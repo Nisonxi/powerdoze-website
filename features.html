@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Features — PowerDoze</title>
+  <meta name="description" content="Explore every PowerDoze feature in detail — scheduled sleep rules, power modes, smart detection, hardware monitor, and more.">
+  <link rel="icon" href="assets/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="/" class="logo"><img src="assets/icon.png" alt="">PowerDoze</a>
+    <ul class="nav-links">
+      <li><a href="/" data-i18n="navHome">Home</a></li>
+      <li><a href="features.html" data-i18n="navFeatures">Features</a></li>
+      <li><a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a></li>
+      <li><a href="use-cases.html" data-i18n="navUseCases">Use Cases</a></li>
+      <li><a href="/#download" data-i18n="navDownload">Download</a></li>
+    </ul>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <select id="lang-select" class="lang-select"></select>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="container">
+    <h1 data-i18n="ft_heroTitle">Every Feature, Explained</h1>
+    <p data-i18n="ft_heroSub">A deep dive into what PowerDoze can do for your PC.</p>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- ═══ 1. Scheduled Sleep Rules ═══ -->
+  <div class="feat-detail">
+    <div class="feat-text">
+      <span class="feat-badge free" data-i18n="ft_badgeFree">Free</span>
+      <h2 data-i18n="ft_f1Title">Scheduled Sleep Rules</h2>
+      <p data-i18n="ft_f1Desc">Create time-based rules that control when your PC goes to sleep. Each rule defines a time window and a sleep timeout. PowerDoze evaluates rules every minute and applies the matching one.</p>
+      <ul>
+        <li data-i18n="ft_f1Li1">Set different timeouts for work hours, evening, and late night</li>
+        <li data-i18n="ft_f1Li2">Filter by day of week (e.g., weekdays only, weekends only)</li>
+        <li data-i18n="ft_f1Li3">Link a Power Mode to each rule for full automation</li>
+        <li data-i18n="ft_f1Li4">Rules are evaluated by priority — first match wins</li>
+        <li data-i18n="ft_f1Li5">Free: up to 3 rules / Pro: unlimited</li>
+      </ul>
+    </div>
+    <div class="demo-area">
+      <div class="demo-placeholder-text">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <p><span data-i18n="ft_f1Demo">Demo: Creating a sleep rule</span><br><small data-i18n="ft_gifSoon">GIF coming soon</small></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 2. Power Modes ═══ -->
+  <div class="feat-detail reverse">
+    <div class="feat-text">
+      <span class="feat-badge free" data-i18n="ft_badgeFree">Free</span>
+      <h2 data-i18n="ft_f2Title">One-Click Power Modes</h2>
+      <p data-i18n="ft_f2Desc">Power Modes bundle multiple system settings into a single profile you can switch with one click. Each mode controls:</p>
+      <ul>
+        <li data-i18n="ft_f2Li1">Windows power scheme (Balanced, High Performance, Power Saver, or custom GUID)</li>
+        <li data-i18n="ft_f2Li2">CPU min/max percentage and boost mode</li>
+        <li data-i18n="ft_f2Li3">Cooling policy (active vs. passive)</li>
+        <li data-i18n="ft_f2Li4">Screen timeout (AC and DC separately)</li>
+        <li>PCIe ASPM link state power management</li>
+        <li data-i18n="ft_f2Li6">NVIDIA GPU power limit (if nvidia-smi is available)</li>
+        <li data-i18n="ft_f2Li7">Free: 2 modes / Pro: unlimited</li>
+      </ul>
+    </div>
+    <div class="demo-area">
+      <div class="demo-placeholder-text">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <p><span data-i18n="ft_f2Demo">Demo: Switching power modes</span><br><small data-i18n="ft_gifSoon">GIF coming soon</small></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 3. App Whitelist ═══ -->
+  <div class="feat-detail">
+    <div class="feat-text">
+      <span class="feat-badge free" data-i18n="ft_badgeFree">Free</span>
+      <h2 data-i18n="ft_f3Title">App Whitelist</h2>
+      <p data-i18n="ft_f3Desc">Prevent your PC from sleeping when specific apps are running. Perfect for downloads, rendering, long-running tasks, or any process that shouldn't be interrupted.</p>
+      <ul>
+        <li data-i18n="ft_f3Li1">Organize apps into groups (e.g., "Games", "Work", "Downloads")</li>
+        <li data-i18n="ft_f3Li2">Scan running processes or installed apps to add quickly</li>
+        <li data-i18n="ft_f3Li3">Drag-and-drop to reorder between groups</li>
+        <li data-i18n="ft_f3Li4">Icons auto-extracted from executables</li>
+      </ul>
+    </div>
+    <div class="demo-area">
+      <div class="demo-placeholder-text">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <p><span data-i18n="ft_f3Demo">Demo: Adding apps to whitelist</span><br><small data-i18n="ft_gifSoon">GIF coming soon</small></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 4. Fullscreen & Game Detection ═══ -->
+  <div class="feat-detail reverse">
+    <div class="feat-text">
+      <span class="feat-badge free" data-i18n="ft_badgeFree">Free</span>
+      <h2 data-i18n="ft_f4Title">Fullscreen &amp; Game Detection</h2>
+      <p data-i18n="ft_f4Desc">PowerDoze automatically detects when a fullscreen application (game, movie, presentation) is running and suspends all sleep rules. When you exit fullscreen, the normal schedule resumes.</p>
+      <ul>
+        <li data-i18n="ft_f4Li1">Works with any DirectX/OpenGL/Vulkan game</li>
+        <li data-i18n="ft_f4Li2">Also detects fullscreen video players and presentation apps</li>
+        <li data-i18n="ft_f4Li3">No configuration needed — fully automatic</li>
+        <li data-i18n="ft_f4Li4">FPS counter available in the hardware monitor overlay</li>
+      </ul>
+    </div>
+    <div class="demo-area">
+      <div class="demo-placeholder-text">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        <p><span data-i18n="ft_f4Demo">Demo: Fullscreen detection in action</span><br><small data-i18n="ft_gifSoon">GIF coming soon</small></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 5. Away Mode ═══ -->
+  <div class="feat-detail">
+    <div class="feat-text">
+      <span class="feat-badge free" data-i18n="ft_f5BadgeFree">Free (basic) </span>
+      <span class="feat-badge pro" data-i18n="ft_f5BadgePro">Pro (advanced)</span>
+      <h2 data-i18n="ft_f5Title">Away Mode</h2>
+      <p data-i18n="ft_f5Desc">When you stop using your PC for a configurable number of minutes, PowerDoze automatically switches to an eco-friendly power mode. When you return, it restores your previous settings.</p>
+      <ul>
+        <li data-i18n="ft_f5Li1"><strong>Free:</strong> Enable/disable away mode with a fixed idle timeout</li>
+        <li data-i18n="ft_f5Li2"><strong>Pro:</strong> Choose which power mode to switch to when away</li>
+        <li data-i18n="ft_f5Li3"><strong>Pro:</strong> Separate timeout for AC and battery power</li>
+        <li data-i18n="ft_f5Li4">Uses Windows idle detection (keyboard + mouse activity)</li>
+        <li data-i18n="ft_f5Li5">Won't trigger during fullscreen apps or meetings</li>
+      </ul>
+    </div>
+    <div class="demo-area">
+      <div class="demo-placeholder-text">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg>
+        <p><span data-i18n="ft_f5Demo">Demo: Away mode triggering</span><br><small data-i18n="ft_gifSoon">GIF coming soon</small></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 6. App Foreground Detection (Pro) ═══ -->
+  <div class="feat-detail reverse">
+    <div class="feat-text">
+      <span class="feat-badge pro" data-i18n="ft_badgePro">Pro</span>
+      <h2 data-i18n="ft_f6Title">App Foreground Auto-Switch</h2>
+      <p data-i18n="ft_f6Desc">Automatically switch to a specific power mode when a particular app is in the foreground. When you switch away from that app, the previous mode is restored.</p>
+      <ul>
+        <li data-i18n="ft_f6Li1">Map any process to a power mode (e.g., Premiere Pro → Performance)</li>
+        <li data-i18n="ft_f6Li2">Meeting app detection: Teams, Zoom, Slack, Discord, and more</li>
+        <li data-i18n="ft_f6Li3">Customizable meeting app list</li>
+        <li data-i18n="ft_f6Li4">Higher priority than schedule rules — foreground always wins</li>
+      </ul>
+    </div>
+    <div class="demo-area">
+      <div class="demo-placeholder-text">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <p><span data-i18n="ft_f6Demo">Demo: Auto-switching on app focus</span><br><small data-i18n="ft_gifSoon">GIF coming soon</small></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 7. Wi-Fi Geofencing (Pro) ═══ -->
+  <div class="feat-detail">
+    <div class="feat-text">
+      <span class="feat-badge pro" data-i18n="ft_badgePro">Pro</span>
+      <h2 data-i18n="ft_f7Title">Wi-Fi Geofencing</h2>
+      <p data-i18n="ft_f7Desc">Automatically switch power modes based on which Wi-Fi network you're connected to. This acts as a simple location-aware trigger without GPS.</p>
+      <ul>
+        <li data-i18n="ft_f7Li1">Map Wi-Fi SSIDs to power modes (e.g., "Office-5G" → Balanced)</li>
+        <li data-i18n="ft_f7Li2">Automatically detects current SSID</li>
+        <li data-i18n="ft_f7Li3">Useful for "at work" vs. "at home" vs. "at coffee shop" profiles</li>
+        <li data-i18n="ft_f7Li4">Checks periodically in the background</li>
+      </ul>
+    </div>
+    <div class="demo-area">
+      <div class="demo-placeholder-text">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1"/></svg>
+        <p><span data-i18n="ft_f7Demo">Demo: Wi-Fi geofencing rules</span><br><small data-i18n="ft_gifSoon">GIF coming soon</small></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 8. Battery Smart Policy (Pro) ═══ -->
+  <div class="feat-detail reverse">
+    <div class="feat-text">
+      <span class="feat-badge pro" data-i18n="ft_badgePro">Pro</span>
+      <h2 data-i18n="ft_f8Title">Battery Smart Policy</h2>
+      <p data-i18n="ft_f8Desc">Define automatic power mode switches based on battery level and charging state. Keep Performance when plugged in, switch to Power Saver below 30%.</p>
+      <ul>
+        <li data-i18n="ft_f8Li1">Set battery level thresholds (e.g., below 20% → Power Saver)</li>
+        <li data-i18n="ft_f8Li2">Separate modes for AC power vs. battery</li>
+        <li data-i18n="ft_f8Li3">Transition notifications so you know when modes change</li>
+        <li data-i18n="ft_f8Li4">Works alongside schedule rules and away mode</li>
+      </ul>
+    </div>
+    <div class="demo-area">
+      <div class="demo-placeholder-text">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="13" x2="23" y2="11"/><line x1="7" y1="10" x2="7" y2="14"/><line x1="11" y1="10" x2="11" y2="14"/></svg>
+        <p><span data-i18n="ft_f8Demo">Demo: Battery policy configuration</span><br><small data-i18n="ft_gifSoon">GIF coming soon</small></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 9. Hardware Monitor ═══ -->
+  <div class="feat-detail">
+    <div class="feat-text">
+      <span class="feat-badge free" data-i18n="ft_badgeFree">Free</span>
+      <h2 data-i18n="ft_f9Title">Hardware Monitor</h2>
+      <p data-i18n="ft_f9Desc">A real-time system dashboard with CPU, RAM, network, temperature, and FPS readings. Available as a full screen or a compact floating overlay.</p>
+      <ul>
+        <li data-i18n="ft_f9Li1">CPU usage, frequency, and temperature (via LibreHardwareMonitor)</li>
+        <li data-i18n="ft_f9Li2">RAM usage and available memory</li>
+        <li data-i18n="ft_f9Li3">Network upload/download speed</li>
+        <li data-i18n="ft_f9Li4">FPS counter (via ETW for DX10/11/12 and DX9 games)</li>
+        <li data-i18n="ft_f9Li5">Mini Mode: a compact floating panel that stays on top</li>
+        <li data-i18n="ft_f9Li6">Power consumption tracking and session statistics</li>
+      </ul>
+    </div>
+    <div class="demo-area">
+      <div class="demo-placeholder-text">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <p><span data-i18n="ft_f9Demo">Demo: Hardware monitor overlay</span><br><small data-i18n="ft_gifSoon">GIF coming soon</small></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 10. Smart Tasks ═══ -->
+  <div class="feat-detail reverse">
+    <div class="feat-text">
+      <span class="feat-badge free" data-i18n="ft_badgeFree">Free</span>
+      <h2 data-i18n="ft_f10Title">Smart Tasks</h2>
+      <p data-i18n="ft_f10Desc">Schedule automated system actions like shutdown, restart, sleep, or lock at a specific time or after a countdown. Useful for overnight tasks or maintenance windows.</p>
+      <ul>
+        <li data-i18n="ft_f10Li1">Actions: Shutdown, Restart, Sleep, Hibernate, Lock, Sign Out</li>
+        <li data-i18n="ft_f10Li2">Triggers: specific time (once/daily), countdown timer</li>
+        <li data-i18n="ft_f10Li3">Pre-execution warning notification (30 seconds before)</li>
+        <li data-i18n="ft_f10Li4">Enable/disable individual tasks without deleting them</li>
+      </ul>
+    </div>
+    <div class="demo-area">
+      <div class="demo-placeholder-text">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <p><span data-i18n="ft_f10Demo">Demo: Creating a smart task</span><br><small data-i18n="ft_gifSoon">GIF coming soon</small></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 11. Analytics (Pro) ═══ -->
+  <div class="feat-detail">
+    <div class="feat-text">
+      <span class="feat-badge pro" data-i18n="ft_badgePro">Pro</span>
+      <h2 data-i18n="ft_f11Title">Analytics &amp; Energy Report</h2>
+      <p data-i18n="ft_f11Desc">Track your power usage over time, see which modes you use most, and estimate your energy savings. Includes an achievement system to gamify your power management habits.</p>
+      <ul>
+        <li data-i18n="ft_f11Li1">Power history chart (7/14/30 day views)</li>
+        <li data-i18n="ft_f11Li2">Mode usage breakdown and time distribution</li>
+        <li data-i18n="ft_f11Li3">Estimated kWh saved and CO2 reduction</li>
+        <li data-i18n="ft_f11Li4">Electricity cost estimation (supports multiple currencies and pricing tiers)</li>
+        <li data-i18n="ft_f11Li5">Achievement badges for power-saving milestones</li>
+        <li data-i18n="ft_f11Li6">Export to CSV for further analysis</li>
+      </ul>
+    </div>
+    <div class="demo-area">
+      <div class="demo-placeholder-text">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <p><span data-i18n="ft_f11Demo">Demo: Analytics dashboard</span><br><small data-i18n="ft_gifSoon">GIF coming soon</small></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 12. Settings Export/Import ═══ -->
+  <div class="feat-detail reverse">
+    <div class="feat-text">
+      <span class="feat-badge free" data-i18n="ft_badgeFree">Free</span>
+      <h2 data-i18n="ft_f12Title">Settings Export &amp; Import</h2>
+      <p data-i18n="ft_f12Desc">Back up your entire configuration (rules, modes, whitelist, smart detect settings) to a single JSON file. Restore on the same PC or transfer to a new machine.</p>
+      <ul>
+        <li data-i18n="ft_f12Li1">One-click export of all settings</li>
+        <li data-i18n="ft_f12Li2">Import restores everything — rules, modes, whitelist, policies</li>
+        <li data-i18n="ft_f12Li3">Useful for PC migration, fresh Windows installs, or sharing configs</li>
+        <li data-i18n="ft_f12Li4">Automatic backup snapshots before every save operation</li>
+      </ul>
+    </div>
+    <div class="demo-area">
+      <div class="demo-placeholder-text">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <p><span data-i18n="ft_f12Demo">Demo: Export &amp; import settings</span><br><small data-i18n="ft_gifSoon">GIF coming soon</small></p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── CTA ──────────────────────────────────────────────── -->
+<div class="cta-bar">
+  <div class="container">
+    <h2 data-i18n="ft_ctaTitle">Ready to try?</h2>
+    <p data-i18n="ft_ctaSub">Download the free version and start automating your power settings today.</p>
+    <a href="/#download" class="btn btn-primary" data-i18n="ft_ctaBtn">Download PowerDoze Free</a>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 PowerDoze. All rights reserved.</p>
+    <p style="margin-top:8px;">
+      <a href="mailto:gto70070@gmail.com">Contact</a> &bull;
+      <a href="privacy.html">Privacy Policy</a>
+    </p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>updateNavAuth();</script>
+</body>
+</html>

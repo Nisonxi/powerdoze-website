@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — PowerDoze</title>
+  <link rel="icon" href="assets/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .auth-container {
+      max-width: 420px; margin: 0 auto; padding-top: 120px; padding-bottom: 80px;
+    }
+    .auth-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 40px 32px;
+    }
+    .auth-card h1 {
+      font-size: 1.6rem; text-align: center; margin-bottom: 8px;
+      background: none; -webkit-text-fill-color: var(--text);
+    }
+    .auth-card .subtitle {
+      text-align: center; color: var(--muted); font-size: 0.9rem; margin-bottom: 32px;
+    }
+
+    /* ── OAuth buttons ── */
+    .oauth-buttons { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+    .oauth-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--bg); color: var(--text); font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; transition: all .2s; font-family: inherit;
+    }
+    .oauth-btn:hover { border-color: var(--primary); background: rgba(139,92,246,.08); }
+    .oauth-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    /* ── Divider ── */
+    .divider {
+      display: flex; align-items: center; gap: 16px;
+      color: var(--muted); font-size: 0.8rem; margin-bottom: 24px;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    /* ── Form ── */
+    .auth-form { display: flex; flex-direction: column; gap: 14px; }
+    .auth-form label {
+      font-size: 0.85rem; color: var(--muted); font-weight: 500;
+    }
+    .auth-form input {
+      width: 100%; padding: 11px 14px; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--bg);
+      color: var(--text); font-size: 0.9rem; font-family: inherit;
+      outline: none; transition: border-color .2s; box-sizing: border-box;
+    }
+    .auth-form input:focus { border-color: var(--primary); }
+    .auth-form .btn-submit {
+      padding: 12px; border: none; border-radius: 10px;
+      background: var(--primary); color: #fff; font-size: 0.95rem;
+      font-weight: 600; cursor: pointer; transition: opacity .2s; font-family: inherit;
+    }
+    .auth-form .btn-submit:hover { opacity: .9; }
+    .auth-form .btn-submit:disabled { opacity: .5; cursor: not-allowed; }
+
+    /* ── Toggle & links ── */
+    .auth-toggle {
+      text-align: center; margin-top: 20px; font-size: 0.85rem; color: var(--muted);
+    }
+    .auth-toggle a { color: var(--primary); cursor: pointer; text-decoration: none; }
+    .auth-toggle a:hover { text-decoration: underline; }
+    .forgot-link {
+      text-align: right; font-size: 0.8rem;
+    }
+    .forgot-link a { color: var(--primary); text-decoration: none; cursor: pointer; }
+
+    /* ── Messages ── */
+    .auth-msg {
+      padding: 10px 14px; border-radius: 8px; font-size: 0.85rem;
+      margin-bottom: 16px; display: none;
+    }
+    .auth-msg.error { display: block; background: rgba(239,68,68,.12); color: #f87171; border: 1px solid rgba(239,68,68,.2); }
+    .auth-msg.success { display: block; background: rgba(34,197,94,.12); color: #4ade80; border: 1px solid rgba(34,197,94,.2); }
+
+    /* ── Logo ── */
+    .auth-logo {
+      display: flex; align-items: center; justify-content: center;
+      gap: 10px; margin-bottom: 24px;
+    }
+    .auth-logo img { width: 40px; height: 40px; border-radius: 8px; }
+    .auth-logo span { font-size: 1.3rem; font-weight: 700; color: var(--text); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="/" class="logo"><img src="assets/icon.png" alt="">PowerDoze</a>
+    <ul class="nav-links">
+      <li><a href="/" data-i18n="navHome">Home</a></li>
+      <li><a href="features.html" data-i18n="navFeatures">Features</a></li>
+      <li><a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a></li>
+      <li><a href="use-cases.html" data-i18n="navUseCases">Use Cases</a></li>
+      <li><a href="/#download" data-i18n="navDownload">Download</a></li>
+    </ul>
+    <select id="lang-select" class="lang-select"></select>
+  </div>
+</nav>
+
+<div class="auth-container">
+  <div class="auth-card">
+
+    <div class="auth-logo">
+      <img src="assets/icon.png" alt="">
+      <span>PowerDoze</span>
+    </div>
+
+    <!-- ═══ Sign In View ═══ -->
+    <div id="signin-view">
+      <h1 data-i18n="authSignInTitle">Welcome back</h1>
+      <p class="subtitle" data-i18n="authSignInSub">Sign in to manage your Pro license and sync settings.</p>
+
+      <div id="auth-message" class="auth-msg"></div>
+
+      <div class="oauth-buttons">
+        <button class="oauth-btn" onclick="signInWithGoogle()">
+          <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          <span data-i18n="authGoogle">Continue with Google</span>
+        </button>
+        <button class="oauth-btn" onclick="signInWithApple()" style="display:none;">
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+          <span data-i18n="authApple">Continue with Apple</span>
+        </button>
+      </div>
+
+      <div class="divider" data-i18n="authOr">or sign in with email</div>
+
+      <form class="auth-form" onsubmit="handleSignIn(event)">
+        <div>
+          <label data-i18n="authEmail">Email</label>
+          <input type="email" id="signin-email" required placeholder="you@example.com">
+        </div>
+        <div>
+          <label data-i18n="authPassword">Password</label>
+          <input type="password" id="signin-password" required placeholder="••••••••" minlength="6">
+        </div>
+        <div class="forgot-link">
+          <a onclick="showForgot()" data-i18n="authForgot">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn-submit" id="signin-btn" data-i18n="authSignInBtn">Sign In</button>
+      </form>
+
+      <div class="auth-toggle">
+        <span data-i18n="authNoAccount">Don't have an account?</span>
+        <a onclick="showSignUp()" data-i18n="authGoSignUp">Sign up</a>
+      </div>
+    </div>
+
+    <!-- ═══ Sign Up View ═══ -->
+    <div id="signup-view" style="display:none;">
+      <h1 data-i18n="authSignUpTitle">Create account</h1>
+      <p class="subtitle" data-i18n="authSignUpSub">Sign up to activate Pro and sync your settings across devices.</p>
+
+      <div id="signup-message" class="auth-msg"></div>
+
+      <div class="oauth-buttons">
+        <button class="oauth-btn" onclick="signInWithGoogle()">
+          <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          <span data-i18n="authGoogle">Continue with Google</span>
+        </button>
+      </div>
+
+      <div class="divider" data-i18n="authOrSignUp">or sign up with email</div>
+
+      <form class="auth-form" onsubmit="handleSignUp(event)">
+        <div>
+          <label data-i18n="authEmail">Email</label>
+          <input type="email" id="signup-email" required placeholder="you@example.com">
+        </div>
+        <div>
+          <label data-i18n="authPassword">Password</label>
+          <input type="password" id="signup-password" required placeholder="••••••••" minlength="6">
+        </div>
+        <div>
+          <label data-i18n="authConfirmPassword">Confirm Password</label>
+          <input type="password" id="signup-confirm" required placeholder="••••••••" minlength="6">
+        </div>
+        <button type="submit" class="btn-submit" id="signup-btn" data-i18n="authSignUpBtn">Create Account</button>
+      </form>
+
+      <div class="auth-toggle">
+        <span data-i18n="authHasAccount">Already have an account?</span>
+        <a onclick="showSignIn()" data-i18n="authGoSignIn">Sign in</a>
+      </div>
+    </div>
+
+    <!-- ═══ Forgot Password View ═══ -->
+    <div id="forgot-view" style="display:none;">
+      <h1 data-i18n="authForgotTitle">Reset password</h1>
+      <p class="subtitle" data-i18n="authForgotSub">Enter your email and we'll send you a reset link.</p>
+
+      <div id="forgot-message" class="auth-msg"></div>
+
+      <form class="auth-form" onsubmit="handleForgot(event)">
+        <div>
+          <label data-i18n="authEmail">Email</label>
+          <input type="email" id="forgot-email" required placeholder="you@example.com">
+        </div>
+        <button type="submit" class="btn-submit" id="forgot-btn" data-i18n="authResetBtn">Send Reset Link</button>
+      </form>
+
+      <div class="auth-toggle">
+        <a onclick="showSignIn()" data-i18n="authBackToSignIn">Back to sign in</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 PowerDoze. All rights reserved.</p>
+    <p style="margin-top:8px;">
+      <a href="mailto:gto70070@gmail.com">Contact</a> &bull;
+      <a href="privacy.html">Privacy Policy</a>
+    </p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  // ── View switching ──
+  function showSignIn() {
+    document.getElementById('signin-view').style.display = '';
+    document.getElementById('signup-view').style.display = 'none';
+    document.getElementById('forgot-view').style.display = 'none';
+    clearMessages();
+  }
+  function showSignUp() {
+    document.getElementById('signin-view').style.display = 'none';
+    document.getElementById('signup-view').style.display = '';
+    document.getElementById('forgot-view').style.display = 'none';
+    clearMessages();
+  }
+  function showForgot() {
+    document.getElementById('signin-view').style.display = 'none';
+    document.getElementById('signup-view').style.display = 'none';
+    document.getElementById('forgot-view').style.display = '';
+    clearMessages();
+  }
+  function clearMessages() {
+    document.querySelectorAll('.auth-msg').forEach(el => { el.className = 'auth-msg'; el.textContent = ''; });
+  }
+  function showMsg(id, text, type) {
+    const el = document.getElementById(id);
+    el.textContent = text;
+    el.className = 'auth-msg ' + type;
+  }
+
+  // ── Auth handlers ──
+  async function handleSignIn(e) {
+    e.preventDefault();
+    const btn = document.getElementById('signin-btn');
+    btn.disabled = true;
+    clearMessages();
+
+    const email = document.getElementById('signin-email').value;
+    const password = document.getElementById('signin-password').value;
+    const { data, error } = await signInWithEmail(email, password);
+
+    if (error) {
+      showMsg('auth-message', error.message, 'error');
+      btn.disabled = false;
+    } else {
+      window.location.href = '/';
+    }
+  }
+
+  async function handleSignUp(e) {
+    e.preventDefault();
+    const btn = document.getElementById('signup-btn');
+    btn.disabled = true;
+    clearMessages();
+
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+    const confirm = document.getElementById('signup-confirm').value;
+
+    if (password !== confirm) {
+      showMsg('signup-message', 'Passwords do not match.', 'error');
+      btn.disabled = false;
+      return;
+    }
+
+    const { data, error } = await signUpWithEmail(email, password);
+    if (error) {
+      showMsg('signup-message', error.message, 'error');
+      btn.disabled = false;
+    } else {
+      showMsg('signup-message', 'Check your email to confirm your account!', 'success');
+      btn.disabled = false;
+    }
+  }
+
+  async function handleForgot(e) {
+    e.preventDefault();
+    const btn = document.getElementById('forgot-btn');
+    btn.disabled = true;
+    clearMessages();
+
+    const email = document.getElementById('forgot-email').value;
+    const { data, error } = await resetPassword(email);
+    if (error) {
+      showMsg('forgot-message', error.message, 'error');
+    } else {
+      showMsg('forgot-message', 'Reset link sent! Check your email.', 'success');
+    }
+    btn.disabled = false;
+  }
+
+  // ── If already logged in, redirect ──
+  document.addEventListener('DOMContentLoaded', async () => {
+    const user = await getUser();
+    if (user) window.location.href = '/';
+  });
+</script>
+</body>
+</html>

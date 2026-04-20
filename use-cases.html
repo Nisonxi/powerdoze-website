@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Use Cases — PowerDoze</title>
+  <link rel="icon" href="assets/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="/" class="logo"><img src="assets/icon.png" alt="">PowerDoze</a>
+    <ul class="nav-links">
+      <li><a href="/" data-i18n="navHome">Home</a></li>
+      <li><a href="features.html" data-i18n="navFeatures">Features</a></li>
+      <li><a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a></li>
+      <li><a href="use-cases.html" data-i18n="navUseCases">Use Cases</a></li>
+      <li><a href="/#download" data-i18n="navDownload">Download</a></li>
+    </ul>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <select id="lang-select" class="lang-select"></select>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="container">
+    <h1 data-i18n="uc_heroTitle">Real-World Use Cases</h1>
+    <p data-i18n="uc_heroSub">See how different types of users get the most out of PowerDoze.</p>
+  </div>
+</section>
+
+<section>
+<div class="container">
+
+  <!-- ═══ Gamer ═══ -->
+  <div class="uc-detail">
+    <span class="usecase-tag gamer" data-i18n="uc_gamerTag">Gamer</span>
+    <h2 data-i18n="uc_gamerTitle">Gaming Sessions Without Interruptions</h2>
+    <p class="scenario" data-i18n="uc_gamerScenario">
+      You're deep into a 3-hour gaming session. Your normal schedule would put the PC to sleep after 30 minutes of "inactivity" (because the game uses a controller, not keyboard). Halfway through, your PC goes dark. Sound familiar?
+    </p>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="label" data-i18n="uc_gamerS1Label">What you set up</div>
+        <p data-i18n="uc_gamerS1Desc">A "Late Night" sleep rule with 5-minute timeout for 00:00–07:00, and add your games to the whitelist.</p>
+      </div>
+      <div class="flow-step">
+        <div class="label" data-i18n="uc_gamerS2Label">What PowerDoze does</div>
+        <p data-i18n="uc_gamerS2Desc">Detects the game is fullscreen → suspends all sleep rules. You also get an FPS overlay via the hardware monitor.</p>
+      </div>
+      <div class="flow-step">
+        <div class="label" data-i18n="uc_gamerS3Label">When you're done</div>
+        <p data-i18n="uc_gamerS3Desc">You alt-F4 the game → fullscreen detection ends → "Late Night" rule kicks back in → PC sleeps in 5 minutes if you walk away.</p>
+      </div>
+    </div>
+    <div class="result" data-i18n="uc_gamerResult">
+      Result: Zero interruptions during gaming. PC still saves power when you're not playing.
+    </div>
+  </div>
+
+  <!-- ═══ Remote Worker ═══ -->
+  <div class="uc-detail">
+    <span class="usecase-tag remote" data-i18n="uc_remoteTag">Remote Worker</span>
+    <h2 data-i18n="uc_remoteTitle">Work From Home, All Day</h2>
+    <p class="scenario" data-i18n="uc_remoteScenario">
+      You work from home 9–6, with Teams meetings scattered throughout the day. Between meetings, you sometimes step away for 10+ minutes. You want Performance mode during work, Power Saver at night, and zero sleep during calls.
+    </p>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="label" data-i18n="uc_remoteS1Label">Morning (09:00)</div>
+        <p data-i18n="uc_remoteS1Desc">Schedule rule "Work Hours" activates → 60-minute sleep timeout, linked to Balanced mode.</p>
+      </div>
+      <div class="flow-step">
+        <div class="label" data-i18n="uc_remoteS2Label">Teams call (10:30)</div>
+        <p data-i18n="uc_remoteS2Desc">Meeting app detection sees "ms-teams" in foreground → suspends sleep entirely.</p>
+      </div>
+      <div class="flow-step">
+        <div class="label" data-i18n="uc_remoteS3Label">Coffee break (11:15)</div>
+        <p data-i18n="uc_remoteS3Desc">Away mode detects 10 minutes idle → switches to Power Saver. You come back → restores Balanced.</p>
+      </div>
+      <div class="flow-step">
+        <div class="label" data-i18n="uc_remoteS4Label">Evening (18:00)</div>
+        <p data-i18n="uc_remoteS4Desc">"Evening Relax" rule takes over → 30-minute timeout, passive cooling for quiet operation.</p>
+      </div>
+    </div>
+    <div class="result" data-i18n="uc_remoteResult">
+      Result: Your entire day is automated. Meetings never interrupted. Power saved during breaks and evenings.
+    </div>
+  </div>
+
+  <!-- ═══ Student ═══ -->
+  <div class="uc-detail">
+    <span class="usecase-tag student" data-i18n="uc_studentTag">Student</span>
+    <h2 data-i18n="uc_studentTitle">Campus Life on a Laptop</h2>
+    <p class="scenario" data-i18n="uc_studentScenario">
+      You carry your laptop between lectures, the library, and home. Battery life matters. At each location, you want different behavior: Performance for video editing class, Power Saver in the library, Balanced at home.
+    </p>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="label">Wi-Fi: "Campus-5G"</div>
+        <p data-i18n="uc_studentS1Desc">Wi-Fi geofencing detects campus network → switches to Performance for your creative software class.</p>
+      </div>
+      <div class="flow-step">
+        <div class="label">Wi-Fi: "Library"</div>
+        <p data-i18n="uc_studentS2Desc">You move to the library → different SSID → Power Saver kicks in. Battery lasts the whole study session.</p>
+      </div>
+      <div class="flow-step">
+        <div class="label" data-i18n="uc_studentS3Label">Battery below 20%</div>
+        <p data-i18n="uc_studentS3Desc">Battery smart policy triggers → forces Power Saver regardless of location.</p>
+      </div>
+      <div class="flow-step">
+        <div class="label">Wi-Fi: "Home"</div>
+        <p data-i18n="uc_studentS4Desc">You get home, plug in → AC power detected → Balanced mode with longer timeouts.</p>
+      </div>
+    </div>
+    <div class="result" data-i18n="uc_studentResult">
+      Result: Your laptop adapts to each location automatically. No manual mode switching. Battery survives the full day.
+    </div>
+  </div>
+
+  <!-- ═══ Content Creator ═══ -->
+  <div class="uc-detail">
+    <span class="usecase-tag gamer" data-i18n="uc_creatorTag">Content Creator</span>
+    <h2 data-i18n="uc_creatorTitle">Rendering Overnight Without Sleep</h2>
+    <p class="scenario" data-i18n="uc_creatorScenario">
+      You start a 4-hour video render at midnight. Your normal "Late Night" rule would put the PC to sleep in 5 minutes. You need the PC to stay awake for the render, then sleep when it's done.
+    </p>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="label" data-i18n="uc_creatorS1Label">Before render</div>
+        <p data-i18n="uc_creatorS1Desc">Add your video editor (Premiere, DaVinci, Blender) to the app whitelist.</p>
+      </div>
+      <div class="flow-step">
+        <div class="label" data-i18n="uc_creatorS2Label">During render</div>
+        <p data-i18n="uc_creatorS2Desc">Whitelist detects the editor is running → sleep rules suspended. PC stays awake at full power.</p>
+      </div>
+      <div class="flow-step">
+        <div class="label" data-i18n="uc_creatorS3Label">Render finishes</div>
+        <p data-i18n="uc_creatorS3Desc">Editor closes → whitelist clears → "Late Night" rule resumes → PC sleeps in 5 minutes.</p>
+      </div>
+    </div>
+    <div class="result" data-i18n="uc_creatorResult">
+      Result: Render completes uninterrupted. PC sleeps automatically when done. Zero wasted electricity.
+    </div>
+  </div>
+
+  <!-- ═══ Eco / Office ═══ -->
+  <div class="uc-detail">
+    <span class="usecase-tag eco" data-i18n="uc_ecoTag">Office Manager / Eco-Conscious</span>
+    <h2 data-i18n="uc_ecoTitle">Track and Reduce Energy Usage</h2>
+    <p class="scenario" data-i18n="uc_ecoScenario">
+      You want to reduce your PC's energy footprint, but you don't know how much power it's actually using or wasting. You need visibility before you can optimize.
+    </p>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="label" data-i18n="uc_ecoS1Label">Week 1: Measure</div>
+        <p data-i18n="uc_ecoS1Desc">Install PowerDoze with default rules. The analytics dashboard starts tracking mode usage and estimated consumption.</p>
+      </div>
+      <div class="flow-step">
+        <div class="label" data-i18n="uc_ecoS2Label">Week 2: Analyze</div>
+        <p data-i18n="uc_ecoS2Desc">Check the energy report: "Your PC was in Performance mode 70% of the time, but only needed it 20%." Identify waste.</p>
+      </div>
+      <div class="flow-step">
+        <div class="label" data-i18n="uc_ecoS3Label">Week 3: Optimize</div>
+        <p data-i18n="uc_ecoS3Desc">Add away mode, tighten schedule rules, lower CPU limits in Power Saver mode. Analytics shows the improvement.</p>
+      </div>
+      <div class="flow-step">
+        <div class="label" data-i18n="uc_ecoS4Label">Ongoing</div>
+        <p data-i18n="uc_ecoS4Desc">Achievement badges motivate continued optimization. CSV export for monthly reports.</p>
+      </div>
+    </div>
+    <div class="result" data-i18n="uc_ecoResult">
+      Result: Measurable energy reduction with data to prove it. Great for personal goals or company ESG reporting.
+    </div>
+  </div>
+
+</div>
+</section>
+
+<div class="cta-bar">
+  <div class="container">
+    <h2 data-i18n="uc_ctaTitle">Which one are you?</h2>
+    <p data-i18n="uc_ctaSub">Start with the free version. Upgrade when you're ready for more automation.</p>
+    <a href="/#download" class="btn btn-primary" style="margin-right:12px;" data-i18n="uc_ctaDownload">Download Free</a>
+    <a href="comparison.html" class="btn btn-outline" data-i18n="uc_ctaComparison">See Full Comparison</a>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 PowerDoze. All rights reserved.</p>
+    <p style="margin-top:8px;"><a href="mailto:gto70070@gmail.com">Contact</a> &bull; <a href="privacy.html">Privacy Policy</a></p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>updateNavAuth();</script>
+</body>
+</html>

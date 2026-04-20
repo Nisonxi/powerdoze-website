@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Processing payment… — PowerDoze</title>
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .pp-container {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 16px; text-align: center; padding: 20px;
+    }
+    .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .pp-text { color: var(--muted); font-size: 0.95rem; }
+    .pp-success { color: #4ade80; font-size: 1.1rem; font-weight: 600; display: none; }
+    .pp-error { color: #f87171; font-size: 0.9rem; display: none; }
+  </style>
+</head>
+<body>
+<div class="pp-container">
+  <div class="spinner" id="spinner"></div>
+  <p class="pp-text" id="status">Processing your payment…</p>
+  <p class="pp-success" id="success">&#10003; Payment successful! This window will close automatically.</p>
+  <p class="pp-error" id="error"></p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+(async function() {
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get('token');    // PayPal order token
+  var orderId = params.get('orderId'); // our order ID
+
+  // PayPal appends 'token' param to return_url
+  if (!orderId) orderId = token;
+
+  if (params.get('purchase') === 'cancel') {
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('status').textContent = 'Payment cancelled.';
+    setTimeout(function() { window.close(); }, 2000);
+    return;
+  }
+
+  if (!orderId) {
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('status').style.display = 'none';
+    document.getElementById('error').style.display = 'block';
+    document.getElementById('error').textContent = 'No order ID found. Please close this window.';
+    return;
+  }
+
+  try {
+    // Get session
+    var session = await getSession();
+    if (!session) {
+      document.getElementById('status').textContent = 'Please log in and try again.';
+      document.getElementById('spinner').style.display = 'none';
+      return;
+    }
+
+    // Call capture API
+    var res = await fetch(SUPABASE_URL + '/functions/v1/capture-paypal', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + session.access_token,
+      },
+      body: JSON.stringify({ orderId: orderId }),
+    });
+
+    var data = await res.json();
+
+    if (data.status === 'success' || data.status === 'already_activated') {
+      document.getElementById('spinner').style.display = 'none';
+      document.getElementById('status').style.display = 'none';
+      document.getElementById('success').style.display = 'block';
+
+      // Tell the opener (parent window) to redirect
+      if (window.opener && !window.opener.closed) {
+        window.opener.location.href = '/?purchase=success';
+      }
+
+      // Close this popup after 2 seconds
+      setTimeout(function() { window.close(); }, 2000);
+    } else {
+      throw new Error(data.error || 'Capture failed');
+    }
+
+  } catch (err) {
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('status').style.display = 'none';
+    document.getElementById('error').style.display = 'block';
+    document.getElementById('error').textContent = 'Error: ' + err.message;
+
+    // Still try to close after a delay
+    setTimeout(function() {
+      if (window.opener && !window.opener.closed) {
+        window.opener.location.href = '/';
+      }
+      window.close();
+    }, 4000);
+  }
+})();
+</script>
+</body>
+</html>

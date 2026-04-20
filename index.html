@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PowerDoze — Smart Power Automation for Windows</title>
+  <meta name="description" content="PowerDoze automatically switches your PC's power settings based on time, location, and what you're doing. Save battery, reduce noise, and never miss a meeting.">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── Nav ──────────────────────────────────────────────── -->
+<nav>
+  <div class="container">
+    <a href="/" class="logo">
+      <img src="assets/icon.png" alt="PowerDoze">
+      PowerDoze
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" data-i18n="navHome">Home</a></li>
+      <li><a href="features.html" data-i18n="navFeatures">Features</a></li>
+      <li><a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a></li>
+      <li><a href="use-cases.html" data-i18n="navUseCases">Use Cases</a></li>
+      <li><a href="#download" data-i18n="navDownload">Download</a></li>
+    </ul>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <select id="lang-select" class="lang-select"></select>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <img src="assets/icon.png" alt="PowerDoze" class="hero-icon">
+    <h1 data-i18n="heroTitle">Your PC Learns When<br>to Sleep and When to Roar</h1>
+    <p class="tagline" data-i18n="heroTagline">
+      PowerDoze automatically adjusts power settings based on time, location, and what you're doing &mdash; so your laptop lasts longer, stays quiet, and never sleeps during a meeting.
+    </p>
+    <div class="btn-group">
+      <a href="#download" class="btn btn-primary" data-i18n="heroDownload">Download Free</a>
+      <a href="#pricing" class="btn btn-outline" data-i18n="heroSee">See Pro Features</a>
+    </div>
+    <span class="hero-badge" data-i18n="heroBadge">v2.0 &mdash; Windows 10 / 11</span>
+  </div>
+</section>
+
+<!-- ── Stats ────────────────────────────────────────────── -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">7</div><div class="stat-label" data-i18n="statLang">Languages</div></div>
+  <div class="stat"><div class="stat-num">20+</div><div class="stat-label" data-i18n="statFeat">Power Features</div></div>
+  <div class="stat"><div class="stat-num">0 kB</div><div class="stat-label" data-i18n="statCloud">Cloud Data Sent</div></div>
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label" data-i18n="statLocal">Local &amp; Private</div></div>
+</div>
+
+<!-- ── How it works ────────────────────────────────────── -->
+<section id="how">
+  <div class="container">
+    <h2 class="section-title" data-i18n="howTitle">How It Works</h2>
+    <p class="section-subtitle" data-i18n="howSub">Three steps to smarter power management.</p>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num">1</div>
+        <h3 data-i18n="how1t">Set Your Rules</h3>
+        <p data-i18n="how1d">Define when your PC should sleep, which apps prevent sleep, and what power mode to use for each time slot.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">2</div>
+        <h3 data-i18n="how2t">PowerDoze Watches</h3>
+        <p data-i18n="how2d">It monitors the time, running apps, fullscreen state, Wi-Fi network, and your activity level in the background.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">3</div>
+        <h3 data-i18n="how3t">Auto-Adjusts</h3>
+        <p data-i18n="how3d">Power settings change automatically. No manual switching. Your PC is always in the right mode for what you're doing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ─────────────────────────────────────────── -->
+<section id="features" style="background: var(--surface);">
+  <div class="container">
+    <h2 class="section-title" data-i18n="featTitle">What PowerDoze Does</h2>
+    <p class="section-subtitle" data-i18n="featSub">
+      Windows built-in power plans are static. PowerDoze makes them context-aware.
+    </p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feat-icon blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3 data-i18n="feat1t">Scheduled Sleep Rules</h3>
+        <p data-i18n="feat1d">Set different sleep timeouts for morning, afternoon, and late night. Filter by day of week. Whitelist apps that should prevent sleep.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon cyan">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h3 data-i18n="feat2t">One-Click Power Modes</h3>
+        <p data-i18n="feat2d">Switch between Performance, Balanced, and Power Saver with one click. Each mode controls CPU, GPU, screen timeout, and power scheme.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon rose">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3 data-i18n="feat3t">Fullscreen &amp; Game Detection</h3>
+        <p data-i18n="feat3d">Automatically suspend sleep rules when a fullscreen app or game is running. Resume when you exit.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+        </div>
+        <h3 data-i18n="feat4t">Away Mode</h3>
+        <p data-i18n="feat4d">Detect when you step away from your PC and auto-switch to an eco-friendly power mode. Revert when you return.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"><rect x="1" y="6" width="22" height="12" rx="2"/><line x1="23" y1="13" x2="23" y2="11"/><line x1="6" y1="10" x2="6" y2="14"/><line x1="10" y1="10" x2="10" y2="14"/><line x1="14" y1="10" x2="14" y2="14"/></svg>
+        </div>
+        <h3 data-i18n="feat5t">Hardware Monitor</h3>
+        <p data-i18n="feat5d">Real-time CPU, RAM, network, and FPS overlay. See exactly what your system is doing without switching apps.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon slate">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <h3 data-i18n="feat6t">7 Languages</h3>
+        <p data-i18n="feat6d">English, Traditional Chinese, Simplified Chinese, Japanese, Korean, French, and German. More coming soon.</p>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:36px;">
+      <a href="features.html" class="btn btn-outline" data-i18n="btnSeeFeatures">See All 12 Features in Detail</a>
+    </div>
+
+    <div class="lang-badges">
+      <span class="lang-badge">English</span>
+      <span class="lang-badge">繁體中文</span>
+      <span class="lang-badge">简体中文</span>
+      <span class="lang-badge">日本語</span>
+      <span class="lang-badge">한국어</span>
+      <span class="lang-badge">Fran&ccedil;ais</span>
+      <span class="lang-badge">Deutsch</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Use Cases ────────────────────────────────────────── -->
+<section id="usecases">
+  <div class="container">
+    <h2 class="section-title" data-i18n="ucTitle">Built for How You Actually Use Your PC</h2>
+    <p class="section-subtitle" data-i18n="ucSub">Real scenarios where PowerDoze makes a difference.</p>
+    <div class="usecases-grid">
+      <div class="usecase">
+        <span class="usecase-tag gamer" data-i18n="ucTag1">Gamer</span>
+        <h3 data-i18n="uc1t">Never interrupt a raid</h3>
+        <p data-i18n="uc1d">Fullscreen detection suspends all sleep rules while you're gaming. When you quit, your power-saving schedule kicks back in automatically.</p>
+      </div>
+      <div class="usecase">
+        <span class="usecase-tag remote" data-i18n="ucTag2">Remote Worker</span>
+        <h3 data-i18n="uc2t">Meetings stay on, coffee breaks save power</h3>
+        <p data-i18n="uc2d">Meeting app detection prevents sleep during calls. Away mode kicks in when you step out for coffee. Your schedule handles the rest.</p>
+      </div>
+      <div class="usecase">
+        <span class="usecase-tag student" data-i18n="ucTag3">Student</span>
+        <h3 data-i18n="uc3t">Lecture mode vs. study mode</h3>
+        <p data-i18n="uc3d">Set different power profiles for class hours vs. study time. Wi-Fi geofencing can auto-switch when you arrive at campus or go home.</p>
+      </div>
+      <div class="usecase">
+        <span class="usecase-tag eco" data-i18n="ucTag4">Eco-Conscious</span>
+        <h3 data-i18n="uc4t">See exactly how much energy you save</h3>
+        <p data-i18n="uc4d">The analytics dashboard tracks your power savings over time. Know your impact and optimize further with data-driven suggestions.</p>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:36px;">
+      <a href="use-cases.html" class="btn btn-outline" data-i18n="btnSeeUseCases">See 5 Detailed Use Cases with Workflows</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Pricing ──────────────────────────────────────────── -->
+<section id="pricing" style="background: var(--surface);">
+  <div class="container">
+    <h2 class="section-title" data-i18n="priceTitle">Simple Pricing</h2>
+    <p class="section-subtitle" data-i18n="priceSub">
+      Free forever with core features. Unlock the full experience with a one-time purchase.
+    </p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="tier free-label" data-i18n="freeTier">Free</div>
+        <div class="price" data-i18n="freePrice">$0</div>
+        <div class="price-note" data-i18n="freeNote">forever</div>
+        <ul>
+          <li data-i18n="f1">Up to 3 sleep rules</li>
+          <li data-i18n="f2">2 power modes</li>
+          <li data-i18n="f3">App whitelist</li>
+          <li data-i18n="f4">Fullscreen detection</li>
+          <li data-i18n="f5">Away mode (basic)</li>
+          <li data-i18n="f6">Hardware monitor</li>
+          <li data-i18n="f7">Settings export / import</li>
+          <li class="disabled" data-i18n="fd1">App foreground detection</li>
+          <li class="disabled" data-i18n="fd2">Wi-Fi geofencing</li>
+          <li class="disabled" data-i18n="fd3">Battery smart policy</li>
+          <li class="disabled" data-i18n="fd4">Analytics dashboard</li>
+          <li class="disabled" data-i18n="fd5">Custom meeting apps</li>
+        </ul>
+        <a href="#download" class="btn btn-outline" style="width:100%; justify-content:center;" data-i18n="freeBtn">Download Free</a>
+      </div>
+      <div class="price-card pro">
+        <div class="tier pro-label" data-i18n="proTier">Pro</div>
+        <div class="price" data-i18n="proPrice">US$9.99</div>
+        <div class="price-note" data-i18n="proNote">one-time purchase &bull; NT$390</div>
+        <ul>
+          <li data-i18n="p1">Unlimited sleep rules</li>
+          <li data-i18n="p2">Unlimited power modes</li>
+          <li data-i18n="p3">App whitelist</li>
+          <li data-i18n="p4">Fullscreen detection</li>
+          <li data-i18n="p5">Away mode (advanced)</li>
+          <li data-i18n="p6">Hardware monitor</li>
+          <li data-i18n="p7">Settings export / import</li>
+          <li data-i18n="p8">App foreground auto-switch</li>
+          <li data-i18n="p9">Wi-Fi geofencing</li>
+          <li data-i18n="p10">Battery smart policy</li>
+          <li data-i18n="p11">Analytics &amp; energy report</li>
+          <li data-i18n="p12">Custom meeting app list</li>
+        </ul>
+        <a href="#" class="btn btn-primary" style="width:100%; justify-content:center;" id="buy-btn" data-i18n="buyBtn">Buy Pro &mdash; US$9.99</a>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:24px;">
+      <a href="comparison.html" class="btn btn-outline" style="font-size:0.85rem; padding:8px 20px;" data-i18n="btnSeeComparison">See Detailed Feature Comparison</a>
+    </div>
+    <p style="text-align:center; margin-top:16px; font-size:0.85rem; color:var(--muted);" data-i18n="pricingNote">
+      14-day money-back guarantee. One-time purchase, not a subscription. Discounts available in-app.
+    </p>
+  </div>
+</section>
+
+<!-- ── Payment Method Modal ─────────────────────────────── -->
+<div id="pay-modal" style="display:none; position:fixed; inset:0; z-index:999; background:rgba(0,0,0,.6); backdrop-filter:blur(4px); align-items:center; justify-content:center;">
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:32px; max-width:400px; width:90%; position:relative;">
+    <button onclick="closePayModal()" style="position:absolute; top:12px; right:16px; background:none; border:none; color:var(--muted); font-size:1.3rem; cursor:pointer;">&times;</button>
+    <h3 style="margin-bottom:6px; color:var(--text);" data-i18n="payTitle">Choose Payment Method</h3>
+    <p style="color:var(--muted); font-size:0.85rem; margin-bottom:24px;" data-i18n="paySub">One-time purchase. 14-day money-back guarantee.</p>
+
+    <button class="pay-option" id="pay-ecpay" onclick="startPurchase('ecpay')">
+      <span class="pay-flag">🇹🇼</span>
+      <span class="pay-info">
+        <span class="pay-label" data-i18n="payEcpayLabel">Credit Card / ATM</span>
+        <span class="pay-provider" data-i18n="payEcpayProvider">via ECPay</span>
+      </span>
+      <span class="pay-price">NT$990</span>
+    </button>
+
+    <button class="pay-option" id="pay-paypal" onclick="startPurchase('paypal')">
+      <span class="pay-flag">🌐</span>
+      <span class="pay-info">
+        <span class="pay-label">PayPal</span>
+        <span class="pay-provider" data-i18n="payPaypalProvider">International</span>
+      </span>
+      <span class="pay-price">US$24.99</span>
+    </button>
+
+    <p style="text-align:center; margin-top:16px; font-size:0.75rem; color:var(--muted);" data-i18n="payNote">Secure payment. Your Pro license activates instantly after payment.</p>
+  </div>
+</div>
+
+<!-- ── Download ─────────────────────────────────────────── -->
+<section id="download">
+  <div class="container" style="text-align:center;">
+    <h2 class="section-title" data-i18n="dlTitle">Download PowerDoze</h2>
+    <p class="section-subtitle" data-i18n="dlSub">
+      Compatible with Windows 10 (1903+) and Windows 11.
+    </p>
+    <a href="#" class="btn btn-primary" id="download-btn" style="font-size:1.1rem; padding:16px 40px;" data-i18n="dlBtn">
+      Download v2.0.0 for Windows
+    </a>
+    <p style="margin-top:16px; font-size:0.8rem; color:var(--muted);" data-i18n="dlNote">
+      ~25 MB &bull; Includes installer
+    </p>
+  </div>
+</section>
+
+<!-- ── FAQ ──────────────────────────────────────────────── -->
+<section id="faq" style="background: var(--surface);">
+  <div class="container">
+    <h2 class="section-title" data-i18n="faqTitle">Frequently Asked Questions</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" data-i18n="faq1q">Is PowerDoze free?</div>
+        <div class="faq-a" data-i18n="faq1a">Yes! Core features are free forever. Pro unlocks advanced automation like app-based switching, Wi-Fi geofencing, and analytics. It's a one-time purchase, not a subscription.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" data-i18n="faq2q">Does it send my data anywhere?</div>
+        <div class="faq-a" data-i18n="faq2a">No. PowerDoze runs entirely on your local machine. The only network request is an optional update check to our website. No telemetry, no analytics, no cloud.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" data-i18n="faq3q">Why does Windows SmartScreen show a warning?</div>
+        <div class="faq-a" data-i18n="faq3a">Code signing certificates cost US$200+/year. As an indie developer, we'll add signing once the project is sustainable. Click "More info" then "Run anyway" to proceed safely.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" data-i18n="faq4q">Can I transfer my license to a new PC?</div>
+        <div class="faq-a" data-i18n="faq4a">Yes. Use the built-in Settings Export/Import to move your configuration. License transfer will also be supported through our website.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" data-i18n="faq5q">Does it work on laptops and desktops?</div>
+        <div class="faq-a" data-i18n="faq5a">Yes, both. Laptops benefit from battery policies and away mode. Desktops benefit from scheduled sleep rules and app-based power mode switching.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" data-i18n="faq6q">What happens if I don't like it?</div>
+        <div class="faq-a" data-i18n="faq6a">The free version has no time limit. If you bought Pro, you have a 14-day money-back guarantee, no questions asked.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ──────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <p data-i18n="footer">&copy; 2026 PowerDoze. All rights reserved.</p>
+    <p style="margin-top:8px;">
+      <a href="mailto:gto70070@gmail.com" data-i18n="contact">Contact</a>
+      &nbsp;&bull;&nbsp;
+      <a href="privacy.html" data-i18n="privacy">Privacy Policy</a>
+    </p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+});
+updateNavAuth();
+
+// ── Purchase success banner ──
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('purchase') === 'success') {
+    var banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:1000;background:linear-gradient(135deg,#10b981,#059669);color:#fff;padding:16px 32px;border-radius:12px;font-weight:600;font-size:0.95rem;box-shadow:0 4px 20px rgba(16,185,129,.3);display:flex;align-items:center;gap:10px;';
+    banner.innerHTML = '<span style="font-size:1.3rem;">&#10003;</span><span data-i18n="purchaseSuccess">Payment successful! Your Pro license is now active.</span>';
+    document.body.appendChild(banner);
+    // Re-apply i18n
+    if (typeof applyLang === 'function' && typeof getLang === 'function') applyLang(getLang());
+    // Auto-remove after 6 seconds
+    setTimeout(function() { banner.style.transition='opacity .5s'; banner.style.opacity='0'; setTimeout(function(){banner.remove();}, 500); }, 6000);
+    // Clean URL
+    history.replaceState(null, '', '/');
+  }
+})();
+
+// ── Payment modal ──
+var buyBtn = document.getElementById('buy-btn');
+var payModal = document.getElementById('pay-modal');
+
+function closePayModal() {
+  if (payModal) payModal.style.display = 'none';
+}
+
+// Close on backdrop click
+if (payModal) {
+  payModal.addEventListener('click', function(e) {
+    if (e.target === payModal) closePayModal();
+  });
+}
+
+// Buy Pro → check auth → open modal
+if (buyBtn) {
+  buyBtn.addEventListener('click', async function(e) {
+    e.preventDefault();
+
+    var user = await getUser();
+    if (!user) {
+      window.location.href = 'auth.html?redirect=buy';
+      return;
+    }
+
+    if (sbClient) {
+      var { data: profile } = await sbClient.from('profiles').select('is_pro').eq('id', user.id).single();
+      if (profile && profile.is_pro) {
+        alert('You already have Pro!');
+        return;
+      }
+    }
+
+    // Open payment method modal
+    payModal.style.display = 'flex';
+    if (typeof applyLang === 'function' && typeof getLang === 'function') {
+      applyLang(getLang());
+    }
+  });
+}
+
+// Start purchase with selected gateway
+async function startPurchase(gateway) {
+  var btn = document.getElementById('pay-' + gateway);
+  if (btn) btn.disabled = true;
+
+  var session = await getSession();
+  if (!session) {
+    window.location.href = 'auth.html?redirect=buy';
+    return;
+  }
+
+  try {
+    var res = await fetch(SUPABASE_URL + '/functions/v1/create-order', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + session.access_token,
+      },
+      body: JSON.stringify({ gateway: gateway }),
+    });
+
+    var data = await res.json();
+
+    if (gateway === 'ecpay' && data.html) {
+      // ECPay: auto-submit form in new tab
+      var w = window.open('', '_blank');
+      if (w) {
+        w.document.write(data.html);
+        w.document.close();
+      } else {
+        document.open();
+        document.write(data.html);
+        document.close();
+      }
+    } else if (gateway === 'paypal' && data.approveUrl) {
+      // PayPal: open in popup — paypal-return.html handles capture + closing
+      window.open(data.approveUrl, 'paypal', 'width=500,height=700');
+    } else if (data.error) {
+      alert('Error: ' + data.error);
+    } else {
+      console.log('Unexpected response:', data);
+      alert('Unexpected response from server. Check console for details.');
+    }
+  } catch (err) {
+    alert('Failed to create order: ' + err.message);
+  }
+
+  if (btn) btn.disabled = false;
+  closePayModal();
+}
+</script>
+</body>
+</html>

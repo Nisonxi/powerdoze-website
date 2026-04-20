@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signing in… — PowerDoze</title>
+  <link rel="icon" href="assets/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .callback-container {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 16px;
+    }
+    .spinner {
+      width: 40px; height: 40px; border: 3px solid var(--border);
+      border-top-color: var(--primary); border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .callback-text { color: var(--muted); font-size: 0.95rem; }
+    .callback-error { color: #f87171; font-size: 0.9rem; display: none; max-width: 400px; text-align: center; }
+  </style>
+</head>
+<body>
+<div class="callback-container">
+  <div class="spinner" id="spinner"></div>
+  <p class="callback-text" id="status-text">Completing sign in…</p>
+  <p class="callback-error" id="error-text"></p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+(async () => {
+  try {
+    // Supabase automatically picks up the tokens from the URL hash/params
+    const { data: { session }, error } = await sbClient.auth.getSession();
+
+    if (error) throw error;
+
+    if (session) {
+      // Check URL params for special types
+      const params = new URLSearchParams(window.location.search);
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      const type = params.get('type') || hashParams.get('type');
+
+      if (type === 'recovery') {
+        // Password recovery — redirect to a password change page (or back to auth)
+        window.location.href = '/auth.html?reset=true';
+      } else {
+        // Normal sign-in — go to homepage
+        document.getElementById('status-text').textContent = 'Sign in successful! Redirecting…';
+        setTimeout(() => { window.location.href = '/'; }, 800);
+      }
+    } else {
+      // No session yet — wait a moment and retry (OAuth can be async)
+      await new Promise(r => setTimeout(r, 1500));
+      const { data: { session: retrySession } } = await sbClient.auth.getSession();
+      if (retrySession) {
+        window.location.href = '/';
+      } else {
+        throw new Error('Unable to complete sign in. Please try again.');
+      }
+    }
+  } catch (err) {
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('status-text').style.display = 'none';
+    const errorEl = document.getElementById('error-text');
+    errorEl.style.display = 'block';
+    errorEl.textContent = err.message || 'Something went wrong. Please try again.';
+    setTimeout(() => { window.location.href = '/auth.html'; }, 3000);
+  }
+})();
+</script>
+</body>
+</html>

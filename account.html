@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account — PowerDoze</title>
+  <link rel="icon" href="assets/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .account-container { max-width: 640px; margin: 0 auto; padding-top: 100px; padding-bottom: 60px; }
+    .acc-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 20px; }
+    .acc-card h2 { font-size: 1.15rem; margin-bottom: 16px; color: var(--text); }
+    .acc-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .acc-row:last-child { border-bottom: none; }
+    .acc-label { color: var(--muted); font-size: 0.85rem; }
+    .acc-value { color: var(--text); font-size: 0.9rem; font-weight: 500; }
+    .acc-badge { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+    .acc-badge.pro { background: rgba(139,92,246,.15); color: #a78bfa; }
+    .acc-badge.free { background: rgba(148,163,184,.15); color: #94a3b8; }
+    .device-item { display: flex; align-items: center; justify-content: space-between; padding: 14px; margin-bottom: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; }
+    .device-info { flex: 1; }
+    .device-name { color: var(--text); font-weight: 600; font-size: 0.9rem; }
+    .device-meta { color: var(--muted); font-size: 0.78rem; margin-top: 2px; }
+    .device-remove { background: none; border: 1px solid rgba(239,68,68,.3); color: #f87171; padding: 6px 14px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; font-family: inherit; transition: all .2s; }
+    .device-remove:hover { background: rgba(239,68,68,.1); border-color: #f87171; }
+    .empty-devices { text-align: center; padding: 24px; color: var(--muted); font-size: 0.9rem; }
+    .license-key { font-family: monospace; background: var(--bg); padding: 8px 14px; border-radius: 6px; border: 1px solid var(--border); color: var(--primary); font-size: 0.9rem; letter-spacing: 1px; user-select: all; }
+    .acc-loading { text-align: center; padding: 40px; color: var(--muted); }
+    .acc-user-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .acc-avatar { width: 56px; height: 56px; border-radius: 50%; }
+    .acc-user-info h1 { font-size: 1.3rem; margin: 0; color: var(--text); background: none; -webkit-text-fill-color: var(--text); }
+    .acc-user-info p { margin: 2px 0 0; color: var(--muted); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="/" class="logo"><img src="assets/icon.png" alt="">PowerDoze</a>
+    <ul class="nav-links">
+      <li><a href="/" data-i18n="navHome">Home</a></li>
+      <li><a href="features.html" data-i18n="navFeatures">Features</a></li>
+      <li><a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a></li>
+      <li><a href="use-cases.html" data-i18n="navUseCases">Use Cases</a></li>
+      <li><a href="/#download" data-i18n="navDownload">Download</a></li>
+    </ul>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <select id="lang-select" class="lang-select"></select>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<div class="account-container">
+  <div id="acc-loading" class="acc-loading">Loading...</div>
+  <div id="acc-content" style="display:none;">
+
+    <!-- User Info -->
+    <div class="acc-user-header">
+      <img id="acc-avatar" class="acc-avatar" src="" alt="">
+      <div class="acc-user-info">
+        <h1 id="acc-name"></h1>
+        <p id="acc-email"></p>
+      </div>
+    </div>
+
+    <!-- Pro Status -->
+    <div class="acc-card">
+      <h2 data-i18n="accProStatus">Pro License</h2>
+      <div class="acc-row">
+        <span class="acc-label" data-i18n="accStatus">Status</span>
+        <span id="acc-pro-badge" class="acc-badge free">Free</span>
+      </div>
+      <div id="acc-license-row" class="acc-row" style="display:none;">
+        <span class="acc-label" data-i18n="accLicenseKey">License Key</span>
+        <span id="acc-license-key" class="license-key"></span>
+      </div>
+      <div id="acc-source-row" class="acc-row" style="display:none;">
+        <span class="acc-label" data-i18n="accPurchasedVia">Purchased via</span>
+        <span id="acc-source" class="acc-value"></span>
+      </div>
+      <div id="acc-date-row" class="acc-row" style="display:none;">
+        <span class="acc-label" data-i18n="accActivatedOn">Activated on</span>
+        <span id="acc-date" class="acc-value"></span>
+      </div>
+      <div id="acc-upgrade-row" style="margin-top:16px; display:none;">
+        <a href="/#pricing" class="btn btn-primary" style="width:100%; text-align:center;" data-i18n="accUpgrade">Upgrade to Pro</a>
+      </div>
+    </div>
+
+    <!-- Devices -->
+    <div class="acc-card">
+      <h2>
+        <span data-i18n="accDevices">Registered Devices</span>
+        <span id="acc-device-count" style="color:var(--muted); font-weight:400; font-size:0.85rem;"></span>
+      </h2>
+      <div id="acc-devices-list"></div>
+    </div>
+
+    <!-- Account Actions -->
+    <div class="acc-card">
+      <h2 data-i18n="accActions">Account</h2>
+      <div class="acc-row">
+        <span class="acc-label" data-i18n="accSignedInAs">Signed in as</span>
+        <span id="acc-email2" class="acc-value"></span>
+      </div>
+      <div style="margin-top:16px;">
+        <button onclick="signOut()" class="btn btn-outline" style="width:100%; text-align:center; color:#f87171; border-color:rgba(239,68,68,.3);" data-i18n="authSignOut">Sign Out</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 PowerDoze. All rights reserved.</p>
+    <p style="margin-top:8px;">
+      <a href="mailto:gto70070@gmail.com">Contact</a> &bull;
+      <a href="privacy.html">Privacy Policy</a>
+    </p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+updateNavAuth();
+
+(async function() {
+  var user = await getUser();
+  if (!user) {
+    window.location.href = 'auth.html';
+    return;
+  }
+
+  // Fetch profile + license + devices
+  var profile = null, license = null, devices = [];
+
+  if (sbClient) {
+    var { data: p } = await sbClient.from('profiles').select('*').eq('id', user.id).single();
+    profile = p;
+
+    var { data: l } = await sbClient.from('licenses').select('*').eq('user_id', user.id).eq('status', 'active').order('created_at', { ascending: false }).limit(1);
+    license = l && l[0];
+
+    var { data: d } = await sbClient.from('devices').select('*').eq('user_id', user.id).order('created_at', { ascending: true });
+    devices = d || [];
+  }
+
+  // Hide loading, show content
+  document.getElementById('acc-loading').style.display = 'none';
+  document.getElementById('acc-content').style.display = '';
+
+  // User info
+  var avatar = user.user_metadata?.avatar_url;
+  var name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
+  document.getElementById('acc-avatar').src = avatar || 'assets/icon.png';
+  document.getElementById('acc-name').textContent = name;
+  document.getElementById('acc-email').textContent = user.email;
+  document.getElementById('acc-email2').textContent = user.email;
+
+  // Pro status
+  if (profile && profile.is_pro) {
+    document.getElementById('acc-pro-badge').textContent = 'Pro';
+    document.getElementById('acc-pro-badge').className = 'acc-badge pro';
+
+    if (license) {
+      document.getElementById('acc-license-row').style.display = '';
+      document.getElementById('acc-license-key').textContent = license.license_key;
+
+      document.getElementById('acc-source-row').style.display = '';
+      document.getElementById('acc-source').textContent = license.source === 'ecpay' ? 'ECPay (Taiwan)' : 'PayPal';
+
+      document.getElementById('acc-date-row').style.display = '';
+      document.getElementById('acc-date').textContent = new Date(license.activated_at).toLocaleDateString();
+    }
+  } else {
+    document.getElementById('acc-upgrade-row').style.display = '';
+  }
+
+  // Devices
+  var deviceCount = document.getElementById('acc-device-count');
+  deviceCount.textContent = ' (' + devices.length + '/2)';
+
+  var deviceList = document.getElementById('acc-devices-list');
+  if (devices.length === 0) {
+    deviceList.innerHTML = '<div class="empty-devices" data-i18n="accNoDevices">No devices registered yet. Open the PowerDoze app to register this device.</div>';
+  } else {
+    deviceList.innerHTML = devices.map(function(dev) {
+      var lastSeen = new Date(dev.last_verified_at).toLocaleString();
+      return '<div class="device-item">' +
+        '<div class="device-info">' +
+          '<div class="device-name">' + escapeHtml(dev.device_name || 'Unknown Device') + '</div>' +
+          '<div class="device-meta">' +
+            (dev.os_version ? dev.os_version + ' &bull; ' : '') +
+            (dev.app_version ? 'v' + dev.app_version + ' &bull; ' : '') +
+            'Last seen: ' + lastSeen +
+          '</div>' +
+        '</div>' +
+        '<button class="device-remove" onclick="removeDevice(\'' + dev.id + '\')" data-i18n="accRemoveDevice">Remove</button>' +
+      '</div>';
+    }).join('');
+  }
+
+  // Re-apply i18n
+  if (typeof applyLang === 'function' && typeof getLang === 'function') applyLang(getLang());
+})();
+
+function escapeHtml(text) {
+  var div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+async function removeDevice(deviceId) {
+  if (!confirm('Remove this device? It will be downgraded to Free on next app launch.')) return;
+
+  if (sbClient) {
+    var { error } = await sbClient.from('devices').delete().eq('id', deviceId);
+    if (error) {
+      alert('Failed to remove device: ' + error.message);
+    } else {
+      window.location.reload();
+    }
+  }
+}
+</script>
+</body>
+</html>
