@@ -238,12 +238,8 @@ body.plain {
 
 .p-hero-grid {
   display: grid;
-  grid-template-columns: 7fr 5fr;
-  gap: var(--s-16);
-  align-items: end;
-}
-@media (max-width: 880px) {
-  .p-hero-grid { grid-template-columns: 1fr; }
+  grid-template-columns: 1fr;
+  gap: var(--s-12);
 }
 
 .p-hero-meta {
@@ -300,9 +296,12 @@ body.plain {
   position: relative;
   border: 1px solid var(--hair);
   border-radius: var(--r-2);
-  background: var(--surface);
+  background: var(--bg);
   overflow: hidden;
-  aspect-ratio: 5/4;
+  aspect-ratio: 16/10;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
   display: flex; align-items: center; justify-content: center;
 }
 .p-hero-frame-img {
