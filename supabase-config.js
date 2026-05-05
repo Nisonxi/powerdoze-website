@@ -1,6 +1,7 @@
 // ── Supabase Client ─────────────────────────────────────
 const SUPABASE_URL = 'https://qhlwjvibxhunlqzvbcwk.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_n_YXwYdXvxi79i1JcoDsJg_3StptKF7';
+const SUPABASE_FUNCTIONS_URL = SUPABASE_URL + '/functions/v1';
 
 var sbClient = null;
 try {
@@ -36,30 +37,10 @@ async function signInWithGoogle() {
   if (error) console.error('Google sign-in error:', error.message);
 }
 
-async function signInWithEmail(email, password) {
-  if (!sbClient) return { data: null, error: { message: 'Not initialized' } };
-  return await sbClient.auth.signInWithPassword({ email, password });
-}
-
-async function signUpWithEmail(email, password) {
-  if (!sbClient) return { data: null, error: { message: 'Not initialized' } };
-  return await sbClient.auth.signUp({
-    email, password,
-    options: { emailRedirectTo: window.location.origin + '/auth-callback.html' }
-  });
-}
-
 async function signOut() {
   if (!sbClient) return;
   const { error } = await sbClient.auth.signOut();
   if (!error) window.location.href = '/';
-}
-
-async function resetPassword(email) {
-  if (!sbClient) return { data: null, error: { message: 'Not initialized' } };
-  return await sbClient.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.origin + '/auth-callback.html?type=recovery'
-  });
 }
 
 // ── Nav auth state ──────────────────────────────────────

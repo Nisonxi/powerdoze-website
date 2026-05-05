@@ -1,60 +1,203 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Account — PowerDoze</title>
   <link rel="icon" href="assets/favicon.ico">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
   <style>
-    .account-container { max-width: 640px; margin: 0 auto; padding-top: 100px; padding-bottom: 60px; }
-    .acc-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 20px; }
-    .acc-card h2 { font-size: 1.15rem; margin-bottom: 16px; color: var(--text); }
-    .acc-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
-    .acc-row:last-child { border-bottom: none; }
-    .acc-label { color: var(--muted); font-size: 0.85rem; }
-    .acc-value { color: var(--text); font-size: 0.9rem; font-weight: 500; }
-    .acc-badge { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
-    .acc-badge.pro { background: rgba(139,92,246,.15); color: #a78bfa; }
-    .acc-badge.free { background: rgba(148,163,184,.15); color: #94a3b8; }
-    .device-item { display: flex; align-items: center; justify-content: space-between; padding: 14px; margin-bottom: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; }
-    .device-info { flex: 1; }
-    .device-name { color: var(--text); font-weight: 600; font-size: 0.9rem; }
-    .device-meta { color: var(--muted); font-size: 0.78rem; margin-top: 2px; }
-    .device-remove { background: none; border: 1px solid rgba(239,68,68,.3); color: #f87171; padding: 6px 14px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; font-family: inherit; transition: all .2s; }
-    .device-remove:hover { background: rgba(239,68,68,.1); border-color: #f87171; }
-    .empty-devices { text-align: center; padding: 24px; color: var(--muted); font-size: 0.9rem; }
-    .license-key { font-family: monospace; background: var(--bg); padding: 8px 14px; border-radius: 6px; border: 1px solid var(--border); color: var(--primary); font-size: 0.9rem; letter-spacing: 1px; user-select: all; }
-    .acc-loading { text-align: center; padding: 40px; color: var(--muted); }
-    .acc-user-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
-    .acc-avatar { width: 56px; height: 56px; border-radius: 50%; }
-    .acc-user-info h1 { font-size: 1.3rem; margin: 0; color: var(--text); background: none; -webkit-text-fill-color: var(--text); }
-    .acc-user-info p { margin: 2px 0 0; color: var(--muted); font-size: 0.85rem; }
+    /* Page-specific (keeps JS-injected class names compatible) */
+    .account-container { max-width: 640px; margin: 0 auto; padding: 80px 24px 64px; }
+
+    .acc-loading {
+      text-align: center;
+      padding: 48px 0;
+      color: var(--ink-3);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .acc-user-header {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--hair);
+    }
+    .acc-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--hair-2);
+    }
+    .acc-user-info h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .acc-user-info p {
+      margin: 2px 0 0;
+      color: var(--ink-3);
+      font-size: 13px;
+    }
+
+    .acc-card {
+      border: 1px solid var(--hair);
+      border-radius: var(--r-3);
+      padding: 24px;
+      margin-bottom: 16px;
+      background: var(--surface);
+    }
+    .acc-card h2 {
+      margin: 0 0 16px;
+      font-size: 13px;
+      font-family: var(--font-mono);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+    }
+    .acc-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--hair);
+    }
+    .acc-row:last-child { border-bottom: 0; }
+    .acc-label {
+      color: var(--ink-3);
+      font-size: 13px;
+    }
+    .acc-value {
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--font-mono);
+    }
+    .acc-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: var(--r-1);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid var(--hair-2);
+    }
+    .acc-badge.pro {
+      background: var(--accent);
+      color: var(--on-accent);
+      border-color: var(--accent);
+    }
+    .acc-badge.free {
+      background: transparent;
+      color: var(--ink-3);
+    }
+
+    .device-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 16px;
+      margin-bottom: 8px;
+      background: var(--bg);
+      border: 1px solid var(--hair);
+      border-radius: var(--r-2);
+    }
+    .device-info { flex: 1; min-width: 0; }
+    .device-name {
+      color: var(--ink);
+      font-weight: 500;
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .device-meta {
+      color: var(--ink-3);
+      font-size: 11px;
+      font-family: var(--font-mono);
+      margin-top: 4px;
+      letter-spacing: 0.02em;
+    }
+    .device-remove {
+      background: transparent;
+      border: 1px solid var(--hair-2);
+      color: var(--ink-3);
+      padding: 6px 12px;
+      border-radius: var(--r-2);
+      font-size: 11px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 80ms, border-color 80ms;
+      flex-shrink: 0;
+      margin-left: 12px;
+    }
+    .device-remove:hover {
+      color: #ef4444;
+      border-color: #ef4444;
+    }
+    .empty-devices {
+      text-align: center;
+      padding: 32px 16px;
+      color: var(--ink-3);
+      font-size: 13px;
+    }
+
+    .acc-signout-btn {
+      width: 100%;
+      height: 36px;
+      background: transparent;
+      border: 1px solid var(--hair-2);
+      color: var(--ink-3);
+      border-radius: var(--r-2);
+      font-size: 12px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 80ms, border-color 80ms;
+    }
+    .acc-signout-btn:hover {
+      color: #ef4444;
+      border-color: #ef4444;
+    }
   </style>
 </head>
-<body>
+<body class="plain">
 
-<nav>
-  <div class="container">
-    <a href="/" class="logo"><img src="assets/icon.png" alt="">PowerDoze</a>
-    <ul class="nav-links">
-      <li><a href="/" data-i18n="navHome">Home</a></li>
-      <li><a href="features.html" data-i18n="navFeatures">Features</a></li>
-      <li><a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a></li>
-      <li><a href="use-cases.html" data-i18n="navUseCases">Use Cases</a></li>
-      <li><a href="/#download" data-i18n="navDownload">Download</a></li>
-    </ul>
-    <div style="display:flex; align-items:center; gap:12px;">
-      <select id="lang-select" class="lang-select"></select>
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="/" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="/#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
       <div id="auth-slot"></div>
     </div>
   </div>
 </nav>
 
 <div class="account-container">
-  <div id="acc-loading" class="acc-loading">Loading...</div>
+  <div id="acc-loading" class="acc-loading" data-i18n="loading">Loading...</div>
   <div id="acc-content" style="display:none;">
 
     <!-- User Info -->
@@ -73,10 +216,6 @@
         <span class="acc-label" data-i18n="accStatus">Status</span>
         <span id="acc-pro-badge" class="acc-badge free">Free</span>
       </div>
-      <div id="acc-license-row" class="acc-row" style="display:none;">
-        <span class="acc-label" data-i18n="accLicenseKey">License Key</span>
-        <span id="acc-license-key" class="license-key"></span>
-      </div>
       <div id="acc-source-row" class="acc-row" style="display:none;">
         <span class="acc-label" data-i18n="accPurchasedVia">Purchased via</span>
         <span id="acc-source" class="acc-value"></span>
@@ -86,7 +225,7 @@
         <span id="acc-date" class="acc-value"></span>
       </div>
       <div id="acc-upgrade-row" style="margin-top:16px; display:none;">
-        <a href="/#pricing" class="btn btn-primary" style="width:100%; text-align:center;" data-i18n="accUpgrade">Upgrade to Pro</a>
+        <a href="/#pricing" class="p-btn p-btn-accent" style="width:100%; justify-content:center;" data-i18n="accUpgrade">Upgrade to Pro</a>
       </div>
     </div>
 
@@ -94,7 +233,7 @@
     <div class="acc-card">
       <h2>
         <span data-i18n="accDevices">Registered Devices</span>
-        <span id="acc-device-count" style="color:var(--muted); font-weight:400; font-size:0.85rem;"></span>
+        <span id="acc-device-count" style="color:var(--ink-3); font-weight:400; font-size:11px; margin-left:6px;"></span>
       </h2>
       <div id="acc-devices-list"></div>
     </div>
@@ -107,20 +246,19 @@
         <span id="acc-email2" class="acc-value"></span>
       </div>
       <div style="margin-top:16px;">
-        <button onclick="signOut()" class="btn btn-outline" style="width:100%; text-align:center; color:#f87171; border-color:rgba(239,68,68,.3);" data-i18n="authSignOut">Sign Out</button>
+        <button onclick="signOut()" class="acc-signout-btn" data-i18n="authSignOut">Sign Out</button>
       </div>
     </div>
 
   </div>
 </div>
 
-<footer>
+<footer class="p-footer">
   <div class="container">
-    <p>&copy; 2026 PowerDoze. All rights reserved.</p>
-    <p style="margin-top:8px;">
-      <a href="mailto:gto70070@gmail.com">Contact</a> &bull;
-      <a href="privacy.html">Privacy Policy</a>
-    </p>
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
   </div>
 </footer>
 
@@ -128,106 +266,132 @@
 <script src="i18n.js"></script>
 <script src="supabase-config.js"></script>
 <script>
-updateNavAuth();
-
-(async function() {
-  var user = await getUser();
-  if (!user) {
-    window.location.href = 'auth.html';
-    return;
-  }
-
-  // Fetch profile + license + devices
-  var profile = null, license = null, devices = [];
-
-  if (sbClient) {
-    var { data: p } = await sbClient.from('profiles').select('*').eq('id', user.id).single();
-    profile = p;
-
-    var { data: l } = await sbClient.from('licenses').select('*').eq('user_id', user.id).eq('status', 'active').order('created_at', { ascending: false }).limit(1);
-    license = l && l[0];
-
-    var { data: d } = await sbClient.from('devices').select('*').eq('user_id', user.id).order('created_at', { ascending: true });
-    devices = d || [];
-  }
-
-  // Hide loading, show content
-  document.getElementById('acc-loading').style.display = 'none';
-  document.getElementById('acc-content').style.display = '';
-
-  // User info
-  var avatar = user.user_metadata?.avatar_url;
-  var name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
-  document.getElementById('acc-avatar').src = avatar || 'assets/icon.png';
-  document.getElementById('acc-name').textContent = name;
-  document.getElementById('acc-email').textContent = user.email;
-  document.getElementById('acc-email2').textContent = user.email;
-
-  // Pro status
-  if (profile && profile.is_pro) {
-    document.getElementById('acc-pro-badge').textContent = 'Pro';
-    document.getElementById('acc-pro-badge').className = 'acc-badge pro';
-
-    if (license) {
-      document.getElementById('acc-license-row').style.display = '';
-      document.getElementById('acc-license-key').textContent = license.license_key;
-
-      document.getElementById('acc-source-row').style.display = '';
-      document.getElementById('acc-source').textContent = license.source === 'ecpay' ? 'ECPay (Taiwan)' : 'PayPal';
-
-      document.getElementById('acc-date-row').style.display = '';
-      document.getElementById('acc-date').textContent = new Date(license.activated_at).toLocaleDateString();
+  // Theme toggle
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
     }
-  } else {
-    document.getElementById('acc-upgrade-row').style.display = '';
-  }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
 
-  // Devices
-  var deviceCount = document.getElementById('acc-device-count');
-  deviceCount.textContent = ' (' + devices.length + '/2)';
+  updateNavAuth();
 
-  var deviceList = document.getElementById('acc-devices-list');
-  if (devices.length === 0) {
-    deviceList.innerHTML = '<div class="empty-devices" data-i18n="accNoDevices">No devices registered yet. Open the PowerDoze app to register this device.</div>';
-  } else {
-    deviceList.innerHTML = devices.map(function(dev) {
-      var lastSeen = new Date(dev.last_verified_at).toLocaleString();
-      return '<div class="device-item">' +
-        '<div class="device-info">' +
-          '<div class="device-name">' + escapeHtml(dev.device_name || 'Unknown Device') + '</div>' +
-          '<div class="device-meta">' +
-            (dev.os_version ? dev.os_version + ' &bull; ' : '') +
-            (dev.app_version ? 'v' + dev.app_version + ' &bull; ' : '') +
-            'Last seen: ' + lastSeen +
-          '</div>' +
-        '</div>' +
-        '<button class="device-remove" onclick="removeDevice(\'' + dev.id + '\')" data-i18n="accRemoveDevice">Remove</button>' +
-      '</div>';
-    }).join('');
-  }
+  (async function() {
+    var user = await getUser();
+    if (!user) {
+      window.location.href = 'auth.html';
+      return;
+    }
 
-  // Re-apply i18n
-  if (typeof applyLang === 'function' && typeof getLang === 'function') applyLang(getLang());
-})();
+    var profile = null, license = null, devices = [];
 
-function escapeHtml(text) {
-  var div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}
+    if (sbClient) {
+      var { data: p } = await sbClient.from('profiles').select('*').eq('id', user.id).single();
+      profile = p;
 
-async function removeDevice(deviceId) {
-  if (!confirm('Remove this device? It will be downgraded to Free on next app launch.')) return;
+      var { data: l } = await sbClient.from('licenses').select('*').eq('user_id', user.id).eq('status', 'active').order('created_at', { ascending: false }).limit(1);
+      license = l && l[0];
 
-  if (sbClient) {
-    var { error } = await sbClient.from('devices').delete().eq('id', deviceId);
-    if (error) {
-      alert('Failed to remove device: ' + error.message);
+      var { data: d } = await sbClient.from('devices').select('*').eq('user_id', user.id).order('created_at', { ascending: true });
+      devices = d || [];
+    }
+
+    document.getElementById('acc-loading').style.display = 'none';
+    document.getElementById('acc-content').style.display = '';
+
+    var avatar = user.user_metadata?.avatar_url;
+    var name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
+    document.getElementById('acc-avatar').src = avatar || 'assets/icon.png';
+    document.getElementById('acc-name').textContent = name;
+    document.getElementById('acc-email').textContent = user.email;
+    document.getElementById('acc-email2').textContent = user.email;
+
+    if (profile && profile.is_pro) {
+      document.getElementById('acc-pro-badge').textContent = 'Pro';
+      document.getElementById('acc-pro-badge').className = 'acc-badge pro';
+
+      if (license) {
+        document.getElementById('acc-source-row').style.display = '';
+        document.getElementById('acc-source').textContent = license.source === 'ecpay' ? 'ECPay (Taiwan)' : 'PayPal';
+
+        document.getElementById('acc-date-row').style.display = '';
+        document.getElementById('acc-date').textContent = new Date(license.activated_at).toLocaleDateString();
+      }
     } else {
-      window.location.reload();
+      document.getElementById('acc-upgrade-row').style.display = '';
+    }
+
+    var deviceCount = document.getElementById('acc-device-count');
+    deviceCount.textContent = '(' + devices.length + '/3)';
+
+    var deviceList = document.getElementById('acc-devices-list');
+    if (devices.length === 0) {
+      deviceList.innerHTML = '<div class="empty-devices" data-i18n="accNoDevices">No devices registered yet. Open the PowerDoze app to register this device.</div>';
+    } else {
+      deviceList.innerHTML = devices.map(function(dev) {
+        var lastSeen = new Date(dev.last_verified_at).toLocaleString();
+        return '<div class="device-item">' +
+          '<div class="device-info">' +
+            '<div class="device-name">' + escapeHtml(dev.device_name || t('accUnknownDevice')) + '</div>' +
+            '<div class="device-meta">' +
+              (dev.os_version ? dev.os_version + ' · ' : '') +
+              (dev.app_version ? 'v' + dev.app_version + ' · ' : '') +
+              t('accLastSeen') + ' ' + lastSeen +
+            '</div>' +
+          '</div>' +
+          '<button class="device-remove" onclick="removeDevice(\'' + dev.id + '\')" data-i18n="accRemoveDevice">Remove</button>' +
+        '</div>';
+      }).join('');
+    }
+
+    if (typeof applyLang === 'function' && typeof getLang === 'function') applyLang(getLang());
+  })();
+
+  function escapeHtml(text) {
+    var div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  async function removeDevice(deviceId) {
+    if (!confirm(t('unbindConfirm'))) return;
+    if (!sbClient) return;
+
+    try {
+      const session = await getSession();
+      if (!session) {
+        alert(t('unbindFailed') + ': ' + t('accNotSignedIn'));
+        return;
+      }
+      const res = await fetch(SUPABASE_FUNCTIONS_URL + '/unbind-device', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + session.access_token,
+        },
+        body: JSON.stringify({ id: deviceId }),
+      });
+      const payload = await res.json().catch(function() { return {}; });
+      if (res.ok && payload.status === 'OK') {
+        window.location.reload();
+        return;
+      }
+      if (payload.status === 'COOLDOWN') {
+        alert(t('unbindCooldown', { days: payload.days_remaining }));
+        return;
+      }
+      alert(t('unbindFailed') + ': ' + (payload.message || ('HTTP ' + res.status)));
+    } catch (e) {
+      alert(t('unbindFailed') + ': ' + e.message);
     }
   }
-}
 </script>
 </body>
 </html>

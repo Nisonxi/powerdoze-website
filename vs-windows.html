@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PowerDoze vs Windows native vs PowerToys — PowerDoze</title>
+  <meta name="description" content="How PowerDoze compares to Windows built-in power management and Microsoft PowerToys Awake. Feature-by-feature breakdown.">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="/" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="/#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container">
+    <div class="p-section-head">
+      <div><span class="p-eyebrow">Comparison</span></div>
+      <div>
+        <h1 class="p-h2" data-i18n="vs_title">PowerDoze vs Windows native vs PowerToys</h1>
+        <p class="p-h2-sub" data-i18n="vs_sub">Windows gives you the building blocks. PowerToys Awake adds one feature. PowerDoze ties everything together with rules, schedules, and automation.</p>
+      </div>
+    </div>
+
+    <table class="p-cmp-table cols-4">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Windows native</th>
+          <th>PowerToys Awake</th>
+          <th class="col-pd">PowerDoze</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="cat"><td colspan="4">Sleep Control</td></tr>
+        <tr><td>Sleep rules</td><td><span class="cell-mono">Single setting</span></td><td>&mdash;</td><td><span class="check-pro">Multi-rule</span></td></tr>
+        <tr><td>Day-of-week filter</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td>App whitelist (prevent sleep)</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td>Temporarily disable sleep</td><td><span class="cell-mono">Manual</span></td><td><span class="check">One-click</span></td><td><span class="check-pro">Auto</span></td></tr>
+        <tr><td>Schedule-based timeouts</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+
+        <tr class="cat"><td colspan="4">Power Mode Switching</td></tr>
+        <tr><td>Switch power plan</td><td><span class="cell-mono">Manual</span></td><td>&mdash;</td><td><span class="check-pro">Auto</span></td></tr>
+        <tr><td>CPU min/max control</td><td><span class="cell-mono">powercfg</span></td><td>&mdash;</td><td><span class="check-pro">GUI</span></td></tr>
+        <tr><td>Cooling policy</td><td><span class="cell-mono">powercfg</span></td><td>&mdash;</td><td><span class="check-pro">GUI</span></td></tr>
+        <tr><td>NVIDIA GPU power limit</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td>One-click profile bundle</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+
+        <tr class="cat"><td colspan="4">Smart Automation</td></tr>
+        <tr><td>Fullscreen / game detection</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td>App foreground auto-switch</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td>Meeting app detection</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td>Wi-Fi geofencing</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td>Battery smart policy</td><td><span class="cell-mono">Basic</span></td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td>Idle / away detection</td><td><span class="cell-mono">Screen lock</span></td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+
+        <tr class="cat"><td colspan="4">Hardware Monitor</td></tr>
+        <tr><td>CPU / RAM dashboard</td><td><span class="cell-mono">Task Manager</span></td><td>&mdash;</td><td><span class="check-pro">Live overlay</span></td></tr>
+        <tr><td>Network speed</td><td><span class="cell-mono">Task Manager</span></td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td>Temperature readings</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td>FPS counter</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td>Mini floating panel</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+
+        <tr class="cat"><td colspan="4">Analytics</td></tr>
+        <tr><td>Power usage history</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td>kWh / CO\u2082 saved estimate</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td>Electricity cost estimate</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+
+        <tr class="cat"><td colspan="4">Other</td></tr>
+        <tr><td>System tray integration</td><td><span class="check">&check;</span></td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td>Localized UI</td><td><span class="cell-mono">System</span></td><td><span class="check">&check;</span></td><td><span class="check-pro">7 langs</span></td></tr>
+        <tr><td>Settings export / import</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td>Cost</td><td><span class="cell-mono">Free</span></td><td><span class="cell-mono">Free</span></td><td><span class="cell-mono">Free + Pro</span></td></tr>
+        <tr><td>Open source</td><td>&mdash;</td><td><span class="check">MIT</span></td><td>&mdash;</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 64px; max-width: 640px;">
+      <h2 class="p-h2" style="font-size: 22px; margin: 0 0 12px;" data-i18n="vs_concl_title">Why PowerDoze?</h2>
+      <p style="margin: 0; color: var(--ink-2); font-size: 15px; line-height: 1.65;" data-i18n="vs_concl_text">Windows + PowerToys give you raw materials. PowerDoze is the assembled product — schedule rules, app conditions, Wi-Fi triggers, and analytics, all in one tray app.</p>
+    </div>
+
+    <div style="text-align: center; padding: 48px 0 0;">
+      <a href="/#download" class="p-btn p-btn-primary" style="margin-right: 12px;" data-i18n="cmp_dlFree">Download Free</a>
+      <a href="/#pricing" class="p-btn p-btn-accent" data-i18n="cmp_buyPro">See Pro pricing</a>
+    </div>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+</script>
+</body>
+</html>

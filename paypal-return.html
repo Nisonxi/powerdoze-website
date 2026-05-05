@@ -1,34 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Processing payment… — PowerDoze</title>
   <link rel="icon" href="assets/favicon.ico">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
   <style>
     .pp-container {
       min-height: 100vh; display: flex; align-items: center; justify-content: center;
       flex-direction: column; gap: 16px; text-align: center; padding: 20px;
     }
-    .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin .8s linear infinite; }
+    .spinner {
+      width: 32px; height: 32px;
+      border: 2px solid var(--hair);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .pp-text { color: var(--muted); font-size: 0.95rem; }
-    .pp-success { color: #4ade80; font-size: 1.1rem; font-weight: 600; display: none; }
-    .pp-error { color: #f87171; font-size: 0.9rem; display: none; }
+    .pp-text {
+      color: var(--ink-3);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .pp-success { color: #10b981; font-size: 14px; font-weight: 600; display: none; }
+    .pp-error { color: #ef4444; font-size: 13px; display: none; }
   </style>
 </head>
-<body>
+<body class="plain">
 <div class="pp-container">
   <div class="spinner" id="spinner"></div>
-  <p class="pp-text" id="status">Processing your payment…</p>
-  <p class="pp-success" id="success">&#10003; Payment successful! This window will close automatically.</p>
+  <p class="pp-text" id="status" data-i18n="ppr_processing">Processing your payment…</p>
+  <p class="pp-success" id="success" data-i18n="ppr_success">&#10003; Payment successful. This window will close automatically.</p>
   <p class="pp-error" id="error"></p>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
 <script src="supabase-config.js"></script>
 <script>
+// Apply localization to static defaults before async work starts.
+if (typeof applyLang === 'function' && typeof getLang === 'function') applyLang(getLang());
+
 (async function() {
   var params = new URLSearchParams(window.location.search);
   var token = params.get('token');    // PayPal order token
@@ -39,7 +61,7 @@
 
   if (params.get('purchase') === 'cancel') {
     document.getElementById('spinner').style.display = 'none';
-    document.getElementById('status').textContent = 'Payment cancelled.';
+    document.getElementById('status').textContent = t('ppr_cancelled');
     setTimeout(function() { window.close(); }, 2000);
     return;
   }
@@ -48,20 +70,18 @@
     document.getElementById('spinner').style.display = 'none';
     document.getElementById('status').style.display = 'none';
     document.getElementById('error').style.display = 'block';
-    document.getElementById('error').textContent = 'No order ID found. Please close this window.';
+    document.getElementById('error').textContent = t('ppr_noOrder');
     return;
   }
 
   try {
-    // Get session
     var session = await getSession();
     if (!session) {
-      document.getElementById('status').textContent = 'Please log in and try again.';
+      document.getElementById('status').textContent = t('ppr_loginRequired');
       document.getElementById('spinner').style.display = 'none';
       return;
     }
 
-    // Call capture API
     var res = await fetch(SUPABASE_URL + '/functions/v1/capture-paypal', {
       method: 'POST',
       headers: {
@@ -78,12 +98,10 @@
       document.getElementById('status').style.display = 'none';
       document.getElementById('success').style.display = 'block';
 
-      // Tell the opener (parent window) to redirect
       if (window.opener && !window.opener.closed) {
         window.opener.location.href = '/?purchase=success';
       }
 
-      // Close this popup after 2 seconds
       setTimeout(function() { window.close(); }, 2000);
     } else {
       throw new Error(data.error || 'Capture failed');
@@ -93,9 +111,8 @@
     document.getElementById('spinner').style.display = 'none';
     document.getElementById('status').style.display = 'none';
     document.getElementById('error').style.display = 'block';
-    document.getElementById('error').textContent = 'Error: ' + err.message;
+    document.getElementById('error').textContent = t('ppr_errorPrefix') + err.message;
 
-    // Still try to close after a delay
     setTimeout(function() {
       if (window.opener && !window.opener.closed) {
         window.opener.location.href = '/';

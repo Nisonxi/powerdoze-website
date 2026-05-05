@@ -1,52 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Free vs Pro — PowerDoze</title>
   <link rel="icon" href="assets/favicon.ico">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
 </head>
-<body>
+<body class="plain">
 
-<nav>
-  <div class="container">
-    <a href="/" class="logo"><img src="assets/icon.png" alt="">PowerDoze</a>
-    <ul class="nav-links">
-      <li><a href="/" data-i18n="navHome">Home</a></li>
-      <li><a href="features.html" data-i18n="navFeatures">Features</a></li>
-      <li><a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a></li>
-      <li><a href="use-cases.html" data-i18n="navUseCases">Use Cases</a></li>
-      <li><a href="/#download" data-i18n="navDownload">Download</a></li>
-    </ul>
-    <div style="display:flex; align-items:center; gap:12px;">
-      <select id="lang-select" class="lang-select"></select>
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="/" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="/#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
       <div id="auth-slot"></div>
     </div>
   </div>
 </nav>
 
-<section class="page-hero">
+<section class="p-section">
   <div class="container">
-    <h1 data-i18n="cmp_heroTitle">Free vs Pro — Full Comparison</h1>
-    <p data-i18n="cmp_heroSub">See exactly what you get with each version. No hidden limitations. 17 Pro features.</p>
-  </div>
-</section>
+    <div class="p-section-head">
+      <div>
+        <span class="p-eyebrow" data-i18n="cmp_heroEyebrow">Comparison</span>
+      </div>
+      <div>
+        <h1 class="p-h2" data-i18n="cmp_heroTitle">Free vs Pro — Full Comparison</h1>
+        <p class="p-h2-sub" data-i18n="cmp_heroSub">See exactly what you get with each version. No hidden limitations. 17 Pro features.</p>
+      </div>
+    </div>
 
-<section>
-  <div class="container">
-    <table class="compare-table">
+    <table class="p-cmp-table">
       <thead>
         <tr>
           <th data-i18n="cmp_thFeature">Feature</th>
-          <th style="color:var(--free)" data-i18n="cmp_thFree">Free</th>
-          <th style="color:var(--pro)" data-i18n="cmp_thPro">Pro <small style="font-weight:400; color:var(--muted)">(US$24.99)</small></th>
+          <th data-i18n="cmp_thFree">Free</th>
+          <th>
+            <span data-i18n="cmp_thPro">Pro</span>
+            <small>NT$690 / US$20.99</small>
+          </th>
         </tr>
       </thead>
       <tbody>
-        <!-- Schedule -->
         <tr class="cat"><td colspan="3" data-i18n="cmp_catSchedule">Schedule &amp; Sleep Rules</td></tr>
         <tr><td data-i18n="cmp_sleepRules">Sleep rules</td><td><span class="limit" data-i18n="cmp_upTo3">Up to 3</span></td><td><span class="check-pro" data-i18n="cmp_unlimited">Unlimited</span></td></tr>
         <tr><td data-i18n="cmp_dayFilter">Day-of-week filter</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
@@ -55,7 +68,6 @@
         <tr><td data-i18n="cmp_ruleGroups">Rule groups / folders</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_testApply">Test-apply a rule instantly</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
 
-        <!-- Power Modes -->
         <tr class="cat"><td colspan="3" data-i18n="cmp_catModes">Power Modes</td></tr>
         <tr><td data-i18n="cmp_powerModes">Power modes</td><td><span class="limit" data-i18n="cmp_upTo2">Up to 2</span></td><td><span class="check-pro" data-i18n="cmp_unlimited">Unlimited</span></td></tr>
         <tr><td data-i18n="cmp_cpuBoost">CPU min/max, boost mode</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
@@ -66,13 +78,11 @@
         <tr><td data-i18n="cmp_schemeExport">Windows scheme export/import (.pow)</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_autoApply">Auto-apply on startup</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
 
-        <!-- Whitelist -->
         <tr class="cat"><td colspan="3" data-i18n="cmp_catWhitelist">App Whitelist</td></tr>
         <tr><td data-i18n="cmp_whitelistApps">Whitelist apps to prevent sleep</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_organizeGroups">Organize by groups</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_scanApps">Scan running/installed apps</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
 
-        <!-- Smart Detection -->
         <tr class="cat"><td colspan="3" data-i18n="cmp_catSmart">Smart Detection</td></tr>
         <tr><td data-i18n="cmp_fullscreen">Fullscreen / game detection</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_awayBasic">Away mode (basic idle detection)</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
@@ -83,26 +93,22 @@
         <tr><td data-i18n="cmp_wifiGeo">Wi-Fi geofencing</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_battPolicy">Battery smart policy</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
 
-        <!-- Advanced Control -->
         <tr class="cat"><td colspan="3" data-i18n="cmp_catAdvanced">Advanced Control</td></tr>
         <tr><td data-i18n="cmp_ecoQos">Process EcoQoS (Efficiency Mode)</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_gpuPref">Per-app GPU preference (iGPU/dGPU)</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_lidClose">Lid close behavior (AC/battery separate)</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
 
-        <!-- Monitor -->
         <tr class="cat"><td colspan="3" data-i18n="cmp_catMonitor">Hardware Monitor</td></tr>
         <tr><td data-i18n="cmp_dashboard">CPU, RAM, network dashboard</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_fps">FPS counter</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_temp">Temperature readings</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
-        <tr><td data-i18n="cmp_miniMode">Mini Mode floating panel</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td data-i18n="cmp_miniMode">Mini Mode floating panel</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_multiMon">Multi-monitor refresh rate switching</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
 
-        <!-- Smart Tasks -->
         <tr class="cat"><td colspan="3" data-i18n="cmp_catTasks">Smart Tasks</td></tr>
         <tr><td data-i18n="cmp_schedActions">Scheduled shutdown/restart/sleep/lock</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_countdown">Countdown timer actions</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
 
-        <!-- Analytics -->
         <tr class="cat"><td colspan="3" data-i18n="cmp_catAnalytics">Analytics &amp; Reports</td></tr>
         <tr><td data-i18n="cmp_powerChart">Power history chart (7/14/30 days)</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_modeBreak">Mode usage breakdown</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
@@ -111,7 +117,6 @@
         <tr><td data-i18n="cmp_badges">Achievement badges</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_csvExport">CSV export</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
 
-        <!-- Other -->
         <tr class="cat"><td colspan="3" data-i18n="cmp_catOther">Other</td></tr>
         <tr><td data-i18n="cmp_7lang">7 languages</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_settingsExport">Settings export / import</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
@@ -119,34 +124,54 @@
         <tr><td data-i18n="cmp_theme">Dark / light theme</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_notif">Notification system</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_autostart">Autostart on boot</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
-        <tr><td data-i18n="cmp_bugReport">Bug report + Discord support</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
+        <tr><td data-i18n="cmp_bugReport">Bug report support</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_priorityEmail">Priority email support</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
 
-        <!-- Pricing -->
         <tr class="cat"><td colspan="3" data-i18n="cmp_catPricing">Pricing</td></tr>
-        <tr><td data-i18n="cmp_price">Price</td><td><strong style="color:var(--free)" data-i18n="cmp_priceFree">$0 forever</strong></td><td><strong style="color:var(--pro)" data-i18n="cmp_pricePro">US$24.99 one-time</strong></td></tr>
+        <tr><td data-i18n="cmp_price">Price</td><td><strong style="color:var(--ink)" data-i18n="cmp_priceFree">$0 forever</strong></td><td><strong style="color:var(--accent)" data-i18n="cmp_pricePro">NT$690 / US$20.99 one-time</strong></td></tr>
         <tr><td data-i18n="cmp_discounts">Discounts available in-app</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
         <tr><td data-i18n="cmp_refund">Refund policy</td><td>&mdash;</td><td data-i18n="cmp_refundVal">14 days, no questions</td></tr>
       </tbody>
     </table>
 
-    <div style="text-align:center; margin-top:48px;">
-      <a href="/#download" class="btn btn-primary" style="margin-right:12px;" data-i18n="cmp_dlFree">Download Free</a>
-      <a href="index.html#pricing" class="btn btn-outline" data-i18n="cmp_buyPro">Buy Pro</a>
+    <div style="text-align: center; padding: 48px 0 0;">
+      <a href="/#download" class="p-btn p-btn-secondary" style="margin-right: 12px;" data-i18n="cmp_dlFree">Download Free</a>
+      <a href="/#pricing" class="p-btn p-btn-accent" data-i18n="cmp_buyPro">Buy Pro</a>
+    </div>
+
+    <div style="text-align: center; padding: 24px 0 0;">
+      <a href="vs-windows.html" class="p-btn p-btn-ghost">vs Windows native &amp; PowerToys →</a>
     </div>
   </div>
 </section>
 
-<footer>
+<footer class="p-footer">
   <div class="container">
-    <p>&copy; 2026 PowerDoze. All rights reserved.</p>
-    <p style="margin-top:8px;"><a href="mailto:gto70070@gmail.com">Contact</a> &bull; <a href="privacy.html">Privacy Policy</a></p>
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
   </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="i18n.js"></script>
 <script src="supabase-config.js"></script>
-<script>updateNavAuth();</script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+</script>
 </body>
 </html>

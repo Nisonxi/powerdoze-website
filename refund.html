@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign In — PowerDoze</title>
+  <title>Refund Policy — PowerDoze</title>
   <link rel="icon" href="assets/favicon.ico">
   <link rel="stylesheet" href="plain.css">
   <script>
@@ -31,26 +31,31 @@
       <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
         <span id="theme-label">DARK</span>
       </button>
+      <div id="auth-slot"></div>
     </div>
   </div>
 </nav>
 
-<div class="p-auth">
-  <div class="p-auth-card">
-    <div class="p-auth-logo">
-      <img src="assets/icon.png" alt="">
-      <span>powerdoze</span>
-    </div>
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <span class="p-eyebrow">Legal</span>
+    <h1 class="p-h2" style="margin: 24px 0 8px;" data-i18n="rf_title">Refund Policy</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      <span data-i18n="pp_updated">Last updated</span> · 2026-04-27
+    </p>
 
-    <h1 data-i18n="authSignInTitle">Welcome back</h1>
-    <p class="p-auth-sub" data-i18n="authSignInSub">Sign in to manage your Pro license and sync settings.</p>
+    <article class="p-prose">
+      <h2 data-i18n="rf_h1">Our policy</h2>
+      <p data-i18n="rf_p1">PowerDoze offers a <strong>14-day, no-questions-asked</strong> refund for any Pro purchase. If you're not satisfied for any reason, we'll refund your payment in full.</p>
 
-    <button class="p-oauth-btn" onclick="signInWithGoogle()">
-      <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-      <span data-i18n="authGoogle">Continue with Google</span>
-    </button>
+      <h2 data-i18n="rf_h2">How to request</h2>
+      <p data-i18n="rf_p2">Email <a href="mailto:PowerDozeSupport@gmail.com">PowerDozeSupport@gmail.com</a> with your order ID and the email address used for purchase. We'll process your refund within a few business days.</p>
+
+      <h2 data-i18n="rf_h3">After the refund</h2>
+      <p data-i18n="rf_p3">Once the refund is processed, your Pro license will be deactivated. You can continue using PowerDoze Free for as long as you like.</p>
+    </article>
   </div>
-</div>
+</section>
 
 <footer class="p-footer">
   <div class="container">
@@ -65,7 +70,6 @@
 <script src="i18n.js"></script>
 <script src="supabase-config.js"></script>
 <script>
-  // Theme toggle
   (function() {
     var btn = document.getElementById('theme-toggle');
     var label = document.getElementById('theme-label');
@@ -79,21 +83,7 @@
       set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
     });
   })();
-
-  // Preserve ?redirect=buy across the OAuth round trip via sessionStorage.
-  // index.html reads pd_post_login_action on load to auto-open the pay modal.
-  const redirectParam = new URLSearchParams(window.location.search).get('redirect');
-  if (redirectParam) {
-    sessionStorage.setItem('pd_post_login_action', redirectParam);
-  }
-
-  // If already logged in, honor the redirect and otherwise go home.
-  document.addEventListener('DOMContentLoaded', async () => {
-    const user = await getUser();
-    if (user) {
-      window.location.href = '/';
-    }
-  });
+  if (typeof updateNavAuth === 'function') updateNavAuth();
 </script>
 </body>
 </html>

@@ -1,333 +1,453 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PowerDoze — Smart Power Automation for Windows</title>
   <meta name="description" content="PowerDoze automatically switches your PC's power settings based on time, location, and what you're doing. Save battery, reduce noise, and never miss a meeting.">
   <link rel="icon" href="assets/favicon.ico">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
 </head>
-<body>
+<body class="plain">
 
 <!-- ── Nav ──────────────────────────────────────────────── -->
-<nav>
-  <div class="container">
-    <a href="/" class="logo">
-      <img src="assets/icon.png" alt="PowerDoze">
-      PowerDoze
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="/" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
     </a>
-    <ul class="nav-links">
-      <li><a href="/" data-i18n="navHome">Home</a></li>
-      <li><a href="features.html" data-i18n="navFeatures">Features</a></li>
-      <li><a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a></li>
-      <li><a href="use-cases.html" data-i18n="navUseCases">Use Cases</a></li>
-      <li><a href="#download" data-i18n="navDownload">Download</a></li>
-    </ul>
-    <div style="display:flex; align-items:center; gap:12px;">
-      <select id="lang-select" class="lang-select"></select>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
       <div id="auth-slot"></div>
     </div>
   </div>
 </nav>
 
 <!-- ── Hero ─────────────────────────────────────────────── -->
-<section class="hero">
+<section class="p-hero">
   <div class="container">
-    <img src="assets/icon.png" alt="PowerDoze" class="hero-icon">
-    <h1 data-i18n="heroTitle">Your PC Learns When<br>to Sleep and When to Roar</h1>
-    <p class="tagline" data-i18n="heroTagline">
-      PowerDoze automatically adjusts power settings based on time, location, and what you're doing &mdash; so your laptop lasts longer, stays quiet, and never sleeps during a meeting.
-    </p>
-    <div class="btn-group">
-      <a href="#download" class="btn btn-primary" data-i18n="heroDownload">Download Free</a>
-      <a href="#pricing" class="btn btn-outline" data-i18n="heroSee">See Pro Features</a>
+    <div class="p-hero-grid">
+      <div>
+        <div class="p-hero-meta">
+          <span data-i18n="heroBadge">v2.0 · Windows 10 / 11</span>
+          <span>2026</span>
+        </div>
+        <h1 data-i18n="heroTitle">Your PC Learns When<br>to Sleep and When to Roar</h1>
+        <p class="p-hero-sub" data-i18n="heroTagline">
+          PowerDoze automatically adjusts power settings based on time, location, and what you're doing — so your laptop lasts longer, stays quiet, and never sleeps during a meeting.
+        </p>
+        <div class="p-hero-cta">
+          <a href="#download" class="p-btn p-btn-primary" data-i18n="heroDownload">Download free</a>
+          <a href="#pricing" class="p-btn p-btn-ghost" data-i18n="heroSee">See Pro features →</a>
+        </div>
+        <div class="p-hero-foot">
+          <span data-i18n="heroNote">Free forever · No subscription · 100% local</span>
+        </div>
+      </div>
+      <div class="p-hero-frame">
+        <div class="p-hero-frame-body">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="9" cy="9" r="2"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+          <span class="p-hero-frame-label">Screenshot pending</span>
+          <span class="p-hero-frame-sub">App preview · 4:3</span>
+        </div>
+      </div>
     </div>
-    <span class="hero-badge" data-i18n="heroBadge">v2.0 &mdash; Windows 10 / 11</span>
   </div>
 </section>
 
 <!-- ── Stats ────────────────────────────────────────────── -->
-<div class="stats-bar">
-  <div class="stat"><div class="stat-num">7</div><div class="stat-label" data-i18n="statLang">Languages</div></div>
-  <div class="stat"><div class="stat-num">20+</div><div class="stat-label" data-i18n="statFeat">Power Features</div></div>
-  <div class="stat"><div class="stat-num">0 kB</div><div class="stat-label" data-i18n="statCloud">Cloud Data Sent</div></div>
-  <div class="stat"><div class="stat-num">100%</div><div class="stat-label" data-i18n="statLocal">Local &amp; Private</div></div>
-</div>
+<section class="p-section" style="padding-top: 0; padding-bottom: 0; border-bottom: 0;">
+  <div class="container" style="padding: 0;">
+    <div class="p-stats">
+      <div class="p-stat">
+        <span class="p-stat-num">07</span>
+        <span class="p-stat-label" data-i18n="statLang">Languages</span>
+      </div>
+      <div class="p-stat">
+        <span class="p-stat-num">20+</span>
+        <span class="p-stat-label" data-i18n="statFeat">Power features</span>
+      </div>
+      <div class="p-stat">
+        <span class="p-stat-num">0kB</span>
+        <span class="p-stat-label" data-i18n="statCloud">Cloud data sent</span>
+      </div>
+      <div class="p-stat">
+        <span class="p-stat-num">100%</span>
+        <span class="p-stat-label" data-i18n="statLocal">Local & private</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-<!-- ── How it works ────────────────────────────────────── -->
-<section id="how">
+<!-- ── How it works ─────────────────────────────────────── -->
+<section class="p-section">
   <div class="container">
-    <h2 class="section-title" data-i18n="howTitle">How It Works</h2>
-    <p class="section-subtitle" data-i18n="howSub">Three steps to smarter power management.</p>
-    <div class="how-grid">
-      <div class="how-card">
-        <div class="how-num">1</div>
-        <h3 data-i18n="how1t">Set Your Rules</h3>
+    <div class="p-section-head">
+      <div><span class="p-eyebrow">How it works</span></div>
+      <div>
+        <h2 class="p-h2" data-i18n="howTitle">Three steps to smarter power.</h2>
+        <p class="p-h2-sub" data-i18n="howSub">Set it up once. PowerDoze handles the rest in the background.</p>
+      </div>
+    </div>
+    <div class="p-features">
+      <div class="p-feat">
+        <span class="p-feat-num">01 / Setup</span>
+        <h3 data-i18n="how1t">Set your rules</h3>
         <p data-i18n="how1d">Define when your PC should sleep, which apps prevent sleep, and what power mode to use for each time slot.</p>
       </div>
-      <div class="how-card">
-        <div class="how-num">2</div>
-        <h3 data-i18n="how2t">PowerDoze Watches</h3>
-        <p data-i18n="how2d">It monitors the time, running apps, fullscreen state, Wi-Fi network, and your activity level in the background.</p>
+      <div class="p-feat">
+        <span class="p-feat-num">02 / Watch</span>
+        <h3 data-i18n="how2t">PowerDoze monitors</h3>
+        <p data-i18n="how2d">It watches the time, running apps, fullscreen state, Wi-Fi network, and your activity level — silently.</p>
       </div>
-      <div class="how-card">
-        <div class="how-num">3</div>
-        <h3 data-i18n="how3t">Auto-Adjusts</h3>
-        <p data-i18n="how3d">Power settings change automatically. No manual switching. Your PC is always in the right mode for what you're doing.</p>
+      <div class="p-feat">
+        <span class="p-feat-num">03 / Adjust</span>
+        <h3 data-i18n="how3t">Auto-adjusts</h3>
+        <p data-i18n="how3d">Power settings change automatically. No manual switching. Always the right mode for what you're doing.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ── Features ─────────────────────────────────────────── -->
-<section id="features" style="background: var(--surface);">
+<section class="p-section">
   <div class="container">
-    <h2 class="section-title" data-i18n="featTitle">What PowerDoze Does</h2>
-    <p class="section-subtitle" data-i18n="featSub">
-      Windows built-in power plans are static. PowerDoze makes them context-aware.
-    </p>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feat-icon blue">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <h3 data-i18n="feat1t">Scheduled Sleep Rules</h3>
-        <p data-i18n="feat1d">Set different sleep timeouts for morning, afternoon, and late night. Filter by day of week. Whitelist apps that should prevent sleep.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feat-icon cyan">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        </div>
-        <h3 data-i18n="feat2t">One-Click Power Modes</h3>
-        <p data-i18n="feat2d">Switch between Performance, Balanced, and Power Saver with one click. Each mode controls CPU, GPU, screen timeout, and power scheme.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feat-icon rose">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        </div>
-        <h3 data-i18n="feat3t">Fullscreen &amp; Game Detection</h3>
-        <p data-i18n="feat3d">Automatically suspend sleep rules when a fullscreen app or game is running. Resume when you exit.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feat-icon green">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
-        </div>
-        <h3 data-i18n="feat4t">Away Mode</h3>
-        <p data-i18n="feat4d">Detect when you step away from your PC and auto-switch to an eco-friendly power mode. Revert when you return.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feat-icon amber">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"><rect x="1" y="6" width="22" height="12" rx="2"/><line x1="23" y1="13" x2="23" y2="11"/><line x1="6" y1="10" x2="6" y2="14"/><line x1="10" y1="10" x2="10" y2="14"/><line x1="14" y1="10" x2="14" y2="14"/></svg>
-        </div>
-        <h3 data-i18n="feat5t">Hardware Monitor</h3>
-        <p data-i18n="feat5d">Real-time CPU, RAM, network, and FPS overlay. See exactly what your system is doing without switching apps.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feat-icon slate">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        </div>
-        <h3 data-i18n="feat6t">7 Languages</h3>
-        <p data-i18n="feat6d">English, Traditional Chinese, Simplified Chinese, Japanese, Korean, French, and German. More coming soon.</p>
+    <div class="p-section-head">
+      <div><span class="p-eyebrow">Features</span></div>
+      <div>
+        <h2 class="p-h2" data-i18n="featTitle">Everything you need to save power.</h2>
+        <p class="p-h2-sub" data-i18n="featSub">20+ features from scheduling to analytics. Core ones free forever.</p>
       </div>
     </div>
-
-    <div style="text-align:center; margin-top:36px;">
-      <a href="features.html" class="btn btn-outline" data-i18n="btnSeeFeatures">See All 12 Features in Detail</a>
-    </div>
-
-    <div class="lang-badges">
-      <span class="lang-badge">English</span>
-      <span class="lang-badge">繁體中文</span>
-      <span class="lang-badge">简体中文</span>
-      <span class="lang-badge">日本語</span>
-      <span class="lang-badge">한국어</span>
-      <span class="lang-badge">Fran&ccedil;ais</span>
-      <span class="lang-badge">Deutsch</span>
-    </div>
-  </div>
-</section>
-
-<!-- ── Use Cases ────────────────────────────────────────── -->
-<section id="usecases">
-  <div class="container">
-    <h2 class="section-title" data-i18n="ucTitle">Built for How You Actually Use Your PC</h2>
-    <p class="section-subtitle" data-i18n="ucSub">Real scenarios where PowerDoze makes a difference.</p>
-    <div class="usecases-grid">
-      <div class="usecase">
-        <span class="usecase-tag gamer" data-i18n="ucTag1">Gamer</span>
-        <h3 data-i18n="uc1t">Never interrupt a raid</h3>
-        <p data-i18n="uc1d">Fullscreen detection suspends all sleep rules while you're gaming. When you quit, your power-saving schedule kicks back in automatically.</p>
+    <div class="p-features">
+      <div class="p-feat">
+        <span class="p-feat-num">F.01</span>
+        <h3><span data-i18n="feat1t">Sleep rules</span> <span class="p-tag" data-i18n="freeTier">Free</span></h3>
+        <p data-i18n="feat1d">Schedule when your PC sleeps — different timeouts for work hours, evenings, and weekends.</p>
       </div>
-      <div class="usecase">
-        <span class="usecase-tag remote" data-i18n="ucTag2">Remote Worker</span>
-        <h3 data-i18n="uc2t">Meetings stay on, coffee breaks save power</h3>
-        <p data-i18n="uc2d">Meeting app detection prevents sleep during calls. Away mode kicks in when you step out for coffee. Your schedule handles the rest.</p>
+      <div class="p-feat">
+        <span class="p-feat-num">F.02</span>
+        <h3><span data-i18n="feat2t">Power modes</span> <span class="p-tag" data-i18n="freeTier">Free</span></h3>
+        <p data-i18n="feat2d">One-click profiles bundling CPU, screen, thermal, and GPU settings together.</p>
       </div>
-      <div class="usecase">
-        <span class="usecase-tag student" data-i18n="ucTag3">Student</span>
-        <h3 data-i18n="uc3t">Lecture mode vs. study mode</h3>
-        <p data-i18n="uc3d">Set different power profiles for class hours vs. study time. Wi-Fi geofencing can auto-switch when you arrive at campus or go home.</p>
+      <div class="p-feat">
+        <span class="p-feat-num">F.03</span>
+        <h3><span data-i18n="feat3t">Fullscreen detection</span> <span class="p-tag" data-i18n="freeTier">Free</span></h3>
+        <p data-i18n="feat3d">Games, movies, and presentations automatically pause sleep timers. Zero setup.</p>
       </div>
-      <div class="usecase">
-        <span class="usecase-tag eco" data-i18n="ucTag4">Eco-Conscious</span>
-        <h3 data-i18n="uc4t">See exactly how much energy you save</h3>
-        <p data-i18n="uc4d">The analytics dashboard tracks your power savings over time. Know your impact and optimize further with data-driven suggestions.</p>
+      <div class="p-feat">
+        <span class="p-feat-num">F.04</span>
+        <h3><span data-i18n="feat4t">App foreground switch</span> <span class="p-tag p-tag-pro" data-i18n="proTier">Pro</span></h3>
+        <p data-i18n="feat4d">Map apps to power modes. Premiere Pro → High Performance. Switch back on focus change.</p>
+      </div>
+      <div class="p-feat">
+        <span class="p-feat-num">F.05</span>
+        <h3><span data-i18n="feat5t">Wi-Fi geofencing</span> <span class="p-tag p-tag-pro" data-i18n="proTier">Pro</span></h3>
+        <p data-i18n="feat5d">Different power profile per Wi-Fi network. Office, home, café — auto-switched.</p>
+      </div>
+      <div class="p-feat">
+        <span class="p-feat-num">F.06</span>
+        <h3><span data-i18n="feat6t">Battery smart policy</span> <span class="p-tag p-tag-pro" data-i18n="proTier">Pro</span></h3>
+        <p data-i18n="feat6d">Auto-switch modes based on battery level and charger state. Low battery? Eco mode.</p>
       </div>
     </div>
-    <div style="text-align:center; margin-top:36px;">
-      <a href="use-cases.html" class="btn btn-outline" data-i18n="btnSeeUseCases">See 5 Detailed Use Cases with Workflows</a>
+    <div style="text-align: center; padding: 48px 0 0;">
+      <a href="features.html" class="p-btn p-btn-secondary" data-i18n="featSeeAll">See all 20+ features →</a>
     </div>
   </div>
 </section>
 
 <!-- ── Pricing ──────────────────────────────────────────── -->
-<section id="pricing" style="background: var(--surface);">
+<section id="pricing" class="p-section">
   <div class="container">
-    <h2 class="section-title" data-i18n="priceTitle">Simple Pricing</h2>
-    <p class="section-subtitle" data-i18n="priceSub">
-      Free forever with core features. Unlock the full experience with a one-time purchase.
-    </p>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="tier free-label" data-i18n="freeTier">Free</div>
-        <div class="price" data-i18n="freePrice">$0</div>
-        <div class="price-note" data-i18n="freeNote">forever</div>
-        <ul>
+    <div class="p-section-head">
+      <div><span class="p-eyebrow">Pricing</span></div>
+      <div>
+        <h2 class="p-h2" data-i18n="priceTitle">Buy once, use forever.</h2>
+        <p class="p-h2-sub" data-i18n="priceSub">No subscription. No hidden fees. Early customers get launch pricing.</p>
+      </div>
+    </div>
+
+    <div class="p-pricing">
+      <!-- Free -->
+      <div class="p-price">
+        <div class="p-price-tier" data-i18n="freeTier">Free</div>
+        <div class="p-price-num">NT$0</div>
+        <span class="p-price-unit" data-i18n="freeNote">forever</span>
+        <ul class="p-price-list">
+          <li class="cat" data-i18n="freeCatCore">Core</li>
           <li data-i18n="f1">Up to 3 sleep rules</li>
           <li data-i18n="f2">2 power modes</li>
           <li data-i18n="f3">App whitelist</li>
           <li data-i18n="f4">Fullscreen detection</li>
-          <li data-i18n="f5">Away mode (basic)</li>
+          <li class="cat" data-i18n="freeCatOther">Other</li>
           <li data-i18n="f6">Hardware monitor</li>
           <li data-i18n="f7">Settings export / import</li>
-          <li class="disabled" data-i18n="fd1">App foreground detection</li>
-          <li class="disabled" data-i18n="fd2">Wi-Fi geofencing</li>
-          <li class="disabled" data-i18n="fd3">Battery smart policy</li>
-          <li class="disabled" data-i18n="fd4">Analytics dashboard</li>
-          <li class="disabled" data-i18n="fd5">Custom meeting apps</li>
         </ul>
-        <a href="#download" class="btn btn-outline" style="width:100%; justify-content:center;" data-i18n="freeBtn">Download Free</a>
+        <a href="#download" class="p-btn p-btn-secondary" style="width: 100%; justify-content: center;" data-i18n="freeBtn">Download free</a>
       </div>
-      <div class="price-card pro">
-        <div class="tier pro-label" data-i18n="proTier">Pro</div>
-        <div class="price" data-i18n="proPrice">US$9.99</div>
-        <div class="price-note" data-i18n="proNote">one-time purchase &bull; NT$390</div>
-        <ul>
+
+      <!-- Pro -->
+      <div class="p-price featured">
+        <div class="p-price-tier" data-i18n="proTier">Pro</div>
+
+        <div id="first-batch-badge" class="p-batch-pill">
+          <span data-i18n="firstBatchBadge">First-batch pricing</span>
+        </div>
+
+        <div>
+          <span class="p-price-num" id="price-main">NT$490</span>
+          <span class="p-price-was" id="price-original">NT$690</span>
+        </div>
+        <span class="p-price-unit" data-i18n="proNote">one-time purchase</span>
+
+        <ul class="p-price-list">
+          <li class="cat" data-i18n="proCatAll">Everything in Free</li>
           <li data-i18n="p1">Unlimited sleep rules</li>
           <li data-i18n="p2">Unlimited power modes</li>
-          <li data-i18n="p3">App whitelist</li>
-          <li data-i18n="p4">Fullscreen detection</li>
-          <li data-i18n="p5">Away mode (advanced)</li>
-          <li data-i18n="p6">Hardware monitor</li>
-          <li data-i18n="p7">Settings export / import</li>
+          <li data-i18n="p13">Mini floating panel</li>
+          <li class="cat" data-i18n="proCatSmart">Smart automation</li>
           <li data-i18n="p8">App foreground auto-switch</li>
           <li data-i18n="p9">Wi-Fi geofencing</li>
           <li data-i18n="p10">Battery smart policy</li>
-          <li data-i18n="p11">Analytics &amp; energy report</li>
-          <li data-i18n="p12">Custom meeting app list</li>
+          <li class="cat" data-i18n="proCatAnalytics">Analytics</li>
+          <li data-i18n="p11">Energy report &amp; cost estimate</li>
+          <li class="cat" data-i18n="proCatLicense">License</li>
+          <li data-i18n="p14">Up to 3 devices per license</li>
         </ul>
-        <a href="#" class="btn btn-primary" style="width:100%; justify-content:center;" id="buy-btn" data-i18n="buyBtn">Buy Pro &mdash; US$9.99</a>
+        <a href="#pricing" class="p-btn p-btn-accent" id="buy-btn" style="width: 100%; justify-content: center;" data-i18n="buyBtn">Upgrade to Pro</a>
       </div>
     </div>
-    <div style="text-align:center; margin-top:24px;">
-      <a href="comparison.html" class="btn btn-outline" style="font-size:0.85rem; padding:8px 20px;" data-i18n="btnSeeComparison">See Detailed Feature Comparison</a>
+
+    <!-- Trust row -->
+    <div class="p-trust-grid">
+      <div class="p-trust-item">
+        <span class="p-trust-item-title" data-i18n="trust1t">14-day refund</span>
+        <span class="p-trust-item-sub" data-i18n="trust1s">No questions asked</span>
+      </div>
+      <div class="p-trust-item">
+        <span class="p-trust-item-title" data-i18n="trust2t">V2.x free updates</span>
+        <span class="p-trust-item-sub" data-i18n="trust2s">Continuous improvements</span>
+      </div>
+      <div class="p-trust-item">
+        <span class="p-trust-item-title" data-i18n="trust3t">Up to 3 devices</span>
+        <span class="p-trust-item-sub" data-i18n="trust3s">Desktop, laptop, backup</span>
+      </div>
+      <div class="p-trust-item">
+        <span class="p-trust-item-title" data-i18n="trust4t">One-time purchase</span>
+        <span class="p-trust-item-sub" data-i18n="trust4s">Never a subscription</span>
+      </div>
     </div>
-    <p style="text-align:center; margin-top:16px; font-size:0.85rem; color:var(--muted);" data-i18n="pricingNote">
-      14-day money-back guarantee. One-time purchase, not a subscription. Discounts available in-app.
-    </p>
+
+    <div style="text-align: center; padding: 32px 0 0;">
+      <a href="comparison.html" class="p-btn p-btn-ghost" data-i18n="btnSeeComparison">See detailed feature comparison →</a>
+    </div>
   </div>
 </section>
 
 <!-- ── Payment Method Modal ─────────────────────────────── -->
-<div id="pay-modal" style="display:none; position:fixed; inset:0; z-index:999; background:rgba(0,0,0,.6); backdrop-filter:blur(4px); align-items:center; justify-content:center;">
-  <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:32px; max-width:400px; width:90%; position:relative;">
-    <button onclick="closePayModal()" style="position:absolute; top:12px; right:16px; background:none; border:none; color:var(--muted); font-size:1.3rem; cursor:pointer;">&times;</button>
-    <h3 style="margin-bottom:6px; color:var(--text);" data-i18n="payTitle">Choose Payment Method</h3>
-    <p style="color:var(--muted); font-size:0.85rem; margin-bottom:24px;" data-i18n="paySub">One-time purchase. 14-day money-back guarantee.</p>
+<div id="pay-modal" class="p-pay-modal">
+  <div class="p-pay-card">
+    <h3 data-i18n="payTitle">Choose Payment Method</h3>
+    <p class="p-pay-card-sub" data-i18n="paySub">One-time purchase. 14-day money-back guarantee.</p>
 
-    <button class="pay-option" id="pay-ecpay" onclick="startPurchase('ecpay')">
-      <span class="pay-flag">🇹🇼</span>
+    <button class="p-pay-option" id="pay-ecpay" onclick="startPurchase('ecpay')">
+      <span class="pay-flag">TW</span>
       <span class="pay-info">
         <span class="pay-label" data-i18n="payEcpayLabel">Credit Card / ATM</span>
         <span class="pay-provider" data-i18n="payEcpayProvider">via ECPay</span>
       </span>
-      <span class="pay-price">NT$990</span>
+      <span class="pay-price" id="pay-ecpay-price">NT$490</span>
     </button>
 
-    <button class="pay-option" id="pay-paypal" onclick="startPurchase('paypal')">
-      <span class="pay-flag">🌐</span>
+    <button class="p-pay-option" id="pay-paypal" onclick="startPurchase('paypal')">
+      <span class="pay-flag">INTL</span>
       <span class="pay-info">
         <span class="pay-label">PayPal</span>
         <span class="pay-provider" data-i18n="payPaypalProvider">International</span>
       </span>
-      <span class="pay-price">US$24.99</span>
+      <span class="pay-price" id="pay-paypal-price">US$14.99</span>
     </button>
 
-    <p style="text-align:center; margin-top:16px; font-size:0.75rem; color:var(--muted);" data-i18n="payNote">Secure payment. Your Pro license activates instantly after payment.</p>
+    <p class="p-pay-note" data-i18n="payNote">Secure payment. Your Pro license activates instantly after payment.</p>
   </div>
 </div>
 
+<!-- ── Savings calculator ───────────────────────────────── -->
+<section class="p-section">
+  <div class="container">
+    <div class="p-section-head">
+      <div><span class="p-eyebrow">Savings calculator</span></div>
+      <div>
+        <h2 class="p-h2" data-i18n="calc_title">How much will you save?</h2>
+        <p class="p-h2-sub" data-i18n="calc_sub">Estimate based on PowerDoze users' typical 30% energy reduction. Adjust the inputs to match your setup.</p>
+      </div>
+    </div>
+
+    <div class="p-calc">
+      <div class="p-calc-grid">
+        <div class="p-calc-field">
+          <label class="p-calc-label" for="calc-watts" data-i18n="calc_input_watts">PC wattage</label>
+          <input type="number" class="p-calc-input" id="calc-watts" value="65" min="5" max="800" step="1" inputmode="numeric">
+          <div class="p-calc-presets">
+            <span class="p-calc-preset-label" data-i18n="calc_preset_label">Reference</span>
+            <button type="button" class="p-calc-preset" data-watts="30"><span data-i18n="calc_preset_ultrabook">Ultrabook</span> · 30W</button>
+            <button type="button" class="p-calc-preset" data-watts="65"><span data-i18n="calc_preset_laptop">Laptop</span> · 65W</button>
+            <button type="button" class="p-calc-preset" data-watts="120"><span data-i18n="calc_preset_gaming_laptop">Gaming Laptop</span> · 120W</button>
+            <button type="button" class="p-calc-preset" data-watts="150"><span data-i18n="calc_preset_desktop">Desktop</span> · 150W</button>
+            <button type="button" class="p-calc-preset" data-watts="400"><span data-i18n="calc_preset_gaming">Gaming Desktop</span> · 400W</button>
+          </div>
+        </div>
+        <div class="p-calc-field">
+          <label class="p-calc-label" for="calc-hours" data-i18n="calc_input_hours">Hours per day</label>
+          <input type="number" class="p-calc-input" id="calc-hours" value="8" min="0" max="24" step="0.5" inputmode="decimal">
+          <span class="p-calc-preset-label" data-i18n="calc_hours_hint">0–24 hours</span>
+        </div>
+        <div class="p-calc-field">
+          <label class="p-calc-label" for="calc-rate" data-i18n="calc_input_rate">Rate per kWh</label>
+          <input type="number" class="p-calc-input" id="calc-rate" value="4.0" min="0" step="0.1" inputmode="decimal">
+        </div>
+      </div>
+
+      <div class="p-calc-divider"></div>
+
+      <div class="p-calc-grid">
+        <div class="p-calc-output">
+          <span class="p-calc-label" data-i18n="calc_output_kwh">Energy saved</span>
+          <span class="p-calc-output-num" id="calc-out-kwh">—</span>
+          <span class="p-calc-output-unit">kWh / year</span>
+        </div>
+        <div class="p-calc-output">
+          <span class="p-calc-label" data-i18n="calc_output_money">Cost saved</span>
+          <span class="p-calc-output-num" id="calc-out-money">—</span>
+          <span class="p-calc-output-unit">/ year</span>
+        </div>
+        <div class="p-calc-output">
+          <span class="p-calc-label" data-i18n="calc_output_co2">CO₂ reduced</span>
+          <span class="p-calc-output-num" id="calc-out-co2">—</span>
+          <span class="p-calc-output-unit">kg / year</span>
+        </div>
+      </div>
+
+      <p class="p-calc-payback" id="calc-payback" data-i18n="calc_payback">PowerDoze Pro pays for itself in <strong>—</strong>.</p>
+    </div>
+
+    <p class="p-calc-disclaimer" data-i18n="calc_disclaimer">Estimate based on a typical <strong>30%</strong> reduction during idle periods (auto-sleep, screen timeout, CPU mode switching). Heavy 24/7 workloads save less by %; mostly-idle PCs save more.<br><br><strong>Beyond electricity:</strong> Pro also automates power-mode switching, multi-monitor refresh rate, and per-app GPU preference — saving you manual hassle and reducing hardware stress from constant max load.</p>
+  </div>
+</section>
+
 <!-- ── Download ─────────────────────────────────────────── -->
-<section id="download">
-  <div class="container" style="text-align:center;">
-    <h2 class="section-title" data-i18n="dlTitle">Download PowerDoze</h2>
-    <p class="section-subtitle" data-i18n="dlSub">
-      Compatible with Windows 10 (1903+) and Windows 11.
-    </p>
-    <a href="#" class="btn btn-primary" id="download-btn" style="font-size:1.1rem; padding:16px 40px;" data-i18n="dlBtn">
+<section id="download" class="p-section">
+  <div class="container" style="text-align: center;">
+    <span class="p-eyebrow">Download</span>
+    <h2 class="p-h2" style="margin: 24px 0 12px;" data-i18n="dlTitle">Get PowerDoze.</h2>
+    <p class="p-h2-sub" style="margin: 0 auto 32px;" data-i18n="dlSub">Compatible with Windows 10 (1903+) and Windows 11.</p>
+    <a href="#" class="p-btn p-btn-primary" id="download-btn" style="height: 44px; padding: 0 28px; font-size: 14px;" data-i18n="dlBtn">
       Download v2.0.0 for Windows
     </a>
-    <p style="margin-top:16px; font-size:0.8rem; color:var(--muted);" data-i18n="dlNote">
-      ~25 MB &bull; Includes installer
-    </p>
+    <div style="margin-top: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.08em;" data-i18n="dlNote">
+      ~25 MB · Includes installer · SHA256 verified
+    </div>
   </div>
 </section>
 
 <!-- ── FAQ ──────────────────────────────────────────────── -->
-<section id="faq" style="background: var(--surface);">
-  <div class="container">
-    <h2 class="section-title" data-i18n="faqTitle">Frequently Asked Questions</h2>
-    <div class="faq-list">
-      <div class="faq-item">
-        <div class="faq-q" data-i18n="faq1q">Is PowerDoze free?</div>
-        <div class="faq-a" data-i18n="faq1a">Yes! Core features are free forever. Pro unlocks advanced automation like app-based switching, Wi-Fi geofencing, and analytics. It's a one-time purchase, not a subscription.</div>
+<section id="faq" class="p-section">
+  <div class="container" style="max-width: 760px;">
+    <div class="p-section-head">
+      <div><span class="p-eyebrow">FAQ</span></div>
+      <div>
+        <h2 class="p-h2" data-i18n="faqTitle">Frequently asked questions</h2>
       </div>
-      <div class="faq-item">
-        <div class="faq-q" data-i18n="faq2q">Does it send my data anywhere?</div>
-        <div class="faq-a" data-i18n="faq2a">No. PowerDoze runs entirely on your local machine. The only network request is an optional update check to our website. No telemetry, no analytics, no cloud.</div>
+    </div>
+    <div class="p-faq-list">
+      <div class="p-faq-item">
+        <div class="p-faq-q" data-i18n="faq1q">Is PowerDoze free?</div>
+        <div class="p-faq-a" data-i18n="faq1a">Yes! Core features are free forever. Pro unlocks advanced automation like app-based switching, Wi-Fi geofencing, and analytics. It's a one-time purchase, not a subscription.</div>
       </div>
-      <div class="faq-item">
-        <div class="faq-q" data-i18n="faq3q">Why does Windows SmartScreen show a warning?</div>
-        <div class="faq-a" data-i18n="faq3a">Code signing certificates cost US$200+/year. As an indie developer, we'll add signing once the project is sustainable. Click "More info" then "Run anyway" to proceed safely.</div>
+      <div class="p-faq-item">
+        <div class="p-faq-q" data-i18n="faq2q">Does it send my data anywhere?</div>
+        <div class="p-faq-a" data-i18n="faq2a">No. PowerDoze runs entirely on your local machine. The only network request is an optional update check and Pro license verification. No telemetry.</div>
       </div>
-      <div class="faq-item">
-        <div class="faq-q" data-i18n="faq4q">Can I transfer my license to a new PC?</div>
-        <div class="faq-a" data-i18n="faq4a">Yes. Use the built-in Settings Export/Import to move your configuration. License transfer will also be supported through our website.</div>
+      <div class="p-faq-item">
+        <div class="p-faq-q" data-i18n="faq3q">Why does Windows SmartScreen show a warning?</div>
+        <div class="p-faq-a" data-i18n="faq3a">Code signing certificates cost US$200+/year. As an indie developer, we'll add signing once the project is sustainable. Click "More info" then "Run anyway" to proceed safely.</div>
       </div>
-      <div class="faq-item">
-        <div class="faq-q" data-i18n="faq5q">Does it work on laptops and desktops?</div>
-        <div class="faq-a" data-i18n="faq5a">Yes, both. Laptops benefit from battery policies and away mode. Desktops benefit from scheduled sleep rules and app-based power mode switching.</div>
+      <div class="p-faq-item">
+        <div class="p-faq-q" data-i18n="faq4q">Can I transfer my license to a new PC?</div>
+        <div class="p-faq-a" data-i18n="faq4a">Yes. Each Pro license works on up to 3 devices. Manage your bound devices from the account page — unbind an old PC to free a slot.</div>
       </div>
-      <div class="faq-item">
-        <div class="faq-q" data-i18n="faq6q">What happens if I don't like it?</div>
-        <div class="faq-a" data-i18n="faq6a">The free version has no time limit. If you bought Pro, you have a 14-day money-back guarantee, no questions asked.</div>
+      <div class="p-faq-item">
+        <div class="p-faq-q" data-i18n="faq5q">Does it work on laptops and desktops?</div>
+        <div class="p-faq-a" data-i18n="faq5a">Both. Laptops benefit from battery policies and away mode. Desktops benefit from scheduled sleep rules and app-based power mode switching.</div>
+      </div>
+      <div class="p-faq-item">
+        <div class="p-faq-q" data-i18n="faq6q">What happens if I don't like it?</div>
+        <div class="p-faq-a" data-i18n="faq6a">The free version has no time limit. If you bought Pro, you have a 14-day money-back guarantee, no questions asked.</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ── Footer ──────────────────────────────────────────── -->
-<footer>
+<footer class="p-footer">
   <div class="container">
-    <p data-i18n="footer">&copy; 2026 PowerDoze. All rights reserved.</p>
-    <p style="margin-top:8px;">
-      <a href="mailto:gto70070@gmail.com" data-i18n="contact">Contact</a>
-      &nbsp;&bull;&nbsp;
-      <a href="privacy.html" data-i18n="privacy">Privacy Policy</a>
-    </p>
+    <div class="p-footer-grid">
+      <div>
+        <a href="/" class="p-logo" style="margin-bottom: 12px; display: inline-flex;">
+          <img src="assets/icon.png" alt=""> powerdoze
+        </a>
+        <p style="margin: 12px 0 0; max-width: 32ch;" data-i18n="footerAbout">
+          Smart power automation for Windows. Save battery, reduce noise, never miss a meeting.
+        </p>
+      </div>
+      <div>
+        <h4 data-i18n="footerProduct">Product</h4>
+        <ul>
+          <li><a href="features.html" data-i18n="navFeatures">Features</a></li>
+          <li><a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a></li>
+          <li><a href="use-cases.html" data-i18n="navUseCases">Use cases</a></li>
+          <li><a href="#download" data-i18n="navDownload">Download</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footerSupport">Support</h4>
+        <ul>
+          <li><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a></li>
+          <li><a href="account.html" data-i18n="footerAccount">Account</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footerLegal">Legal</h4>
+        <ul>
+          <li><a href="privacy.html" data-i18n="privacy">Privacy</a></li>
+          <li><a href="refund.html" data-i18n="footerRefund">Refund Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze. All rights reserved.</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a></span>
+    </div>
   </div>
 </footer>
 
@@ -335,71 +455,239 @@
 <script src="i18n.js"></script>
 <script src="supabase-config.js"></script>
 <script>
-document.querySelectorAll('.faq-q').forEach(q => {
+// ── Theme toggle ──
+(function() {
+  var btn = document.getElementById('theme-toggle');
+  var label = document.getElementById('theme-label');
+  function set(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('pd-theme', theme);
+    if (label) label.textContent = theme.toUpperCase();
+  }
+  set(localStorage.getItem('pd-theme') || 'dark');
+  btn.addEventListener('click', function() {
+    set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+})();
+
+// ── FAQ accordion ──
+document.querySelectorAll('.p-faq-q').forEach(q => {
   q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
 });
+
+// ── Savings calculator ──
+(function() {
+  const SAVING_RATIO = 0.30;   // typical mixed-use upper estimate
+  const CO2_PER_KWH  = 0.502;  // Taiwan grid avg, kg/kWh
+  const FALLBACK_PRO_PRICE = 690; // regular price; used if DOM read fails
+
+  // Read live Pro price from the displayed pricing card so payback
+  // automatically tracks first-batch promo (NT$490) vs regular (NT$690).
+  function getProPrice() {
+    const el = document.getElementById('price-main');
+    if (!el) return FALLBACK_PRO_PRICE;
+    const m = el.textContent.match(/(\d{1,3}(?:[,，]\d{3})*)/);
+    if (!m) return FALLBACK_PRO_PRICE;
+    const n = parseInt(m[1].replace(/[,，]/g, ''), 10);
+    return n > 0 ? n : FALLBACK_PRO_PRICE;
+  }
+
+  const wattsEl  = document.getElementById('calc-watts');
+  const hoursEl  = document.getElementById('calc-hours');
+  const rateEl   = document.getElementById('calc-rate');
+  const outKwh   = document.getElementById('calc-out-kwh');
+  const outMoney = document.getElementById('calc-out-money');
+  const outCo2   = document.getElementById('calc-out-co2');
+  const payback  = document.getElementById('calc-payback');
+  const presets  = document.querySelectorAll('.p-calc-preset');
+
+  function fmt(n, digits) { return n.toLocaleString(undefined, { maximumFractionDigits: digits || 0 }); }
+
+  function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+  function readClamped(el) {
+    const v = parseFloat(el.value);
+    if (isNaN(v)) return parseFloat(el.min) || 0;
+    return clamp(v, parseFloat(el.min), parseFloat(el.max) || Infinity);
+  }
+
+  function syncPresetActive() {
+    const w = parseFloat(wattsEl.value);
+    presets.forEach(p => {
+      p.classList.toggle('active', parseFloat(p.dataset.watts) === w);
+    });
+  }
+
+  function recalc() {
+    const w = readClamped(wattsEl);
+    const h = readClamped(hoursEl);
+    const r = Math.max(0, parseFloat(rateEl.value) || 0);
+
+    const kwhYear   = (w * h * 365) / 1000;
+    const savedKwh  = kwhYear * SAVING_RATIO;
+    const savedCost = savedKwh * r;
+    const savedCo2  = savedKwh * CO2_PER_KWH;
+
+    outKwh.textContent   = fmt(savedKwh, 0);
+    outMoney.textContent = fmt(savedCost, 0);
+    outCo2.textContent   = fmt(savedCo2, 0);
+
+    const monthlyCost = savedCost / 12;
+    if (savedCost > 0) {
+      const proPrice = getProPrice();
+      const months = Math.max(1, Math.round(proPrice / monthlyCost));
+      const tpl = (typeof t === 'function') ? t('calc_payback') : 'PowerDoze Pro pays for itself in <strong>{months} months</strong>.';
+      payback.innerHTML = tpl.replace('{months}', months);
+      payback.style.display = '';
+    } else {
+      payback.style.display = 'none';
+    }
+    syncPresetActive();
+  }
+
+  // Re-render calc when promo loader updates pricing card
+  window.addEventListener('pd-pricing-updated', recalc);
+
+  // Snap input to bounds on blur for visual feedback
+  [wattsEl, hoursEl].forEach(el => {
+    el.addEventListener('blur', () => {
+      const v = parseFloat(el.value);
+      const min = parseFloat(el.min);
+      const max = parseFloat(el.max);
+      if (isNaN(v))     el.value = min;
+      else if (v < min) el.value = min;
+      else if (v > max) el.value = max;
+      recalc();
+    });
+  });
+
+  [wattsEl, hoursEl, rateEl].forEach(el => el.addEventListener('input', recalc));
+
+  presets.forEach(p => {
+    p.addEventListener('click', () => {
+      wattsEl.value = p.dataset.watts;
+      recalc();
+    });
+  });
+
+  // Initial render after i18n.js applies
+  setTimeout(recalc, 50);
+})();
+
 updateNavAuth();
 
-// ── Purchase success banner ──
+// ── First-batch promo status ──
+(async function() {
+  try {
+    const resp = await fetch(SUPABASE_URL + '/functions/v1/get-promo-status');
+    if (!resp.ok) return;
+    const data = await resp.json();
+    if (data.status !== 'OK') return;
+
+    const badge = document.getElementById('first-batch-badge');
+    const priceMain = document.getElementById('price-main');
+    const priceOrig = document.getElementById('price-original');
+    const ecpayPrice = document.getElementById('pay-ecpay-price');
+    const paypalPrice = document.getElementById('pay-paypal-price');
+
+    if (data.isFirstBatch) {
+      if (badge) badge.classList.add('visible');
+      if (priceMain) priceMain.textContent = 'NT$490';
+      if (priceOrig) { priceOrig.style.display = ''; priceOrig.textContent = 'NT$690'; }
+      if (ecpayPrice) ecpayPrice.textContent = 'NT$490';
+      if (paypalPrice) paypalPrice.textContent = 'US$14.99';
+    } else {
+      if (badge) badge.classList.remove('visible');
+      if (priceMain) priceMain.textContent = 'NT$690';
+      if (priceOrig) priceOrig.style.display = 'none';
+      if (ecpayPrice) ecpayPrice.textContent = 'NT$690';
+      if (paypalPrice) paypalPrice.textContent = 'US$20.99';
+    }
+    window.dispatchEvent(new Event('pd-pricing-updated'));
+  } catch (e) { /* offline */ }
+})();
+
+// ── Purchase success modal ──
 (function() {
   var params = new URLSearchParams(window.location.search);
-  if (params.get('purchase') === 'success') {
-    var banner = document.createElement('div');
-    banner.style.cssText = 'position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:1000;background:linear-gradient(135deg,#10b981,#059669);color:#fff;padding:16px 32px;border-radius:12px;font-weight:600;font-size:0.95rem;box-shadow:0 4px 20px rgba(16,185,129,.3);display:flex;align-items:center;gap:10px;';
-    banner.innerHTML = '<span style="font-size:1.3rem;">&#10003;</span><span data-i18n="purchaseSuccess">Payment successful! Your Pro license is now active.</span>';
-    document.body.appendChild(banner);
-    // Re-apply i18n
-    if (typeof applyLang === 'function' && typeof getLang === 'function') applyLang(getLang());
-    // Auto-remove after 6 seconds
-    setTimeout(function() { banner.style.transition='opacity .5s'; banner.style.opacity='0'; setTimeout(function(){banner.remove();}, 500); }, 6000);
-    // Clean URL
-    history.replaceState(null, '', '/');
-  }
+  if (params.get('purchase') !== 'success') return;
+  history.replaceState(null, '', '/');
+
+  var backdrop = document.createElement('div');
+  backdrop.className = 'p-modal-backdrop';
+
+  var box = document.createElement('div');
+  box.className = 'p-modal-box';
+  box.style.borderColor = '#10b981';
+
+  var check = '<div style="text-align:center;margin-bottom:20px;"><div style="display:inline-flex;width:56px;height:56px;border-radius:50%;background:#10b981;align-items:center;justify-content:center;font-size:1.8rem;color:#0E0E10;">&#10003;</div></div>';
+  var title = '<h2 style="margin:0 0 8px;text-align:center;font-size:20px;font-weight:600;color:var(--ink);" data-i18n="purchaseSuccessTitle">Payment Successful</h2>';
+  var sub = '<p style="margin:0 0 20px;text-align:center;color:var(--ink-3);font-size:13px;" data-i18n="purchaseSuccessSub">Pro has been activated for your account. Open PowerDoze and sign in to bind this device.</p>';
+  var steps = ''
+    + '<div style="border:1px solid var(--hair);border-radius:6px;padding:16px 18px;margin-bottom:20px;">'
+    + '  <ol style="margin:0;padding-left:18px;color:var(--ink-2);font-size:13px;line-height:1.8;">'
+    + '    <li data-i18n="purchaseStep1">Open the PowerDoze app</li>'
+    + '    <li data-i18n="purchaseStep2">Go to Settings and sign in with the same Google account</li>'
+    + '    <li data-i18n="purchaseStep3">Click "Bind this device"</li>'
+    + '  </ol>'
+    + '</div>';
+  var footer = ''
+    + '<div style="display:flex;gap:8px;">'
+    + '  <a href="account.html" class="p-btn p-btn-secondary" style="flex:1;justify-content:center;" data-i18n="purchaseGoAccount">View Account</a>'
+    + '  <button id="pd-close-btn" class="p-btn p-btn-primary" style="flex:1;justify-content:center;" data-i18n="purchaseDoneBtn">Done</button>'
+    + '</div>';
+
+  box.innerHTML = check + title + sub + steps + footer;
+  backdrop.appendChild(box);
+  document.body.appendChild(backdrop);
+
+  if (typeof applyLang === 'function' && typeof getLang === 'function') applyLang(getLang());
+
+  document.getElementById('pd-close-btn').addEventListener('click', function() { backdrop.remove(); });
+  backdrop.addEventListener('click', function(e) { if (e.target === backdrop) backdrop.remove(); });
 })();
 
 // ── Payment modal ──
 var buyBtn = document.getElementById('buy-btn');
 var payModal = document.getElementById('pay-modal');
 
-function closePayModal() {
-  if (payModal) payModal.style.display = 'none';
-}
+function closePayModal() { if (payModal) payModal.style.display = 'none'; }
 
-// Close on backdrop click
 if (payModal) {
   payModal.addEventListener('click', function(e) {
     if (e.target === payModal) closePayModal();
   });
 }
 
-// Buy Pro → check auth → open modal
 if (buyBtn) {
   buyBtn.addEventListener('click', async function(e) {
     e.preventDefault();
-
     var user = await getUser();
     if (!user) {
       window.location.href = 'auth.html?redirect=buy';
       return;
     }
-
     if (sbClient) {
       var { data: profile } = await sbClient.from('profiles').select('is_pro').eq('id', user.id).single();
       if (profile && profile.is_pro) {
-        alert('You already have Pro!');
+        alert(t('payAlreadyPro'));
         return;
       }
     }
-
-    // Open payment method modal
     payModal.style.display = 'flex';
-    if (typeof applyLang === 'function' && typeof getLang === 'function') {
-      applyLang(getLang());
-    }
+    if (typeof applyLang === 'function' && typeof getLang === 'function') applyLang(getLang());
   });
 }
 
-// Start purchase with selected gateway
+// Auto-open the pay modal if we just came back from OAuth with
+// `redirect=buy` stashed in sessionStorage (see auth.html).
+if (sessionStorage.getItem('pd_post_login_action') === 'buy') {
+  sessionStorage.removeItem('pd_post_login_action');
+  if (buyBtn) {
+    setTimeout(function() { buyBtn.click(); }, 100);
+  }
+}
+
 async function startPurchase(gateway) {
   var btn = document.getElementById('pay-' + gateway);
   if (btn) btn.disabled = true;
@@ -423,7 +711,6 @@ async function startPurchase(gateway) {
     var data = await res.json();
 
     if (gateway === 'ecpay' && data.html) {
-      // ECPay: auto-submit form in new tab
       var w = window.open('', '_blank');
       if (w) {
         w.document.write(data.html);
@@ -434,16 +721,14 @@ async function startPurchase(gateway) {
         document.close();
       }
     } else if (gateway === 'paypal' && data.approveUrl) {
-      // PayPal: open in popup — paypal-return.html handles capture + closing
       window.open(data.approveUrl, 'paypal', 'width=500,height=700');
     } else if (data.error) {
-      alert('Error: ' + data.error);
+      alert(t('payError', { err: data.error }));
     } else {
-      console.log('Unexpected response:', data);
-      alert('Unexpected response from server. Check console for details.');
+      alert(t('payUnexpectedResponse'));
     }
   } catch (err) {
-    alert('Failed to create order: ' + err.message);
+    alert(t('payOrderFailed', { err: err.message }));
   }
 
   if (btn) btn.disabled = false;
