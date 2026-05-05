@@ -908,11 +908,28 @@ body.plain {
 .p-fd {
   display: grid;
   grid-template-columns: 1fr 2fr;
+  grid-template-areas: "meta body";
   gap: var(--s-12);
   padding: var(--s-12) 0;
   border-bottom: 1px solid var(--hair);
+  scroll-margin-top: 80px;
 }
-@media (max-width: 880px) { .p-fd { grid-template-columns: 1fr; gap: var(--s-6); } }
+.p-fd-meta { grid-area: meta; }
+.p-fd-body { grid-area: body; }
+
+/* ABAB 交替：第 2/4/6/8/10/12 個 .p-fd 反轉（右圖左文）*/
+.p-fd:nth-child(odd) {
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas: "body meta";
+}
+
+@media (max-width: 880px) {
+  .p-fd, .p-fd:nth-child(odd) {
+    grid-template-columns: 1fr;
+    grid-template-areas: "meta" "body";
+    gap: var(--s-6);
+  }
+}
 
 .p-fd-meta { position: sticky; top: 80px; align-self: start; }
 .p-fd-num {
@@ -935,6 +952,28 @@ body.plain {
   display: flex; align-items: center; justify-content: center;
   flex-direction: column;
   color: var(--ink-3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.p-fd-thumb:hover {
+  transform: scale(1.02);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-soft);
+}
+
+/* Scroll-driven fade-in（Chrome 115+ / Edge 115+，其他瀏覽器看正常版）*/
+@keyframes p-fd-fade-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@supports (animation-timeline: view()) {
+  .p-fd {
+    animation: p-fd-fade-in 0.7s ease-out both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 35%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .p-fd { animation: none; }
+  }
 }
 .p-fd-thumb svg { width: 24px; height: 24px; opacity: 0.5; margin-bottom: var(--s-2); }
 .p-fd-thumb-img {
