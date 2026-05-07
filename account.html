@@ -4,7 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Account — PowerDoze</title>
+  <meta name="description" content="Manage your PowerDoze Pro license, signed-in devices, and account preferences.">
+  <meta name="robots" content="noindex,follow">
   <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/account.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Account — PowerDoze">
+  <meta property="og:description" content="Manage your PowerDoze Pro license, signed-in devices, and account preferences.">
+  <meta property="og:url" content="https://powerdoze.app/account.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Account — PowerDoze">
+  <meta name="twitter:description" content="Manage your PowerDoze Pro license and signed-in devices.">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
   <link rel="stylesheet" href="plain.css">
   <script>
     (function() {
@@ -308,7 +321,9 @@
 
     var avatar = user.user_metadata?.avatar_url;
     var name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
-    document.getElementById('acc-avatar').src = avatar || 'assets/icon.png';
+    var accAvatarEl = document.getElementById('acc-avatar');
+    accAvatarEl.src = avatar || 'assets/icon.png';
+    accAvatarEl.alt = name;
     document.getElementById('acc-name').textContent = name;
     document.getElementById('acc-email').textContent = user.email;
     document.getElementById('acc-email2').textContent = user.email;

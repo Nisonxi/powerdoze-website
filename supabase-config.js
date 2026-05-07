@@ -60,7 +60,7 @@ async function updateNavAuth() {
       authSlot.innerHTML =
         '<div class="nav-user">' +
         '<a href="account.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">' +
-        (avatar ? '<img src="' + avatar + '" alt="" class="nav-avatar">' : '') +
+        (avatar ? '<img src="' + avatar + '" alt="' + name.replace(/"/g, '&quot;') + '" class="nav-avatar">' : '') +
         '<span class="nav-username">' + name + '</span>' +
         '</a>' +
         '<button onclick="signOut()" class="nav-signout" data-i18n="authSignOut">Sign Out</button>' +
