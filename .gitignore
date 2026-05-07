@@ -1,2 +1,7 @@
-.env.local
+.env*
 schema.sql
+*.key
+*.pem
+credentials*
+secrets*
+
