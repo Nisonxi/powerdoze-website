@@ -1,6 +1,6 @@
 {
-  "latest": "2.0.1",
+  "latest": "2.0.2",
   "url": "https://powerdoze.app/#download",
-  "notes": "Power mode v2: priority orchestrator, sub-second scheme detection, queued strip + 22 audit fixes (L1-L13 / M1-M16).",
+  "notes": "v2.0.1 + 22 audit fixes (L1-L13 / M1-M16): process handle leaks, atomic writes, ETW pipe drain, log rotation, paint optimisation, etc. Stability-only.",
   "date": "2026-05-07"
 }
