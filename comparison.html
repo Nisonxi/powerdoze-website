@@ -67,7 +67,7 @@
           <th data-i18n="cmp_thFree">Free</th>
           <th>
             <span data-i18n="cmp_thPro">Pro</span>
-            <small>NT$690 / US$20.99</small>
+            <small id="cmp-price-head">NT$690 / US$20.99</small>
           </th>
         </tr>
       </thead>
@@ -184,6 +184,29 @@
     });
   })();
   if (typeof updateNavAuth === 'function') updateNavAuth();
+
+  // First-batch promo: keep comparison pricing in sync with the home page.
+  // index.html updates its own price elements; here we patch the i18n source
+  // (so language switches keep the promo price) plus the Pro column header.
+  (async function() {
+    try {
+      if (typeof SUPABASE_URL === 'undefined') return;
+      var resp = await fetch(SUPABASE_URL + '/functions/v1/get-promo-status');
+      if (!resp.ok) return;
+      var data = await resp.json();
+      if (data.status !== 'OK' || !data.isFirstBatch) return;
+      if (typeof LANGS !== 'undefined') {
+        Object.keys(LANGS).forEach(function(lng) {
+          var v = LANGS[lng] && LANGS[lng].cmp_pricePro;
+          if (v) LANGS[lng].cmp_pricePro = v.replace('NT$690', 'NT$490').replace('US$20.99', 'US$14.99');
+        });
+        var cur = localStorage.getItem('pd_lang') || document.documentElement.lang || 'en';
+        if (typeof applyLang === 'function') applyLang(cur);
+      }
+      var head = document.getElementById('cmp-price-head');
+      if (head) head.textContent = 'NT$490 / US$14.99';
+    } catch (e) { /* offline — keep regular price */ }
+  })();
 </script>
 </body>
 </html>
