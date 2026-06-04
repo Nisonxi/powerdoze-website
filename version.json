@@ -1,6 +1,8 @@
-{
-  "latest": "2.0.2",
-  "url": "https://powerdoze.app/#download",
-  "notes": "v2.0.1 + 22 audit fixes (L1-L13 / M1-M16): process handle leaks, atomic writes, ETW pipe drain, log rotation, paint optimisation, etc. Stability-only.",
-  "date": "2026-05-07"
+﻿{
+    "latest":  "2.0.3",
+    "url":  "https://powerdoze.app/#download",
+    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.0.3/PowerDoze_v2.0.3_portable.zip",
+    "sha256":  "c915f1935a8403e22b417aaccd8168a1a863429e50fd45c43626fd8c42197a1a",
+    "notes":  "一鍵自動更新、排程=電源模式單一來源重構、會議/全螢幕睡眠衝突修復、Wi-Fi 定位體驗優化、powercfg 中文系統讀取修正，及多項穩定性修復。",
+    "date":  "2026-06-04"
 }
