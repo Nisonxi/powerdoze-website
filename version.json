@@ -1,8 +1,8 @@
 ﻿{
-    "latest":  "2.0.4",
+    "latest":  "2.0.5",
     "url":  "https://powerdoze.app/#download",
-    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.0.4/PowerDoze_v2.0.4_portable.zip",
-    "sha256":  "7ad094348c8ef2b822ac53de7d1306821dce081d4a7558bec0f8e6748767ceaf",
-    "notes":  "新增『設定→關於』可查版本+一鍵檢查更新、友善錯誤訊息、電源模式空狀態引導，及多項體驗打磨。",
-    "date":  "2026-06-04"
+    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.0.5/PowerDoze_v2.0.5_portable.zip",
+    "sha256":  "03dcebabd36d1ed1c02738a0867a0cc79032bb033cbcdb7ad885dc562678a06d",
+    "notes":  "白名單 app 可選「前景電源模式」、新增排程規則強制綁定電源模式；修正白名單防睡眠衝突、一鍵更新換檔不再閃黑視窗。",
+    "date":  "2026-06-05"
 }
