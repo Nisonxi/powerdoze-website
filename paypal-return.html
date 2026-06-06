@@ -81,6 +81,7 @@ if (typeof applyLang === 'function' && typeof getLang === 'function') applyLang(
     if (!session) {
       document.getElementById('status').textContent = t('ppr_loginRequired');
       document.getElementById('spinner').style.display = 'none';
+      setTimeout(function() { window.close(); }, 3000);
       return;
     }
 

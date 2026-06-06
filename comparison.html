@@ -67,7 +67,7 @@
           <th data-i18n="cmp_thFree">Free</th>
           <th>
             <span data-i18n="cmp_thPro">Pro</span>
-            <small id="cmp-price-head">NT$690 / US$20.99</small>
+            <small id="cmp-price-head">NT$490 / US$14.99</small>
           </th>
         </tr>
       </thead>
@@ -152,7 +152,7 @@
     </div>
 
     <div style="text-align: center; padding: 24px 0 0;">
-      <a href="vs-windows.html" class="p-btn p-btn-ghost">vs Windows native &amp; PowerToys →</a>
+      <a href="vs-windows.html" class="p-btn p-btn-ghost" data-i18n="cmp_vsWindows">vs Windows native &amp; PowerToys →</a>
     </div>
   </div>
 </section>
@@ -161,7 +161,7 @@
   <div class="container">
     <div class="p-footer-bottom">
       <span data-i18n="footer">© 2026 PowerDoze</span>
-      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a> · <a href="refund.html" data-i18n="footerRefund">Refund Policy</a></span>
     </div>
   </div>
 </footer>
@@ -194,18 +194,23 @@
       var resp = await fetch(SUPABASE_URL + '/functions/v1/get-promo-status');
       if (!resp.ok) return;
       var data = await resp.json();
-      if (data.status !== 'OK' || !data.isFirstBatch) return;
+      // Page defaults to the first-batch promo price (matches index.html, so an
+      // offline/failed fetch never shows a HIGHER price than the home page).
+      // Only downgrade to the regular price once we CONFIRM the promo has ended.
+      if (data.status !== 'OK' || data.isFirstBatch) return;
       if (typeof LANGS !== 'undefined') {
         Object.keys(LANGS).forEach(function(lng) {
-          var v = LANGS[lng] && LANGS[lng].cmp_pricePro;
-          if (v) LANGS[lng].cmp_pricePro = v.replace('NT$690', 'NT$490').replace('US$20.99', 'US$14.99');
+          var o = LANGS[lng];
+          if (!o) return;
+          if (o.cmp_pricePro) o.cmp_pricePro = o.cmp_pricePro.replace('NT$490', 'NT$690').replace('US$14.99', 'US$20.99');
+          if (o.cmp_thPro)    o.cmp_thPro    = o.cmp_thPro.replace('NT$490', 'NT$690').replace('US$14.99', 'US$20.99');
         });
         var cur = localStorage.getItem('pd_lang') || document.documentElement.lang || 'en';
         if (typeof applyLang === 'function') applyLang(cur);
       }
       var head = document.getElementById('cmp-price-head');
-      if (head) head.textContent = 'NT$490 / US$14.99';
-    } catch (e) { /* offline — keep regular price */ }
+      if (head) head.textContent = 'NT$690 / US$20.99';
+    } catch (e) { /* offline — keep promo price */ }
   })();
 </script>
 </body>

@@ -29,7 +29,7 @@ async function getSession() {
 }
 
 async function signInWithGoogle() {
-  if (!sbClient) return;
+  if (!sbClient) { alert('Service temporarily unavailable — please refresh the page and try again.'); return; }
   const { error } = await sbClient.auth.signInWithOAuth({
     provider: 'google',
     options: { redirectTo: window.location.origin + '/auth-callback.html' }

@@ -270,7 +270,7 @@
   <div class="container">
     <div class="p-footer-bottom">
       <span data-i18n="footer">© 2026 PowerDoze</span>
-      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a> · <a href="refund.html" data-i18n="footerRefund">Refund Policy</a></span>
     </div>
   </div>
 </footer>
@@ -334,7 +334,7 @@
 
       if (license) {
         document.getElementById('acc-source-row').style.display = '';
-        document.getElementById('acc-source').textContent = license.source === 'ecpay' ? 'ECPay (Taiwan)' : 'PayPal';
+        document.getElementById('acc-source').textContent = license.source === 'ecpay' ? 'ECPay' : 'PayPal';
 
         document.getElementById('acc-date-row').style.display = '';
         document.getElementById('acc-date').textContent = new Date(license.activated_at).toLocaleDateString();
