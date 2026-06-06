@@ -5,3 +5,6 @@ schema.sql
 credentials*
 secrets*
 
+# Local screenshot / CDP verification scratch (not for deploy)
+.shots/
+

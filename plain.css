@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════
    PowerDoze · Utility Dark Design System
-   v0.2 POC · 2026-04-27
+   v1.0 · 2026
    Defaults: dark · sans-serif · solid color · single amber accent
    ═══════════════════════════════════════════════════════════ */
 
@@ -1441,25 +1441,3 @@ body.plain {
   transition: color 80ms, border-color 80ms;
 }
 .plain .nav-signout:hover { color: var(--ink); border-color: var(--ink-3); }
-
-/* ═══════════════════════════════════════════════════════════
-   POC banner
-   ═══════════════════════════════════════════════════════════ */
-
-.p-poc-banner {
-  position: fixed; bottom: var(--s-4); right: var(--s-4);
-  z-index: 200;
-  padding: var(--s-3) var(--s-4);
-  background: var(--ink);
-  color: var(--bg);
-  border-radius: var(--r-2);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  display: flex; gap: var(--s-3); align-items: center;
-}
-.p-poc-banner a {
-  color: var(--accent);
-  text-decoration: underline;
-}

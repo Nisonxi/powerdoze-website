@@ -506,6 +506,13 @@ document.querySelectorAll('.p-faq-q').forEach(q => {
 
   function fmt(n, digits) { return n.toLocaleString(undefined, { maximumFractionDigits: digits || 0 }); }
 
+  // Cost-saved currency symbol, keyed off the active UI language (same currency
+  // the user types their per-kWh rate in). Falls back to "$" before i18n loads.
+  function calcCurrency() {
+    var l = (typeof getLang === 'function') ? getLang() : 'en';
+    return { 'zh-TW': 'NT$', 'zh-CN': '¥', ja: '¥', ko: '₩', fr: '€', de: '€', en: '$' }[l] || '$';
+  }
+
   function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 
   function readClamped(el) {
@@ -532,7 +539,7 @@ document.querySelectorAll('.p-faq-q').forEach(q => {
     const savedCo2  = savedKwh * CO2_PER_KWH;
 
     outKwh.textContent   = fmt(savedKwh, 0);
-    outMoney.textContent = fmt(savedCost, 0);
+    outMoney.textContent = calcCurrency() + fmt(savedCost, 0);
     outCo2.textContent   = fmt(savedCo2, 0);
 
     const monthlyCost = savedCost / 12;
