@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# 應用/登入/交易流程頁 — 不需出現在搜尋結果
+Disallow: /account.html
+Disallow: /auth.html
+Disallow: /auth-callback.html
+Disallow: /paypal-return.html
+
+Sitemap: https://powerdoze.app/sitemap.xml
