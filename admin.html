@@ -64,7 +64,7 @@
     .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; font-size: 13px; }
     .bar-row .lbl { width: 96px; color: var(--ad-ink2); flex: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .bar-track { flex: 1; height: 22px; background: var(--ad-panel2); border-radius: 6px; overflow: hidden; }
-    .bar-fill { height: 100%; background: var(--ad-amber); border-radius: 6px; min-width: 2px; transition: width .4s ease; }
+    .bar-fill { display: block; height: 100%; background: var(--ad-amber); border-radius: 6px; min-width: 2px; transition: width .4s ease; }
     .bar-fill.dim { background: #3a3a44; }
     .bar-row .num { width: 44px; text-align: right; color: var(--ad-ink); font-variant-numeric: tabular-nums; flex: none; }
 
@@ -298,7 +298,7 @@
         var contact = b.contactEmail || b.userEmail;
         var meta = [];
         if (contact) meta.push('<a href="mailto:' + esc(contact) + '">' + esc(contact) + '</a>');
-        if (b.appVersion) meta.push('v' + esc(b.appVersion));
+        if (b.appVersion) meta.push('v' + esc(String(b.appVersion).replace(/^v/i, '')));
         if (b.os) meta.push(esc(b.os));
         if (b.backendStatus) meta.push('backend:' + esc(b.backendStatus));
         if (b.createdAt) meta.push(esc(new Date(b.createdAt).toLocaleString()));

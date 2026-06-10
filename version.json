@@ -1,8 +1,8 @@
 ﻿{
-    "latest":  "2.0.5",
+    "latest":  "2.0.6",
     "url":  "https://powerdoze.app/#download",
-    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.0.5/PowerDoze_v2.0.5_portable.zip",
-    "sha256":  "03dcebabd36d1ed1c02738a0867a0cc79032bb033cbcdb7ad885dc562678a06d",
-    "notes":  "白名單 app 可選「前景電源模式」、新增排程規則強制綁定電源模式；修正白名單防睡眠衝突、一鍵更新換檔不再閃黑視窗。",
-    "date":  "2026-06-05"
+    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.0.6/PowerDoze_v2.0.6_portable.zip",
+    "sha256":  "7ca5dbddcc48d11436ffdee0a8ac8cd86f1abd16a7d3d3359971023fa2f7230a",
+    "notes":  "FPS overlay 修正（多 swapchain 虛高）、Bug 回報 App 內直送、迷你模式設定持久化、電源計畫選擇器、Game Mode 徽章、UTF-8 編碼根治、說明文案更新",
+    "date":  "2026-06-10"
 }
