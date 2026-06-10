@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理後台 — PowerDoze</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function () {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    :root {
+      --ad-bg: #0c0c0e; --ad-panel: #151518; --ad-panel2: #1c1c21;
+      --ad-line: #2a2a31; --ad-ink: #ececf0; --ad-ink2: #b6b6c0;
+      --ad-ink3: #84848f; --ad-amber: #f5a623; --ad-green: #34d399; --ad-red: #ef4444;
+    }
+    * { box-sizing: border-box; }
+    body.admin {
+      margin: 0; background: var(--ad-bg); color: var(--ad-ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      min-height: 100vh;
+    }
+    .ad-wrap { max-width: 1040px; margin: 0 auto; padding: 28px 22px 80px; }
+    .ad-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 6px; }
+    .ad-top h1 { font-size: 20px; font-weight: 650; letter-spacing: -.02em; margin: 0; }
+    .ad-top h1 .dot { color: var(--ad-amber); }
+    .ad-meta { font-size: 12px; color: var(--ad-ink3); font-variant-numeric: tabular-nums; }
+    .ad-userbar { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ad-ink2); }
+    .ad-userbar img { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--ad-line); }
+    .ad-btn {
+      background: var(--ad-panel2); color: var(--ad-ink2); border: 1px solid var(--ad-line);
+      border-radius: 8px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit;
+    }
+    .ad-btn:hover { color: var(--ad-ink); border-color: #3a3a44; }
+    .ad-btn.primary { background: var(--ad-amber); color: #1a1a1a; border-color: var(--ad-amber); font-weight: 600; padding: 10px 18px; font-size: 14px; }
+
+    /* States */
+    .ad-state { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; min-height: 70vh; text-align: center; }
+    .ad-state p { color: var(--ad-ink3); font-size: 14px; max-width: 380px; margin: 0; line-height: 1.6; }
+    .ad-spin { width: 30px; height: 30px; border: 2px solid var(--ad-line); border-top-color: var(--ad-amber); border-radius: 50%; animation: adspin .8s linear infinite; }
+    @keyframes adspin { to { transform: rotate(360deg); } }
+    .hidden { display: none !important; }
+
+    /* Cards */
+    .ad-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 22px 0; }
+    @media (max-width: 720px) { .ad-cards { grid-template-columns: repeat(2, 1fr); } }
+    .ad-card { background: var(--ad-panel); border: 1px solid var(--ad-line); border-radius: 14px; padding: 18px 18px 16px; }
+    .ad-card .k { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ad-ink3); }
+    .ad-card .v { font-size: 30px; font-weight: 680; margin-top: 8px; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+    .ad-card .s { font-size: 12px; color: var(--ad-ink3); margin-top: 4px; }
+    .ad-card .v.amber { color: var(--ad-amber); }
+
+    .ad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 720px) { .ad-grid { grid-template-columns: 1fr; } }
+    .ad-panel { background: var(--ad-panel); border: 1px solid var(--ad-line); border-radius: 14px; padding: 18px; margin-bottom: 14px; }
+    .ad-panel h2 { font-size: 12px; letter-spacing: .07em; text-transform: uppercase; color: var(--ad-ink3); margin: 0 0 14px; font-weight: 600; }
+
+    /* Bars */
+    .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; font-size: 13px; }
+    .bar-row .lbl { width: 96px; color: var(--ad-ink2); flex: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bar-track { flex: 1; height: 22px; background: var(--ad-panel2); border-radius: 6px; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--ad-amber); border-radius: 6px; min-width: 2px; transition: width .4s ease; }
+    .bar-fill.dim { background: #3a3a44; }
+    .bar-row .num { width: 44px; text-align: right; color: var(--ad-ink); font-variant-numeric: tabular-nums; flex: none; }
+
+    /* Funnel */
+    .funnel .bar-fill { background: linear-gradient(0deg, var(--ad-amber), var(--ad-amber)); }
+    .funnel .bar-row .lbl { width: 70px; }
+
+    /* Sparkline */
+    .spark { display: flex; align-items: flex-end; gap: 3px; height: 64px; }
+    .spark .col { flex: 1; background: var(--ad-amber); border-radius: 3px 3px 0 0; min-height: 2px; opacity: .85; }
+    .spark-x { display: flex; justify-content: space-between; font-size: 10px; color: var(--ad-ink3); margin-top: 6px; }
+
+    /* Lists */
+    .ad-list { list-style: none; margin: 0; padding: 0; }
+    .ad-list li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 0; border-top: 1px solid var(--ad-line); font-size: 13px; }
+    .ad-list li:first-child { border-top: none; }
+    .ad-list .em { color: var(--ad-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ad-list .meta { color: var(--ad-ink3); font-size: 12px; flex: none; font-variant-numeric: tabular-nums; }
+    .pill { font-size: 10px; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--ad-line); color: var(--ad-ink2); }
+    .pill.pro { color: var(--ad-amber); border-color: rgba(245,166,35,.4); }
+    .empty { color: var(--ad-ink3); font-size: 13px; padding: 8px 0; }
+  </style>
+</head>
+<body class="admin">
+
+  <!-- Sign-in gate -->
+  <div id="gate-signin" class="ad-state hidden">
+    <h1 style="font-size:22px;margin:0;">PowerDoze <span style="color:var(--ad-amber)">管理後台</span></h1>
+    <p>請用你的 Google 帳號登入。只有管理員帳號看得到資料。</p>
+    <button class="ad-btn primary" onclick="adminSignIn()">使用 Google 登入</button>
+  </div>
+
+  <!-- Forbidden -->
+  <div id="gate-forbidden" class="ad-state hidden">
+    <h1 style="font-size:22px;margin:0;">🔒 沒有權限</h1>
+    <p>這個帳號不是管理員，看不到後台資料。</p>
+    <button class="ad-btn" onclick="signOut()">登出換帳號</button>
+  </div>
+
+  <!-- Loading -->
+  <div id="gate-loading" class="ad-state">
+    <div class="ad-spin"></div>
+    <p>載入中…</p>
+  </div>
+
+  <!-- Error -->
+  <div id="gate-error" class="ad-state hidden">
+    <h1 style="font-size:20px;margin:0;">⚠️ 載入失敗</h1>
+    <p id="error-msg"></p>
+    <button class="ad-btn" onclick="location.reload()">重試</button>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard" class="ad-wrap hidden">
+    <div class="ad-top">
+      <div>
+        <h1>PowerDoze <span class="dot">管理後台</span></h1>
+        <div class="ad-meta" id="gen-at"></div>
+      </div>
+      <div class="ad-userbar">
+        <span id="who"></span>
+        <button class="ad-btn" onclick="location.reload()">↻ 重新整理</button>
+        <button class="ad-btn" onclick="signOut()">登出</button>
+      </div>
+    </div>
+
+    <div class="ad-cards">
+      <div class="ad-card"><div class="k">註冊人數</div><div class="v" id="c-reg">–</div><div class="s" id="c-reg-s"></div></div>
+      <div class="ad-card"><div class="k">付費人數</div><div class="v amber" id="c-paid">–</div><div class="s" id="c-paid-s"></div></div>
+      <div class="ad-card"><div class="k">總收入</div><div class="v" id="c-rev">–</div><div class="s" id="c-rev-s"></div></div>
+      <div class="ad-card"><div class="k">總下載</div><div class="v" id="c-dl">–</div><div class="s" id="c-dl-s">GitHub Releases</div></div>
+    </div>
+
+    <div class="ad-grid">
+      <div class="ad-panel">
+        <h2>轉換漏斗</h2>
+        <div class="funnel" id="funnel"></div>
+      </div>
+      <div class="ad-panel">
+        <h2>付費來源</h2>
+        <div id="by-source"></div>
+      </div>
+    </div>
+
+    <div class="ad-panel">
+      <h2>每日註冊（近 14 天）</h2>
+      <div class="spark" id="spark"></div>
+      <div class="spark-x"><span id="spark-from"></span><span id="spark-to"></span></div>
+    </div>
+
+    <div class="ad-grid">
+      <div class="ad-panel">
+        <h2>最近註冊</h2>
+        <ul class="ad-list" id="recent-signups"></ul>
+      </div>
+      <div class="ad-panel">
+        <h2>最近付費</h2>
+        <ul class="ad-list" id="recent-payments"></ul>
+      </div>
+    </div>
+
+    <div class="ad-panel">
+      <h2>各版本下載</h2>
+      <div id="downloads"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="supabase-config.js"></script>
+  <script>
+    const GH_REPO = 'Nisonxi/powerdoze-website';
+
+    function show(id) {
+      ['gate-signin', 'gate-forbidden', 'gate-loading', 'gate-error', 'dashboard']
+        .forEach(function (x) { document.getElementById(x).classList.toggle('hidden', x !== id); });
+    }
+    function esc(s) { var d = document.createElement('div'); d.textContent = (s == null ? '' : String(s)); return d.innerHTML; }
+    function fmt(n) { return (n == null ? 0 : n).toLocaleString(); }
+    function dshort(iso) { return iso ? String(iso).slice(0, 10) : '—'; }
+
+    async function adminSignIn() {
+      if (!sbClient) { alert('服務暫時無法使用，請重新整理頁面'); return; }
+      await sbClient.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: window.location.origin + '/admin.html' },
+      });
+    }
+
+    async function loadSession(retries) {
+      retries = retries == null ? 2 : retries;
+      for (var i = 0; i <= retries; i++) {
+        var r = await sbClient.auth.getSession();
+        if (r.data && r.data.session) return r.data.session;
+        if (i < retries) await new Promise(function (res) { setTimeout(res, 800); });
+      }
+      return null;
+    }
+
+    function bars(container, rows, max) {
+      var m = max || Math.max(1, ...rows.map(function (r) { return r.value; }));
+      container.innerHTML = rows.map(function (r) {
+        var w = Math.round((r.value / m) * 100);
+        return '<div class="bar-row"><span class="lbl">' + esc(r.label) + '</span>' +
+          '<span class="bar-track"><span class="bar-fill' + (r.dim ? ' dim' : '') + '" style="width:' + w + '%"></span></span>' +
+          '<span class="num">' + fmt(r.value) + '</span></div>';
+      }).join('');
+    }
+
+    function renderDashboard(d) {
+      show('dashboard');
+      document.getElementById('gen-at').textContent = '更新於 ' + (d.generatedAt ? new Date(d.generatedAt).toLocaleString() : '');
+
+      document.getElementById('c-reg').textContent = fmt(d.registrations);
+      document.getElementById('c-reg-s').textContent = fmt(d.proProfiles) + ' 人已是 Pro';
+      document.getElementById('c-paid').textContent = fmt(d.paidUsers);
+      document.getElementById('c-paid-s').textContent = fmt(d.devices) + ' 台裝置綁定';
+      document.getElementById('c-rev').textContent = 'NT$' + fmt(d.revenueTW);
+      document.getElementById('c-rev-s').textContent = 'US$' + (d.revenueUSD || 0).toFixed(2);
+
+      // By source
+      var srcRows = Object.keys(d.bySource || {}).map(function (k) { return { label: k, value: d.bySource[k] }; });
+      if (!srcRows.length) srcRows = [{ label: '尚無付費', value: 0, dim: true }];
+      bars(document.getElementById('by-source'), srcRows);
+
+      // Signups sparkline (last 14 days)
+      var days = [];
+      var today = new Date();
+      for (var i = 13; i >= 0; i--) {
+        var dt = new Date(today.getTime() - i * 86400000);
+        var key = dt.toISOString().slice(0, 10);
+        days.push({ key: key, n: (d.signupsByDay && d.signupsByDay[key]) || 0 });
+      }
+      var maxN = Math.max(1, ...days.map(function (x) { return x.n; }));
+      document.getElementById('spark').innerHTML = days.map(function (x) {
+        var h = Math.round((x.n / maxN) * 100);
+        return '<div class="col" style="height:' + Math.max(3, h) + '%" title="' + x.key + ': ' + x.n + '"></div>';
+      }).join('');
+      document.getElementById('spark-from').textContent = days[0].key;
+      document.getElementById('spark-to').textContent = days[days.length - 1].key;
+
+      // Recent lists
+      var rs = d.recentSignups || [];
+      document.getElementById('recent-signups').innerHTML = rs.length ? rs.map(function (u) {
+        return '<li><span class="em">' + esc(u.email || '—') + '</span>' +
+          '<span class="meta">' + (u.isPro ? '<span class="pill pro">Pro</span> ' : '') + dshort(u.createdAt) + '</span></li>';
+      }).join('') : '<li class="empty">尚無註冊</li>';
+
+      var rp = d.recentPayments || [];
+      document.getElementById('recent-payments').innerHTML = rp.length ? rp.map(function (p) {
+        var amt = p.amountTW ? ('NT$' + fmt(p.amountTW)) : (p.amountUSD ? ('US$' + p.amountUSD) : '');
+        return '<li><span class="em">' + esc(p.email || '—') + '</span>' +
+          '<span class="meta">' + esc(p.source || '') + ' · ' + amt + ' · ' + dshort(p.createdAt) + '</span></li>';
+      }).join('') : '<li class="empty">尚無付費</li>';
+
+      // Funnel + downloads (async GitHub)
+      renderFunnel(d, null);
+      fetchDownloads(d);
+    }
+
+    function renderFunnel(d, totalDownloads) {
+      var rows = [
+        { label: '下載', value: totalDownloads == null ? 0 : totalDownloads, dim: totalDownloads == null },
+        { label: '註冊', value: d.registrations || 0 },
+        { label: '付費', value: d.paidUsers || 0 },
+      ];
+      var max = Math.max(1, totalDownloads || 0, d.registrations || 0);
+      bars(document.getElementById('funnel'), rows, max);
+    }
+
+    async function fetchDownloads(d) {
+      try {
+        var res = await fetch('https://api.github.com/repos/' + GH_REPO + '/releases');
+        var releases = await res.json();
+        if (!Array.isArray(releases)) throw new Error('GitHub API');
+        var total = 0;
+        var perVer = releases.map(function (r) {
+          var v = (r.assets || []).reduce(function (s, a) { return s + (a.download_count || 0); }, 0);
+          total += v;
+          return { label: r.tag_name, value: v };
+        });
+        document.getElementById('c-dl').textContent = fmt(total);
+        bars(document.getElementById('downloads'), perVer.length ? perVer : [{ label: '尚無', value: 0, dim: true }]);
+        renderFunnel(d, total);
+      } catch (e) {
+        document.getElementById('c-dl').textContent = '—';
+        document.getElementById('c-dl-s').textContent = 'GitHub 讀取失敗';
+        document.getElementById('downloads').innerHTML = '<div class="empty">無法讀取 GitHub 下載數（API 限流或離線）</div>';
+      }
+    }
+
+    (async function init() {
+      if (!sbClient) { document.getElementById('error-msg').textContent = 'Supabase 未載入'; show('gate-error'); return; }
+      show('gate-loading');
+      try {
+        var session = await loadSession();
+        if (!session) { show('gate-signin'); return; }
+
+        var user = session.user || {};
+        var name = (user.user_metadata && user.user_metadata.full_name) || (user.email || '').split('@')[0];
+        var avatar = user.user_metadata && user.user_metadata.avatar_url;
+        document.getElementById('who').innerHTML =
+          (avatar ? '<img src="' + esc(avatar) + '" alt="">' : '') + '<span>' + esc(name) + '</span>';
+
+        var res = await fetch(SUPABASE_FUNCTIONS_URL + '/admin-stats', {
+          headers: { 'Authorization': 'Bearer ' + session.access_token },
+        });
+        if (res.status === 403) { show('gate-forbidden'); return; }
+        var data = await res.json().catch(function () { return {}; });
+        if (!res.ok || data.status !== 'OK') {
+          document.getElementById('error-msg').textContent = data.message || ('HTTP ' + res.status);
+          show('gate-error'); return;
+        }
+        renderDashboard(data);
+      } catch (e) {
+        document.getElementById('error-msg').textContent = e.message || '未知錯誤';
+        show('gate-error');
+      }
+    })();
+  </script>
+</body>
+</html>
