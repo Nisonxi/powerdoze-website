@@ -66,6 +66,15 @@
     .bar-track { flex: 1; height: 22px; background: var(--ad-panel2); border-radius: 6px; overflow: hidden; }
     .bar-fill { display: block; height: 100%; background: var(--ad-amber); border-radius: 6px; min-width: 2px; transition: width .4s ease; }
     .bar-fill.dim { background: #3a3a44; }
+    /* 下載拆分：新安裝(amber) vs 自更新(灰) 堆疊段 */
+    .dl-track { display: flex; }
+    .dl-track .bar-fill { min-width: 0; border-radius: 0; }
+    .bar-fill.upd { background: #55555f; }
+    .dl-num { width: 72px !important; }
+    .dl-legend { display: flex; gap: 16px; font-size: 12px; color: var(--ad-ink2); margin-bottom: 10px; }
+    .dl-legend .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+    .dl-legend .sw.new { background: var(--ad-amber); }
+    .dl-legend .sw.upd { background: #55555f; }
     .bar-row .num { width: 44px; text-align: right; color: var(--ad-ink); font-variant-numeric: tabular-nums; flex: none; }
 
     /* Funnel */
@@ -313,14 +322,31 @@
       }).join('');
     }
 
-    function renderFunnel(d, totalDownloads) {
+    function renderFunnel(d, newInstalls) {
       var rows = [
-        { label: '下載', value: totalDownloads == null ? 0 : totalDownloads, dim: totalDownloads == null },
+        { label: '新安裝', value: newInstalls == null ? 0 : newInstalls, dim: newInstalls == null },
         { label: '註冊', value: d.registrations || 0 },
         { label: '付費', value: d.paidUsers || 0 },
       ];
-      var max = Math.max(1, totalDownloads || 0, d.registrations || 0);
+      var max = Math.max(1, newInstalls || 0, d.registrations || 0);
       bars(document.getElementById('funnel'), rows, max);
+    }
+
+    // installer(.exe) = 新安裝、zip = App 一鍵自更新；漏斗只看新安裝
+    function renderDownloads(perVer) {
+      var el = document.getElementById('downloads');
+      var max = Math.max.apply(null, perVer.map(function (r) { return r.inst + r.zip; }).concat([1]));
+      el.innerHTML =
+        '<div class="dl-legend"><span><i class="sw new"></i>新安裝 (installer)</span>' +
+        '<span><i class="sw upd"></i>自更新 (zip)</span></div>' +
+        perVer.map(function (r) {
+          var wi = (r.inst / max * 100), wz = (r.zip / max * 100);
+          return '<div class="bar-row"><span class="lbl">' + esc(r.label) + '</span>' +
+            '<span class="bar-track dl-track">' +
+            '<span class="bar-fill" style="width:' + wi + '%"></span>' +
+            '<span class="bar-fill upd" style="width:' + wz + '%"></span>' +
+            '</span><span class="num dl-num">' + fmt(r.inst) + ' + ' + fmt(r.zip) + '</span></div>';
+        }).join('');
     }
 
     async function fetchDownloads(d) {
@@ -328,15 +354,21 @@
         var res = await fetch('https://api.github.com/repos/' + GH_REPO + '/releases');
         var releases = await res.json();
         if (!Array.isArray(releases)) throw new Error('GitHub API');
-        var total = 0;
+        var totalNew = 0, totalUpd = 0;
         var perVer = releases.map(function (r) {
-          var v = (r.assets || []).reduce(function (s, a) { return s + (a.download_count || 0); }, 0);
-          total += v;
-          return { label: r.tag_name, value: v };
+          var inst = 0, zip = 0;
+          (r.assets || []).forEach(function (a) {
+            var c = a.download_count || 0;
+            if ((a.name || '').toLowerCase().endsWith('.zip')) zip += c; else inst += c;
+          });
+          totalNew += inst; totalUpd += zip;
+          return { label: r.tag_name, inst: inst, zip: zip };
         });
-        document.getElementById('c-dl').textContent = fmt(total);
-        bars(document.getElementById('downloads'), perVer.length ? perVer : [{ label: '尚無', value: 0, dim: true }]);
-        renderFunnel(d, total);
+        document.getElementById('c-dl').textContent = fmt(totalNew + totalUpd);
+        document.getElementById('c-dl-s').textContent = '新安裝 ' + fmt(totalNew) + ' · 自更新 ' + fmt(totalUpd);
+        if (perVer.length) renderDownloads(perVer);
+        else document.getElementById('downloads').innerHTML = '<div class="empty">尚無</div>';
+        renderFunnel(d, totalNew);
       } catch (e) {
         document.getElementById('c-dl').textContent = '—';
         document.getElementById('c-dl-s').textContent = 'GitHub 讀取失敗';
