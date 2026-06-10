@@ -86,6 +86,21 @@
     .pill { font-size: 10px; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--ad-line); color: var(--ad-ink2); }
     .pill.pro { color: var(--ad-amber); border-color: rgba(245,166,35,.4); }
     .empty { color: var(--ad-ink3); font-size: 13px; padding: 8px 0; }
+
+    /* Bug reports */
+    #bug-badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--ad-amber); color: #1a1a1a; font-weight: 700; margin-left: 6px; }
+    #bug-badge.zero { background: var(--ad-panel2); color: var(--ad-ink3); font-weight: 500; }
+    .bug { border-top: 1px solid var(--ad-line); padding: 12px 0; }
+    .bug:first-child { border-top: none; }
+    .bug-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+    .bug-desc { color: var(--ad-ink); font-size: 14px; white-space: pre-wrap; word-break: break-word; line-height: 1.5; }
+    .bug-meta { font-size: 12px; color: var(--ad-ink3); margin-top: 7px; display: flex; flex-wrap: wrap; gap: 4px 14px; font-variant-numeric: tabular-nums; }
+    .bug-meta a { color: var(--ad-amber); text-decoration: none; }
+    .bug details { margin-top: 7px; }
+    .bug summary { cursor: pointer; font-size: 12px; color: var(--ad-ink3); }
+    .bug pre { background: var(--ad-bg); border: 1px solid var(--ad-line); border-radius: 8px; padding: 10px; font-size: 11px; color: var(--ad-ink2); overflow-x: auto; margin: 6px 0 0; white-space: pre-wrap; }
+    .bug .st { font-size: 10px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--ad-line); color: var(--ad-ink3); flex: none; }
+    .bug .st.new { color: var(--ad-amber); border-color: rgba(245,166,35,.4); }
   </style>
 </head>
 <body class="admin">
@@ -164,6 +179,11 @@
         <h2>最近付費</h2>
         <ul class="ad-list" id="recent-payments"></ul>
       </div>
+    </div>
+
+    <div class="ad-panel">
+      <h2>Bug 回報 <span id="bug-badge"></span></h2>
+      <div id="bug-reports"></div>
     </div>
 
     <div class="ad-panel">
@@ -259,9 +279,38 @@
           '<span class="meta">' + esc(p.source || '') + ' · ' + amt + ' · ' + dshort(p.createdAt) + '</span></li>';
       }).join('') : '<li class="empty">尚無付費</li>';
 
+      renderBugs(d);
+
       // Funnel + downloads (async GitHub)
       renderFunnel(d, null);
       fetchDownloads(d);
+    }
+
+    function renderBugs(d) {
+      var n = d.newBugs || 0;
+      var badge = document.getElementById('bug-badge');
+      badge.textContent = n > 0 ? (n + ' 待處理') : '0';
+      badge.className = n > 0 ? '' : 'zero';
+      var bugs = d.bugReports || [];
+      var el = document.getElementById('bug-reports');
+      if (!bugs.length) { el.innerHTML = '<div class="empty">尚無 Bug 回報</div>'; return; }
+      el.innerHTML = bugs.map(function (b) {
+        var contact = b.contactEmail || b.userEmail;
+        var meta = [];
+        if (contact) meta.push('<a href="mailto:' + esc(contact) + '">' + esc(contact) + '</a>');
+        if (b.appVersion) meta.push('v' + esc(b.appVersion));
+        if (b.os) meta.push(esc(b.os));
+        if (b.backendStatus) meta.push('backend:' + esc(b.backendStatus));
+        if (b.createdAt) meta.push(esc(new Date(b.createdAt).toLocaleString()));
+        var metaHtml = meta.map(function (x) { return '<span>' + x + '</span>'; }).join('');
+        var crash = b.crashExcerpt
+          ? '<details><summary>crash log</summary><pre>' + esc(b.crashExcerpt) + '</pre></details>' : '';
+        return '<div class="bug">' +
+          '<div class="bug-head"><div class="bug-desc">' + esc(b.description || '') + '</div>' +
+          '<span class="st' + (b.status === 'new' ? ' new' : '') + '">' + esc(b.status || 'new') + '</span></div>' +
+          '<div class="bug-meta">' + metaHtml + '</div>' + crash +
+          '</div>';
+      }).join('');
     }
 
     function renderFunnel(d, totalDownloads) {
