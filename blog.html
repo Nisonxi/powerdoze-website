@@ -53,16 +53,16 @@
 <section class="p-section">
   <div class="container" style="max-width: 720px;">
     <span class="p-eyebrow">Blog</span>
-    <h1 class="p-h2" style="margin: 24px 0 8px;">Notes on power, in writing</h1>
-    <p class="p-h2-sub" style="margin: 0 0 48px;">Windows power management, PC energy savings, and how PowerDoze is built.</p>
+    <h1 class="p-h2" style="margin: 24px 0 8px;" data-i18n="blogTitle">Notes on power, in writing</h1>
+    <p class="p-h2-sub" style="margin: 0 0 48px;" data-i18n="blogSub">Windows power management, PC energy savings, and how PowerDoze is built.</p>
 
     <div class="p-feat" style="margin-bottom: 16px;">
       <span class="p-feat-num">2026-06-11</span>
-      <h3><a href="blog-why-automatic-power-management.html" style="color: inherit;">Why Your Windows PC Needs Automatic Power Management</a></h3>
-      <p>Your PC sits idle most of the day at close to full power. What that actually costs per year, why Windows' built-in power plans and sleep timer can't fix it, and the four signals automatic power management should follow.</p>
+      <h3><a href="blog-why-automatic-power-management.html" style="color: inherit;" data-i18n="blogA1t">Why Your Windows PC Needs Automatic Power Management</a></h3>
+      <p data-i18n="blogA1d">Your PC sits idle most of the day at close to full power. What that actually costs per year, why Windows' built-in power plans and sleep timer can't fix it, and the four signals automatic power management should follow.</p>
       <p style="margin-top: 8px; font-family: var(--font-mono); font-size: 12px;">
-        <a href="blog-why-automatic-power-management.html">Read in English →</a> ·
-        <a href="blog-why-automatic-power-management-zh.html">中文版 →</a>
+        <a href="blog-why-automatic-power-management.html" data-i18n="blogReadEn">Read in English →</a> ·
+        <a href="blog-why-automatic-power-management-zh.html" data-i18n="blogReadZh">中文版 →</a>
       </p>
     </div>
 
@@ -96,6 +96,19 @@
     });
   })();
   if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言是中文（繁/簡）時，文章標題連到中文版；其他語言連英文版
+  (function() {
+    var EN = 'blog-why-automatic-power-management.html';
+    var ZH = 'blog-why-automatic-power-management-zh.html';
+    function sync() {
+      var lang = localStorage.getItem('pd_lang') || document.documentElement.lang || 'en';
+      var href = lang.indexOf('zh') === 0 ? ZH : EN;
+      document.querySelectorAll('a[data-i18n="blogA1t"]').forEach(function(a) { a.href = href; });
+    }
+    var sel = document.getElementById('lang-select');
+    if (sel) sel.addEventListener('change', sync);
+    sync();
+  })();
 </script>
 </body>
 </html>

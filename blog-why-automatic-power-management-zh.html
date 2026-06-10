@@ -147,6 +147,17 @@
     });
   })();
   if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 留在中文版；其他語言 → 跳英文版
+  (function() {
+    var EN = 'blog-why-automatic-power-management.html';
+    var ZH = 'blog-why-automatic-power-management-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
 </script>
 </body>
 </html>
