@@ -265,7 +265,7 @@ body.plain {
   margin: 0;
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: clamp(32px, 4vw, 48px);
+  font-size: clamp(30px, 3.4vw, 42px);
   line-height: 1.15;
   letter-spacing: -0.015em;
   color: var(--ink);
