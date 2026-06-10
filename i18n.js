@@ -1,7 +1,7 @@
 const LANGS = {
   en: { cmp_heroEyebrow: 'Comparison', ft_heroEyebrow: 'Features', uc_heroEyebrow: 'Use cases', vs_heroEyebrow: 'Comparison', cmp_vsWindows: 'vs Windows native &amp; PowerToys →', ctaGetStarted: 'Get started', ft_f2Li5: 'PCIe ASPM link state power management',
     navHome: 'Home', navFeatures: 'Features', navFreeVsPro: 'Free vs Pro',
-    navPricing: 'Pricing',
+    navPricing: 'Pricing', navBlog: 'Blog',
     navDownload: 'Download',
     navInstall: 'Install Guide',
     heroTitle: 'Automatic power management<br>Sleep when idle, full speed when busy',
@@ -381,7 +381,7 @@ const LANGS = {
 
   'zh-TW': { cmp_heroEyebrow: '比較', ft_heroEyebrow: '功能', uc_heroEyebrow: '使用情境', vs_heroEyebrow: '比較', cmp_vsWindows: '對比 Windows 內建與 PowerToys →', ctaGetStarted: '開始使用', ft_f2Li5: 'PCIe ASPM 連結狀態電源管理',
     navHome: '首頁', navFeatures: '功能', navFreeVsPro: 'Free vs Pro',
-    navPricing: '方案',
+    navPricing: '方案', navBlog: '部落格',
     navDownload: '下載',
     navInstall: '安裝指南',
     heroTitle: 'Windows 自動電源管理<br>該休息，該全力',
@@ -761,7 +761,7 @@ const LANGS = {
 
   'zh-CN': { cmp_heroEyebrow: '对比', ft_heroEyebrow: '功能', uc_heroEyebrow: '使用场景', vs_heroEyebrow: '对比', cmp_vsWindows: '对比 Windows 内置与 PowerToys →', ctaGetStarted: '开始使用', ft_f2Li5: 'PCIe ASPM 链路状态电源管理',
     navHome: '首页', navFeatures: '功能', navFreeVsPro: 'Free vs Pro',
-    navPricing: '方案',
+    navPricing: '方案', navBlog: '博客',
     navDownload: '下载',
     navInstall: '安装指南',
     heroTitle: 'Windows 自动电源管理<br>该休息，该全力',
@@ -1113,7 +1113,7 @@ const LANGS = {
   },
 
   ja: { cmp_heroEyebrow: '比較', ft_heroEyebrow: '機能', uc_heroEyebrow: 'ユースケース', vs_heroEyebrow: '比較', cmp_vsWindows: 'Windows 標準・PowerToys との比較 →', ctaGetStarted: '始める', ft_f2Li5: 'PCIe ASPM リンク状態電源管理',
-    navHome: 'ホーム', navFeatures: '機能', navFreeVsPro: 'Free vs Pro', navPricing: '料金', navDownload: 'ダウンロード', navInstall: 'インストール',
+    navHome: 'ホーム', navFeatures: '機能', navFreeVsPro: 'Free vs Pro', navPricing: '料金', navBlog: 'ブログ', navDownload: 'ダウンロード', navInstall: 'インストール',
     heroTitle: 'Windows の自動電源管理<br>休むときは休み、必要なら全力',
     heroTagline: 'PowerDoze は時間・場所・作業内容に応じて電源モードを自動切り替え — 節電し、ファン音を抑え、会議やダウンロード中に勝手にスリープしません。デスクトップもノートも対応。',
     heroDownload: '無料ダウンロード', heroSee: 'Pro 機能を見る', heroBadge: 'Windows 10 / 11',
@@ -1446,7 +1446,7 @@ const LANGS = {
   },
 
   ko: { cmp_heroEyebrow: '비교', ft_heroEyebrow: '기능', uc_heroEyebrow: '사용 사례', vs_heroEyebrow: '비교', cmp_vsWindows: 'Windows 기본 및 PowerToys와 비교 →', ctaGetStarted: '시작하기', ft_f2Li5: 'PCIe ASPM 링크 상태 전원 관리',
-    navHome: '홈', navFeatures: '기능', navFreeVsPro: 'Free vs Pro', navPricing: '가격', navDownload: '다운로드', navInstall: '설치 가이드',
+    navHome: '홈', navFeatures: '기능', navFreeVsPro: 'Free vs Pro', navPricing: '가격', navBlog: '블로그', navDownload: '다운로드', navInstall: '설치 가이드',
     heroTitle: 'Windows 자동 전원 관리<br>쉴 때는 쉬고, 필요하면 전력',
     heroTagline: 'PowerDoze는 시간, 위치, 현재 작업에 따라 전원 모드를 자동 전환 — 절전하고, 팬 소음을 줄이며, 회의나 다운로드 중 멋대로 절전되지 않습니다. 데스크톱과 노트북 모두 지원.',
     heroDownload: '무료 다운로드', heroSee: 'Pro 기능 보기', heroBadge: 'Windows 10 / 11',
@@ -1778,7 +1778,7 @@ const LANGS = {
   },
 
   fr: { cmp_heroEyebrow: 'Comparaison', ft_heroEyebrow: 'Fonctionnalités', uc_heroEyebrow: 'Cas d\'usage', vs_heroEyebrow: 'Comparaison', cmp_vsWindows: 'vs Windows natif &amp; PowerToys →', ctaGetStarted: 'Commencer', ft_f2Li5: 'Gestion d\'alimentation PCIe ASPM (link state)',
-    navHome: 'Accueil', navFeatures: 'Fonctions', navFreeVsPro: 'Free vs Pro', navPricing: 'Tarifs', navDownload: 'T\u00e9l\u00e9charger', navInstall: 'Installation',
+    navHome: 'Accueil', navFeatures: 'Fonctions', navFreeVsPro: 'Free vs Pro', navPricing: 'Tarifs', navBlog: 'Blog', navDownload: 'T\u00e9l\u00e9charger', navInstall: 'Installation',
     heroTitle: 'Gestion automatique de l\'alimentation<br>Veille au repos, pleine puissance au besoin',
     heroTagline: 'PowerDoze change de mode d\'alimentation selon l\'heure, le lieu et votre activit\u00e9 \u2014 \u00e9conomise l\'\u00e9nergie, r\u00e9duit le bruit du ventilateur et ne se met jamais en veille en pleine t\u00e2che. Ordinateur de bureau et portable.',
     heroDownload: 'T\u00e9l\u00e9charger gratuitement', heroSee: 'Voir les fonctions Pro', heroBadge: 'Windows 10 / 11',
@@ -2110,7 +2110,7 @@ const LANGS = {
   },
 
   de: { cmp_heroEyebrow: 'Vergleich', ft_heroEyebrow: 'Funktionen', uc_heroEyebrow: 'Anwendungsfälle', vs_heroEyebrow: 'Vergleich', cmp_vsWindows: 'vs Windows nativ &amp; PowerToys →', ctaGetStarted: 'Loslegen', ft_f2Li5: 'PCIe-ASPM-Link-State-Energieverwaltung',
-    navHome: 'Startseite', navFeatures: 'Funktionen', navFreeVsPro: 'Free vs Pro', navPricing: 'Preise', navDownload: 'Download', navInstall: 'Installation',
+    navHome: 'Startseite', navFeatures: 'Funktionen', navFreeVsPro: 'Free vs Pro', navPricing: 'Preise', navBlog: 'Blog', navDownload: 'Download', navInstall: 'Installation',
     heroTitle: 'Automatische Energieverwaltung<br>Schl\u00e4ft bei Leerlauf, volle Leistung bei Bedarf',
     heroTagline: 'PowerDoze wechselt den Energiemodus nach Zeit, Ort und T\u00e4tigkeit \u2014 spart Strom, senkt den L\u00fcfterl\u00e4rm und geht nie mitten in der Arbeit in den Ruhezustand. F\u00fcr Desktop und Laptop.',
     heroDownload: 'Kostenlos herunterladen', heroSee: 'Pro-Funktionen ansehen', heroBadge: 'Windows 10 / 11',

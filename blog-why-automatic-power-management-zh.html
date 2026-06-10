@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>為什麼你的 Windows 電腦需要自動電源管理 — PowerDoze 部落格</title>
+  <meta name="description" content="你的電腦一天大部分時間都在全功率發呆。這篇算給你看：發呆的真實電費、為什麼 Windows 內建設定解決不了、以及「自動電源管理」應該長什麼樣。">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-why-automatic-power-management-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-why-automatic-power-management.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-why-automatic-power-management-zh.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="為什麼你的 Windows 電腦需要自動電源管理">
+  <meta property="og:description" content="電腦一天大部分時間在全功率發呆。算給你看真實成本，以及怎麼自動化解決。">
+  <meta property="og:url" content="https://powerdoze.app/blog-why-automatic-power-management-zh.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="為什麼你的 Windows 電腦需要自動電源管理">
+  <meta name="twitter:description" content="電腦一天大部分時間在全功率發呆。算給你看真實成本，以及怎麼自動化解決。">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "為什麼你的 Windows 電腦需要自動電源管理",
+    "datePublished": "2026-06-11",
+    "dateModified": "2026-06-11",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-why-automatic-power-management-zh.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "zh-Hant"
+  }
+  </script>
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="blog.html" data-i18n="navBlog">Blog</a>
+      <a href="index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <span class="p-eyebrow">Blog</span>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">為什麼你的 Windows 電腦需要自動電源管理</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-06-11 · <a href="blog-why-automatic-power-management.html" style="color: var(--ink-3);">English version</a>
+    </p>
+
+    <article class="p-prose">
+      <p>關於你正在用的這台電腦，有個不太舒服的事實：它一生中大部分的時間都在「待命」——幾乎什麼都沒做，卻維持接近全功率的狀態，整路吃電。</p>
+
+      <h2>你的電腦發呆的時間比你想的多得多</h2>
+      <p>回想普通的一天：去吃午餐——電腦空轉一小時；開會——空轉；掛著下載過夜——它用 2% 的能力做事，卻以全功率空轉八小時。加總起來，一台典型的家用或辦公桌機<strong>每天真正工作大概只有 2–4 小時</strong>，剩下 20 個小時，它是一台很貴的、會發光的暖爐。</p>
+      <p>而「發呆」並不便宜。一般桌機停在桌面什麼都不做時要吃 <strong>50–100 瓦</strong>；有獨顯加一身 RGB 的遊戲機，待機功耗更高。對比睡眠狀態的 1–5 瓦——中間的差距，就是你默默繳出去的電費。</p>
+
+      <h2>「就讓它開著」到底花多少錢</h2>
+      <p>簡單算一下：一台以 75 瓦待機、24 小時開著的桌機，一年燒掉約 <strong>657 度電</strong>（75W × 24h × 365）。以台電夏月級距常見的每度約 NT$3–5 來算，一年大約 <strong>NT$2,000–3,300</strong>——而這台機器多數時間只是在等你回來。家裡跑兩三台（常開機玩家的日常），再乘上去。</p>
+      <p>重點不是數字多大，而是這筆錢是<em>純浪費</em>——你什麼都沒換到——而且它完全可以用自動化省掉。</p>
+
+      <h2>為什麼 Windows 內建設定解決不了</h2>
+      <p>Windows 給你的工具十多年來沒變過，就兩樣：</p>
+      <ul>
+        <li><strong>電源計畫</strong>——埋在控制台裡的靜態設定檔，永遠不會自己切換。你 2023 年選了什麼，現在跑的就是什麼。</li>
+        <li><strong>睡眠計時器</strong>——一個全域的「閒置 N 分鐘後睡眠」，分不出<em>你人走了的閒置</em>和<em>下載、轉檔、Plex 串流進行中的閒置</em>。設短了，過夜任務被砍；設長了（或像多數人乾脆關掉），又回到整夜燒電。</li>
+      </ul>
+      <p>這兩樣工具都不知道現在幾點、跑著什麼程式、筆電在哪裡、你是不是在開會。它們是「設定」，不是「行為」。</p>
+
+      <h2>手動繞路的無限輪迴</h2>
+      <p>於是大家開始自力救濟：打遊戲前手動切高效能、掛大檔前先關睡眠、用完再開回來（通常是忘記開回來）、或乾脆整台關機然後失去遠端連線。每一個土方法都是對你注意力的一筆小額重複課稅——而這種事本來就該是電腦替人類處理的。</p>
+
+      <h2>「自動」應該長什麼樣</h2>
+      <p>電源行為應該跟著四種訊號走，而且全程不需要你出手：</p>
+      <ul>
+        <li><strong>時間</strong>——工作時段全速，深夜自動切到限制功耗的省電模式。如果機器必須整夜醒著掛下載、跑家用伺服器，它可以<em>保持清醒的同時</em>壓低 CPU 上限、改被動散熱、限制 GPU 功耗。</li>
+        <li><strong>程式</strong>——下載軟體、備份工作在「保持清醒」白名單上，電腦就不會睡到一半砍掉任務；遊戲或視訊會議在前景，睡眠計時自動暫停，你什麼都不用按。</li>
+        <li><strong>地點</strong>——筆電連上公司 Wi-Fi 就套用公司設定檔，回家連家裡網路就換回來。不用 GPS，用的就是你本來就連著的 SSID。</li>
+        <li><strong>人在不在</strong>——你起身離開，幾分鐘後機器自動降速；你一動滑鼠，立刻無縫還原。關鍵是它<em>不能誤判</em>——開會、看電影時不該觸發。</li>
+      </ul>
+
+      <h2>PowerDoze 的位置</h2>
+      <p>這就是我們自己想用卻找不到的工具，所以做了一個。<a href="./">PowerDoze</a> 在 Windows 10/11 上把四種訊號全部接齊：排程電源模式（打包 CPU 上限、散熱策略、螢幕逾時、NVIDIA GPU 功耗限制）、保持清醒白名單、全螢幕與會議偵測、Wi-Fi 地點設定檔、離開模式——再加一頁統計，把你實際省下的度數和錢算給你看，讓你能驗證這一切到底值不值。</p>
+      <p>核心功能——排程、電源模式、白名單、硬體監控——<strong>永久免費、不用註冊帳號</strong>。一切都在你的電腦本機執行，App 不送任何遙測資料。進階自動化有一次買斷的 Pro 版（不訂閱），需要再說。</p>
+
+      <h2>誰其實不需要這個</h2>
+      <p>誠實時間：如果你是筆電族、一天用幾小時、用完就闔蓋，Windows 預設其實夠用——電池本身就逼出了合理的行為。自動電源管理回報最大的是<strong>桌機、24 小時常開機、多台機器的玩家，以及老是砍掉自己下載任務的人</strong>。不是這些情境的話，你不需要多裝一個工具。</p>
+
+      <p style="margin-top: 40px;"><a href="index.html#download" class="p-btn p-btn-primary">免費下載 PowerDoze →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+</script>
+</body>
+</html>
