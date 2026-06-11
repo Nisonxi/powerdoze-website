@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Windows Sleep Settings: The Complete Guide (and Where They Fall Short) — PowerDoze Blog</title>
+  <meta name="description" content="Every Windows sleep setting explained: where they live, sleep vs hibernate, why your PC won't sleep (powercfg /requests), why it sleeps when it shouldn't, and what the built-in tools can't do.">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-windows-sleep-settings-guide.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-windows-sleep-settings-guide-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-windows-sleep-settings-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Windows Sleep Settings: The Complete Guide (and Where They Fall Short)">
+  <meta property="og:description" content="Every Windows sleep setting explained — including the powercfg commands that diagnose why your PC won't sleep, and the limits no setting can fix.">
+  <meta property="og:url" content="https://powerdoze.app/blog-windows-sleep-settings-guide.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Windows Sleep Settings: The Complete Guide">
+  <meta name="twitter:description" content="Where every sleep setting lives, the powercfg commands worth knowing, and the limits no setting can fix.">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Windows Sleep Settings: The Complete Guide (and Where They Fall Short)",
+    "datePublished": "2026-06-11",
+    "dateModified": "2026-06-11",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-windows-sleep-settings-guide.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "en"
+  }
+  </script>
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="blog.html" data-i18n="navBlog">Blog</a>
+      <a href="index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="blog-windows-sleep-settings-guide-zh.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">中文版 →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">Windows Sleep Settings: The Complete Guide (and Where They Fall Short)</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-06-11
+    </p>
+
+    <article class="p-prose">
+      <p>Sleep settings are the most-touched, least-understood corner of Windows. This guide covers where every setting actually lives, the difference between the sleep states, the <code>powercfg</code> commands that solve the two classic problems — <em>"my PC won't sleep"</em> and <em>"my PC sleeps when it shouldn't"</em> — and the structural limits that no built-in setting can fix.</p>
+
+      <h2>Where the settings actually live</h2>
+      <p>Windows splits sleep configuration across three places, which is half the confusion:</p>
+      <ul>
+        <li><strong>Settings → System → Power &amp; battery</strong> — the modern page. Screen-off and sleep timers, separately for plugged-in and on-battery. This is all most people ever see.</li>
+        <li><strong>Control Panel → Power Options</strong> — the classic power plans (Balanced / High performance / Power saver), still fully alive underneath. "Change advanced power settings" hides the real depth: hybrid sleep, hibernate-after, USB selective suspend, wake timers, lid and power-button actions.</li>
+        <li><strong><code>powercfg</code></strong> — the command line that sees everything. The diagnostic commands below are powercfg; there is no GUI equivalent for most of them.</li>
+      </ul>
+
+      <h2>Sleep, Hibernate, Hybrid, Modern Standby — 30 seconds</h2>
+      <ul>
+        <li><strong>Sleep (S3)</strong> — RAM stays powered (1–5 W), everything else off. Wakes in ~1 second. Lost on power cut.</li>
+        <li><strong>Hibernate (S4)</strong> — RAM written to disk (<code>hiberfil.sys</code>), true 0 W. Slower wake. Survives power cuts. Enable with <code>powercfg /hibernate on</code>.</li>
+        <li><strong>Hybrid sleep</strong> — sleep + RAM also written to disk. Desktop default; best of both at the cost of disk writes.</li>
+        <li><strong>Modern Standby (S0 low power idle)</strong> — newer laptops. The machine stays half-awake to sync mail and such; also the reason some laptops cook in backpacks. Check which you have: <code>powercfg /a</code>.</li>
+      </ul>
+
+      <h2>Problem 1: "My PC won't sleep"</h2>
+      <p>Something is holding a wake request. Find it in 10 seconds — run in an elevated terminal:</p>
+      <p><code>powercfg /requests</code></p>
+      <p>Whatever appears under DISPLAY / SYSTEM / AWAYMODE is the culprit — typically a browser tab playing audio, a stuck driver, or an overzealous background app. Other usual suspects:</p>
+      <ul>
+        <li><strong>Wake timers</strong> — scheduled tasks waking the machine: <code>powercfg /waketimers</code> to list, and "Allow wake timers" in advanced power settings to disable.</li>
+        <li><strong>What woke it last</strong> — <code>powercfg /lastwake</code>.</li>
+        <li><strong>Devices allowed to wake it</strong> — <code>powercfg /devicequery wake_armed</code>; mice and network adapters are the classics. Disable per-device in Device Manager → Power Management.</li>
+        <li><strong>The full report</strong> — <code>powercfg /energy</code> generates an HTML report of everything misbehaving.</li>
+      </ul>
+
+      <h2>Problem 2: "It sleeps when it shouldn't"</h2>
+      <p>The opposite case: you're downloading a 60 GB game, rendering a video, or running a server — and the global timer kills it. Windows' built-in answers are all bad in a different way:</p>
+      <ul>
+        <li><strong>Set sleep to Never</strong> — works, burns power 24/7 from then on, because you will forget to set it back.</li>
+        <li><strong>Switch power plans by hand</strong> — works, until you forget. Same failure mode.</li>
+        <li><strong>presentationsettings.exe</strong> — keeps the PC awake during presentations; manual on, manual off.</li>
+      </ul>
+      <p>What's missing is the obvious thing: <em>"stay awake while this app is doing something, sleep normally otherwise."</em> Windows has no setting for that — the sleep timer is one global number that can't see what's running.</p>
+
+      <h2>Sensible baseline settings</h2>
+      <ul>
+        <li><strong>Desktop</strong> — screen off 10 min, sleep 30 min, hybrid sleep on, wake timers off (unless you use scheduled backups that must wake the machine).</li>
+        <li><strong>Laptop, plugged in</strong> — screen off 10 min, sleep 30 min.</li>
+        <li><strong>Laptop, battery</strong> — screen off 5 min, sleep 10–15 min, hibernate after 60 min.</li>
+        <li>Disable mouse wake if your PC wakes at night (<code>wake_armed</code> above) — desk vibration is enough to trigger some mice.</li>
+      </ul>
+
+      <h2>The structural limit no setting fixes</h2>
+      <p>Even perfectly tuned, Windows sleep settings are <strong>one static number</strong>. They can't be different at 2 PM and 2 AM. They can't tell a download from idleness. They can't switch when you launch a game, join a meeting, or move your laptop from office to home. Every "fix" above is you compensating, manually, for settings that can't see context.</p>
+      <p>That gap is why we built <a href="./">PowerDoze</a>: schedule rules pick a power mode per time slot, a whitelist keeps the machine awake while specific apps are running (and lets it sleep afterward), fullscreen and meeting detection pause timers automatically, and an away mode throttles the machine when you leave. The core features are free, no account, fully local. If you only fix your settings with this guide, that's a win too — but if you're tired of being the manual automation layer, that's the tool.</p>
+
+      <h2>powercfg quick reference</h2>
+      <ul>
+        <li><code>powercfg /a</code> — sleep states this PC supports</li>
+        <li><code>powercfg /requests</code> — what's blocking sleep right now</li>
+        <li><code>powercfg /waketimers</code> — scheduled wakes</li>
+        <li><code>powercfg /lastwake</code> — what woke it last time</li>
+        <li><code>powercfg /devicequery wake_armed</code> — devices allowed to wake it</li>
+        <li><code>powercfg /energy</code> — full misbehavior report (HTML)</li>
+        <li><code>powercfg /hibernate on|off</code> — enable/disable hibernate</li>
+        <li><code>powercfg /batteryreport</code> — battery health history (laptops)</li>
+      </ul>
+
+      <p style="margin-top: 40px;"><a href="index.html#download" class="p-btn p-btn-primary">Download PowerDoze free →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 跳中文版；其他語言 → 英文版
+  (function() {
+    var EN = 'blog-windows-sleep-settings-guide.html';
+    var ZH = 'blog-windows-sleep-settings-guide-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>

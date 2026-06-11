@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Windows 睡眠設定完全指南（以及它做不到的事）— PowerDoze 部落格</title>
+  <meta name="description" content="所有 Windows 睡眠設定一次講清楚：設定藏在哪、睡眠/休眠差在哪、電腦不睡覺怎麼查（powercfg /requests）、不該睡卻睡掉怎麼辦，以及內建設定的天生極限。">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-windows-sleep-settings-guide-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-windows-sleep-settings-guide.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-windows-sleep-settings-guide-zh.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Windows 睡眠設定完全指南（以及它做不到的事）">
+  <meta property="og:description" content="設定藏在哪、睡眠/休眠差在哪、powercfg 診斷指令、以及內建設定的天生極限。">
+  <meta property="og:url" content="https://powerdoze.app/blog-windows-sleep-settings-guide-zh.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Windows 睡眠設定完全指南">
+  <meta name="twitter:description" content="設定藏在哪、powercfg 診斷指令、以及內建設定的天生極限。">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Windows 睡眠設定完全指南（以及它做不到的事）",
+    "datePublished": "2026-06-11",
+    "dateModified": "2026-06-11",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-windows-sleep-settings-guide-zh.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "zh-Hant"
+  }
+  </script>
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="blog.html" data-i18n="navBlog">Blog</a>
+      <a href="index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="blog-windows-sleep-settings-guide.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">English version →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">Windows 睡眠設定完全指南（以及它做不到的事）</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-06-11
+    </p>
+
+    <article class="p-prose">
+      <p>睡眠設定是 Windows 裡最常被動到、卻最少人真正搞懂的角落。這篇一次講清楚：每個設定實際藏在哪、各種睡眠狀態差在哪、用 <code>powercfg</code> 指令解決兩大經典問題——「<em>電腦不肯睡</em>」和「<em>不該睡卻睡掉</em>」——以及任何內建設定都修不了的結構性極限。</p>
+
+      <h2>設定到底藏在哪</h2>
+      <p>Windows 把睡眠設定拆在三個地方，混亂有一半是這樣來的：</p>
+      <ul>
+        <li><strong>設定 → 系統 → 電源與電池</strong>——新版頁面。關螢幕和睡眠的計時器，插電/用電池分開設。多數人只看過這頁。</li>
+        <li><strong>控制台 → 電源選項</strong>——傳統電源計畫（平衡/高效能/省電），底層仍完全有效。「變更進階電源設定」裡藏著真正的深度：混合式睡眠、多久後休眠、USB 選擇性暫停、喚醒計時器、闔蓋與電源鍵行為。</li>
+        <li><strong><code>powercfg</code></strong>——看得到一切的命令列。下面的診斷指令都是 powercfg，多數沒有對應的圖形介面。</li>
+      </ul>
+
+      <h2>睡眠、休眠、混合式、Modern Standby——30 秒搞懂</h2>
+      <ul>
+        <li><strong>睡眠（S3）</strong>——記憶體保持供電（1–5 瓦），其他全關。約 1 秒喚醒。斷電資料就沒了。</li>
+        <li><strong>休眠（S4）</strong>——記憶體內容寫進硬碟（<code>hiberfil.sys</code>），真正 0 瓦。喚醒較慢，斷電也不怕。開啟指令：<code>powercfg /hibernate on</code>。</li>
+        <li><strong>混合式睡眠</strong>——睡眠＋同時把記憶體寫進硬碟。桌機預設，兩者優點兼得，代價是多一次磁碟寫入。</li>
+        <li><strong>Modern Standby（S0 低電力閒置）</strong>——較新的筆電。半睡半醒以便收信同步——也是有些筆電在背包裡發燙的原因。查你的機器支援哪種：<code>powercfg /a</code>。</li>
+      </ul>
+
+      <h2>問題一：「電腦不肯睡」</h2>
+      <p>一定是有東西掛著喚醒請求。10 秒揪出來——用系統管理員終端機執行：</p>
+      <p><code>powercfg /requests</code></p>
+      <p>DISPLAY / SYSTEM / AWAYMODE 底下列出來的就是兇手——通常是播著聲音的瀏覽器分頁、卡住的驅動程式、或太積極的背景程式。其他慣犯：</p>
+      <ul>
+        <li><strong>喚醒計時器</strong>——排程工作把電腦叫醒：<code>powercfg /waketimers</code> 列出來；進階電源設定裡的「允許喚醒計時器」可關閉。</li>
+        <li><strong>上次是誰叫醒它</strong>——<code>powercfg /lastwake</code>。</li>
+        <li><strong>哪些裝置有權叫醒它</strong>——<code>powercfg /devicequery wake_armed</code>；滑鼠和網卡是經典慣犯。到裝置管理員 → 電源管理逐一關閉。</li>
+        <li><strong>完整報告</strong>——<code>powercfg /energy</code> 產出一份 HTML，列出所有行為不檢的東西。</li>
+      </ul>
+
+      <h2>問題二：「不該睡卻睡掉」</h2>
+      <p>反過來的情況：你掛著 60 GB 的遊戲下載、轉檔到一半、或跑著伺服器——全域計時器一到就把它砍了。Windows 內建的解法每個都爛在不同地方：</p>
+      <ul>
+        <li><strong>睡眠設成「永不」</strong>——有效，然後從此 24 小時燒電，因為你一定忘記改回來。</li>
+        <li><strong>手動切電源計畫</strong>——有效，直到你忘記。同一種死法。</li>
+        <li><strong>presentationsettings.exe</strong>——簡報模式保持清醒；手動開、手動關。</li>
+      </ul>
+      <p>缺的就是那個最理所當然的功能：「<em>這個程式在做事的時候保持清醒，做完照常睡。</em>」Windows 沒有這種設定——睡眠計時器是一個全域數字，看不見現在跑著什麼。</p>
+
+      <h2>合理的基準設定</h2>
+      <ul>
+        <li><strong>桌機</strong>——關螢幕 10 分鐘、睡眠 30 分鐘、混合式睡眠開、喚醒計時器關（除非你有必須喚醒電腦的排程備份）。</li>
+        <li><strong>筆電（插電）</strong>——關螢幕 10 分鐘、睡眠 30 分鐘。</li>
+        <li><strong>筆電（電池）</strong>——關螢幕 5 分鐘、睡眠 10–15 分鐘、60 分鐘後休眠。</li>
+        <li>半夜電腦自己醒來的話，關掉滑鼠喚醒權（用上面的 <code>wake_armed</code> 查）——桌子震一下就足以觸發某些滑鼠。</li>
+      </ul>
+
+      <h2>任何設定都修不了的結構性極限</h2>
+      <p>就算調到完美，Windows 的睡眠設定仍然是<strong>一個靜態數字</strong>。它沒辦法下午 2 點一個樣、凌晨 2 點另一個樣；分不出「掛著下載」和「人走了」；不會在你開遊戲、進會議、或把筆電從公司帶回家時自動切換。上面每一個「解法」，本質都是你在手動補償一套看不見情境的設定。</p>
+      <p>這個缺口就是我們做 <a href="./">PowerDoze</a> 的原因：排程規則替每個時段選電源模式、白名單讓特定程式跑著時不睡（跑完照常睡）、全螢幕與會議偵測自動暫停計時、離開模式在你起身後自動降速。核心功能免費、不用帳號、完全本機。如果這篇指南就解決了你的問題，那也很好——但如果你受夠了自己當人肉自動化層，工具在這裡。</p>
+
+      <h2>powercfg 快速參考</h2>
+      <ul>
+        <li><code>powercfg /a</code>——這台電腦支援哪些睡眠狀態</li>
+        <li><code>powercfg /requests</code>——現在是誰擋著不讓睡</li>
+        <li><code>powercfg /waketimers</code>——排程喚醒清單</li>
+        <li><code>powercfg /lastwake</code>——上次是誰叫醒它</li>
+        <li><code>powercfg /devicequery wake_armed</code>——有權喚醒它的裝置</li>
+        <li><code>powercfg /energy</code>——完整異常報告（HTML）</li>
+        <li><code>powercfg /hibernate on|off</code>——開關休眠</li>
+        <li><code>powercfg /batteryreport</code>——電池健康履歷（筆電）</li>
+      </ul>
+
+      <p style="margin-top: 40px;"><a href="index.html#download" class="p-btn p-btn-primary">免費下載 PowerDoze →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 留在中文版；其他語言 → 跳英文版
+  (function() {
+    var EN = 'blog-windows-sleep-settings-guide.html';
+    var ZH = 'blog-windows-sleep-settings-guide-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>
