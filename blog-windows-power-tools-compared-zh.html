@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PowerToys Awake、Caffeine、Process Lasso：你到底需要哪一個 Windows 電源工具？— PowerDoze 部落格</title>
+  <meta name="description" content="Windows 電源工具誠實比一比：PowerToys Awake、Caffeine、Don't Sleep、PowerPlanSwitcher、Process Lasso、ThrottleStop、廠商電池工具——各自的強項，以及它們全都沒填上的那個缺口。">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-windows-power-tools-compared-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-windows-power-tools-compared.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-windows-power-tools-compared-zh.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="PowerToys Awake、Caffeine、Process Lasso：你到底需要哪一個？">
+  <meta property="og:description" content="Windows 電源工具誠實比一比——各自的強項，以及它們全都沒填上的缺口。">
+  <meta property="og:url" content="https://powerdoze.app/blog-windows-power-tools-compared-zh.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="你到底需要哪一個 Windows 電源工具？">
+  <meta name="twitter:description" content="Awake、Caffeine、Process Lasso 們誠實比一比。">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "PowerToys Awake、Caffeine、Process Lasso：你到底需要哪一個 Windows 電源工具？",
+    "datePublished": "2026-06-11",
+    "dateModified": "2026-06-11",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-windows-power-tools-compared-zh.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "zh-Hant"
+  }
+  </script>
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="blog.html" data-i18n="navBlog">Blog</a>
+      <a href="index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="blog-windows-power-tools-compared.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">English version →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">PowerToys Awake、Caffeine、Process Lasso：你到底需要哪一個 Windows 電源工具？</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-06-11
+    </p>
+
+    <article class="p-prose">
+      <p>Windows 的電源管理養出了一整批小工具，每個各解決一小塊問題，而且多數在自己那塊做得不錯。這篇是一張誠實的地圖：誰擅長什麼——包括我們自己的工具適合與不適合的地方——讓你挑「對的那個」，而不是「下載量最高的那個」。</p>
+
+      <h2>保持清醒派：PowerToys Awake、Caffeine、Don't Sleep</h2>
+      <p><strong>PowerToys Awake</strong>（微軟官方、免費）在系統匣放一個咖啡杯圖示：點下去電腦就不睡，可以無限期或設定時長。<strong>Caffeine</strong> 每 59 秒模擬一次按鍵——粗暴、極小、有效。<strong>Don't Sleep</strong> 更進一步，連關機和登出都能擋。</p>
+      <p>三個都擅長同一件事：<em>手動的覆寫開關</em>。也共享同一種死法——你得記得在下載前打開、下載完關掉。忘記後半段（每個人都會忘），電腦就從此再也不睡了。它們治標、隨叫隨到，但自動化層是「你的記性」。</p>
+
+      <h2>快速切換派：PowerPlanSwitcher</h2>
+      <p>系統匣彈出選單，兩下就切換 Windows 電源計畫，免去控制台長征。如果你本來就常在多個電源計畫之間切換，它確實省事——但每一次的判斷和點擊仍然是你的。它是更快的方向盤，不是自動駕駛。</p>
+
+      <h2>重量級選手：Process Lasso</h2>
+      <p><a href="https://bitsum.com" rel="nofollow">Process Lasso</a> 值得敬意——它是成熟、認真的產品。核心是 CPU <em>排程</em>：ProBalance 馴服霸佔 CPU 的背景程序、可以鎖定各程序的優先權和核心親和性、IdleSaver 在你離開時切到省電計畫。如果你的問題是「背景程序害前景應用卡頓」，它就是正解，這裡沒有任何工具能取代它。</p>
+      <p>但它的重心是 CPU，不是你的一天。沒有時間排程、沒有 Wi-Fi 地點設定檔、沒有會議/全螢幕偵測、沒有省電報表——而且介面講的是流利的工程師語。Process Lasso 優化的是<em>程序怎麼分享 CPU</em>，不是<em>現在的電源行為該配合你正在做的事</em>。</p>
+
+      <h2>調校派：ThrottleStop、QuickCPU</h2>
+      <p>降壓、Turbo 倍頻、C-states、Speed Shift——給「完全知道這些詞是什麼意思」的人用的強力儀器。它們是發燒友的手動實驗設備，不是日常自動化，多數使用者不該進去亂動。</p>
+
+      <h2>廠商電池工具：Lenovo Vantage、MyASUS 等</h2>
+      <p>如果你是來找<strong>充電上限</strong>的——像 macOS 上 AlDente 那樣把電池鎖在 80%——那功能在你筆電廠商的工具裡，因為它需要韌體層存取。Lenovo Vantage、MyASUS、Dell Power Manager 對自家機器都做得很好。（PowerDoze 沒有充電上限功能；任何宣稱能在 Windows 上「通用」做到這件事的工具都該被懷疑。）這些工具管的是電池硬體，不管行為自動化。</p>
+
+      <h2>地圖上的缺口</h2>
+      <ul>
+        <li>保持清醒工具——手動、單一用途</li>
+        <li>計畫切換器——手動、只是比較快</li>
+        <li>Process Lasso——自動，但管的是 CPU 排程</li>
+        <li>調校工具——手動、專家限定</li>
+        <li>廠商工具——電池硬體、綁品牌</li>
+      </ul>
+      <p>每一排都缺同一個東西：一個看著<em>情境</em>的工具——現在幾點、前景是什麼程式、連著哪個 Wi-Fi、人在不在座位上——然後自動把電源行為切換到位，再把省下的算給你看。這就是 <a href="./">PowerDoze</a> 存在的那一塊：排程電源模式、做完事會自己退場的保持清醒白名單、全螢幕與會議偵測、Wi-Fi 設定檔、離開模式、kWh/電費報表。核心功能免費、本機執行、不用帳號。</p>
+
+      <h2>誠實的選購建議</h2>
+      <ul>
+        <li><em>偶爾</em>需要手動擋一下睡眠？用 <strong>PowerToys Awake</strong>，免費又官方，你不需要我們。</li>
+        <li>背景程序害前景工作卡頓？<strong>Process Lasso</strong>。</li>
+        <li>想把筆電電池鎖在 80%？<strong>你的廠商工具</strong>。</li>
+        <li>受夠了自己當那個「在對的時刻切換以上所有東西」的人？那就是 <strong>PowerDoze</strong> 自動化的工作。</li>
+      </ul>
+
+      <p style="margin-top: 40px;"><a href="index.html#download" class="p-btn p-btn-primary">免費下載 PowerDoze →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 留在中文版；其他語言 → 跳英文版
+  (function() {
+    var EN = 'blog-windows-power-tools-compared.html';
+    var ZH = 'blog-windows-power-tools-compared-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>
