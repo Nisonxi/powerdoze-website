@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>24 小時開機的電腦怎麼省電——又不讓它睡著 — PowerDoze 部落格</title>
+  <meta name="description" content="做種機、Plex 伺服器、監控錄影、遠端跳板——有些電腦永遠不能睡。這篇教你照樣省電：powercfg 實作配方、GPU 功耗上限、以及怎麼把「夜班省電」全自動化。">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-always-on-pc-power-savings-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-always-on-pc-power-savings.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-always-on-pc-power-savings-zh.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="24 小時開機的電腦怎麼省電——又不讓它睡著">
+  <meta property="og:description" content="有些電腦永遠不能睡。教你照樣省電：powercfg 配方、GPU 功耗上限、夜班省電自動化。">
+  <meta property="og:url" content="https://powerdoze.app/blog-always-on-pc-power-savings-zh.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="24 小時開機的電腦怎麼省電——又不讓它睡著">
+  <meta name="twitter:description" content="有些電腦永遠不能睡。教你照樣省電，手動或全自動。">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "24 小時開機的電腦怎麼省電——又不讓它睡著",
+    "datePublished": "2026-06-11",
+    "dateModified": "2026-06-11",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-always-on-pc-power-savings-zh.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "zh-Hant"
+  }
+  </script>
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="blog.html" data-i18n="navBlog">Blog</a>
+      <a href="index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="blog-always-on-pc-power-savings.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">English version →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">24 小時開機的電腦怎麼省電——又不讓它睡著</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-06-11
+    </p>
+
+    <article class="p-prose">
+      <p>有些電腦是不准睡覺的：在維持分享率的做種機、全家都在看的 Plex / Jellyfin 伺服器、錄監控畫面的那台、幫朋友開的遊戲伺服器，或單純擺著讓你隨時能遠端連回家的跳板機。網路上每篇省電指南的結論都是「讓它睡眠」——對你來說，每一篇都沒用。</p>
+      <p>但重點是：<strong>「必須保持清醒」不等於「必須 24 小時保持全速待命」。</strong>這是兩個不同的設定，而 Windows 其實讓你把它們分開。</p>
+
+      <h2>常開機的浪費長什麼樣</h2>
+      <p>看看這台機器凌晨 4 點實際在做什麼：做種是涓涓細流的 I/O；媒體伺服器在沒人看片的時間基本上是閒置；監控錄影持續但很輕。大多數常開型工作<strong>絕大部分時間只需要機器幾個百分點的能力</strong>——但預設的「平衡」計畫讓 CPU 隨時準備加速、風扇照常運轉、獨顯醒著跑桌面時脈。</p>
+      <p>最常見的 homelab 模式還會讓這件事更糟：那台常開機就是<em>你上一台遊戲桌機</em>。為了峰值效能挑的硬體，現在做著一台 NUC 就能勝任的工作，全天候以 60–100 瓦空轉。深夜時段（比如 01:00–08:00）是最純粹的浪費：沒人看串流、沒人坐在桌前，而下載完全不在乎 CPU 能不能衝 5 GHz。</p>
+
+      <h2>保持清醒的同時，這些旋鈕能降功耗</h2>
+      <p>這些今天就能手動做。給喜歡 DIY 的人，配方如下：</p>
+      <ul>
+        <li><strong>永不睡眠，但快點關螢幕。</strong><code>powercfg /change standby-timeout-ac 0</code> 關掉睡眠；<code>powercfg /change monitor-timeout-ac 5</code> 讓螢幕 5 分鐘後關閉。無頭伺服器點亮螢幕（以及驅動它的 GPU）是純浪費。</li>
+        <li><strong>限制 CPU 最大狀態。</strong><code>powercfg /setacvalueindex scheme_current sub_processor PROCTHROTTLEMAX 50</code> 再接 <code>powercfg /setactive scheme_current</code>，把處理器上限設在 50%——實際效果主要是「不開 turbo boost」。細流型工作完全無感，待機功耗和溫度直接降。</li>
+        <li><strong>散熱策略改被動。</strong>同一個 <code>sub_processor</code> 群組裡有散熱策略設定（<code>SYSCOOLPOL</code>）——被動模式會先降 CPU 速度再拉風扇轉速。深夜的實際效果：房間更安靜、更涼。</li>
+        <li><strong>給 GPU 設功耗上限。</strong>NVIDIA 顯卡用 <code>nvidia-smi -pl 120</code>（系統管理員視窗）限制整卡功耗。注意重開機會重置，所以開機時要再跑一次。</li>
+      </ul>
+      <p>一個提醒：如果你的伺服器晚上有真工作——轉檔佇列、備份排程——上限設保守一點，或避開那些時段。</p>
+
+      <h2>問題來了：這些設定全是靜態的</h2>
+      <p>DIY 路線麻煩的地方在這裡。晚上 8 點你坐回這台機器想真的用它——結果它還卡在 50% 上限加被動散熱，因為那是你自己設的。於是你手動切回來。之後忘記再設回去。兩週後，這台機器又回到 24 小時全速，而你已經懶得再弄了。</p>
+      <p>誠實的 DIY 解法是兩個批次檔加上工作排程器：01:00 跑一個套用限制、08:00 跑一個解除，再加一個開機任務重新套 GPU 上限。這真的可行——如果你樂在維護，材料都給你了。它的極限也是老樣子：它不知道你此刻是不是正好在用機器、Windows 更新重置設定時它會無聲壞掉、而且你永遠不知道這一切到底省了多少。</p>
+
+      <h2>把夜班自動化</h2>
+      <p>這個模式正是 <a href="./">PowerDoze</a> 的核心場景。你定義電源模式——把 CPU 上限、散熱策略、螢幕逾時、NVIDIA 功耗上限打包成一組——再用排程規則按時段切換：白天均衡、01:00–08:00 切到限速省電模式。伺服器程式加進<strong>保持清醒白名單</strong>，從此任何規則、模式或未來的誤設定都不可能讓機器在做種到一半時睡著。GPU 上限自動重新套用，重開機、更新都不怕。</p>
+      <p>而這一切最該問的問題是「所以到底省了多少？」——所以有一頁分析儀表板，長期追蹤估算瓦數、度數和電費：你這台機器的 before/after，不是假想數字。</p>
+      <p>排程規則、電源模式、白名單、監控全部<strong>免費、不用註冊帳號</strong>。一切都在本機執行，你機器上的任何資料都不會外傳。</p>
+
+      <h2>誰不需要這篇</h2>
+      <p>如果你的常開硬體是 Raspberry Pi、NUC 或功耗 10–20 瓦的專用 NAS，你已經用硬體解掉這個問題了——一篇講「怎麼削桌機待機功耗」的文章對你沒有用。這篇是寫給（非常常見的）另一種情況：因為軟體只能跑 Windows、或櫃子裡剛好有一台，於是拿舊桌機當伺服器的人。那台機器深夜有 40–80 瓦的肥肉可以削——而且削掉它，完全不需要讓機器睡著。</p>
+
+      <p style="margin-top: 40px;"><a href="index.html#download" class="p-btn p-btn-primary">免費下載 PowerDoze →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 留中文版；其他語言 → 跳英文版
+  (function() {
+    var EN = 'blog-always-on-pc-power-savings.html';
+    var ZH = 'blog-always-on-pc-power-savings-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>

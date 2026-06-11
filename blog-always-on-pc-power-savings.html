@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cut Your Always-On PC's Power Bill — Without Letting It Sleep — PowerDoze Blog</title>
+  <meta name="description" content="Seedbox, Plex server, camera recorder, remote-access box — some PCs can never sleep. Here's how to cut their power draw anyway: powercfg recipes, GPU limits, and how to automate the night shift.">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-always-on-pc-power-savings.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-always-on-pc-power-savings-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-always-on-pc-power-savings.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Cut Your Always-On PC's Power Bill — Without Letting It Sleep">
+  <meta property="og:description" content="Some PCs can never sleep. How to cut their power draw anyway: powercfg recipes, GPU limits, and automating the night shift.">
+  <meta property="og:url" content="https://powerdoze.app/blog-always-on-pc-power-savings.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cut Your Always-On PC's Power Bill — Without Letting It Sleep">
+  <meta name="twitter:description" content="Some PCs can never sleep. How to cut their power draw anyway, manually or automatically.">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Cut Your Always-On PC's Power Bill — Without Letting It Sleep",
+    "datePublished": "2026-06-11",
+    "dateModified": "2026-06-11",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-always-on-pc-power-savings.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "en"
+  }
+  </script>
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="blog.html" data-i18n="navBlog">Blog</a>
+      <a href="index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="blog-always-on-pc-power-savings-zh.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">中文版 →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">Cut Your Always-On PC's Power Bill — Without Letting It Sleep</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-06-11
+    </p>
+
+    <article class="p-prose">
+      <p>Some PCs aren't allowed to sleep. The seedbox that's keeping ratio. The Plex or Jellyfin server the family streams from. The machine recording security cameras, hosting a game server for friends, or just sitting there so you can RDP in from anywhere. Every power-saving guide on the internet ends with "let it sleep" — which makes all of them useless to you.</p>
+      <p>But here's the thing: <strong>"must stay awake" does not mean "must stay at full readiness 24/7."</strong> Those are two different settings, and Windows lets you separate them.</p>
+
+      <h2>The waste profile of an always-on box</h2>
+      <p>Look at what the machine actually does at 4 AM. Seeding is a trickle of I/O. A media server between streams is essentially idle. Camera recording is constant but light. Most always-on workloads need <strong>a few percent of the machine's capability, most of the time</strong> — yet the default Balanced plan keeps the CPU boost-ready, the fans on active duty, and a discrete GPU awake at desktop clocks.</p>
+      <p>The most common homelab pattern makes this worse: the always-on box is <em>yesterday's gaming desktop</em>. Hardware picked for peak performance, now doing a job a NUC could handle, idling at 60–100 W around the clock. The overnight hours — say 01:00 to 08:00 — are the purest waste: nobody is streaming, nobody is at the desk, and the downloads genuinely do not care whether the CPU can boost to 5 GHz.</p>
+
+      <h2>The knobs that cut power while staying awake</h2>
+      <p>You can do all of this by hand today. The recipes, for the DIY-inclined:</p>
+      <ul>
+        <li><strong>Never sleep, but kill the display fast.</strong> <code>powercfg /change standby-timeout-ac 0</code> disables sleep; <code>powercfg /change monitor-timeout-ac 5</code> turns the screen off after 5 minutes. A monitor (or a GPU driving one) is power you don't need on a headless box.</li>
+        <li><strong>Cap the CPU's maximum state.</strong> <code>powercfg /setacvalueindex scheme_current sub_processor PROCTHROTTLEMAX 50</code> followed by <code>powercfg /setactive scheme_current</code> caps the processor at 50% — which mainly means "no turbo boost." Trickle workloads won't notice; your idle power and heat drop.</li>
+        <li><strong>Switch cooling policy to passive.</strong> The same <code>sub_processor</code> group has a cooling policy setting (<code>SYSCOOLPOL</code>) — passive slows the CPU before spinning fans up. The practical effect overnight: a quieter, cooler room.</li>
+        <li><strong>Power-limit the GPU.</strong> On NVIDIA, <code>nvidia-smi -pl 120</code> (admin shell) caps the card's power draw. Note it resets on reboot, so it needs to run again at startup.</li>
+      </ul>
+      <p>One caution: if your server does real work at night — a transcode queue, backups — cap less aggressively, or schedule around those windows.</p>
+
+      <h2>The problem: all of those settings are static</h2>
+      <p>Here's where the DIY route gets annoying. At 8 PM you sit down at this same machine to actually use it — and it's still capped at 50% with passive cooling, because that's what you set. So you flip everything back. Later you forget to re-apply it. Two weeks on, the box is back to full power 24/7 and you've stopped bothering.</p>
+      <p>The honest DIY fix is two batch scripts and Task Scheduler: one job at 01:00 applying the caps, one at 08:00 removing them, plus a startup task to re-apply the GPU limit. This genuinely works, and if you enjoy maintaining it, you have everything you need. Its limits are the usual ones: it can't tell whether you happen to be using the machine, it silently breaks when a Windows update resets a setting, and you never find out what any of it actually saved.</p>
+
+      <h2>Automating the night shift</h2>
+      <p>This exact pattern is what <a href="./">PowerDoze</a> was built around. You define power modes — bundles of CPU limit, cooling policy, screen timeout, and NVIDIA power limit — and schedule rules that switch between them by time of day: Balanced during the day, a capped low-power mode from 01:00 to 08:00. Your server apps go on a <strong>keep-awake whitelist</strong>, so no rule, mode, or future misconfiguration can ever put the box to sleep mid-seed. The GPU limit is re-applied automatically, updates and reboots included.</p>
+      <p>And because the obvious question about all of this is "did it actually save anything?", there's an analytics page tracking estimated watts, kWh, and cost over time — the before/after for your specific machine, not a hypothetical.</p>
+      <p>The schedule rules, power modes, whitelist, and monitoring are <strong>free, no account required</strong>. Everything runs locally; nothing about your machine leaves it.</p>
+
+      <h2>Who doesn't need this</h2>
+      <p>If your always-on hardware is a Raspberry Pi, a NUC, or a purpose-built NAS drawing 10–20 W, you already solved this problem with hardware — an article about shaving desktop idle power has nothing for you. This is for the (very common) other case: a repurposed desktop running Windows because that's what the software needs, or that's what was in the closet. That machine has 40–80 W of overnight fat to trim, and it can be trimmed without ever letting it sleep.</p>
+
+      <p style="margin-top: 40px;"><a href="index.html#download" class="p-btn p-btn-primary">Download PowerDoze free →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 跳中文版；其他語言 → 英文版
+  (function() {
+    var EN = 'blog-always-on-pc-power-savings.html';
+    var ZH = 'blog-always-on-pc-power-savings-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>
