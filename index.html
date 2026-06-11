@@ -275,7 +275,10 @@
     <h3 data-i18n="payTitle">Choose Payment Method</h3>
     <p class="p-pay-card-sub" data-i18n="paySub">One-time purchase. 14-day money-back guarantee.</p>
 
-    <button class="p-pay-option" id="pay-ecpay" onclick="startPurchase('ecpay')">
+    <!-- ECPay 暫停（2026-06-11）：正式特店尚未核下，secrets 仍指向測試環境；
+         create-order 也已在 server 端擋 gateway=ecpay（503 ECPAY_DISABLED）。
+         核下換正式金鑰後移除 display:none 即恢復。 -->
+    <button class="p-pay-option" id="pay-ecpay" onclick="startPurchase('ecpay')" style="display:none">
       <span class="pay-flag">TW</span>
       <span class="pay-info">
         <span class="pay-label" data-i18n="payEcpayLabel">Credit Card / ATM</span>
