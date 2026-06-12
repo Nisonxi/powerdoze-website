@@ -158,18 +158,23 @@
     });
   })();
   if (typeof updateNavAuth === 'function') updateNavAuth();
-  // 語言是中文（繁/簡）時，文章標題連到中文版；其他語言連英文版
+  // 語言是中文（繁/簡）時，文章標題連到中文版；其他語言連英文版。
+  // 必須用 getLang()（含瀏覽器語言自動偵測）——只讀 localStorage 會漏掉
+  // 「沒手動切過語言的中文使用者」（pd_lang 不存在 → 退回 html lang='en'）。
   (function() {
     function sync() {
-      var lang = localStorage.getItem('pd_lang') || document.documentElement.lang || 'en';
+      var lang = (typeof getLang === 'function') ? getLang()
+        : (localStorage.getItem('pd_lang') || document.documentElement.lang || 'en');
       var isZh = lang.indexOf('zh') === 0;
       document.querySelectorAll('a[data-en][data-zh]').forEach(function(a) {
         a.href = a.getAttribute(isZh ? 'data-zh' : 'data-en');
       });
     }
     var sel = document.getElementById('lang-select');
-    if (sel) sel.addEventListener('change', sync);
+    // setTimeout：讓 i18n.js 的 setLang 先寫入 pd_lang 再同步，避免讀到舊值
+    if (sel) sel.addEventListener('change', function() { setTimeout(sync, 0); });
     sync();
+    document.addEventListener('DOMContentLoaded', sync);
   })();
 </script>
 </body>
