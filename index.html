@@ -356,7 +356,7 @@
         </div>
       </div>
 
-      <p class="p-calc-payback" id="calc-payback" data-i18n="calc_payback">PowerDoze Pro pays for itself in <strong>—</strong>.</p>
+      <p class="p-calc-payback" id="calc-payback">PowerDoze Pro pays for itself in <strong>—</strong>.</p>
     </div>
 
     <p class="p-calc-disclaimer" data-i18n="calc_disclaimer">Estimate based on a typical <strong>30%</strong> reduction during idle periods (auto-sleep, screen timeout, CPU mode switching). Heavy 24/7 workloads save less by %; mostly-idle PCs save more.<br><br><strong>Beyond electricity:</strong> Pro also automates power-mode switching, multi-monitor refresh rate, and per-app GPU preference — saving you manual hassle and reducing hardware stress from constant max load.</p>
@@ -411,6 +411,10 @@
       <div class="p-faq-item">
         <div class="p-faq-q" data-i18n="faq6q">What happens if I don't like it?</div>
         <div class="p-faq-a" data-i18n="faq6a">The free version has no time limit. If you bought Pro, you have a 14-day money-back guarantee, no questions asked.</div>
+      </div>
+      <div class="p-faq-item">
+        <div class="p-faq-q" data-i18n="faq7q">Is switching power modes safe? I keep mine on High performance just in case.</div>
+        <div class="p-faq-a" data-i18n="faq7a">Yes. Power modes are a native Windows feature — every laptop switches them dozens of times a day as it's plugged in and unplugged. PowerDoze writes settings only through Windows' official powercfg interface (CPU limit, cooling policy, sleep and screen timeouts) and never touches the BIOS, drivers, fan curves or your overclock. Uninstall it and everything returns to Windows defaults. Staying on High performance 24/7 doesn't add safety — it just burns extra watts while the PC waits for you.</div>
       </div>
     </div>
   </div>
@@ -585,8 +589,12 @@ document.querySelectorAll('.p-faq-q').forEach(q => {
     });
   });
 
-  // Initial render after i18n.js applies
+  // Initial render after i18n.js applies. The payback line deliberately has no
+  // data-i18n (applyLang would overwrite the computed text with the raw
+  // "{months}" template); recalc() localizes it via t() instead, so it must
+  // re-run after the initial DOMContentLoaded applyLang.
   setTimeout(recalc, 50);
+  document.addEventListener('DOMContentLoaded', () => setTimeout(recalc, 0));
 })();
 
 updateNavAuth();

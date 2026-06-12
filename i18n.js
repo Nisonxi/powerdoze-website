@@ -222,6 +222,7 @@ const LANGS = {
     faq2q: 'Does it send my data anywhere?', faq2a: 'No. PowerDoze runs entirely on your local machine. The only network requests are an optional update check and Pro license verification when you sign in. No telemetry, no analytics, no cloud sync.',
     faq3q: 'Why does Windows SmartScreen show a warning?', faq3a: 'Code signing certificates cost US$200+/year. As an indie developer, we\'ll add signing once the project is sustainable. Click "More info" then "Run anyway" to proceed.',
     faq4q: 'Can I transfer my license to a new PC?', faq4a: 'Yes. Each Pro license works on up to 3 devices. Manage your bound devices from the account page \u2014 unbind an old PC to free a slot (one unbind every 30 days).',
+    faq7q: 'Is switching power modes safe? I keep mine on High performance just in case.', faq7a: 'Yes. Power modes are a native Windows feature \u2014 every laptop switches them dozens of times a day as it\'s plugged in and unplugged. PowerDoze writes settings only through Windows\' official powercfg interface (CPU limit, cooling policy, sleep and screen timeouts) and never touches the BIOS, drivers, fan curves or your overclock. Uninstall it and everything returns to Windows defaults. Staying on High performance 24/7 doesn\'t add safety \u2014 it just burns extra watts while the PC waits for you.',
     faq5q: 'Does it work on laptops and desktops?', faq5a: 'Yes, both. Laptops benefit from battery policies and away mode. Desktops benefit from scheduled sleep rules and app-based power mode switching.',
     faq6q: 'What happens if I don\'t like it?', faq6a: 'The free version has no time limit. If you bought Pro, you have a 14-day money-back guarantee, no questions asked.',
 
@@ -632,6 +633,7 @@ const LANGS = {
     faq2q: '會傳送我的資料嗎？', faq2a: '不會。PowerDoze 完全在你的電腦上運行。僅有的網路請求是可選的更新檢查，以及登入時的 Pro 授權驗證。無遙測、無分析、無雲端同步。',
     faq3q: '為什麼 Windows SmartScreen 會顯示警告？', faq3a: '代碼簽章憑證每年需要 US$200 以上。作為獨立開發者，我們會在專案可持續發展後加入簽章。點擊「其他資訊」再點「仍要執行」即可。',
     faq4q: '可以把授權轉移到新電腦嗎？', faq4a: '可以。每張 Pro 授權最多可綁定 3 台裝置。到帳號頁面管理你綁定的裝置 — 解除舊電腦來釋放一個名額（每 30 天可解綁 1 次）。',
+    faq7q: '切換電源模式安全嗎？我怕出問題所以一直開高效能。', faq7a: '安全。電源模式是 Windows 原生功能——每台筆電插拔電源時一天就自動切換幾十次。PowerDoze 只透過 Windows 官方的 powercfg 介面寫入設定（CPU 上限、散熱原則、睡眠/螢幕逾時），不碰 BIOS、驅動程式、風扇曲線或你的超頻；移除程式後一切交還 Windows 預設。常駐高效能並不會更安全——只是讓電腦在等你的時候多燒電而已。',
     faq5q: '筆電和桌機都能用嗎？', faq5a: '都可以。筆電受益於電池策略和離開模式，桌機受益於排程睡眠規則和 App 電源模式自動切換。',
     faq6q: '不喜歡怎麼辦？', faq6a: '免費版沒有時間限制。如果你購買了 Pro，享有 14 天無條件退款保證。',
 
@@ -1017,6 +1019,7 @@ const LANGS = {
     faq2q: '会发送我的数据吗？', faq2a: '不会。PowerDoze 完全在你的电脑上运行。仅有的网络请求是可选的更新检查，以及登录时的 Pro 授权验证。',
     faq3q: '为什么 SmartScreen 会显示警告？', faq3a: '代码签名证书每年需要 US$200 以上。点击「详细信息」再点「仍要运行」即可。',
     faq4q: '可以转移授权到新电脑吗？', faq4a: '可以。每张 Pro 授权最多可绑定 3 台设备。到账号页面管理你绑定的设备 — 解除旧电脑来释放一个名额（每 30 天可解绑 1 次）。',
+    faq7q: '切换电源模式安全吗？我怕出问题所以一直开高性能。', faq7a: '安全。电源模式是 Windows 原生功能——每台笔记本插拔电源时一天就自动切换几十次。PowerDoze 只通过 Windows 官方的 powercfg 接口写入设置（CPU 上限、散热策略、睡眠/屏幕超时），不碰 BIOS、驱动、风扇曲线或你的超频；卸载后一切交还 Windows 默认。常驻高性能并不会更安全——只是让电脑在等你的时候多烧电而已。',
     faq5q: '笔记本和台式机都能用吗？', faq5a: '都可以。笔记本受益于电池策略，台式机受益于排程睡眠规则。',
     faq6q: '不喜欢怎么办？', faq6a: '免费版没有时间限制。Pro 享有 14 天无条件退款保证。',
 
@@ -1383,6 +1386,7 @@ const LANGS = {
     faq2q: 'データは送信されますか？', faq2a: 'いいえ。完全にローカルで動作します。ネットワーク通信はオプションの更新確認と、サインイン時の Pro ライセンス認証のみ。',
     faq3q: 'SmartScreen警告が出るのはなぜ？', faq3a: 'コード署名証明書は年間US$200以上。「詳細情報」→「実行」で安全に進められます。',
     faq4q: '新しいPCにライセンスを移せますか？', faq4a: 'はい。各 Pro ライセンスは最大 3 台のデバイスで使用できます。アカウントページでバインド済みデバイスを管理し、古い PC をバインド解除して枠を空けてください（バインド解除は 30 日に 1 回まで）。',
+    faq7q: '電源モードの切り替えは安全？心配なので常に高パフォーマンスにしています', faq7a: '安全です。電源モードは Windows 標準機能で、ノートPCは電源の抜き差しのたびに毎日何十回も自動で切り替わっています。PowerDoze は Windows 公式の powercfg 経由でのみ設定を書き込み（CPU上限・冷却ポリシー・スリープ/画面タイムアウト）、BIOS・ドライバー・ファンカーブ・オーバークロックには一切触れません。アンインストールすればすべて Windows の既定値に戻ります。',
     faq5q: 'ノートPCとデスクトップの両方で使えますか？', faq5a: 'はい。ノートPCはバッテリーポリシーと離席モード、デスクトップはスリープルールとアプリ連動が便利です。',
     faq6q: '気に入らなかったら？', faq6a: '無料版に期限はありません。Pro購入者は14日間返金保証付きです。',
 
@@ -1745,6 +1749,7 @@ const LANGS = {
     faq2q: '데이터가 전송되나요?', faq2a: '아닙니다. 완전히 로컬에서 실행됩니다. 네트워크 통신은 선택적 업데이트 확인과 로그인 시 Pro 라이선스 인증뿐입니다.',
     faq3q: 'SmartScreen 경고가 뜨는 이유?', faq3a: '코드 서명 인증서는 연간 US$200 이상. "추가 정보" → "실행"을 클릭하면 됩니다.',
     faq4q: '새 PC로 라이선스를 옮길 수 있나요?', faq4a: '네. 각 Pro 라이선스는 최대 3대의 기기에서 작동합니다. 계정 페이지에서 바인딩된 기기를 관리하고, 오래된 PC의 바인딩을 해제하여 슬롯을 확보하세요(바인딩 해제는 30일에 1회).',
+    faq7q: '전원 모드 전환은 안전한가요? 불안해서 항상 고성능으로 둡니다.', faq7a: '안전합니다. 전원 모드는 Windows 기본 기능으로, 노트북은 전원을 꽂고 뺄 때마다 하루에도 수십 번 자동 전환됩니다. PowerDoze는 Windows 공식 powercfg 인터페이스로만 설정을 기록하며(CPU 상한, 냉각 정책, 절전/화면 시간 제한) BIOS, 드라이버, 팬 커브, 오버클럭은 일절 건드리지 않습니다. 제거하면 모든 것이 Windows 기본값으로 돌아갑니다.',
     faq5q: '노트북과 데스크톱 모두 사용 가능?', faq5a: '네. 노트북은 배터리 정책, 데스크톱은 절전 규칙과 앱 연동이 유용합니다.',
     faq6q: '마음에 안 들면?', faq6a: '무료 버전은 기한 없음. Pro는 14일 무조건 환불 보장.',
 
@@ -2107,6 +2112,7 @@ const LANGS = {
     faq2q: 'Mes donn\u00e9es sont-elles envoy\u00e9es ?', faq2a: 'Non. Tout fonctionne localement. Les seules requ\u00eates r\u00e9seau sont une v\u00e9rification optionnelle de mise \u00e0 jour et la v\u00e9rification de licence Pro \u00e0 la connexion.',
     faq3q: 'Pourquoi SmartScreen affiche un avertissement ?', faq3a: 'Les certificats de signature co\u00fbtent US$200+/an. Cliquez \u00ab Informations \u00bb puis \u00ab Ex\u00e9cuter quand m\u00eame \u00bb.',
     faq4q: 'Puis-je transf\u00e9rer ma licence ?', faq4a: 'Oui. Chaque licence Pro fonctionne sur jusqu\'\u00e0 3 appareils. G\u00e9rez vos appareils li\u00e9s depuis la page compte \u2014 dissociez un ancien PC pour lib\u00e9rer une place (une dissociation tous les 30 jours).',
+    faq7q: 'Changer de mode d\'alimentation est-il sans risque ?', faq7a: 'Oui. Les modes d\'alimentation sont une fonction native de Windows \u2014 chaque portable en change des dizaines de fois par jour en se branchant et d\u00e9branchant. PowerDoze \u00e9crit uniquement via l\'interface officielle powercfg (limite CPU, refroidissement, d\u00e9lais de veille/\u00e9cran) et ne touche jamais au BIOS, aux pilotes, aux courbes de ventilateurs ni \u00e0 l\'overclocking. D\u00e9sinstallez et tout revient aux r\u00e9glages Windows par d\u00e9faut.',
     faq5q: 'Compatible portables et fixes ?', faq5a: 'Oui. Les portables profitent des politiques batterie, les fixes des r\u00e8gles de veille.',
     faq6q: 'Et si \u00e7a ne me pla\u00eet pas ?', faq6a: 'La version gratuite n\'a pas de limite. Pro offre une garantie remboursement 14 jours.',
 
@@ -2469,6 +2475,7 @@ const LANGS = {
     faq2q: 'Werden meine Daten gesendet?', faq2a: 'Nein. Alles l\u00e4uft lokal. Einzige Netzwerkkommunikation sind die optionale Update-Pr\u00fcfung und die Pro-Lizenzpr\u00fcfung bei der Anmeldung.',
     faq3q: 'Warum zeigt SmartScreen eine Warnung?', faq3a: 'Codesignatur-Zertifikate kosten US$200+/Jahr. Klicken Sie \u201eWeitere Informationen\u201c und dann \u201eTrotzdem ausf\u00fchren\u201c.',
     faq4q: 'Kann ich die Lizenz auf einen neuen PC \u00fcbertragen?', faq4a: 'Ja. Jede Pro-Lizenz funktioniert auf bis zu 3 Ger\u00e4ten. Verwalten Sie Ihre verkn\u00fcpften Ger\u00e4te \u00fcber die Kontoseite \u2014 trennen Sie einen alten PC, um einen Platz freizugeben (eine Trennung alle 30 Tage).',
+    faq7q: 'Ist das Umschalten von Energiemodi sicher?', faq7a: 'Ja. Energiemodi sind eine native Windows-Funktion \u2014 jeder Laptop wechselt sie dutzende Male am Tag beim An- und Abstecken. PowerDoze schreibt Einstellungen nur \u00fcber die offizielle powercfg-Schnittstelle (CPU-Limit, K\u00fchlungsrichtlinie, Energiespar-/Bildschirm-Timeouts) und r\u00fchrt BIOS, Treiber, L\u00fcfterkurven oder \u00dcbertaktung nie an. Nach der Deinstallation ist alles wieder Windows-Standard.',
     faq5q: 'Funktioniert es auf Laptops und Desktops?', faq5a: 'Ja. Laptops profitieren von Batterierichtlinien, Desktops von Schlafregeln und App-Umschaltung.',
     faq6q: 'Was, wenn es mir nicht gef\u00e4llt?', faq6a: 'Die kostenlose Version hat kein Zeitlimit. Pro bietet 14 Tage Geld-zur\u00fcck-Garantie.',
 
