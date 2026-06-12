@@ -254,7 +254,7 @@
       document.getElementById('c-reg').textContent = fmt(d.registrations);
       document.getElementById('c-reg-s').textContent = fmt(d.proProfiles) + ' 人已是 Pro';
       document.getElementById('c-paid').textContent = fmt(d.paidUsers);
-      document.getElementById('c-paid-s').textContent = fmt(d.devices) + ' 台裝置綁定';
+      document.getElementById('c-paid-s').textContent = fmt(d.devices) + ' 台裝置綁定' + (d.promoUsers ? ' · 贈送 ' + fmt(d.promoUsers) : '');
       document.getElementById('c-rev').textContent = 'NT$' + fmt(d.revenueTW);
       document.getElementById('c-rev-s').textContent = 'US$' + (d.revenueUSD || 0).toFixed(2);
 
