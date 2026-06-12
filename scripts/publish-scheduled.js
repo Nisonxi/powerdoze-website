@@ -89,6 +89,15 @@ for (const post of due) {
   new Function(i18n);
   fs.writeFileSync(i18nFile, i18n);
 
+  // 3b. blog-nav.js 導覽清單（上一篇/下一篇用）
+  const navFile = path.join(ROOT, 'blog-nav.js');
+  let nav = fs.readFileSync(navFile, 'utf8');
+  const NAV_MARK = '// <scheduled-blog-nav>';
+  if (!nav.includes(NAV_MARK)) fail('blog-nav.js marker missing: ' + NAV_MARK);
+  nav = nav.replace(NAV_MARK, "'" + slug + "',\n    " + NAV_MARK);
+  new Function(nav);
+  fs.writeFileSync(navFile, nav);
+
   // 4. sitemap.xml
   const smFile = path.join(ROOT, 'sitemap.xml');
   let sm = fs.readFileSync(smFile, 'utf8');
