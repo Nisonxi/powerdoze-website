@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Your Laptop Drains Battery While "Asleep" — Blame Modern Standby — PowerDoze Blog</title>
+  <meta name="description" content="Hot laptop in the bag, 30% gone overnight? Windows replaced real sleep (S3) with Modern Standby (S0). How to diagnose the drain with powercfg and the fixes that actually help.">
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-modern-standby-battery-drain.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-modern-standby-battery-drain-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-modern-standby-battery-drain.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Your Laptop Drains Battery While &quot;Asleep&quot; — Blame Modern Standby">
+  <meta property="og:description" content="Hot laptop in the bag, 30% gone overnight? Windows replaced real sleep with Modern Standby. How to diagnose it, and the fixes that actually help.">
+  <meta property="og:url" content="https://powerdoze.app/blog-modern-standby-battery-drain.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Your Laptop Drains Battery While &quot;Asleep&quot;">
+  <meta name="twitter:description" content="Blame Modern Standby. How to diagnose the drain with powercfg, and the fixes that actually help.">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Your Laptop Drains Battery While \"Asleep\" — Blame Modern Standby",
+    "datePublished": "2026-06-19",
+    "dateModified": "2026-06-19",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-modern-standby-battery-drain.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "en"
+  }
+  </script>
+  <link rel="stylesheet" href="/plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="/" class="p-logo">
+      <img src="/assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="/features.html" data-i18n="navFeatures">Features</a>
+      <a href="/comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="/use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="/blog.html" data-i18n="navBlog">Blog</a>
+      <a href="/index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="/blog-modern-standby-battery-drain-zh.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">中文版 →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">Your Laptop Drains Battery While "Asleep" — Blame Modern Standby</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-06-19
+    </p>
+
+    <article class="p-prose">
+      <p>You close the lid, slide the laptop into your bag, and head out. Two hours later you pull out a machine that's warm — sometimes alarmingly hot — with a chunk of its battery gone. Nothing is broken. Your laptop is doing exactly what it was designed to do. That's the problem.</p>
+
+      <h2>What happened to sleep</h2>
+      <p>For two decades, closing the lid meant <strong>S3 sleep</strong>: RAM stays powered, everything else shuts off, the machine draws a trickle and can hold its charge for days. Then Windows moved to <strong>Modern Standby</strong> (S0 Low Power Idle), and most current laptops ship with it — usually with no S3 option left in the firmware at all.</p>
+      <p>Modern Standby is built on a phone-like idea: "asleep" should really mean <em>barely awake</em>. The machine keeps its network connection, syncs mail, downloads updates, and wakes instantly at a touch. When it works, it's lovely. When it doesn't, a driver or background task keeps the system in a higher-power state — and your bag becomes a padded oven. A healthy machine should lose only a few percent overnight; a misbehaving one can burn 10% or more per hour, awake in all but name.</p>
+
+      <h2>Diagnose before you fix</h2>
+      <p>Open an admin terminal and ask Windows what it's actually doing:</p>
+      <ul>
+        <li><strong><code>powercfg /a</code></strong> — lists which sleep states your hardware supports. If you see "Standby (S0 Low Power Idle)", you're on Modern Standby; if S3 isn't listed, your firmware doesn't offer real sleep and no software can add it.</li>
+        <li><strong><code>powercfg /sleepstudy</code></strong> — the key tool. Generates an HTML report of every standby session: how long it lasted, how much battery it ate, and which components or processes kept the system busy. The "Top Offenders" list is usually where your answer lives.</li>
+        <li><strong><code>powercfg /lastwake</code></strong> and <strong><code>powercfg /devicequery wake_armed</code></strong> — what woke the machine last, and which devices are allowed to wake it at all.</li>
+      </ul>
+
+      <h2>The fixes that actually help</h2>
+      <ul>
+        <li><strong>Disarm rogue wake sources.</strong> Anything in the <code>wake_armed</code> list that you don't need — usually the network adapter and stray peripherals — can be disarmed in Device Manager (Power Management tab, uncheck "Allow this device to wake the computer") or with <code>powercfg /devicedisablewake "Device Name"</code>.</li>
+        <li><strong>Cut the network during standby.</strong> Much of S0's background drain is network activity. Some machines expose "Network connection in standby" in power options; where available, setting it to disabled on battery makes standby behave much more like old-fashioned sleep.</li>
+        <li><strong>Use hibernate for long absences.</strong> Hibernate (S4) writes RAM to disk and powers off completely — zero drain, survives any bag, any flight. It takes a few seconds longer to resume, which matters not at all when you're away for hours. Make sure it's enabled (<code>powercfg /hibernate on</code>), then map lid-close on battery to Hibernate instead of Sleep in your power settings.</li>
+        <li><strong>The registry kill switch — with a real warning.</strong> You'll find guides recommending <code>PlatformAoAcOverride = 0</code> to disable Modern Standby entirely. Know what you're buying: on machines whose firmware no longer supports S3 (most recent laptops), you don't get good old sleep back — you get an undefined state, and Windows has ignored the key on some recent builds anyway. Test thoroughly and be ready to revert; for most people, hibernate-on-lid-close achieves the same goal without the risk.</li>
+      </ul>
+
+      <h2>The switching problem, again</h2>
+      <p>Notice the shape of the fix: hibernate is right for the bag and wrong for the desk. At your desk you want short, light sleep — quick to enter, instant to leave. On the move you want the machine completely off. Windows gives you one static set of lid and timeout settings, so whichever you pick is wrong half the time.</p>
+      <p>This is the layer <a href="/">PowerDoze</a> automates. It doesn't touch S0 itself — it decides <em>when and how</em> the machine goes down, which is where the battery actually gets saved:</p>
+      <ul>
+        <li><strong>Lid-close action, set from the app</strong> — sleep, hibernate, shutdown or nothing, configured separately for plugged-in and on-battery. "Hibernate when on battery, sleep when docked" is exactly the bag fix above, made permanent.</li>
+        <li><strong>Scheduled hibernate as a Smart Task</strong> — a task like "hibernate at 01:00" catches the nights the laptop got left open, the single biggest source of mystery morning drain.</li>
+        <li><strong>Per-mode sleep timeouts</strong> — aggressive timeouts on battery, relaxed ones plugged in, switching automatically with your power modes instead of living in Control Panel.</li>
+      </ul>
+
+      <h2>Honesty corner</h2>
+      <p>No third-party app — ours included — can change how Modern Standby itself behaves once the machine is in S0; that's firmware and Windows territory, and the diagnosis steps above are how you fight that fight. What software <em>can</em> own is the decision layer: making sure the machine enters the right state (sleep, hibernate, off) at the right moment, every time, without you thinking about it. In practice, that decision layer is where most of the lost battery was hiding all along. For the broader picture of how Windows sleep settings fit together, see our <a href="/blog-windows-sleep-settings-guide.html">complete guide to Windows sleep settings</a>.</p>
+
+      <p style="margin-top: 40px;"><a href="/index.html#download" class="p-btn p-btn-primary">Download PowerDoze free →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="/privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/i18n.js"></script>
+<script src="/supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 跳中文版；其他語言 → 英文版
+  (function() {
+    var EN = '/blog-modern-standby-battery-drain.html';
+    var ZH = '/blog-modern-standby-battery-drain-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>

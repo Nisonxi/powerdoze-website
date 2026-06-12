@@ -8,6 +8,7 @@ const LANGS = {
     blogReadEn: 'Read in English →', blogReadZh: '中文版 →',
     blogA2t: 'Windows Sleep Settings: The Complete Guide (and Where They Fall Short)',
     blogA2d: 'Where every sleep setting lives, sleep vs hibernate vs Modern Standby, the powercfg commands that solve "won\'t sleep" and "sleeps too soon", and the structural limits no setting can fix.',
+    // <scheduled-blog-i18n:en>
     blogA7t: 'How Much Power Does Your PC Actually Draw? Three Ways to Find Out',
     blogA7d: 'Your PSU\'s label is a ceiling, not a reading. Wall meter, UPS readout, or free software sensors — what each method tells you, what each one misses, and how to turn the number into actual savings.',
     blogA6t: 'Loud PC Fans? Try Software Before You Buy New Cooling',
@@ -417,6 +418,7 @@ const LANGS = {
     blogReadEn: '英文版 →', blogReadZh: '中文版 →',
     blogA2t: 'Windows 睡眠設定完全指南（以及它做不到的事）',
     blogA2d: '設定藏在哪、睡眠/休眠/Modern Standby 差在哪、用 powercfg 解決「不肯睡」和「不該睡卻睡掉」，以及任何設定都修不了的結構性極限。',
+    // <scheduled-blog-i18n:zh-TW>
     blogA7t: '你的電腦到底吃幾瓦？三種量法，從免費到精準',
     blogA7d: '電源供應器標的瓦數是上限，不是讀數。插座電錶、UPS 讀數、免費軟體感測器——每種方法量到什麼、漏掉什麼，以及怎麼把數字變成真正省下的電。',
     blogA6t: '電腦風扇好吵？先別買散熱器，試試軟體',
@@ -826,6 +828,7 @@ const LANGS = {
     blogReadEn: '英文版 →', blogReadZh: '中文版（繁体）→',
     blogA2t: 'Windows 睡眠设置完全指南（以及它做不到的事）',
     blogA2d: '设置藏在哪、睡眠/休眠/Modern Standby 差在哪、用 powercfg 解决「不肯睡」和「不该睡却睡掉」，以及任何设置都修不了的结构性极限。',
+    // <scheduled-blog-i18n:zh-CN>
     blogA7t: '你的电脑到底吃几瓦？三种量法，从免费到精准',
     blogA7d: '电源标的瓦数是上限，不是读数。插座电表、UPS 读数、免费软件传感器——每种方法量到什么、漏掉什么，以及怎么把数字变成真正省下的电。',
     blogA6t: '电脑风扇好吵？先别买散热器，试试软件',
@@ -1207,6 +1210,7 @@ const LANGS = {
     blogReadEn: '英語で読む →', blogReadZh: '中国語版 →',
     blogA2t: 'Windows スリープ設定 完全ガイド（と、その限界）',
     blogA2d: '設定の場所、スリープ/休止状態/Modern Standby の違い、「スリープしない」「すぐスリープする」を解決する powercfg コマンド、そして設定では直せない構造的限界。',
+    // <scheduled-blog-i18n:ja>
     blogA7t: 'PCの実際の消費電力は？無料から正確まで、3つの測り方',
     blogA7d: '電源ユニットの表記は上限であって実測値ではない。ワットチェッカー、UPSの表示、無料のソフトウェアセンサー——それぞれ何が測れて何が抜けるか、そして数字を実際の節電につなげる方法。',
     blogA6t: 'PCのファンがうるさい？クーラーを買う前にソフトで',
@@ -1569,6 +1573,7 @@ const LANGS = {
     blogReadEn: '영어로 읽기 →', blogReadZh: '중국어판 →',
     blogA2t: 'Windows 절전 설정 완벽 가이드(그리고 그 한계)',
     blogA2d: '설정 위치, 절전/최대 절전/Modern Standby의 차이, "절전 안 됨"과 "너무 빨리 절전됨"을 해결하는 powercfg 명령어, 그리고 설정으로는 고칠 수 없는 구조적 한계.',
+    // <scheduled-blog-i18n:ko>
     blogA7t: '내 PC는 실제로 몇 와트를 쓸까? 무료부터 정밀까지 3가지 측정법',
     blogA7d: '파워서플라이에 적힌 와트는 상한이지 실측값이 아닙니다. 플러그 전력계, UPS 표시값, 무료 소프트웨어 센서 — 각 방법이 보여주는 것과 놓치는 것, 그리고 숫자를 실제 절약으로 바꾸는 법.',
     blogA6t: 'PC 팬이 시끄럽다면? 쿨러 사기 전에 소프트웨어부터',
@@ -1930,6 +1935,7 @@ const LANGS = {
     blogReadEn: 'Lire en anglais →', blogReadZh: 'Version chinoise →',
     blogA2t: 'Réglages de veille Windows : le guide complet (et leurs limites)',
     blogA2d: 'Où se trouvent les réglages, veille vs hibernation vs Modern Standby, les commandes powercfg qui résolvent « ne veut pas dormir » et « s\'endort trop tôt », et les limites structurelles.',
+    // <scheduled-blog-i18n:fr>
     blogA7t: 'Combien consomme vraiment votre PC ? Trois façons de le savoir',
     blogA7d: 'L\'étiquette de votre alimentation est un plafond, pas une mesure. Wattmètre, écran de l\'onduleur ou capteurs logiciels gratuits — ce que chaque méthode révèle, ce qu\'elle rate, et comment transformer le chiffre en économies réelles.',
     blogA6t: 'Ventilateurs bruyants ? Essayez le logiciel avant d\'acheter',
@@ -2291,6 +2297,7 @@ const LANGS = {
     blogReadEn: 'Auf Englisch lesen →', blogReadZh: 'Chinesische Version →',
     blogA2t: 'Windows-Energiesparmodus: Der komplette Leitfaden (und seine Grenzen)',
     blogA2d: 'Wo alle Einstellungen liegen, Schlaf vs. Ruhezustand vs. Modern Standby, die powercfg-Befehle für „schläft nicht" und „schläft zu früh", und die strukturellen Grenzen.',
+    // <scheduled-blog-i18n:de>
     blogA7t: 'Wie viel Strom zieht Ihr PC wirklich? Drei Wege, es herauszufinden',
     blogA7d: 'Das Netzteil-Etikett ist eine Obergrenze, kein Messwert. Steckdosen-Messgerät, USV-Anzeige oder kostenlose Software-Sensoren — was jede Methode zeigt, was sie übersieht und wie aus der Zahl echte Ersparnis wird.',
     blogA6t: 'Laute PC-Lüfter? Erst Software, dann neue Kühlung kaufen',

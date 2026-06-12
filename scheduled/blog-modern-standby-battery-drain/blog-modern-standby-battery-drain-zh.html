@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>筆電「睡著」還在偷跑電？元兇是 Modern Standby — PowerDoze 部落格</title>
+  <meta name="description" content="放包包裡發燙、隔夜掉 30%？Windows 把傳統 S3 睡眠換成了 Modern Standby（S0）。用 powercfg 抓出待機耗電元兇的方法，以及真正有用的處方。">
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-modern-standby-battery-drain-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-modern-standby-battery-drain.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-modern-standby-battery-drain-zh.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="筆電「睡著」還在偷跑電？元兇是 Modern Standby">
+  <meta property="og:description" content="放包包裡發燙、隔夜掉 30%？Windows 把傳統睡眠換成了 Modern Standby。診斷方法與真正有用的處方。">
+  <meta property="og:url" content="https://powerdoze.app/blog-modern-standby-battery-drain-zh.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="筆電「睡著」還在偷跑電？元兇是 Modern Standby">
+  <meta name="twitter:description" content="放包包裡發燙、隔夜掉 30%？診斷方法與真正有用的處方。">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "筆電「睡著」還在偷跑電？元兇是 Modern Standby",
+    "datePublished": "2026-06-19",
+    "dateModified": "2026-06-19",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-modern-standby-battery-drain-zh.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "zh-Hant"
+  }
+  </script>
+  <link rel="stylesheet" href="/plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="/" class="p-logo">
+      <img src="/assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="/features.html" data-i18n="navFeatures">Features</a>
+      <a href="/comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="/use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="/blog.html" data-i18n="navBlog">Blog</a>
+      <a href="/index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="/blog-modern-standby-battery-drain.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">English version →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">筆電「睡著」還在偷跑電？元兇是 Modern Standby</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-06-19
+    </p>
+
+    <article class="p-prose">
+      <p>闔上螢幕，筆電塞進包包，出門。兩小時後拿出來：機身是溫的——有時燙得讓人緊張——電量少了一大截。沒有東西壞掉。你的筆電完全照著它的設計在運作。問題就出在這裡。</p>
+
+      <h2>「睡眠」被換掉了</h2>
+      <p>過去二十年，闔上螢幕等於 <strong>S3 睡眠</strong>：記憶體保持供電、其他全部斷電，整台機器只剩涓滴耗電，放幾天都還有電。後來 Windows 轉向 <strong>Modern Standby</strong>（S0 低功耗待機），現在大多數新筆電出廠就是它——而且韌體裡通常已經沒有 S3 這個選項了。</p>
+      <p>Modern Standby 的核心想法很像手機：「睡著」其實是<em>淺淺地醒著</em>。機器保持網路連線、同步郵件、下載更新、一碰就秒醒。運作正常時很美好；不正常時，某個驅動程式或背景工作把系統卡在較高功耗狀態——你的包包就成了保溫箱。健康的機器一夜只該掉幾個百分點；出問題的機器每小時可以燒掉 10% 以上，名為待機，實為醒著。</p>
+
+      <h2>先診斷，再動手</h2>
+      <p>開一個系統管理員終端機，直接問 Windows 它在幹嘛：</p>
+      <ul>
+        <li><strong><code>powercfg /a</code></strong> — 列出硬體支援哪些睡眠狀態。看到「待命 (S0 低電源閒置)」就是 Modern Standby；如果清單裡沒有 S3，代表韌體不提供傳統睡眠，任何軟體都加不回來。</li>
+        <li><strong><code>powercfg /sleepstudy</code></strong> — 關鍵工具。產出一份 HTML 報告，列出每段待機：持續多久、吃掉多少電、哪些元件或程序讓系統閒不下來。答案通常就在「Top Offenders」清單裡。</li>
+        <li><strong><code>powercfg /lastwake</code></strong> 和 <strong><code>powercfg /devicequery wake_armed</code></strong> — 上次是誰喚醒機器、以及哪些裝置有權喚醒它。</li>
+      </ul>
+
+      <h2>真正有用的處方</h2>
+      <ul>
+        <li><strong>解除流氓喚醒源的武裝。</strong><code>wake_armed</code> 清單裡用不到的東西——通常是網路卡和雜七雜八的周邊——到裝置管理員（電源管理分頁，取消「允許這個裝置喚醒電腦」）或用 <code>powercfg /devicedisablewake "裝置名稱"</code> 關掉。</li>
+        <li><strong>待機時切斷網路。</strong>S0 背景耗電很大一部分是網路活動。部分機器的電源選項有「待機時的網路連線」這個設定；有的話，把電池模式設為停用，待機行為就會接近傳統睡眠許多。</li>
+        <li><strong>長時間離開改用休眠。</strong>休眠（S4）把記憶體寫進磁碟後完全斷電——零耗電，放多久、飛多遠都沒事。恢復多花幾秒，但對離開好幾個小時的人毫無影響。先確認休眠開著（<code>powercfg /hibernate on</code>），再把「用電池時闔上螢幕」的動作從睡眠改成休眠。</li>
+        <li><strong>登錄檔大絕招——附真實警語。</strong>網路上很多教學推薦 <code>PlatformAoAcOverride = 0</code> 整個關掉 Modern Standby。先想清楚代價：在韌體已不支援 S3 的機器上（最近幾年的筆電大多如此），你換不回傳統睡眠，只會得到一個未定義的狀態，而且 Windows 在部分新版本已經無視這個機碼。要試請充分測試、隨時準備改回來；對多數人來說，「闔蓋改休眠」就能達到同樣目的，沒有這些風險。</li>
+      </ul>
+
+      <h2>又是切換的問題</h2>
+      <p>注意這些處方的共同形狀：休眠對包包是對的，對書桌是錯的。在桌上你要的是輕快的睡眠——進得快、醒得快；在路上你要的是完全斷電。Windows 只給你一組靜態的闔蓋和逾時設定，所以不管選哪邊，都有一半的時間是錯的。</p>
+      <p>這正是 <a href="/">PowerDoze</a> 自動化的那一層。它不碰 S0 本身——它決定的是機器<em>什麼時候、用什麼方式</em>進入低功耗，而電真正省下來的地方就在這裡：</p>
+      <ul>
+        <li><strong>在 App 裡設定闔蓋動作</strong>——睡眠、休眠、關機或不動作，接電和用電池分開設。「用電池時休眠、接上 dock 時睡眠」就是上面那帖包包處方的常駐版。</li>
+        <li><strong>用智慧任務排程休眠</strong>——設一個「01:00 自動休眠」，接住那些筆電忘了關就放著的夜晚——這是「早上電量莫名變少」最大宗的來源。</li>
+        <li><strong>逐模式的睡眠逾時</strong>——電池模式逾時抓緊、插電模式放寬，跟著電源模式自動切換，不用再進控制台。</li>
+      </ul>
+
+      <h2>誠實角落</h2>
+      <p>任何第三方軟體——包括我們的——都無法改變機器進入 S0 之後 Modern Standby 本身的行為；那是韌體和 Windows 的地盤，要打那場仗請用上面的診斷步驟。軟體<em>能</em>負責的是決策層：確保機器每一次都在對的時刻進入對的狀態（睡眠、休眠、關機），而你不用動腦。實務上，大部分消失的電量一直都藏在這個決策層裡。想看 Windows 睡眠設定的全貌，可以讀我們的<a href="/blog-windows-sleep-settings-guide-zh.html">Windows 睡眠設定完整指南</a>。</p>
+
+      <p style="margin-top: 40px;"><a href="/index.html#download" class="p-btn p-btn-primary">免費下載 PowerDoze →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="/privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/i18n.js"></script>
+<script src="/supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 留中文版；其他語言 → 英文版
+  (function() {
+    var EN = '/blog-modern-standby-battery-drain.html';
+    var ZH = '/blog-modern-standby-battery-drain-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>
