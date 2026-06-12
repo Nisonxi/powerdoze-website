@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loud PC Fans? Try Software Before You Buy New Cooling — PowerDoze Blog</title>
+  <meta name="description" content="Fan noise is heat, and heat is watts. Before spending on coolers and case fans, try the Windows settings that cut heat at the source — passive cooling policy, CPU caps, GPU power limits — and automate when they apply.">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-quiet-pc-fan-noise.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-quiet-pc-fan-noise-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-quiet-pc-fan-noise.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Loud PC Fans? Try Software Before You Buy New Cooling">
+  <meta property="og:description" content="Fan noise is heat, and heat is watts. The Windows settings that cut heat at the source — and how to automate when they apply.">
+  <meta property="og:url" content="https://powerdoze.app/blog-quiet-pc-fan-noise.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Loud PC Fans? Try Software Before You Buy New Cooling">
+  <meta name="twitter:description" content="Fan noise is heat, and heat is watts. Cut it at the source with Windows settings.">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Loud PC Fans? Try Software Before You Buy New Cooling",
+    "datePublished": "2026-06-12",
+    "dateModified": "2026-06-12",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-quiet-pc-fan-noise.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "en"
+  }
+  </script>
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="blog.html" data-i18n="navBlog">Blog</a>
+      <a href="index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="blog-quiet-pc-fan-noise-zh.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">中文版 →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">Loud PC Fans? Try Software Before You Buy New Cooling</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-06-12
+    </p>
+
+    <article class="p-prose">
+      <p>Summer makes every PC honest. The machine that hummed politely all winter now spins up like it's preparing for takeoff — during video calls, while you're reading, sometimes seemingly for no reason at all.</p>
+      <p>The standard advice is to spend money: bigger coolers, better case fans, a new case. That advice isn't wrong — but it treats the symptom. Fans exist to move heat, heat comes from watts, and <strong>the watts are a setting.</strong> Before buying hardware to move heat away faster, it's worth trying the free option: produce less heat in the first place.</p>
+
+      <h2>Why your fans are loud</h2>
+      <p>Your CPU and GPU convert electricity into computation, and almost all of it ends up as heat. Fan controllers react to temperature — more watts, more heat, more RPM, more noise. The chain runs one direction, which means you can intervene at the start of it instead of the end:</p>
+      <ul>
+        <li><strong>Hardware route:</strong> same watts, same heat, moved away more efficiently (and more quietly, if you buy well).</li>
+        <li><strong>Software route:</strong> fewer watts, less heat, less for the fans to do — at the cost of some peak performance you may not have been using anyway.</li>
+      </ul>
+
+      <h2>The three settings that quiet a PC</h2>
+      <ul>
+        <li><strong>Cooling policy → passive.</strong> Windows' system cooling policy (<code>SYSCOOLPOL</code> under <code>powercfg</code>, or "System cooling policy" in advanced power options) decides whether Windows spins fans up first (active) or slows the CPU down first (passive). Passive is the single most direct "be quiet" switch the OS has.</li>
+        <li><strong>Cap the CPU's maximum state.</strong> <code>powercfg /setacvalueindex scheme_current sub_processor PROCTHROTTLEMAX 70</code> + <code>powercfg /setactive scheme_current</code> caps the CPU at 70% — which mostly means no turbo boost. Turbo is where the disproportionate heat lives: the last 20% of performance costs far more than 20% of the watts. Browsing, video, and office work won't notice.</li>
+        <li><strong>Power-limit the GPU.</strong> <code>nvidia-smi -pl 150</code> (admin shell) caps an NVIDIA card's draw. Resets at reboot, so it needs a startup task.</li>
+      </ul>
+      <p>Bonus in summer: every watt you don't burn is heat your room — and your air conditioner — doesn't have to deal with. You save the same energy twice.</p>
+
+      <h2>The problem you'll hit within a week</h2>
+      <p>These settings are static, and your life isn't. The cap that makes the machine blissfully silent during a meeting makes it sluggish when you render video at 4 PM and infuriating when you game at 9. So you toggle settings back and forth for a few days, then give up and leave it loud. The settings were never the problem — <em>the switching</em> was.</p>
+
+      <h2>Quiet when it should be, fast when it must be</h2>
+      <p>This is the exact problem shape <a href="./">PowerDoze</a> handles. You bundle the three knobs above (plus screen timeout) into power modes — say, a "Quiet" mode with passive cooling and capped CPU/GPU, and a "Full Power" mode with everything open — then let the automation pick the right one:</p>
+      <ul>
+        <li><strong>Schedule</strong> — Quiet overnight and during meeting-heavy mornings; Full Power for your afternoon work block.</li>
+        <li><strong>Away mode</strong> — you leave the desk, it goes quiet; you come back, it restores instantly.</li>
+        <li><strong>Fullscreen and per-app detection</strong> — a game or render job in the foreground gets Full Power without you touching anything, regardless of what the schedule says it's time for.</li>
+      </ul>
+      <p>The result is a machine that's silent in the moments you care about silence and fast in the moments you care about speed — without you ever opening Control Panel again.</p>
+
+      <h2>When software can't help</h2>
+      <p>Honesty corner: if your fans roar <em>at idle</em> with low temperatures, your problem is mechanical — dust-clogged heatsinks, a dying fan bearing, or a badly configured BIOS fan curve. No setting fixes physics; clean it or replace the part. Likewise, a thin laptop under sustained 100% load will always need its fans. Software tuning shines in the most common case: a machine that's <strong>louder than its actual workload justifies</strong>, because nothing ever told it to calm down.</p>
+
+      <p style="margin-top: 40px;"><a href="index.html#download" class="p-btn p-btn-primary">Download PowerDoze free →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 跳中文版；其他語言 → 英文版
+  (function() {
+    var EN = 'blog-quiet-pc-fan-noise.html';
+    var ZH = 'blog-quiet-pc-fan-noise-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>

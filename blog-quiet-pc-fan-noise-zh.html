@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>電腦風扇好吵？先別買散熱器，試試軟體 — PowerDoze 部落格</title>
+  <meta name="description" content="風扇噪音的本質是熱，熱的本質是瓦數——而瓦數是個設定值。花錢買散熱器之前，先試試從源頭降熱的 Windows 設定：被動散熱策略、CPU 上限、GPU 功耗限制，再把它們自動化。">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-quiet-pc-fan-noise-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-quiet-pc-fan-noise.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-quiet-pc-fan-noise-zh.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="電腦風扇好吵？先別買散熱器，試試軟體">
+  <meta property="og:description" content="噪音的本質是熱，熱的本質是瓦數——而瓦數是個設定值。從源頭降熱，再自動化。">
+  <meta property="og:url" content="https://powerdoze.app/blog-quiet-pc-fan-noise-zh.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="電腦風扇好吵？先別買散熱器，試試軟體">
+  <meta name="twitter:description" content="噪音的本質是熱，熱的本質是瓦數——而瓦數是個設定值。">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "電腦風扇好吵？先別買散熱器，試試軟體",
+    "datePublished": "2026-06-12",
+    "dateModified": "2026-06-12",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-quiet-pc-fan-noise-zh.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "zh-Hant"
+  }
+  </script>
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="blog.html" data-i18n="navBlog">Blog</a>
+      <a href="index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="blog-quiet-pc-fan-noise.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">English version →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">電腦風扇好吵？先別買散熱器，試試軟體</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-06-12
+    </p>
+
+    <article class="p-prose">
+      <p>夏天會讓每台電腦現出原形。整個冬天安安靜靜的機器，現在動不動就轉速拉滿準備起飛——視訊會議的時候、看網頁的時候，有時候根本不知道為什麼。</p>
+      <p>標準建議是花錢：更大的散熱器、更好的機殼風扇、換機殼。這些建議沒有錯——但它們治的是症狀。風扇的工作是搬熱、熱來自瓦數，而<strong>瓦數是個設定值。</strong>在花錢買「把熱更快搬走」的硬體之前，值得先試免費的選項：一開始就少產生一點熱。</p>
+
+      <h2>風扇為什麼吵</h2>
+      <p>CPU 和 GPU 把電變成運算，而幾乎全部都會變成熱。風扇控制器看溫度做事——瓦數越多、熱越多、轉速越高、越吵。這條鏈只有一個方向，意思是你可以從鏈的開頭下手，而不是結尾：</p>
+      <ul>
+        <li><strong>硬體路線：</strong>同樣的瓦數、同樣的熱，搬得更有效率（買得好的話也更安靜）。</li>
+        <li><strong>軟體路線：</strong>更少瓦數、更少熱、風扇沒事做——代價是犧牲一些你可能根本沒在用的峰值效能。</li>
+      </ul>
+
+      <h2>讓電腦安靜的三個設定</h2>
+      <ul>
+        <li><strong>散熱策略改被動。</strong>Windows 的系統散熱策略（<code>powercfg</code> 的 <code>SYSCOOLPOL</code>，或進階電源選項裡的「系統散熱原則」）決定 Windows 先拉風扇（主動）還是先降 CPU 速度（被動）。被動模式是作業系統內建最直接的「安靜開關」。</li>
+        <li><strong>限制 CPU 最大狀態。</strong><code>powercfg /setacvalueindex scheme_current sub_processor PROCTHROTTLEMAX 70</code> 加 <code>powercfg /setactive scheme_current</code>，把 CPU 上限設在 70%——實際效果主要是關掉 turbo boost。不成比例的熱就藏在 turbo 裡：最後 20% 的效能要付出遠超過 20% 的瓦數。上網、看片、文書完全無感。</li>
+        <li><strong>給 GPU 設功耗上限。</strong><code>nvidia-smi -pl 150</code>（系統管理員視窗）限制 NVIDIA 顯卡的功耗。重開機會重置，要靠開機任務。</li>
+      </ul>
+      <p>夏天還有加倍紅利：你沒燒掉的每一瓦，就是你的房間——和你的冷氣——不用處理的熱。同一份電省兩次。</p>
+
+      <h2>一週內你就會撞到的問題</h2>
+      <p>這些設定是靜態的，你的生活不是。讓開會時安靜得像圖書館的那組上限，會讓你下午四點轉影片時慢得想砸鍵盤、晚上九點打遊戲時直接抓狂。於是你來回切設定切個幾天，然後放棄，讓它繼續吵。問題從來不是設定本身——是<em>切換</em>。</p>
+
+      <h2>該安靜的時候安靜，該快的時候快</h2>
+      <p>這正是 <a href="./">PowerDoze</a> 處理的問題形狀。把上面三個旋鈕（加上螢幕逾時）打包成電源模式——比如「安靜」模式：被動散熱+CPU/GPU 上限；「全速」模式：全部放開——然後讓自動化選對的那個：</p>
+      <ul>
+        <li><strong>排程</strong>——深夜和會議密集的早上用安靜模式；下午的工作時段全速。</li>
+        <li><strong>離開模式</strong>——你離開座位它就安靜下來；回來瞬間恢復。</li>
+        <li><strong>全螢幕與 per-app 偵測</strong>——遊戲或算圖在前景就自動全速，不管排程說現在該是什麼時段，你完全不用碰。</li>
+      </ul>
+      <p>結果是一台「你在乎安靜的時刻安靜、你在乎速度的時刻快」的機器——而且你再也不用打開控制台。</p>
+
+      <h2>軟體幫不上忙的情況</h2>
+      <p>誠實段：如果你的風扇<em>連待機都在吼</em>、溫度卻不高，那問題是機械性的——散熱鰭片積灰、風扇軸承快掛了、或 BIOS 風扇曲線設壞了。沒有任何設定能修物理問題；該清灰清灰、該換件換件。同樣地，一台薄筆電在持續 100% 負載下永遠需要風扇全開。軟體調校最有用的是最常見的那種情況：一台<strong>吵得跟它實際工作量不成比例</strong>的電腦——因為從來沒有人叫它冷靜下來。</p>
+
+      <p style="margin-top: 40px;"><a href="index.html#download" class="p-btn p-btn-primary">免費下載 PowerDoze →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 留中文版；其他語言 → 跳英文版
+  (function() {
+    var EN = 'blog-quiet-pc-fan-noise.html';
+    var ZH = 'blog-quiet-pc-fan-noise-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>
