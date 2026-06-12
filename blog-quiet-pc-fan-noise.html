@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Loud PC Fans? Try Software Before You Buy New Cooling — PowerDoze Blog</title>
-  <meta name="description" content="Fan noise is heat, and heat is watts. Before spending on coolers and case fans, try the Windows settings that cut heat at the source — passive cooling policy, CPU caps, GPU power limits — and automate when they apply.">
+  <meta name="description" content="Fan noise is heat, and heat is watts. Before buying coolers and case fans, try the Windows settings that cut heat at the source — and automate when they apply.">
   <link rel="icon" href="assets/favicon.ico">
   <link rel="canonical" href="https://powerdoze.app/blog-quiet-pc-fan-noise.html">
   <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-quiet-pc-fan-noise-zh.html">
@@ -91,7 +91,7 @@
       <h2>The three settings that quiet a PC</h2>
       <ul>
         <li><strong>Cooling policy → passive.</strong> Windows' system cooling policy (<code>SYSCOOLPOL</code> under <code>powercfg</code>, or "System cooling policy" in advanced power options) decides whether Windows spins fans up first (active) or slows the CPU down first (passive). Passive is the most direct "be quiet" switch the OS has — on machines where Windows actually manages cooling, which mostly means laptops and OEM prebuilts. On a typical self-built desktop, fans follow the motherboard's BIOS fan curve and this setting does little; there, the CPU and GPU caps below are what move the needle.</li>
-        <li><strong>Cap the CPU's maximum state.</strong> <code>powercfg /setacvalueindex scheme_current sub_processor PROCTHROTTLEMAX 70</code> + <code>powercfg /setactive scheme_current</code> caps the CPU at 70% — anything below 100% kills turbo boost, and 70% trims sustained clocks a bit further on top. Turbo is where the disproportionate heat lives: the last 20% of performance costs far more than 20% of the watts. Browsing, video, and office work won't notice.</li>
+        <li><strong>Cap the CPU's maximum state.</strong> <code>powercfg /setacvalueindex scheme_current sub_processor PROCTHROTTLEMAX 70</code> + <code>powercfg /setactive scheme_current</code> caps the CPU at 70% — anything below 100% kills turbo boost, and 70% trims sustained clocks a bit further on top. (On a laptop, repeat with <code>/setdcvalueindex</code> for the on-battery profile.) Turbo is where the disproportionate heat lives: the last 20% of performance costs far more than 20% of the watts. Browsing, video, and office work won't notice.</li>
         <li><strong>Power-limit the GPU.</strong> <code>nvidia-smi -pl 150</code> (admin shell) caps an NVIDIA card's draw — check your card's allowed range with <code>nvidia-smi -q -d POWER</code>. Resets at reboot, so it needs a startup task.</li>
       </ul>
       <p>Bonus in summer: every watt you don't burn is heat your room — and your air conditioner — doesn't have to deal with, so each watt you cut comes off your AC's workload too.</p>

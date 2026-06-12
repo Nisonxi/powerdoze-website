@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Running Local AI? Your Power Bill Noticed — PowerDoze Blog</title>
-  <meta name="description" content="Ollama, LM Studio, ComfyUI — local AI turns your desktop into always-on infrastructure. Where the watts actually go, the GPU power-limit trick that barely costs tokens/sec, and how to stop choosing between sleep and dead jobs.">
+  <meta name="description" content="Ollama, LM Studio, ComfyUI — local AI turns your desktop into always-on infrastructure. Where the watts go, the GPU power-limit trick, and how to stop choosing between sleep and dead jobs.">
   <link rel="icon" href="assets/favicon.ico">
   <link rel="canonical" href="https://powerdoze.app/blog-local-ai-power-management.html">
   <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-local-ai-power-management-zh.html">
@@ -84,7 +84,7 @@
       <h2>Where the watts actually go</h2>
       <p>A local-AI machine lives in three states, and the expensive one isn't the one you'd guess:</p>
       <ul>
-        <li><strong>Active inference.</strong> A high-end card at stock settings will happily pull 300–450 W while generating. Sounds bad — but each request only takes seconds.</li>
+        <li><strong>Active inference.</strong> A high-end card at stock settings can pull 300–450 W while generating (diffusion and prompt processing push the high end). Sounds bad — but each request only takes seconds.</li>
         <li><strong>Model loaded, GPU idle.</strong> Between requests, the model can sit resident in VRAM — for minutes or indefinitely, depending on your keep-alive settings. The GPU idles noticeably higher than an empty desktop — and a multi-monitor, high-refresh setup raises that floor further.</li>
         <li><strong>Waiting, 24/7.</strong> If the box serves an API for your phone, your editor plugin, or Home Assistant, it can never sleep — so the whole machine (CPU, fans, board, drives) idles around the clock.</li>
       </ul>
