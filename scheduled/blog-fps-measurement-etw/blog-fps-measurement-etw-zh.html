@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>不碰遊戲怎麼數 FPS？我們 overlay 背後的 ETW 技術 — PowerDoze 部落格</title>
+  <meta name="description" content="防作弊系統痛恨注入，所以我們從外面數幀：Windows ETW、DXGI Present 事件，以及那個讓遊戲顯示 600 FPS 的多 swapchain 踩坑實錄。">
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-fps-measurement-etw-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-fps-measurement-etw.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-fps-measurement-etw-zh.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="不碰遊戲怎麼數 FPS？我們 overlay 背後的 ETW 技術">
+  <meta property="og:description" content="防作弊痛恨注入，所以從外面數幀：ETW、DXGI Present 事件，與多 swapchain 踩坑實錄。">
+  <meta property="og:url" content="https://powerdoze.app/blog-fps-measurement-etw-zh.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="不碰遊戲怎麼數 FPS？">
+  <meta name="twitter:description" content="ETW 量 FPS——零注入、零 hook，外加一個很有教育意義的 bug。">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "不碰遊戲怎麼數 FPS？我們 overlay 背後的 ETW 技術",
+    "datePublished": "2026-06-26",
+    "dateModified": "2026-06-26",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-fps-measurement-etw-zh.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "zh-Hant"
+  }
+  </script>
+  <link rel="stylesheet" href="/plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="/" class="p-logo">
+      <img src="/assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="/features.html" data-i18n="navFeatures">Features</a>
+      <a href="/comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="/use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="/blog.html" data-i18n="navBlog">Blog</a>
+      <a href="/index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="/blog-fps-measurement-etw.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">English version →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">不碰遊戲怎麼數 FPS？我們 overlay 背後的 ETW 技術</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-06-26
+    </p>
+
+    <article class="p-prose">
+      <p>PowerDoze 是個電源工具，為什麼要量 FPS？因為瓦數和幀數是同一筆交易的兩端：把 GPU 功耗上限壓下去，幀數幾乎沒動，你就白賺了安靜和電費；幀數崩了，就是壓過頭。要讓這個取捨看得見，我們的遊戲 overlay 把即時 FPS 和螢幕更新率並排顯示——而做出這個數字的過程，是我們踩過最有教育意義的一個坑。</p>
+
+      <h2>前提約束：絕不碰遊戲本體</h2>
+      <p>量 FPS 的標準做法是「進到遊戲裡面量」：RTSS 這類工具把 DLL 注入遊戲程序、hook 它的 <code>Present</code> 呼叫——每攔到一次就是一幀。效果很好，但這正是防作弊系統的頭號獵物。對一個會跟線上遊戲一起跑的工具來說，注入不是選項：最壞情況不是當機，是使用者的帳號被標記。</p>
+      <p>所以需求變成：<em>完全不碰目標程序</em>，數別人的幀。</p>
+
+      <h2>Windows 其實已經幫你數好了</h2>
+      <p>答案是 ETW——Event Tracing for Windows，作業系統內建的全域遙測匯流排。圖形堆疊本身就有埋點：<code>Microsoft-Windows-DXGI</code> provider 會在任何程序送出一幀時發事件（Event 42，<code>Present::Start</code>）。從自己的程序訂閱這條流、用前景遊戲的 PID 過濾、每秒數事件數——就是 FPS，從外面量出來的。這跟 Intel 的 PresentMon 用的是同一個資料來源。老的 DirectX 9 遊戲走另一條路徑，所以我們同時聽 <code>Microsoft-Windows-D3D9</code> 的 Event 1，並用旗標防止同一幀從兩邊各算一次。</p>
+
+      <h2>那個跑出 600 FPS 的 bug</h2>
+      <p>第一版上線後，玩家回報：遊戲實際大約 200 幀，overlay 卻顯示 500–600。不是抖動——是穩定、自信地三倍於真相。</p>
+      <p>事後看原因很明顯：<strong>現代遊戲不是只有一條幀流。</strong>很多引擎內嵌 Chromium 做 UI（選單、商城、地圖介面），那個瀏覽器有自己的 swapchain、自己送自己的幀。我們的計數器把該 PID 的<em>所有</em> Present 事件加總——主渲染約 200 幀，加上一個很忙的網頁 UI——報出總和。修法就是 PresentMon 的做法：<strong>按 swapchain 分桶</strong>，回報最忙的那一桶（主渲染），愛講話的 UI overlay 自己一桶，不再污染數字。</p>
+      <p>然後第二個坑引爆：事件 payload 裡指向 swapchain 的欄位，<em>在不同 Windows 版本叫不同名字</em>（有的叫 <code>pIDXGISwapChain</code>，有的是變體）。讀錯欄位名，所有事件全進同一桶——悄悄重現原 bug。最後站穩的版本改成名稱無關掃描：找 payload 裡任何名字含「swap」的指標欄位，並每秒把逐 swapchain 的分桶明細寫進診斷 log——哪天某台機器的欄位又叫新名字，log 會直接告訴我們，不用猜。</p>
+
+      <h2>這個做法做不到的事</h2>
+      <p>站在程序外面的代價，誠實列出：</p>
+      <ul>
+        <li><strong>跟著前景視窗走。</strong>Alt-Tab 切走，overlay 就改量你切過去的東西——設計如此，但多螢幕使用者會驚訝。</li>
+        <li><strong>數的是 present 次數，不是每幀耗時。</strong>FPS 數字紮實，但沒有 frametime 百分位數、沒有 1% low。要深度分析卡頓，請用 PresentMon 或 CapFrameX——那件事它們真的做得更好。</li>
+        <li><strong>ETW session 需要管理員權限</strong>——PowerDoze 引擎本來就以系統管理員身分跑電源管理，overlay 搭便車不用多付。</li>
+      </ul>
+
+      <h2>電源工具為什麼需要這個數字</h2>
+      <p>這個 overlay 存在的目的，是讓你一眼回答一個問題：<em>我是不是在為看不到的幀付電費？</em>165 Hz 的螢幕上選單跑 400 FPS，那是純發熱。FPS 和 Hz 並排放著，壓 GPU 功耗（<a href="/blog-local-ai-power-management-zh.html">power limit 那招幾乎不掉性能</a>）就不再是賭注——你盯著數字，它撐住或撐不住，一翻兩瞪眼。</p>
+
+      <p style="margin-top: 40px;"><a href="/index.html#download" class="p-btn p-btn-primary">免費下載 PowerDoze →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="/privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/i18n.js"></script>
+<script src="/supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 留中文版；其他語言 → 英文版
+  (function() {
+    var EN = '/blog-fps-measurement-etw.html';
+    var ZH = '/blog-fps-measurement-etw-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>That Green Leaf in Task Manager: Windows Efficiency Mode, Explained — PowerDoze Blog</title>
+  <meta name="description" content="EcoQoS tells Windows to run a process cheap — E-cores, lower clocks, lower priority. What it actually does, how it differs from priority tweaking, and how to stop background apps from drinking your watts.">
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-windows-efficiency-mode-ecoqos.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-windows-efficiency-mode-ecoqos-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-windows-efficiency-mode-ecoqos.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="That Green Leaf in Task Manager: Windows Efficiency Mode, Explained">
+  <meta property="og:description" content="EcoQoS tells Windows to run a process cheap. What it does, when it helps, and how to use it.">
+  <meta property="og:url" content="https://powerdoze.app/blog-windows-efficiency-mode-ecoqos.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="That Green Leaf in Task Manager, Explained">
+  <meta name="twitter:description" content="Windows Efficiency Mode (EcoQoS): what it actually does and when to use it.">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "That Green Leaf in Task Manager: Windows Efficiency Mode, Explained",
+    "datePublished": "2026-07-17",
+    "dateModified": "2026-07-17",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-windows-efficiency-mode-ecoqos.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "en"
+  }
+  </script>
+  <link rel="stylesheet" href="/plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="/" class="p-logo">
+      <img src="/assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="/features.html" data-i18n="navFeatures">Features</a>
+      <a href="/comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="/use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="/blog.html" data-i18n="navBlog">Blog</a>
+      <a href="/index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="/blog-windows-efficiency-mode-ecoqos-zh.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">中文版 →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">That Green Leaf in Task Manager: Windows Efficiency Mode, Explained</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-07-17
+    </p>
+
+    <article class="p-prose">
+      <p>Open Task Manager on Windows 11 and some processes wear a small green leaf. Most people have seen it; almost nobody has right-clicked it. The leaf is <strong>Efficiency Mode</strong> — Microsoft's name for a scheduling level called EcoQoS — and it's one of the most underused power features in Windows.</p>
+
+      <h2>What the leaf actually does</h2>
+      <p>Every thread in Windows carries a "Quality of Service" hint that tells the scheduler how much the work matters. EcoQoS is the level that says: <em>this work is not urgent — run it as cheaply as possible.</em> Concretely, Windows responds three ways:</p>
+      <ul>
+        <li><strong>Prefer efficiency cores.</strong> On hybrid CPUs (Intel 12th gen and later, recent AMD designs), EcoQoS work gets steered to E-cores, leaving P-cores idle — and idle P-cores are where the power savings live.</li>
+        <li><strong>Run at lower clock speeds.</strong> The scheduler stops boosting for this work; same instructions, executed in the cheap part of the voltage-frequency curve.</li>
+        <li><strong>Yield to everything else.</strong> The process also drops to low scheduling priority, so it never competes with whatever you're actually doing.</li>
+      </ul>
+
+      <h2>EcoQoS vs CPU priority: quality vs queue position</h2>
+      <p>Old-school process priority (Idle through High) only changes <em>queue position</em> — who goes first when the CPU is contested. An idle-priority process on an uncontested machine still boosts the CPU to full clocks and burns full watts. EcoQoS changes the <em>quality</em> of execution: even alone on the machine, the work runs slow, cool and on small cores. Priority answers "who first?"; EcoQoS answers "how expensively?". For background loads on an otherwise quiet PC, EcoQoS is the one that actually moves the power meter.</p>
+
+      <h2>What it's for</h2>
+      <p>Anything that should stay alive but has no business being fast:</p>
+      <ul>
+        <li>Download clients and sync tools (cloud drives, torrents) grinding along at night</li>
+        <li>Chat and launcher apps idling in the tray with their embedded browsers</li>
+        <li>Indexers, backup agents, update services</li>
+      </ul>
+      <p>The pattern: <em>you want it running; you don't want it spending.</em> A background app that pulled the CPU into boost a few hundred times an hour mostly stops doing so under EcoQoS — and on a machine that's otherwise idle, killing those boost spikes is real savings, for free.</p>
+
+      <h2>The Task Manager way — and its limits</h2>
+      <p>Task Manager → right-click a process → Efficiency mode. It works, with two catches. First, it's per-process-instance: restart the app and the leaf is gone. Second, some processes can't be switched there, and child processes need individual treatment. As a one-off experiment it's perfect; as a daily policy, it's a chore — the classic <em>static settings vs changing context</em> problem that this blog keeps running into.</p>
+
+      <h2>Doing it durably</h2>
+      <p>In <a href="/">PowerDoze</a>, the process manager (a Pro feature) puts EcoQoS, CPU priority and per-app GPU preference in one list — pick the processes that should always run cheap, and the setting is applied without the Task Manager scavenger hunt. It pairs naturally with the rest of the toolkit: power modes throttle the whole machine by context, EcoQoS pins down the specific background offenders that misbehave in every context. (For where this sits among Process Lasso and friends — which go much deeper on automation rules at the cost of complexity — see our <a href="/blog-windows-power-tools-compared.html">honest map of Windows power tools</a>.)</p>
+
+      <h2>Honesty corner</h2>
+      <p>EcoQoS is a hint, not a law — Windows honors it well, but the savings depend on what the process was doing. A truly idle process saves almost nothing (it was already cheap); a chatty Electron app saves noticeably; a CPU-hungry encoder gets <em>slow</em> rather than efficient, which is probably not what you want — don't leaf your render jobs. And on older non-hybrid CPUs the E-core steering doesn't apply, leaving only the clock and priority effects. Best targets: the apps you'd describe as "doing nothing, somehow busy".</p>
+
+      <p style="margin-top: 40px;"><a href="/index.html#download" class="p-btn p-btn-primary">Download PowerDoze free →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="/privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/i18n.js"></script>
+<script src="/supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 跳中文版；其他語言 → 英文版
+  (function() {
+    var EN = '/blog-windows-efficiency-mode-ecoqos.html';
+    var ZH = '/blog-windows-efficiency-mode-ecoqos-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>

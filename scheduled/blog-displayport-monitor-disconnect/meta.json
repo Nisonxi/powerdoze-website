@@ -1,0 +1,34 @@
+{
+  "slug": "blog-displayport-monitor-disconnect",
+  "i18nKey": "blogA10",
+  "i18n": {
+    "en": {
+      "t": "Turn Off a DisplayPort Monitor and Windows Thinks It's Gone",
+      "d": "Windows scramble to the other screen, remote sessions go black — why DisplayPort drops off the bus when the monitor sleeps, and the fixes: a Windows 11 setting, an OSD toggle, a $10 dummy plug."
+    },
+    "zh-TW": {
+      "t": "DP 螢幕一關，Windows 以為你拔了它——視窗亂跳與遠端斷線的元兇",
+      "d": "視窗全跳到另一顆螢幕、遠端突然黑屏——為什麼 DP 螢幕休眠時會整個從系統消失，以及三個解法：Win11 設定、螢幕 OSD、一顆百元假負載。"
+    },
+    "zh-CN": {
+      "t": "DP 显示器一关，Windows 以为你拔了它——窗口乱跳与远程断线的元凶",
+      "d": "窗口全跳到另一块屏幕、远程突然黑屏——为什么 DP 显示器休眠时会整个从系统消失，以及三个解法：Win11 设置、显示器 OSD、一个十几块的假负载。"
+    },
+    "ja": {
+      "t": "DPモニターの電源を切ると、Windowsは「抜かれた」と判断する",
+      "d": "ウィンドウが別画面に大移動、リモートが真っ黒——DisplayPortがスリープ時にシステムから消える理由と、3つの対策：Windows 11の設定、OSDの切替、ダミープラグ。"
+    },
+    "ko": {
+      "t": "DP 모니터를 끄면 Windows는 \"뽑혔다\"고 판단한다",
+      "d": "창이 다른 화면으로 우르르 이동, 원격은 깜깜 — DisplayPort가 절전 시 시스템에서 사라지는 이유와 3가지 해결책: Windows 11 설정, OSD 토글, 더미 플러그."
+    },
+    "fr": {
+      "t": "Éteignez un écran DisplayPort et Windows croit qu'il a disparu",
+      "d": "Fenêtres qui migrent, sessions distantes noires — pourquoi le DisplayPort disparaît du système en veille, et les correctifs : un réglage Windows 11, une option OSD, un dummy plug à 10 €."
+    },
+    "de": {
+      "t": "DisplayPort-Monitor aus — und Windows hält ihn für abgesteckt",
+      "d": "Fenster springen auf den anderen Bildschirm, Remote-Sitzungen werden schwarz — warum DisplayPort im Standby vom Bus verschwindet, und die Fixes: eine Windows-11-Einstellung, ein OSD-Schalter, ein Dummy-Plug."
+    }
+  }
+}

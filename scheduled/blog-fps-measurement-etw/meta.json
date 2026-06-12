@@ -1,0 +1,34 @@
+{
+  "slug": "blog-fps-measurement-etw",
+  "i18nKey": "blogA9",
+  "i18n": {
+    "en": {
+      "t": "Counting Frames Without Touching the Game: How Our FPS Overlay Works",
+      "d": "Anti-cheat hates injection, so we count frames from the outside — Windows ETW, DXGI Present events, and the multi-swapchain bug that made one game report 600 FPS."
+    },
+    "zh-TW": {
+      "t": "不碰遊戲怎麼數 FPS？我們 overlay 背後的 ETW 技術",
+      "d": "防作弊系統痛恨注入，所以我們從外面數幀——Windows ETW、DXGI Present 事件，以及那個讓遊戲顯示 600 FPS 的多 swapchain 踩坑實錄。"
+    },
+    "zh-CN": {
+      "t": "不碰游戏怎么数 FPS？我们 overlay 背后的 ETW 技术",
+      "d": "反作弊系统痛恨注入，所以我们从外面数帧——Windows ETW、DXGI Present 事件，以及那个让游戏显示 600 FPS 的多 swapchain 踩坑实录。"
+    },
+    "ja": {
+      "t": "ゲームに触れずにFPSを数える——ETWで作るオーバーレイの仕組み",
+      "d": "アンチチートはインジェクションを嫌う。だから外から数える——Windows ETW、DXGI Presentイベント、そしてゲームが600FPSと表示されたマルチスワップチェーンのバグ実録。"
+    },
+    "ko": {
+      "t": "게임을 건드리지 않고 FPS 세기 — ETW로 만든 오버레이의 원리",
+      "d": "안티치트는 인젝션을 싫어합니다. 그래서 밖에서 셉니다 — Windows ETW, DXGI Present 이벤트, 그리고 게임이 600 FPS로 표시되던 멀티 스왑체인 버그 실록."
+    },
+    "fr": {
+      "t": "Compter les FPS sans toucher au jeu : notre overlay via ETW",
+      "d": "Les anti-cheat détestent l'injection, alors on compte de l'extérieur — Windows ETW, événements DXGI Present, et le bug multi-swapchain qui affichait 600 FPS."
+    },
+    "de": {
+      "t": "Frames zählen, ohne das Spiel anzufassen: unser FPS-Overlay mit ETW",
+      "d": "Anti-Cheat hasst Injection, also zählen wir von außen — Windows ETW, DXGI-Present-Events und der Multi-Swapchain-Bug, der 600 FPS anzeigte."
+    }
+  }
+}

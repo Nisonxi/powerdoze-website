@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Turn Off a DisplayPort Monitor and Windows Thinks It's Gone — PowerDoze Blog</title>
+  <meta name="description" content="Windows scramble to the other screen, remote sessions go black — why DisplayPort monitors vanish from the system when they sleep, and the fixes: a Windows 11 setting, an OSD toggle, a $10 dummy plug.">
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-displayport-monitor-disconnect.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-displayport-monitor-disconnect-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-displayport-monitor-disconnect.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Turn Off a DisplayPort Monitor and Windows Thinks It's Gone">
+  <meta property="og:description" content="Why your windows jump to the other screen and remote sessions go black — and the three fixes.">
+  <meta property="og:url" content="https://powerdoze.app/blog-displayport-monitor-disconnect.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Turn Off a DisplayPort Monitor and Windows Thinks It's Gone">
+  <meta name="twitter:description" content="Window scramble, black remote sessions — DisplayPort's disappearing act, explained and fixed.">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Turn Off a DisplayPort Monitor and Windows Thinks It's Gone",
+    "datePublished": "2026-07-03",
+    "dateModified": "2026-07-03",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-displayport-monitor-disconnect.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "en"
+  }
+  </script>
+  <link rel="stylesheet" href="/plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="/" class="p-logo">
+      <img src="/assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="/features.html" data-i18n="navFeatures">Features</a>
+      <a href="/comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="/use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="/blog.html" data-i18n="navBlog">Blog</a>
+      <a href="/index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="/blog-displayport-monitor-disconnect-zh.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">中文版 →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">Turn Off a DisplayPort Monitor and Windows Thinks It's Gone</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-07-03
+    </p>
+
+    <article class="p-prose">
+      <p>Two complaints, one cause. First: you turn off one monitor of a multi-screen setup, and every window on it stampedes to the screen that's still on — icons reshuffled, layouts wrecked. Second: you try to remote into a machine whose screens are off, and the streaming tool shows you blackness or a sad 800×600 desktop. If the monitor involved is DisplayPort, neither of these is a bug. It's a protocol design decision from 2006.</p>
+
+      <h2>HDMI says "I'm off". DisplayPort says nothing at all.</h2>
+      <p>Both cable standards have a hot-plug detect (HPD) line — the wire that tells the PC "a display is attached". The difference is what happens when the monitor goes to sleep or gets switched off:</p>
+      <ul>
+        <li><strong>HDMI monitors</strong> typically keep the HPD line up. Windows knows the screen is still there, just dark. Topology untouched.</li>
+        <li><strong>DisplayPort monitors</strong> commonly drop HPD when they power down or enter deep sleep. To Windows, that is indistinguishable from you yanking the cable: the monitor isn't <em>off</em>, it's <em>gone</em>.</li>
+      </ul>
+      <p>And when a monitor is gone, Windows does what it's supposed to do for an unplugged display: it re-arranges the desktop. Windows migrate to surviving screens, the resolution may change, and when the monitor wakes up and re-announces itself, everything re-enumerates — that black-flash dance you see when screens come back. Whether your DP monitor does this depends on the model and its firmware; some keep HPD alive, many don't, and some have an OSD option that decides.</p>
+
+      <h2>The remote-access version of the problem</h2>
+      <p>Now switch off <em>all</em> the monitors on a DP-only desktop and the machine believes it has no display hardware at all. Tools that stream the physical desktop — Parsec, Moonlight/Sunshine, some AnyDesk modes — suddenly have nothing to capture, or fall back to a tiny virtual panel. (Classic RDP is immune: it creates its own virtual display.) This is why the remote-gaming crowd buys <strong>HDMI dummy plugs</strong> — a $10 resistor pretending to be a monitor, keeping one "display" permanently attached.</p>
+
+      <h2>The fix toolbox</h2>
+      <ul>
+        <li><strong>Windows 11's window-memory setting.</strong> Settings → System → Display → Multiple displays → enable <em>"Remember window locations based on monitor connection"</em>. Microsoft added this specifically for the DP disappearing act: when the monitor re-appears, your windows go back where they were. It doesn't stop the disconnect; it cleans up after it.</li>
+        <li><strong>Check the monitor's OSD for "DisplayPort deep sleep".</strong> Many Dell, LG and BenQ models have a toggle (sometimes called DP power saving). Turning deep sleep <em>off</em> keeps HPD alive when the screen sleeps — the monitor stays "present" like an HDMI one. Costs a watt or two of standby power.</li>
+        <li><strong>For remote access: a dummy plug</strong> in a spare HDMI port, or RDP instead of capture-based tools. If the machine is headless-by-design, the dummy plug is the no-surprises option.</li>
+      </ul>
+
+      <h2>Where PowerDoze stands in this</h2>
+      <p>PowerDoze's power modes can turn displays off on a timeout — that's a standard Windows display-off, and on well-behaved monitors it's exactly as reversible as it sounds. But if your DP monitor drops HPD on sleep, the window-scramble above happens on <em>any</em> display-off, whoever triggers it — Windows' own timeout, ours, or the power button on the monitor. No software can change how a monitor's firmware handles its HPD line. What we can do is tell you the fix exists: flip the Windows 11 setting, check the OSD, and multi-monitor DP setups behave again. (For the wider map of sleep settings and their quirks, see the <a href="/blog-windows-sleep-settings-guide.html">complete guide to Windows sleep settings</a>.)</p>
+
+      <h2>The short version</h2>
+      <p>DP monitor off ≈ DP monitor unplugged — that's the protocol, not a glitch. Remember-window-locations fixes the scramble, the OSD deep-sleep toggle prevents it, a dummy plug saves your remote sessions. Twenty minutes of setup, and the most annoying multi-monitor behavior on Windows is gone for good.</p>
+
+      <p style="margin-top: 40px;"><a href="/index.html#download" class="p-btn p-btn-primary">Download PowerDoze free →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="/privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/i18n.js"></script>
+<script src="/supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 跳中文版；其他語言 → 英文版
+  (function() {
+    var EN = '/blog-displayport-monitor-disconnect.html';
+    var ZH = '/blog-displayport-monitor-disconnect-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>

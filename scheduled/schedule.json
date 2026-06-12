@@ -5,6 +5,30 @@
       "title": "筆電「睡著」還在偷跑電？元兇是 Modern Standby",
       "publishDate": "2026-06-19",
       "status": "scheduled"
+    },
+    {
+      "slug": "blog-fps-measurement-etw",
+      "title": "不碰遊戲怎麼數 FPS？我們 overlay 背後的 ETW 技術",
+      "publishDate": "2026-06-26",
+      "status": "scheduled"
+    },
+    {
+      "slug": "blog-displayport-monitor-disconnect",
+      "title": "DP 螢幕一關，Windows 以為你拔了它——視窗亂跳與遠端斷線的元兇",
+      "publishDate": "2026-07-03",
+      "status": "scheduled"
+    },
+    {
+      "slug": "blog-active-vs-passive-cooling",
+      "title": "主動 vs 被動散熱：Windows 最被誤解的電源設定",
+      "publishDate": "2026-07-10",
+      "status": "scheduled"
+    },
+    {
+      "slug": "blog-windows-efficiency-mode-ecoqos",
+      "title": "工作管理員那片綠葉是什麼？Windows 效率模式（EcoQoS）解析",
+      "publishDate": "2026-07-17",
+      "status": "scheduled"
     }
   ]
 }

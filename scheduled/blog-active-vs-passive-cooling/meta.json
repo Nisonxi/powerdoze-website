@@ -1,0 +1,34 @@
+{
+  "slug": "blog-active-vs-passive-cooling",
+  "i18nKey": "blogA11",
+  "i18n": {
+    "en": {
+      "t": "Active vs Passive Cooling: Windows' Most Misunderstood Power Setting",
+      "d": "It's not \"fan on vs fan off\" — it's which lever Windows pulls first when things get hot. What the system cooling policy really does, where it works, and whether it fights your BIOS fan curve or Afterburner."
+    },
+    "zh-TW": {
+      "t": "主動 vs 被動散熱：Windows 最被誤解的電源設定",
+      "d": "不是「風扇開或關」，是過熱時 Windows 先拉哪根桿子。系統散熱原則到底做什麼、在哪種機器有效，會不會跟 BIOS 風扇曲線或小飛機打架。"
+    },
+    "zh-CN": {
+      "t": "主动 vs 被动散热：Windows 最被误解的电源设置",
+      "d": "不是「风扇开或关」，是过热时 Windows 先拉哪根杆子。系统散热策略到底做什么、在哪种机器有效，会不会跟 BIOS 风扇曲线或小飞机打架。"
+    },
+    "ja": {
+      "t": "アクティブ冷却 vs パッシブ冷却——Windowsで最も誤解されている電源設定",
+      "d": "「ファンが回るか回らないか」ではなく、熱くなったときWindowsがどちらのレバーを先に引くか。システムの冷却ポリシーの正体、効く環境、BIOSファンカーブやAfterburnerと衝突しないかまで。"
+    },
+    "ko": {
+      "t": "능동 vs 수동 냉각: Windows에서 가장 오해받는 전원 설정",
+      "d": "\"팬이 도느냐 마느냐\"가 아니라, 뜨거워졌을 때 Windows가 어느 레버를 먼저 당기느냐입니다. 시스템 냉각 정책의 실체, 효과 있는 환경, BIOS 팬 커브나 Afterburner와의 충돌 여부까지."
+    },
+    "fr": {
+      "t": "Refroidissement actif vs passif : le réglage Windows le plus incompris",
+      "d": "Ce n'est pas « ventilateur ou pas » — c'est quel levier Windows tire en premier quand ça chauffe. Ce que fait vraiment la stratégie de refroidissement, où elle agit, et si elle se bat avec votre courbe BIOS ou Afterburner."
+    },
+    "de": {
+      "t": "Aktive vs. passive Kühlung: Windows' meistmissverstandene Energieeinstellung",
+      "d": "Es geht nicht um \"Lüfter an oder aus\" — sondern welchen Hebel Windows bei Hitze zuerst zieht. Was die Systemkühlungsrichtlinie wirklich tut, wo sie wirkt und ob sie mit BIOS-Lüfterkurve oder Afterburner kollidiert."
+    }
+  }
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>工作管理員那片綠葉是什麼？Windows 效率模式（EcoQoS）解析 — PowerDoze 部落格</title>
+  <meta name="description" content="EcoQoS 讓 Windows 用最省的方式跑某個程式——小核、低時脈、低優先權。它實際做什麼、跟優先權差在哪，以及怎麼讓背景程式別再偷喝你的電。">
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-windows-efficiency-mode-ecoqos-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-windows-efficiency-mode-ecoqos.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-windows-efficiency-mode-ecoqos-zh.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="工作管理員那片綠葉是什麼？Windows 效率模式（EcoQoS）解析">
+  <meta property="og:description" content="EcoQoS 讓 Windows 用最省的方式跑某個程式。它做什麼、何時有用、怎麼用。">
+  <meta property="og:url" content="https://powerdoze.app/blog-windows-efficiency-mode-ecoqos-zh.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="工作管理員那片綠葉，一次講清楚">
+  <meta name="twitter:description" content="Windows 效率模式（EcoQoS）：實際做什麼、什麼時候該用。">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "工作管理員那片綠葉是什麼？Windows 效率模式（EcoQoS）解析",
+    "datePublished": "2026-07-17",
+    "dateModified": "2026-07-17",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-windows-efficiency-mode-ecoqos-zh.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "zh-Hant"
+  }
+  </script>
+  <link rel="stylesheet" href="/plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="/" class="p-logo">
+      <img src="/assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="/features.html" data-i18n="navFeatures">Features</a>
+      <a href="/comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="/use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="/blog.html" data-i18n="navBlog">Blog</a>
+      <a href="/index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="/blog-windows-efficiency-mode-ecoqos.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">English version →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">工作管理員那片綠葉是什麼？Windows 效率模式（EcoQoS）解析</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-07-17
+    </p>
+
+    <article class="p-prose">
+      <p>在 Windows 11 打開工作管理員，有些程序旁邊掛著一片小綠葉。大多數人看過，幾乎沒人對它按過右鍵。那片葉子是<strong>效率模式</strong>——微軟給一個叫 EcoQoS 的排程等級取的名字——也是 Windows 裡最被低估的省電功能之一。</p>
+
+      <h2>綠葉實際做了什麼</h2>
+      <p>Windows 裡每條執行緒都帶著一個「服務品質」提示，告訴排程器這份工作有多要緊。EcoQoS 就是那個說「<em>這工作不急——用最便宜的方式跑</em>」的等級。具體上 Windows 會做三件事：</p>
+      <ul>
+        <li><strong>優先排到效率核心。</strong>混合架構 CPU（Intel 12 代以後、AMD 近年設計）上，EcoQoS 的工作被導到 E-core（小核），讓 P-core（大核）閒著——而閒著的大核正是省電的來源。</li>
+        <li><strong>用更低的時脈跑。</strong>排程器不再為這些工作催 boost；同樣的指令，改在電壓-頻率曲線最便宜的那段執行。</li>
+        <li><strong>讓路給所有其他工作。</strong>程序同時降到低排程優先權，永遠不跟你正在做的事搶資源。</li>
+      </ul>
+
+      <h2>EcoQoS vs CPU 優先權：「品質」對「排隊順序」</h2>
+      <p>傳統的程序優先權（閒置到高）只改變<em>排隊順序</em>——CPU 被搶的時候誰先上。一個閒置優先權的程序，在沒人搶的機器上照樣把 CPU 催到全速時脈、燒滿瓦數。EcoQoS 改變的是執行的<em>品質</em>：就算整台機器只有它，工作也是慢慢地、涼涼地、在小核上跑。優先權回答「誰先？」，EcoQoS 回答「花多少錢跑？」。對一台大部分時間閒置的電腦上的背景負載來說，真正能動到電錶的是 EcoQoS。</p>
+
+      <h2>它是給誰用的</h2>
+      <p>所有「該活著、但沒資格快」的東西：</p>
+      <ul>
+        <li>夜裡磨著的下載和同步工具（雲端硬碟、torrent）</li>
+        <li>掛在系統匣裡、帶著內嵌瀏覽器的聊天和啟動器 App</li>
+        <li>索引器、備份代理、更新服務</li>
+      </ul>
+      <p>模式很固定：<em>你要它跑，但不要它花錢。</em>一個每小時把 CPU 拉進 boost 幾百次的背景 App，掛上 EcoQoS 之後大多會安分下來——在一台原本閒置的機器上，殺掉那些 boost 尖刺就是實打實的省電，而且免費。</p>
+
+      <h2>工作管理員的做法——和它的極限</h2>
+      <p>工作管理員 → 對程序按右鍵 → 效率模式。可行，但有兩個坑。第一，它是「對這次執行」的：App 重開，葉子就掉了。第二，有些程序在那裡切不動，子程序還得一個個處理。當一次性實驗很完美；當每天的常規，就是苦工——又是這個部落格一直撞到的老問題：<em>靜態設定 vs 變動的情境</em>。</p>
+
+      <h2>把它變成常設</h2>
+      <p>在 <a href="/">PowerDoze</a> 裡，處理程序管理（Pro 功能）把 EcoQoS、CPU 優先權和逐 App 的 GPU 偏好放在同一張清單——挑出那些該永遠便宜跑的程式，設定直接套用，不用每次重開機後去工作管理員尋寶。它跟工具箱的其他部分是互補的：電源模式按情境壓整台機器，EcoQoS 釘死那些在任何情境下都不安分的特定背景程式。（想知道它在 Process Lasso 那類工具——自動化規則深得多、複雜度也高得多——之間的位置，見我們的 <a href="/blog-windows-power-tools-compared-zh.html">Windows 電源工具誠實地圖</a>。）</p>
+
+      <h2>誠實角落</h2>
+      <p>EcoQoS 是提示不是法律——Windows 執行得不錯，但省多少取決於那個程序本來在幹嘛。真正閒置的程序省不了什麼（它本來就便宜）；話多的 Electron App 省得有感；吃滿 CPU 的轉檔工作則會變<em>慢</em>而不是變省——別把你的渲染任務掛上葉子。另外，老的非混合架構 CPU 沒有小核可導，只剩時脈和優先權兩個效果。最佳目標是那些你會形容成「明明沒在幹嘛、卻一直很忙」的 App。</p>
+
+      <p style="margin-top: 40px;"><a href="/index.html#download" class="p-btn p-btn-primary">免費下載 PowerDoze →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="/privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/i18n.js"></script>
+<script src="/supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 留中文版；其他語言 → 英文版
+  (function() {
+    var EN = '/blog-windows-efficiency-mode-ecoqos.html';
+    var ZH = '/blog-windows-efficiency-mode-ecoqos-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>

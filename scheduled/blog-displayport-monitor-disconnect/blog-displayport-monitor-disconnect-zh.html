@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>DP 螢幕一關，Windows 以為你拔了它——視窗亂跳與遠端斷線的元兇 — PowerDoze 部落格</title>
+  <meta name="description" content="視窗全跳到另一顆螢幕、遠端突然黑屏——為什麼 DisplayPort 螢幕休眠時會整個從系統消失，以及三個解法：Win11 設定、螢幕 OSD、一顆百元假負載。">
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-displayport-monitor-disconnect-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-displayport-monitor-disconnect.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-displayport-monitor-disconnect-zh.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="DP 螢幕一關，Windows 以為你拔了它">
+  <meta property="og:description" content="視窗亂跳、遠端黑屏——DisplayPort 的消失術，解釋與解法。">
+  <meta property="og:url" content="https://powerdoze.app/blog-displayport-monitor-disconnect-zh.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DP 螢幕一關，Windows 以為你拔了它">
+  <meta name="twitter:description" content="視窗亂跳、遠端黑屏——DisplayPort 的消失術，解釋與解法。">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "DP 螢幕一關，Windows 以為你拔了它——視窗亂跳與遠端斷線的元兇",
+    "datePublished": "2026-07-03",
+    "dateModified": "2026-07-03",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-displayport-monitor-disconnect-zh.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "zh-Hant"
+  }
+  </script>
+  <link rel="stylesheet" href="/plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="/" class="p-logo">
+      <img src="/assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="/features.html" data-i18n="navFeatures">Features</a>
+      <a href="/comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="/use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="/blog.html" data-i18n="navBlog">Blog</a>
+      <a href="/index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="/blog-displayport-monitor-disconnect.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">English version →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">DP 螢幕一關，Windows 以為你拔了它——視窗亂跳與遠端斷線的元兇</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-07-03
+    </p>
+
+    <article class="p-prose">
+      <p>兩個常見抱怨，同一個元兇。第一個：多螢幕配置關掉其中一顆，上面的視窗全體大遷徙到還亮著的螢幕——圖示重排、版面全毀。第二個：想遠端連回一台螢幕全關的機器，串流工具給你一片黑、或一個可憐的 800×600 桌面。如果涉事的螢幕走 DisplayPort，這兩個都不是 bug——是 2006 年的協定設計決定。</p>
+
+      <h2>HDMI 說「我關了」，DP 什麼都不說</h2>
+      <p>兩種接口都有一條 hot-plug 偵測線（HPD）——告訴電腦「有螢幕接著」的那根訊號。差別在螢幕休眠或關機時的行為：</p>
+      <ul>
+        <li><strong>HDMI 螢幕</strong>通常保持 HPD 訊號。Windows 知道螢幕還在，只是暗了。桌面拓撲不動。</li>
+        <li><strong>DisplayPort 螢幕</strong>常常在關機或深度休眠時把 HPD 整個放掉。對 Windows 來說，這跟你拔線一模一樣：螢幕不是<em>關了</em>，是<em>不見了</em>。</li>
+      </ul>
+      <p>螢幕「不見了」，Windows 就做它對拔除螢幕該做的事：重排桌面。視窗搬到倖存的螢幕上、解析度可能改變；等螢幕醒來重新報到，整個重新枚舉一輪——就是螢幕回來時那段黑屏閃爍。你的 DP 螢幕會不會這樣，取決於型號和韌體：有的保持 HPD、很多不保持、有些在 OSD 裡給你選。</p>
+
+      <h2>遠端版的同一個問題</h2>
+      <p>把一台純 DP 桌機的螢幕<em>全部</em>關掉，這台機器就相信自己沒接任何顯示器。抓實體畫面來串流的工具——Parsec、Moonlight/Sunshine、部分 AnyDesk 模式——突然沒東西可抓，或掉到一塊迷你虛擬面板。（傳統 RDP 免疫：它自帶虛擬螢幕。）這就是遠端遊戲圈人手一顆 <strong>HDMI 假負載（dummy plug）</strong>的原因——一顆百元的電阻假裝自己是螢幕，讓系統永遠「接著一顆顯示器」。</p>
+
+      <h2>解法工具箱</h2>
+      <ul>
+        <li><strong>Windows 11 的視窗位置記憶。</strong>設定 → 系統 → 顯示器 → 多部顯示器 → 開啟「<em>根據監視器連線記住視窗位置</em>」。微軟就是為了 DP 消失術加的這個設定：螢幕回來時，視窗回到原位。它不阻止斷線，但幫你收拾善後。</li>
+        <li><strong>翻螢幕 OSD 找「DP 深度睡眠」。</strong>很多 Dell、LG、BenQ 型號有這個開關（有時叫 DP 省電）。把深度睡眠<em>關掉</em>，螢幕休眠時 HPD 保持活著——表現得跟 HDMI 螢幕一樣。代價是待機多吃一兩瓦。</li>
+        <li><strong>遠端族：假負載插一個閒置 HDMI 孔</strong>，或改用 RDP 而非抓畫面類工具。常態無頭跑的機器，假負載是最不會出意外的選項。</li>
+      </ul>
+
+      <h2>PowerDoze 在這件事裡的位置</h2>
+      <p>PowerDoze 的電源模式可以設逾時關螢幕——走的是 Windows 標準的「關閉顯示器」，在行為正常的螢幕上完全可逆。但如果你的 DP 螢幕休眠就放掉 HPD，上面的視窗大遷徙在<em>任何</em>關螢幕時都會發生——不管是 Windows 自己的逾時、我們的、還是你按螢幕的電源鍵。沒有任何軟體能改變螢幕韌體怎麼處理 HPD 訊號。我們能做的是告訴你解法存在：開 Win11 那個設定、翻一下 OSD，多螢幕 DP 配置就能恢復正常。（睡眠設定的全貌與各種怪癖，見 <a href="/blog-windows-sleep-settings-guide-zh.html">Windows 睡眠設定完整指南</a>。）</p>
+
+      <h2>短版結論</h2>
+      <p>DP 螢幕關閉 ≈ DP 螢幕被拔掉——這是協定，不是故障。視窗位置記憶治善後、OSD 深度睡眠開關治根、假負載救遠端。花二十分鐘設定一次，Windows 多螢幕最惱人的行為從此消失。</p>
+
+      <p style="margin-top: 40px;"><a href="/index.html#download" class="p-btn p-btn-primary">免費下載 PowerDoze →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="/privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/i18n.js"></script>
+<script src="/supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 留中文版；其他語言 → 英文版
+  (function() {
+    var EN = '/blog-displayport-monitor-disconnect.html';
+    var ZH = '/blog-displayport-monitor-disconnect-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>

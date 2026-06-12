@@ -1,0 +1,34 @@
+{
+  "slug": "blog-windows-efficiency-mode-ecoqos",
+  "i18nKey": "blogA12",
+  "i18n": {
+    "en": {
+      "t": "That Green Leaf in Task Manager: Windows Efficiency Mode, Explained",
+      "d": "EcoQoS tells Windows to run a process cheap — E-cores, lower clocks, lower priority. What it actually does, when it beats priority tweaking, and how to keep background apps from drinking your watts."
+    },
+    "zh-TW": {
+      "t": "工作管理員那片綠葉是什麼？Windows 效率模式（EcoQoS）解析",
+      "d": "EcoQoS 讓 Windows 用最省的方式跑某個程式——小核、低時脈、低優先權。它實際做什麼、跟優先權差在哪，以及怎麼讓背景程式別再偷喝你的電。"
+    },
+    "zh-CN": {
+      "t": "任务管理器那片绿叶是什么？Windows 效率模式（EcoQoS）解析",
+      "d": "EcoQoS 让 Windows 用最省的方式跑某个程序——小核、低频率、低优先级。它实际做什么、跟优先级差在哪，以及怎么让后台程序别再偷喝你的电。"
+    },
+    "ja": {
+      "t": "タスクマネージャーの緑の葉の正体——Windows効率モード（EcoQoS）解説",
+      "d": "EcoQoSはプロセスを「安く」走らせる——Eコア、低クロック、低優先度。実際の動作、優先度設定との違い、バックグラウンドアプリの電力泥棒を止める方法。"
+    },
+    "ko": {
+      "t": "작업 관리자의 그 초록 잎은 뭘까? Windows 효율 모드(EcoQoS) 해설",
+      "d": "EcoQoS는 프로세스를 \"싸게\" 돌리라는 신호입니다 — E코어, 낮은 클럭, 낮은 우선순위. 실제 동작, 우선순위 조정과의 차이, 백그라운드 앱의 전력 도둑질을 막는 법."
+    },
+    "fr": {
+      "t": "Cette feuille verte dans le Gestionnaire des tâches : le mode efficacité de Windows, expliqué",
+      "d": "EcoQoS dit à Windows d'exécuter un processus à bas coût — E-cores, fréquences réduites, priorité basse. Ce que ça fait vraiment, quand ça bat le réglage de priorité, et comment empêcher les applis d'arrière-plan de boire vos watts."
+    },
+    "de": {
+      "t": "Das grüne Blatt im Task-Manager: Windows-Effizienzmodus, erklärt",
+      "d": "EcoQoS lässt Windows einen Prozess \"billig\" ausführen — E-Cores, niedrigere Taktraten, niedrige Priorität. Was es wirklich tut, wann es Prioritäts-Tuning schlägt und wie Hintergrund-Apps aufhören, Watt zu trinken."
+    }
+  }
+}

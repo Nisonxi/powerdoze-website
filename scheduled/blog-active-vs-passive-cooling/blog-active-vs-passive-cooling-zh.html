@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>主動 vs 被動散熱：Windows 最被誤解的電源設定 — PowerDoze 部落格</title>
+  <meta name="description" content="不是「風扇開或關」，是過熱時 Windows 先拉哪根桿子。系統散熱原則到底做什麼、在哪種機器有效，會不會跟 BIOS 風扇曲線或 Afterburner 打架。">
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-active-vs-passive-cooling-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-active-vs-passive-cooling.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-active-vs-passive-cooling-zh.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="主動 vs 被動散熱：Windows 最被誤解的電源設定">
+  <meta property="og:description" content="不是「風扇開或關」，是過熱時先吵還是先慢的優先順序。">
+  <meta property="og:url" content="https://powerdoze.app/blog-active-vs-passive-cooling-zh.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="主動 vs 被動散熱，一次講清楚">
+  <meta name="twitter:description" content="系統散熱原則：到底做什麼、哪裡有效、永遠不碰什麼。">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "主動 vs 被動散熱：Windows 最被誤解的電源設定",
+    "datePublished": "2026-07-10",
+    "dateModified": "2026-07-10",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-active-vs-passive-cooling-zh.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "zh-Hant"
+  }
+  </script>
+  <link rel="stylesheet" href="/plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="/" class="p-logo">
+      <img src="/assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="/features.html" data-i18n="navFeatures">Features</a>
+      <a href="/comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="/use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="/blog.html" data-i18n="navBlog">Blog</a>
+      <a href="/index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="/blog-active-vs-passive-cooling.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">English version →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">主動 vs 被動散熱：Windows 最被誤解的電源設定</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-07-10
+    </p>
+
+    <article class="p-prose">
+      <p>Windows 進階電源選項的深處，躺著一個叫「系統散熱原則」的設定，兩個選項——主動、被動——零說明。我們最常聽到的猜測是「被動＝風扇不轉」。錯了，而且錯得情有可原：兩種模式風扇都會轉。這個設定決定的是更有意思的事：<strong>CPU 過熱時，Windows 先拉哪根桿子。</strong></p>
+
+      <h2>熱有兩個出口</h2>
+      <p>晶片熱起來，系統只有兩招：把熱更快搬走（催風扇），或少產熱（讓晶片跑慢）。散熱原則就是這兩招的優先順序：</p>
+      <ul>
+        <li><strong>主動：</strong>風扇優先。Windows 催散熱來撐住時脈——性能受保護，耳朵付帳。</li>
+        <li><strong>被動：</strong>降速優先。Windows 先降 CPU 速度少產熱，風扇留作最後手段——安靜受保護，峰值速度付帳。</li>
+      </ul>
+      <p>真正的翻譯是：主動＝「先吵再慢」，被動＝「先慢再吵」。深夜掛下載的機器、開會時旁邊那台——被動是對的預設；趕渲染的機器——主動才對。</p>
+
+      <h2>在哪裡設</h2>
+      <p>GUI：控制台 → 電源選項 → 變更計畫設定 → 進階 → 處理器電源管理 → 系統散熱原則（接電/電池可分開設）。指令：它是 <code>powercfg</code> 處理器子群組下的 <code>SYSCOOLPOL</code>。或者讓電源模式扛著它——下面細說。</p>
+
+      <h2>細則：這個設定在哪種機器才真的有效</h2>
+      <p>這是多數教學跳過的部分。散熱原則只在 <strong>Windows 自己管風扇</strong>的機器上才完整生效——實務上就是筆電和品牌整機，它們的韌體透過 ACPI 把熱控制權交給作業系統。典型的自組桌機，風扇聽主機板 BIOS 風扇曲線的，Windows 根本碰不到，所以「主動」那一半無從發力；剩下有效的是降速那一半——而那件事你用 CPU 上限控制得更直接。自組桌機要安靜，散熱原則是配角，<a href="/blog-quiet-pc-fan-noise-zh.html">CPU 上限和 GPU 功耗限制才是主角</a>。</p>
+
+      <h2>「會跟我的 BIOS 曲線或小飛機打架嗎？」</h2>
+      <p>一位測試 PowerDoze 的讀者問了正是這題——他花了好幾個小時調 BIOS 風扇曲線和 MSI Afterburner profile，不想被任何東西蓋掉。答案讓人安心，值得講清楚：</p>
+      <ul>
+        <li><strong>BIOS 風扇曲線永遠不被碰。</strong>Windows 散熱原則（和 PowerDoze）做的是熱的「<em>生產</em>端」：CPU 時脈、上限、turbo。你的風扇繼續聽 BIOS 曲線——而因為到達感測器的熱變少了，同一條曲線自然轉得更慢。兩者是疊加，不是競爭。</li>
+        <li><strong>Afterburner 可以共存，只有一個共用旋鈕。</strong>Afterburner 的風扇曲線、core/memory offset、電壓調校，PowerDoze 一律不碰。唯一交集是 GPU <em>功耗上限</em>：兩邊都能設，後寫者贏。乾淨的配置：GPU 歸小飛機管的人，把 PowerDoze 模式裡的 GPU 功耗欄留空——留空＝完全不碰 GPU。</li>
+      </ul>
+
+      <h2>值得自動化的部分</h2>
+      <p>散熱原則是個取捨，意味著正確的值跟著情境變：半夜被動、渲染主動、開會被動、遊戲主動。這正是沒有人會一天手動切五次的那種開關。在 <a href="/">PowerDoze</a> 裡，散熱原則是電源模式打包的旋鈕之一——「安靜」模式帶著被動散熱＋CPU 上限，「全速」模式帶著主動＋全開——再由自動化（排程、全螢幕偵測、逐 App 規則）挑模式，散熱原則就跟著你的一天走，你不用記得它存在。</p>
+
+      <h2>短版結論</h2>
+      <p>主動＝先吵再慢。被動＝先慢再吵。兩種風扇都會轉。筆電和品牌機最有感；自組桌機真正做工的是 CPU 上限。還有——它不會吃掉你的 BIOS 曲線，也不會動你的小飛機 profile。</p>
+
+      <p style="margin-top: 40px;"><a href="/index.html#download" class="p-btn p-btn-primary">免費下載 PowerDoze →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="/privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/i18n.js"></script>
+<script src="/supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 留中文版；其他語言 → 英文版
+  (function() {
+    var EN = '/blog-active-vs-passive-cooling.html';
+    var ZH = '/blog-active-vs-passive-cooling-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>
