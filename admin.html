@@ -199,6 +199,11 @@
       <h2>各版本下載</h2>
       <div id="downloads"></div>
     </div>
+
+    <div class="ad-panel">
+      <h2>Blog 排程 <span id="blog-sched-note" style="text-transform:none;letter-spacing:0;font-weight:400;"></span></h2>
+      <div id="blog-sched"><div class="empty">載入中…</div></div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -376,6 +381,71 @@
       }
     }
 
+    // ── Blog 排程（admin-blog-schedule EF；寫入需 GITHUB_PAT secret）──
+    var _blogToken = null;
+
+    async function fetchBlogSchedule(token) {
+      _blogToken = token;
+      var el = document.getElementById('blog-sched');
+      try {
+        var res = await fetch(SUPABASE_FUNCTIONS_URL + '/admin-blog-schedule', {
+          headers: { 'Authorization': 'Bearer ' + token },
+        });
+        var d = await res.json();
+        if (!res.ok || d.status !== 'OK') throw new Error(d.message || ('HTTP ' + res.status));
+        renderBlogSchedule(d);
+      } catch (e) {
+        el.innerHTML = '<div class="empty">讀取失敗：' + esc(e.message || e) + '</div>';
+      }
+    }
+
+    function renderBlogSchedule(d) {
+      var el = document.getElementById('blog-sched');
+      var note = document.getElementById('blog-sched-note');
+      note.textContent = d.canWrite ? '每日 09:30 自動檢查發佈' : '唯讀——設定 GITHUB_PAT secret 後可在此改期/發佈';
+      var posts = (d.schedule && d.schedule.posts) || [];
+      if (!posts.length) { el.innerHTML = '<div class="empty">佇列是空的</div>'; return; }
+      el.innerHTML = posts.map(function (p) {
+        var sched = p.status === 'scheduled';
+        var prev = sched ? ('/scheduled/' + p.slug + '/' + p.slug) : ('/' + p.slug);
+        var links = '<a href="' + prev + '.html" target="_blank">EN 預覽</a> · <a href="' + prev + '-zh.html" target="_blank">中文預覽</a>';
+        var btns = '';
+        if (sched && d.canWrite) {
+          btns = '<span><button class="ad-btn" onclick="blogSetDate(\'' + p.slug + '\',\'' + p.publishDate + '\')">改日期</button> ' +
+                 '<button class="ad-btn primary" onclick="blogPublishNow(\'' + p.slug + '\')">立即發佈</button></span>';
+        }
+        return '<div class="bug">' +
+          '<div class="bug-head"><div class="bug-desc">' + esc(p.title || p.slug) + '</div>' +
+          '<span class="st' + (sched ? ' new' : '') + '">' + (sched ? '排程 ' : '已發佈 ') + esc(p.publishDate) + '</span></div>' +
+          '<div class="bug-meta"><span>' + esc(p.slug) + '</span><span>' + links + '</span>' + btns + '</div>' +
+          '</div>';
+      }).join('');
+    }
+
+    async function blogAction(body, okMsg) {
+      try {
+        var res = await fetch(SUPABASE_FUNCTIONS_URL + '/admin-blog-schedule', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + _blogToken, 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        var d = await res.json();
+        if (!res.ok || d.status !== 'OK') throw new Error(d.message || ('HTTP ' + res.status));
+        alert(okMsg);
+        renderBlogSchedule({ schedule: d.schedule, canWrite: true });
+      } catch (e) { alert('失敗：' + (e.message || e)); }
+    }
+    function blogSetDate(slug, cur) {
+      var date = prompt('新的發佈日期（YYYY-MM-DD）', cur);
+      if (!date) return;
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) { alert('格式須為 YYYY-MM-DD'); return; }
+      blogAction({ action: 'set-date', slug: slug, date: date }, '已改為 ' + date + '。當天 09:30（台北）自動發佈。');
+    }
+    function blogPublishNow(slug) {
+      if (!confirm('確定立即發佈「' + slug + '」？\n會直接 commit 並觸發部署，約 1-2 分鐘後上線。')) return;
+      blogAction({ action: 'publish-now', slug: slug }, '已觸發發佈，約 1-2 分鐘後上線。');
+    }
+
     (async function init() {
       if (!sbClient) { document.getElementById('error-msg').textContent = 'Supabase 未載入'; show('gate-error'); return; }
       show('gate-loading');
@@ -399,6 +469,7 @@
           show('gate-error'); return;
         }
         renderDashboard(data);
+        fetchBlogSchedule(session.access_token);
       } catch (e) {
         document.getElementById('error-msg').textContent = e.message || '未知錯誤';
         show('gate-error');
