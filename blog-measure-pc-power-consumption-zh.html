@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>你的電腦到底吃幾瓦？三種量法，從免費到精準 — PowerDoze 部落格</title>
+  <meta name="description" content="電源供應器標的瓦數是上限，不是讀數。用電錶、UPS 或免費軟體感測器實測電腦耗電的三種方法——以及每種方法各漏掉什麼、誤差在哪。">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-measure-pc-power-consumption-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-measure-pc-power-consumption.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-measure-pc-power-consumption-zh.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="你的電腦到底吃幾瓦？三種量法，從免費到精準">
+  <meta property="og:description" content="電源供應器標的瓦數是上限，不是讀數。電錶、UPS、軟體感測器三種量法——以及每種各漏掉什麼。">
+  <meta property="og:url" content="https://powerdoze.app/blog-measure-pc-power-consumption-zh.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="你的電腦到底吃幾瓦？三種量法，從免費到精準">
+  <meta name="twitter:description" content="電源供應器標的瓦數是上限，不是讀數。三種實測方法與各自的誤差。">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "你的電腦到底吃幾瓦？三種量法，從免費到精準",
+    "datePublished": "2026-06-12",
+    "dateModified": "2026-06-12",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-measure-pc-power-consumption-zh.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "zh-Hant"
+  }
+  </script>
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="blog.html" data-i18n="navBlog">Blog</a>
+      <a href="index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="blog-measure-pc-power-consumption.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">English version →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">你的電腦到底吃幾瓦？三種量法，從免費到精準</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-06-12
+    </p>
+
+    <article class="p-prose">
+      <p>問一個人「你的電腦多耗電」，通常只會得到兩種答案：聳肩，或是電源供應器上印的那個數字。兩種都不對。750W 的電源供應器不會吃 750 瓦，就像時速錶標到 240 的車不會在市區開 240——<strong>那個標示是上限，不是讀數。</strong></p>
+      <p>真實數字值得弄清楚，因為它幾乎從來不是大家猜的那樣——而且任何省電計畫的第一步，都是先知道自己現在站在哪。</p>
+
+      <h2>沒人知道的那個數字</h2>
+      <p>電腦的耗電會隨著它在做什麼，差到一個數量級：</p>
+      <ul>
+        <li><strong>筆電上網、文書：</strong>大約 10–40 瓦。</li>
+        <li><strong>桌機閒置：</strong>插座端通常 50–100 瓦。</li>
+        <li><strong>遊戲桌機滿載：</strong>高階配置 300–600 瓦很正常。</li>
+      </ul>
+      <p>同一台機器，十倍的範圍。所以「我的電腦吃 X 瓦」其實不是一句有意義的話——它是<em>此刻</em>吃 X 瓦。而且 Windows 不會告訴你：工作管理員有 CPU 百分比、記憶體、甚至 GPU 佇列的圖表，但整個介面裡找不到一個瓦字。</p>
+
+      <h2>三種把數字弄到手的方法</h2>
+      <ul>
+        <li><strong>插座電錶——一個便當錢，買到真相。</strong>串接式功率計（經典的「電力監測插座」）或任何有電力監測的智慧插座，接在牆壁和電腦之間，流過多少就報多少——包括所有軟體看不到的部分：主機板、記憶體、硬碟、風扇、RGB 燈效，還有電源供應器自己的轉換損耗。量三個時刻——閒置、日常工作、滿載——你對這台機器的了解就超過絕大多數機主了。需要拿去做帳、報數字的，用這個方法。</li>
+        <li><strong>你桌下可能已經有的 UPS。</strong>多數家用 UPS 的面板或隨附軟體會顯示輸出瓦數。比較粗略，而且是接在電池端所有設備的總和——但如果 UPS 本來就在，它就是一顆免費電錶。</li>
+        <li><strong>軟體感測器——免費、即時，但只有半張圖。</strong>現代 CPU 會回報自己的「package power」，NVIDIA 顯卡會回報板卡功耗；HWiNFO、LibreHardwareMonitor 這類工具兩個都讀得到。但有兩個關鍵限制。在<em>桌機</em>上，CPU + GPU 不等於整台機器——漏掉的主機板、記憶體、硬碟、風扇和電源轉換損耗，讓插座端的真實數字往往比感測器加總高 30–60%。不過在<em>用電池的筆電</em>上，存在一個真正誠實的軟體數字：電池的放電速率<em>就是</em>整台機器的耗電，連螢幕都算進去——由實際付出這些電的硬體親自量出來。</li>
+      </ul>
+
+      <h2>把瓦數換算成錢</h2>
+      <p>只需要一條公式：</p>
+      <p><code>每年度數（kWh）＝ 瓦數 × 每天小時數 × 365 ÷ 1000</code></p>
+      <p>一台閒置 120 瓦、從不睡眠的桌機，一年燒掉約 1,050 度電——以台電夏月常見的每度約 NT$4 計，大約 NT$4,200。這是它<em>什麼都沒做</em>的代價。</p>
+      <p>但量測真正的價值不在算平均，而在找出<strong>浪費時段</strong>：機器用全速設定空轉、卻沒有任何人受益的那幾個小時。一台整夜吃 120 瓦的電腦，本來可以在限速的電源模式下吃 40 瓦——或在睡眠裡吃 2 瓦——這段差距就是所有省電空間的所在。（如果你的機器因為要跑 Plex 或掛載下載而真的不能睡，這段差距一樣關得起來——我們寫過一篇<a href="blog-always-on-pc-power-savings-zh.html">給常開機器的專文</a>。）</p>
+
+      <h2>把量測放在能動手的地方</h2>
+      <p>知道數字本身一毛錢都省不到；省電來自<em>狀態切換</em>——需要時全速，不需要時限速。所以 <a href="./">PowerDoze</a> 把量測直接做進負責切換的同一個 App 裡：</p>
+      <ul>
+        <li><strong>儀表板上的即時瓦數。</strong>筆電用電池時，顯示的是電池放電速率量出的真實整機數字；桌機或插電時，顯示 CPU + GPU 感測器加總——而且 App 會標明你看到的是哪一種，不會假裝兩者是同一回事。</li>
+        <li><strong>逐模式的歷史紀錄。</strong>PowerDoze 按電源模式記錄功耗樣本，所以「安靜模式比全速模式實際省多少」是用你這台機器自己的數據回答的，不是型錄上的數字。</li>
+        <li><strong>用你自己的基準算省電。</strong>省電統計拿你配置過最耗電的那個模式當基準——而且只有在數據完全來自電池實測時才標「實測」，否則一律標「估算」。</li>
+      </ul>
+      <p>接著由自動化——排程、離開偵測、全螢幕和逐 App 規則——負責切換，這是任何電錶都替你做不到的部分。</p>
+
+      <h2>誠實角落：軟體數字適合拿來做什麼</h2>
+      <p>軟體估算就是估算。桌機上的感測器加總天生少算插座端的數字；GPU 讀數涵蓋的是 NVIDIA 顯卡（AMD 和 Intel 的 GPU 沒有開放同樣的介面）；而且沒有任何 App——包括我們的——看得到你電源供應器的效率曲線。需要精準數字來報帳或請款，請買插座電錶；它的價錢比它一個月找出的浪費還低。</p>
+      <p>但對<em>省電</em>來說，重要的不是精準，是方向。「這個模式比那個模式少了 35 瓦」在軟體裡是成立的，即使兩個絕對值都偏低；而幾週下來的趨勢，正是告訴你一個改動有沒有用的東西。用電錶校準一次，用軟體每天盯著看。</p>
+
+      <p style="margin-top: 40px;"><a href="index.html#download" class="p-btn p-btn-primary">免費下載 PowerDoze →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 留中文版；其他語言 → 英文版
+  (function() {
+    var EN = 'blog-measure-pc-power-consumption.html';
+    var ZH = 'blog-measure-pc-power-consumption-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>

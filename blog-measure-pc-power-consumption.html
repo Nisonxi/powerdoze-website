@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Much Power Does Your PC Actually Draw? Three Ways to Find Out — PowerDoze Blog</title>
+  <meta name="description" content="Your PSU's label is a ceiling, not a reading. How to measure your PC's real power draw with a wall meter, a UPS, or free software sensors — and what each method misses.">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-measure-pc-power-consumption.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-measure-pc-power-consumption-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-measure-pc-power-consumption.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How Much Power Does Your PC Actually Draw? Three Ways to Find Out">
+  <meta property="og:description" content="Your PSU's label is a ceiling, not a reading. Measure real draw with a wall meter, a UPS, or free software sensors — and know what each method misses.">
+  <meta property="og:url" content="https://powerdoze.app/blog-measure-pc-power-consumption.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How Much Power Does Your PC Actually Draw?">
+  <meta name="twitter:description" content="Your PSU's label is a ceiling, not a reading. Three ways to measure real draw — and what each misses.">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How Much Power Does Your PC Actually Draw? Three Ways to Find Out",
+    "datePublished": "2026-06-12",
+    "dateModified": "2026-06-12",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-measure-pc-power-consumption.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "en"
+  }
+  </script>
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="blog.html" data-i18n="navBlog">Blog</a>
+      <a href="index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="blog-measure-pc-power-consumption-zh.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">中文版 →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">How Much Power Does Your PC Actually Draw? Three Ways to Find Out</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-06-12
+    </p>
+
+    <article class="p-prose">
+      <p>Ask someone what their PC costs to run and you'll usually get one of two answers: a shrug, or the number printed on the power supply. Both are wrong. A 750-watt PSU doesn't draw 750 watts any more than a car with a 240 km/h speedometer does 240 in traffic — <strong>the label is a ceiling, not a reading.</strong></p>
+      <p>The real number is worth knowing, because it's almost never what people guess — and because every plan to save power starts with knowing where you actually are.</p>
+
+      <h2>The number nobody knows</h2>
+      <p>A PC's draw swings by an order of magnitude depending on what it's doing:</p>
+      <ul>
+        <li><strong>Laptop, browsing and office work:</strong> roughly 10–40 W.</li>
+        <li><strong>Desktop, sitting idle:</strong> typically 50–100 W at the wall.</li>
+        <li><strong>Gaming desktop under load:</strong> 300–600 W is normal for a high-end build.</li>
+      </ul>
+      <p>Same machine, ten-fold range. "My PC uses X watts" isn't really a sentence that means anything — it uses X watts <em>right now</em>. And Windows won't tell you: Task Manager charts CPU percent, memory, even GPU queues, but there isn't a single watt anywhere in it.</p>
+
+      <h2>Three ways to get the number</h2>
+      <ul>
+        <li><strong>A wall meter — the truth, for the price of lunch.</strong> A plug-through power meter (the classic Kill A Watt style) or any smart plug with energy monitoring sits between the wall and your PC and reports exactly what flows past, including everything software can't see: motherboard, RAM, drives, fans, RGB, and the power supply's own conversion losses. Measure three moments — idle, normal work, full load — and you know more about your machine than most owners ever do. This is the method to use if you need numbers you'd put in a spreadsheet.</li>
+        <li><strong>The UPS you already own.</strong> Most consumer UPSes display output watts on their panel or in their companion software. It's coarser, and it lumps together everything plugged into the battery side — but if a UPS is already under your desk, it's a free wall meter.</li>
+        <li><strong>Software sensors — free, instant, and half the picture.</strong> Modern CPUs report their own "package power" and NVIDIA GPUs report board power; tools like HWiNFO or LibreHardwareMonitor read both. Two caveats matter. On a <em>desktop</em>, CPU + GPU is not the whole machine — the missing motherboard, RAM, drives, fans and PSU losses mean the wall figure is routinely 30–60% higher than what the sensors add up to. On a <em>laptop running on battery</em>, though, there is one genuinely honest software number: the battery's discharge rate <em>is</em> the whole machine, screen included, measured by the hardware that's actually paying for it.</li>
+      </ul>
+
+      <h2>Turning watts into money</h2>
+      <p>One formula is all you need:</p>
+      <p><code>kWh per year = watts × hours per day × 365 ÷ 1000</code></p>
+      <p>A desktop that idles at 120 W and never sleeps burns about 1,050 kWh a year — roughly $160 at US average rates, and well over €300 at European ones. That's for doing <em>nothing</em>.</p>
+      <p>But the real value of measuring isn't computing an average — it's finding the <strong>waste window</strong>: the hours when the machine runs at full-power settings and nobody benefits. A PC drawing 120 W overnight when it could be drawing 40 in a capped power mode — or 2 in sleep — is the gap all the savings live in. (If your machine genuinely can't sleep because it serves Plex or torrents, that gap is still closable — we wrote a <a href="blog-always-on-pc-power-savings.html">separate guide for always-on machines</a>.)</p>
+
+      <h2>Measurement built in, next to the fix</h2>
+      <p>Knowing the number saves nothing by itself; the savings come from <em>switching states</em> — full power when you need it, capped when you don't. That's why <a href="./">PowerDoze</a> builds the measurement into the same app that acts on it:</p>
+      <ul>
+        <li><strong>Live watts on the dashboard.</strong> On a laptop on battery, that's the real whole-machine figure from the battery's discharge rate. On a desktop or plugged in, it's the CPU + GPU sensor sum — and the app labels which kind you're looking at instead of pretending they're the same thing.</li>
+        <li><strong>Per-mode history.</strong> PowerDoze logs power samples per power mode, so "how much does Quiet mode actually save vs Full Power" gets answered with your machine's own data, not a brochure number.</li>
+        <li><strong>Savings vs your own baseline.</strong> The savings stats compare against the most power-hungry mode you've configured — and they're tagged as real measurement only when the data came from the battery, estimate otherwise.</li>
+      </ul>
+      <p>Then the automation — schedule, away detection, fullscreen and per-app rules — does the switching, which is the part no meter can do for you.</p>
+
+      <h2>Honesty corner: what software numbers are good for</h2>
+      <p>Software estimates are estimates. On a desktop, the sensor sum undercounts the wall by design, GPU readings cover NVIDIA cards (AMD and Intel GPUs don't expose the same interface), and no app — ours included — can see your PSU's efficiency curve. If you need precise numbers for billing or reimbursement, buy the wall meter; it costs less than a month of the waste it will find.</p>
+      <p>But for <em>saving</em> power, precision isn't what matters — direction is. "This mode cut 35 W off that mode" is true in software even when both absolute numbers run low, and trends over weeks are exactly what tells you whether a change worked. Use the meter to calibrate once; use the software to watch every day.</p>
+
+      <p style="margin-top: 40px;"><a href="index.html#download" class="p-btn p-btn-primary">Download PowerDoze free →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 跳中文版；其他語言 → 英文版
+  (function() {
+    var EN = 'blog-measure-pc-power-consumption.html';
+    var ZH = 'blog-measure-pc-power-consumption-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>
