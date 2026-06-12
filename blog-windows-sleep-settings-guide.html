@@ -83,15 +83,15 @@
       <h2>Where the settings actually live</h2>
       <p>Windows splits sleep configuration across three places, which is half the confusion:</p>
       <ul>
-        <li><strong>Settings → System → Power &amp; battery</strong> — the modern page. Screen-off and sleep timers, separately for plugged-in and on-battery. This is all most people ever see.</li>
+        <li><strong>Settings → System → Power &amp; battery</strong> (Windows 11) or <strong>Power &amp; sleep</strong> (Windows 10) — the modern page. Screen-off and sleep timers, separately for plugged-in and on-battery. This is all most people ever see.</li>
         <li><strong>Control Panel → Power Options</strong> — the classic power plans (Balanced / High performance / Power saver), still fully alive underneath. "Change advanced power settings" hides the real depth: hybrid sleep, hibernate-after, USB selective suspend, wake timers, lid and power-button actions.</li>
-        <li><strong><code>powercfg</code></strong> — the command line that sees everything. The diagnostic commands below are powercfg; there is no GUI equivalent for most of them.</li>
+        <li><strong><code>powercfg</code></strong> — the command line that sees everything. Every diagnostic command below is a powercfg command; most have no GUI equivalent.</li>
       </ul>
 
-      <h2>Sleep, Hibernate, Hybrid, Modern Standby — 30 seconds</h2>
+      <h2>Sleep, Hibernate, Hybrid, Modern Standby — in 30 seconds</h2>
       <ul>
         <li><strong>Sleep (S3)</strong> — RAM stays powered (1–5 W), everything else off. Wakes in ~1 second. Lost on power cut.</li>
-        <li><strong>Hibernate (S4)</strong> — RAM written to disk (<code>hiberfil.sys</code>), true 0 W. Slower wake. Survives power cuts. Enable with <code>powercfg /hibernate on</code>.</li>
+        <li><strong>Hibernate (S4)</strong> — RAM written to disk (<code>hiberfil.sys</code>), effectively 0 W (same as shut down). Slower wake. Survives power cuts. Enable with <code>powercfg /hibernate on</code>.</li>
         <li><strong>Hybrid sleep</strong> — sleep + RAM also written to disk. Desktop default; best of both at the cost of disk writes.</li>
         <li><strong>Modern Standby (S0 low power idle)</strong> — newer laptops. The machine stays half-awake to sync mail and such; also the reason some laptops cook in backpacks. Check which you have: <code>powercfg /a</code>.</li>
       </ul>
@@ -99,18 +99,18 @@
       <h2>Problem 1: "My PC won't sleep"</h2>
       <p>Something is holding a wake request. Find it in 10 seconds — run in an elevated terminal:</p>
       <p><code>powercfg /requests</code></p>
-      <p>Whatever appears under DISPLAY / SYSTEM / AWAYMODE is the culprit — typically a browser tab playing audio, a stuck driver, or an overzealous background app. Other usual suspects:</p>
+      <p>Whatever appears under SYSTEM, DISPLAY, AWAYMODE, or EXECUTION is the culprit — typically a browser tab playing audio, a stuck driver, or an overzealous background app. Other usual suspects:</p>
       <ul>
         <li><strong>Wake timers</strong> — scheduled tasks waking the machine: <code>powercfg /waketimers</code> to list, and "Allow wake timers" in advanced power settings to disable.</li>
         <li><strong>What woke it last</strong> — <code>powercfg /lastwake</code>.</li>
         <li><strong>Devices allowed to wake it</strong> — <code>powercfg /devicequery wake_armed</code>; mice and network adapters are the classics. Disable per-device in Device Manager → Power Management.</li>
-        <li><strong>The full report</strong> — <code>powercfg /energy</code> generates an HTML report of everything misbehaving.</li>
+        <li><strong>The full report</strong> — <code>powercfg /energy</code> watches the system for 60 seconds, then generates an HTML report of everything misbehaving (run elevated).</li>
       </ul>
 
       <h2>Problem 2: "It sleeps when it shouldn't"</h2>
       <p>The opposite case: you're downloading a 60 GB game, rendering a video, or running a server — and the global timer kills it. Windows' built-in answers are all bad in a different way:</p>
       <ul>
-        <li><strong>Set sleep to Never</strong> — works, burns power 24/7 from then on, because you will forget to set it back.</li>
+        <li><strong>Set sleep to Never</strong> — works, then burns power 24/7, because you will forget to set it back.</li>
         <li><strong>Switch power plans by hand</strong> — works, until you forget. Same failure mode.</li>
         <li><strong>presentationsettings.exe</strong> — keeps the PC awake during presentations; manual on, manual off.</li>
       </ul>
@@ -126,7 +126,7 @@
 
       <h2>The structural limit no setting fixes</h2>
       <p>Even perfectly tuned, Windows sleep settings are <strong>one static number</strong>. They can't be different at 2 PM and 2 AM. They can't tell a download from idleness. They can't switch when you launch a game, join a meeting, or move your laptop from office to home. Every "fix" above is you compensating, manually, for settings that can't see context.</p>
-      <p>That gap is why we built <a href="./">PowerDoze</a>: schedule rules pick a power mode per time slot, a whitelist keeps the machine awake while specific apps are running (and lets it sleep afterward), fullscreen and meeting detection pause timers automatically, and an away mode throttles the machine when you leave. The core features are free, no account, fully local. If you only fix your settings with this guide, that's a win too — but if you're tired of being the manual automation layer, that's the tool.</p>
+      <p>That gap is why we built <a href="./">PowerDoze</a>: schedule rules pick a power mode per time slot, a whitelist keeps the machine awake while specific apps are running (and lets it sleep afterward), and fullscreen/game detection pauses timers automatically — all free, fully local, no account needed. Pro (a one-time purchase, no subscription) adds meeting detection, an away mode that throttles the machine when you step away, and Wi-Fi-based profiles. If you only fix your settings with this guide, that's a win too — but if you're tired of being the manual automation layer, that's the tool.</p>
 
       <h2>powercfg quick reference</h2>
       <ul>

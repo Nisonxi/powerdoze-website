@@ -81,18 +81,18 @@
       <p>Here's an uncomfortable fact about the computer you're reading this on: it spends most of its life doing approximately nothing, at close to full readiness, drawing power the entire time.</p>
 
       <h2>Your PC is idle far more than you think</h2>
-      <p>Think through an ordinary day. You step away for lunch — the PC idles for an hour. You're in a meeting — it idles. You leave a download running overnight — it idles at full power for eight hours to move bits that needed 2% of its capability. Add it up and a typical home or office desktop does <strong>real work for maybe 2–4 hours a day</strong>. The other 20 hours, it's a very expensive space heater with an LED.</p>
+      <p>Think through an ordinary day. You step away for lunch — the PC idles for an hour. You're in a meeting — it idles. You leave a download running overnight — it stays fully powered for eight hours to move bits that needed 2% of its capability. Add it up and a typical home or office desktop does <strong>real work for maybe 2–4 hours a day</strong>. The other ~20 hours, it's a very expensive space heater with an LED.</p>
       <p>And "idle" is not free. A typical desktop draws <strong>50–100 W sitting at the desktop doing nothing</strong>; a gaming rig with a big GPU and RGB everything can idle well above that. Compare that to sleep at 1–5 W, and the gap is the money you're quietly spending.</p>
 
       <h2>What "just leaving it on" actually costs</h2>
-      <p>Quick math. A desktop idling at 75 W around the clock burns about <strong>657 kWh per year</strong> (75 W × 24 h × 365). At a typical electricity rate of US$0.15/kWh, that's roughly <strong>US$100 a year</strong> — for a machine that was mostly waiting. In regions with European energy prices, double it. Run two or three machines (a homelab habit), multiply again.</p>
-      <p>The point isn't that any one number is huge. It's that this cost is <em>pure waste</em> — you get nothing for it — and it's entirely automatable away.</p>
+      <p>Quick math. A desktop idling at 75 W around the clock burns about <strong>657 kWh per year</strong> (75 W × 24 h × 365). At a typical electricity rate of US$0.15/kWh, that's roughly <strong>US$100 a year</strong> — for a machine that was mostly waiting. If you pay European electricity rates, double it. Run two or three machines (a homelab habit) and multiply again.</p>
+      <p>The point isn't that any one number is huge. It's that this cost is <em>pure waste</em> — you get nothing for it — and it can be automated away entirely.</p>
 
       <h2>Why Windows' built-in settings don't solve this</h2>
-      <p>Windows ships with the same two tools it has had for over a decade:</p>
+      <p>Out of the box, Windows gives you essentially the same two levers it has had for over a decade (Windows 11's power-mode slider is the same idea with a new coat of paint — it still never moves itself):</p>
       <ul>
         <li><strong>Power plans</strong> — static profiles buried in Control Panel. They never switch themselves. Whatever you picked in 2023 is what you're running now.</li>
-        <li><strong>The sleep timer</strong> — one global "sleep after N minutes" that can't tell the difference between <em>idle because you left</em> and <em>idle because a download, a render, or a Plex stream is running</em>. Set it short and it kills your overnight jobs. Set it long (or off, like most people) and you're back to burning watts.</li>
+        <li><strong>The sleep timer</strong> — one global "sleep after N minutes" that can't tell the difference between <em>idle because you left</em> and <em>idle because a download, a render, or a backup job is running</em>. Set it short and it kills your overnight jobs. Set it long (or off, like most people) and you're back to burning watts.</li>
       </ul>
       <p>Neither tool knows what time it is, what app is running, where your laptop is, or whether you're in a meeting. They're settings, not behavior.</p>
 
@@ -109,7 +109,7 @@
       </ul>
 
       <h2>Where PowerDoze fits</h2>
-      <p>This is the tool we wanted and couldn't find, so we built it. <a href="./">PowerDoze</a> runs all four signals on Windows 10/11: scheduled power modes (bundling CPU limits, cooling policy, screen timeout, and NVIDIA GPU power limits), a keep-awake whitelist, fullscreen and meeting detection, Wi-Fi based profiles, and an away mode — plus an analytics page that shows the kWh and money you actually saved, so you can check whether any of this was worth it.</p>
+      <p>This is the tool we wanted and couldn't find, so we built it. <a href="./">PowerDoze</a> runs all four signals on Windows 10/11: scheduled power modes (bundling CPU limits, cooling policy, screen timeout, and NVIDIA GPU power limits), a keep-awake whitelist, fullscreen and meeting detection, Wi-Fi-based profiles, and an away mode — plus an analytics page that shows the kWh and money you actually saved, so you can check whether any of this was worth it.</p>
       <p>The core features — schedules, power modes, whitelist, monitoring — are <strong>free, forever, no account required</strong>. Everything runs locally on your machine; the app sends no telemetry. There's a one-time-purchase Pro tier for the advanced automation if you ever want it, and no subscription either way.</p>
 
       <h2>Who doesn't need this</h2>

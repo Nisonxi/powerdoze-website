@@ -81,18 +81,18 @@
       <p>Windows power management has a cottage industry of small tools, each solving one slice of the problem. Most of them are good at their slice. This is an honest map of who does what — including where our own tool does and doesn't fit — so you can pick the right one instead of the most-downloaded one.</p>
 
       <h2>The keep-awake bunch: PowerToys Awake, Caffeine, Don't Sleep</h2>
-      <p><strong>PowerToys Awake</strong> (Microsoft, free) puts a coffee-cup icon in your tray: click it and the PC won't sleep, indefinitely or for a timer. <strong>Caffeine</strong> simulates a keypress every 59 seconds — crude, tiny, works. <strong>Don't Sleep</strong> goes further and can also block shutdown and logoff.</p>
-      <p>All three are good at the same thing: <em>a manual override switch</em>. And they all share the same failure mode — you have to remember to turn them on before the download, and off after it. Forget the second half (everyone does) and your PC just never sleeps again. They treat the symptom, on demand, with your memory as the automation layer.</p>
+      <p><strong>PowerToys Awake</strong> (Microsoft, free) puts a coffee-cup icon in your tray: click it and the PC won't sleep — indefinitely or on a timer. <strong>Caffeine</strong> simulates a keypress every 59 seconds — crude, tiny, works. <strong>Don't Sleep</strong> goes further and can also block shutdown and logoff.</p>
+      <p>All three are good at the same thing: <em>a manual override switch</em>. And they all share the same failure mode — you have to remember to turn them on before the long download or render starts, and off after it finishes. Forget the second half (everyone does) and your PC just never sleeps again. They treat the symptom, on demand, with your memory as the automation layer.</p>
 
       <h2>The quick switcher: PowerPlanSwitcher</h2>
       <p>A tray flyout that switches Windows power plans in two clicks instead of a trip through Control Panel. If you actively use multiple power plans, it removes friction — but the decision and the click are still yours, every time. It's a faster steering wheel, not a self-driving car.</p>
 
       <h2>The heavyweight: Process Lasso</h2>
-      <p><a href="https://bitsum.com" rel="nofollow">Process Lasso</a> deserves respect — it's a mature, serious product. Its core is CPU <em>scheduling</em>: ProBalance tames background processes that hog the CPU, you can pin per-process priorities and affinities, and IdleSaver switches to a power-saving plan when you're away. If your problem is "background processes make my foreground app stutter," it's the right tool and nothing else here replaces it.</p>
-      <p>But its center of gravity is the CPU, not your day. There are no time schedules, no Wi-Fi-based profiles, no meeting or fullscreen detection, no savings report — and the interface speaks fluent engineer. Process Lasso optimizes <em>how processes share the CPU</em>; it doesn't decide <em>what power behavior fits what you're doing right now</em>.</p>
+      <p><a href="https://bitsum.com" rel="nofollow">Process Lasso</a> deserves respect — it's a mature, serious product. Its core is CPU <em>scheduling</em>: ProBalance tames background processes that hog the CPU, you can pin per-process priorities and affinities, and IdleSaver drops to a power-saving plan when you go idle. If your problem is "background processes make my foreground app stutter," it's the right tool and nothing else here replaces it.</p>
+      <p>It does have power automation — but its triggers are process-centric: IdleSaver when you go idle, Performance Mode when a designated app launches. What it doesn't watch is the rest of your day — no time schedules, no Wi-Fi-based profiles, no meeting or fullscreen detection, no savings report — and the interface speaks fluent engineer. Process Lasso's center of gravity is <em>how processes share the CPU</em>, not <em>what power behavior fits your current context</em>.</p>
 
       <h2>The tuners: ThrottleStop, QuickCPU</h2>
-      <p>Undervolting, turbo ratios, C-states, speed shift — powerful instruments for people who know exactly what those words mean. They're manual laboratory equipment for enthusiasts, not daily automation, and most users should not be in there.</p>
+      <p>Undervolting, turbo ratios, C-states, Speed Shift — powerful instruments for people who know exactly what those words mean. They're manual laboratory equipment for enthusiasts (ThrottleStop is Intel-only), not daily automation, and most users should not be in there.</p>
 
       <h2>The vendor battery tools: Lenovo Vantage, MyASUS, etc.</h2>
       <p>If you came here looking for <strong>charge limiting</strong> — capping the battery at 80% the way AlDente does on macOS — that lives in your laptop vendor's tool, because it needs firmware access. Lenovo Vantage, MyASUS, Dell Power Manager and friends do it well for their own machines. (PowerDoze doesn't do charge limiting, and any tool that claims to do it generically on Windows deserves skepticism.) These tools manage the battery; they don't automate power behavior.</p>
@@ -101,11 +101,11 @@
       <ul>
         <li>Keep-awake tools — manual, single-purpose</li>
         <li>Plan switchers — manual, faster</li>
-        <li>Process Lasso — automatic, but about CPU scheduling</li>
+        <li>Process Lasso — automatic, but process-centric (CPU scheduling plus idle/per-app plan switching)</li>
         <li>Tuners — manual, expert-only</li>
         <li>Vendor tools — battery hardware, brand-locked</li>
       </ul>
-      <p>What's missing from every row: a tool that watches the <em>context</em> — the time of day, the app in the foreground, the Wi-Fi you're on, whether you're at the desk — and switches power behavior to match, then shows you what it saved. That's the slice <a href="./">PowerDoze</a> exists for: scheduled power modes, a keep-awake whitelist that turns itself off when the job ends, fullscreen and meeting detection, Wi-Fi profiles, away mode, and a kWh/cost report. Core features free, local, no account.</p>
+      <p>What's missing from every row: a tool that watches the <em>context</em> — the time of day, the app in the foreground, the Wi-Fi you're on, whether you're at the desk — and switches power behavior to match, then shows you what it saved. That's the slice <a href="./">PowerDoze</a> exists for: scheduled power modes, a keep-awake whitelist that turns itself off when the job ends, and fullscreen detection — free, local, no account. The context extras (meeting detection, Wi-Fi profiles, away mode, the kWh/cost report) are a one-time Pro purchase; no subscription either way.</p>
 
       <h2>Honest recommendations</h2>
       <ul>

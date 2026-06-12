@@ -82,7 +82,7 @@
       <p>The standard advice is to spend money: bigger coolers, better case fans, a new case. That advice isn't wrong — but it treats the symptom. Fans exist to move heat, heat comes from watts, and <strong>the watts are a setting.</strong> Before buying hardware to move heat away faster, it's worth trying the free option: produce less heat in the first place.</p>
 
       <h2>Why your fans are loud</h2>
-      <p>Your CPU and GPU convert electricity into computation, and almost all of it ends up as heat. Fan controllers react to temperature — more watts, more heat, more RPM, more noise. The chain runs one direction, which means you can intervene at the start of it instead of the end:</p>
+      <p>Your CPU and GPU convert electricity into computation, and almost all of it ends up as heat. Fan controllers react to temperature — more watts, more heat, more RPM, more noise. The chain runs in one direction, which means you can intervene at the start of it instead of the end:</p>
       <ul>
         <li><strong>Hardware route:</strong> same watts, same heat, moved away more efficiently (and more quietly, if you buy well).</li>
         <li><strong>Software route:</strong> fewer watts, less heat, less for the fans to do — at the cost of some peak performance you may not have been using anyway.</li>
@@ -90,14 +90,14 @@
 
       <h2>The three settings that quiet a PC</h2>
       <ul>
-        <li><strong>Cooling policy → passive.</strong> Windows' system cooling policy (<code>SYSCOOLPOL</code> under <code>powercfg</code>, or "System cooling policy" in advanced power options) decides whether Windows spins fans up first (active) or slows the CPU down first (passive). Passive is the single most direct "be quiet" switch the OS has.</li>
-        <li><strong>Cap the CPU's maximum state.</strong> <code>powercfg /setacvalueindex scheme_current sub_processor PROCTHROTTLEMAX 70</code> + <code>powercfg /setactive scheme_current</code> caps the CPU at 70% — which mostly means no turbo boost. Turbo is where the disproportionate heat lives: the last 20% of performance costs far more than 20% of the watts. Browsing, video, and office work won't notice.</li>
-        <li><strong>Power-limit the GPU.</strong> <code>nvidia-smi -pl 150</code> (admin shell) caps an NVIDIA card's draw. Resets at reboot, so it needs a startup task.</li>
+        <li><strong>Cooling policy → passive.</strong> Windows' system cooling policy (<code>SYSCOOLPOL</code> under <code>powercfg</code>, or "System cooling policy" in advanced power options) decides whether Windows spins fans up first (active) or slows the CPU down first (passive). Passive is the most direct "be quiet" switch the OS has — on machines where Windows actually manages cooling, which mostly means laptops and OEM prebuilts. On a typical self-built desktop, fans follow the motherboard's BIOS fan curve and this setting does little; there, the CPU and GPU caps below are what move the needle.</li>
+        <li><strong>Cap the CPU's maximum state.</strong> <code>powercfg /setacvalueindex scheme_current sub_processor PROCTHROTTLEMAX 70</code> + <code>powercfg /setactive scheme_current</code> caps the CPU at 70% — anything below 100% kills turbo boost, and 70% trims sustained clocks a bit further on top. Turbo is where the disproportionate heat lives: the last 20% of performance costs far more than 20% of the watts. Browsing, video, and office work won't notice.</li>
+        <li><strong>Power-limit the GPU.</strong> <code>nvidia-smi -pl 150</code> (admin shell) caps an NVIDIA card's draw — check your card's allowed range with <code>nvidia-smi -q -d POWER</code>. Resets at reboot, so it needs a startup task.</li>
       </ul>
-      <p>Bonus in summer: every watt you don't burn is heat your room — and your air conditioner — doesn't have to deal with. You save the same energy twice.</p>
+      <p>Bonus in summer: every watt you don't burn is heat your room — and your air conditioner — doesn't have to deal with, so each watt you cut comes off your AC's workload too.</p>
 
       <h2>The problem you'll hit within a week</h2>
-      <p>These settings are static, and your life isn't. The cap that makes the machine blissfully silent during a meeting makes it sluggish when you render video at 4 PM and infuriating when you game at 9. So you toggle settings back and forth for a few days, then give up and leave it loud. The settings were never the problem — <em>the switching</em> was.</p>
+      <p>These settings are static, and your life isn't. The cap that makes the machine blissfully silent during a meeting makes it sluggish when you render video at 4 PM and infuriating when you game at 9 PM. So you toggle settings back and forth for a few days, then give up and leave it loud. The settings were never the problem — <em>the switching</em> was.</p>
 
       <h2>Quiet when it should be, fast when it must be</h2>
       <p>This is the exact problem shape <a href="./">PowerDoze</a> handles. You bundle the three knobs above (plus screen timeout) into power modes — say, a "Quiet" mode with passive cooling and capped CPU/GPU, and a "Full Power" mode with everything open — then let the automation pick the right one:</p>
@@ -106,7 +106,7 @@
         <li><strong>Away mode</strong> — you leave the desk, it goes quiet; you come back, it restores instantly.</li>
         <li><strong>Fullscreen and per-app detection</strong> — a game or render job in the foreground gets Full Power without you touching anything, regardless of what the schedule says it's time for.</li>
       </ul>
-      <p>The result is a machine that's silent in the moments you care about silence and fast in the moments you care about speed — without you ever opening Control Panel again.</p>
+      <p>The result is a machine that's silent in the moments you care about silence and fast in the moments you care about speed — without you ever opening Control Panel again. (Schedules, two power modes, fullscreen detection, and the GPU power-limit knob are free; away mode and per-app rules are part of Pro.)</p>
 
       <h2>When software can't help</h2>
       <p>Honesty corner: if your fans roar <em>at idle</em> with low temperatures, your problem is mechanical — dust-clogged heatsinks, a dying fan bearing, or a badly configured BIOS fan curve. No setting fixes physics; clean it or replace the part. Likewise, a thin laptop under sustained 100% load will always need its fans. Software tuning shines in the most common case: a machine that's <strong>louder than its actual workload justifies</strong>, because nothing ever told it to calm down.</p>

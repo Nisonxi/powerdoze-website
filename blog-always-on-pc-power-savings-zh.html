@@ -89,8 +89,8 @@
       <p>這些今天就能手動做。給喜歡 DIY 的人，配方如下：</p>
       <ul>
         <li><strong>永不睡眠，但快點關螢幕。</strong><code>powercfg /change standby-timeout-ac 0</code> 關掉睡眠；<code>powercfg /change monitor-timeout-ac 5</code> 讓螢幕 5 分鐘後關閉。無頭伺服器點亮螢幕（以及驅動它的 GPU）是純浪費。</li>
-        <li><strong>限制 CPU 最大狀態。</strong><code>powercfg /setacvalueindex scheme_current sub_processor PROCTHROTTLEMAX 50</code> 再接 <code>powercfg /setactive scheme_current</code>，把處理器上限設在 50%——實際效果主要是「不開 turbo boost」。細流型工作完全無感，待機功耗和溫度直接降。</li>
-        <li><strong>散熱策略改被動。</strong>同一個 <code>sub_processor</code> 群組裡有散熱策略設定（<code>SYSCOOLPOL</code>）——被動模式會先降 CPU 速度再拉風扇轉速。深夜的實際效果：房間更安靜、更涼。</li>
+        <li><strong>限制 CPU 最大狀態。</strong><code>powercfg /setacvalueindex scheme_current sub_processor PROCTHROTTLEMAX 50</code> 再接 <code>powercfg /setactive scheme_current</code>，把處理器上限設在額定速度的 50%——turbo 完全關閉，時脈上限約在基礎時脈的一半。細流型工作完全無感，負載時的功耗和溫度直接降。</li>
+        <li><strong>散熱策略改被動。</strong>同一個 <code>sub_processor</code> 群組裡有散熱策略設定（<code>SYSCOOLPOL</code>）——被動模式會先降 CPU 速度再拉風扇轉速。注意：這只在 Windows 真的管風扇的機器上有效（主要是品牌機和筆電）；自組桌機的風扇歸主機板 BIOS 曲線管，真正讓它安靜的是上面的 CPU/GPU 上限。</li>
         <li><strong>給 GPU 設功耗上限。</strong>NVIDIA 顯卡用 <code>nvidia-smi -pl 120</code>（系統管理員視窗）限制整卡功耗。注意重開機會重置，所以開機時要再跑一次。</li>
       </ul>
       <p>一個提醒：如果你的伺服器晚上有真工作——轉檔佇列、備份排程——上限設保守一點，或避開那些時段。</p>
@@ -101,11 +101,11 @@
 
       <h2>把夜班自動化</h2>
       <p>這個模式正是 <a href="./">PowerDoze</a> 的核心場景。你定義電源模式——把 CPU 上限、散熱策略、螢幕逾時、NVIDIA 功耗上限打包成一組——再用排程規則按時段切換：白天均衡、01:00–08:00 切到限速省電模式。伺服器程式加進<strong>保持清醒白名單</strong>，從此任何規則、模式或未來的誤設定都不可能讓機器在做種到一半時睡著。GPU 上限自動重新套用，重開機、更新都不怕。</p>
-      <p>而這一切最該問的問題是「所以到底省了多少？」——所以有一頁分析儀表板，長期追蹤估算瓦數、度數和電費：你這台機器的 before/after，不是假想數字。</p>
+      <p>而這一切最該問的問題是「所以到底省了多少？」——所以有一頁分析儀表板（Pro 功能），長期追蹤估算瓦數、度數和電費：你這台機器的 before/after，不是假想數字。</p>
       <p>排程規則、電源模式、白名單、監控全部<strong>免費、不用註冊帳號</strong>。一切都在本機執行，你機器上的任何資料都不會外傳。</p>
 
       <h2>誰不需要這篇</h2>
-      <p>如果你的常開硬體是 Raspberry Pi、NUC 或功耗 10–20 瓦的專用 NAS，你已經用硬體解掉這個問題了——一篇講「怎麼削桌機待機功耗」的文章對你沒有用。這篇是寫給（非常常見的）另一種情況：因為軟體只能跑 Windows、或櫃子裡剛好有一台，於是拿舊桌機當伺服器的人。那台機器深夜有 40–80 瓦的肥肉可以削——而且削掉它，完全不需要讓機器睡著。</p>
+      <p>如果你的常開硬體是 Raspberry Pi、NUC 或功耗 10–20 瓦的專用 NAS，你已經用硬體解掉這個問題了——一篇講「怎麼削桌機待機功耗」的文章對你沒有用。這篇是寫給（非常常見的）另一種情況：因為軟體只能跑 Windows、或櫃子裡剛好有一台，於是拿舊桌機當伺服器的人。那台機器深夜有 20–40 瓦的肥肉可以削——而且削掉它，完全不需要讓機器睡著。</p>
 
       <p style="margin-top: 40px;"><a href="index.html#download" class="p-btn p-btn-primary">免費下載 PowerDoze →</a></p>
     </article>
