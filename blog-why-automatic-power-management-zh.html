@@ -88,6 +88,11 @@
       <p>簡單算一下：一台以 75 瓦待機、24 小時開著的桌機，一年燒掉約 <strong>657 度電</strong>（75W × 24h × 365）。以台電夏月級距常見的每度約 NT$3–5 來算，一年大約 <strong>NT$2,000–3,300</strong>——而這台機器多數時間只是在等你回來。家裡跑兩三台（常開機玩家的日常），再乘上去。</p>
       <p>重點不是數字多大，而是這筆錢是<em>純浪費</em>——你什麼都沒換到——而且它完全可以用自動化省掉。</p>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        <strong style="color: var(--accent);">💡 懶人包</strong><br>
+        75 瓦是什麼概念？大約一顆傳統燈泡。「電腦 24 小時開著不管它」，就等於家裡有一顆燈泡從年初亮到年尾沒關過——你絕不會容許一顆燈泡這樣，只是電腦的「亮」你看不見而已。
+      </div>
+
       <h2>為什麼 Windows 內建設定解決不了</h2>
       <p>Windows 給你的工具十多年來沒變過，就兩樣：</p>
       <ul>
@@ -95,6 +100,11 @@
         <li><strong>睡眠計時器</strong>——一個全域的「閒置 N 分鐘後睡眠」，分不出<em>你人走了的閒置</em>和<em>下載、轉檔、Plex 串流進行中的閒置</em>。設短了，過夜任務被砍；設長了（或像多數人乾脆關掉），又回到整夜燒電。</li>
       </ul>
       <p>這兩樣工具都不知道現在幾點、跑著什麼程式、筆電在哪裡、你是不是在開會。它們是「設定」，不是「行為」。</p>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        <strong style="color: var(--accent);">💡 懶人包</strong><br>
+        「電源計畫」像一台只有一個段速的電風扇：你三年前轉到「強」，它就一路強到今天，不管現在是不是冬天。「睡眠計時器」像會議室的自動感應燈：沒偵測到動靜就熄燈——可是你明明坐在裡面看簡報，只是沒揮手，它也照關。Windows 缺的不是開關，是一顆「看得懂現在是什麼狀況」的腦子。
+      </div>
 
       <h2>手動繞路的無限輪迴</h2>
       <p>於是大家開始自力救濟：打遊戲前手動切高效能、掛大檔前先關睡眠、用完再開回來（通常是忘記開回來）、或乾脆整台關機然後失去遠端連線。每一個土方法都是對你注意力的一筆小額重複課稅——而這種事本來就該是電腦替人類處理的。</p>
@@ -107,6 +117,11 @@
         <li><strong>地點</strong>——筆電連上公司 Wi-Fi 就套用公司設定檔，回家連家裡網路就換回來。不用 GPS，用的就是你本來就連著的 SSID。</li>
         <li><strong>人在不在</strong>——你起身離開，幾分鐘後機器自動降速；你一動滑鼠，立刻無縫還原。關鍵是它<em>不能誤判</em>——開會、看電影時不該觸發。</li>
       </ul>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        <strong style="color: var(--accent);">💡 懶人包</strong><br>
+        把它想成一位盡責的管家：天黑自動把不用的燈調暗（<strong>時間</strong>）、看到你在煮飯就絕不關瓦斯（<strong>程式</strong>）、你到辦公室他就擺出辦公的桌面（<strong>地點</strong>）、你離開沙發十分鐘他先把電視轉小聲、你一回來馬上轉回去（<strong>人在不在</strong>）。你從頭到尾沒下過任何指令——這就是「自動」兩個字該有的樣子。
+      </div>
 
       <h2>PowerDoze 的位置</h2>
       <p>這就是我們自己想用卻找不到的工具，所以做了一個。<a href="./">PowerDoze</a> 在 Windows 10/11 上把四種訊號全部接齊：排程電源模式（打包 CPU 上限、散熱策略、螢幕逾時、NVIDIA GPU 功耗限制）、保持清醒白名單、全螢幕與會議偵測、Wi-Fi 地點設定檔、離開模式——再加一頁統計，把你實際省下的度數和錢算給你看，讓你能驗證這一切到底值不值。</p>

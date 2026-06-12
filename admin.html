@@ -203,6 +203,17 @@
     <div class="ad-panel">
       <h2>Blog 排程 <span id="blog-sched-note" style="text-transform:none;letter-spacing:0;font-weight:400;"></span></h2>
       <div id="blog-sched"><div class="empty">載入中…</div></div>
+      <div id="blog-editor" class="hidden" style="margin-top:14px;">
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px;">
+          <strong id="blog-editor-slug" style="font-size:13px;"></strong>
+          <button class="ad-btn" id="be-zh" onclick="blogSwitchFile('zh')">中文版</button>
+          <button class="ad-btn" id="be-en" onclick="blogSwitchFile('en')">English</button>
+          <button class="ad-btn primary" onclick="blogSaveCurrent()">儲存</button>
+          <button class="ad-btn" onclick="blogCloseEditor()">關閉</button>
+          <span id="be-status" style="font-size:12px;color:var(--ad-ink3);"></span>
+        </div>
+        <textarea id="be-text" spellcheck="false" style="width:100%;height:420px;font-family:monospace;font-size:12px;background:var(--ad-panel);color:inherit;border:1px solid var(--ad-line);border-radius:8px;padding:10px;box-sizing:border-box;"></textarea>
+      </div>
     </div>
   </div>
 
@@ -410,9 +421,12 @@
         var prev = sched ? ('/scheduled/' + p.slug + '/' + p.slug) : ('/' + p.slug);
         var links = '<a href="' + prev + '.html" target="_blank">EN 預覽</a> · <a href="' + prev + '-zh.html" target="_blank">中文預覽</a>';
         var btns = '';
-        if (sched && d.canWrite) {
-          btns = '<span><button class="ad-btn" onclick="blogSetDate(\'' + p.slug + '\',\'' + p.publishDate + '\')">改日期</button> ' +
-                 '<button class="ad-btn primary" onclick="blogPublishNow(\'' + p.slug + '\')">立即發佈</button></span>';
+        if (sched) {
+          btns = '<span><button class="ad-btn" onclick="blogOpenEditor(\'' + p.slug + '\')">編輯</button>' +
+                 (d.canWrite
+                   ? ' <button class="ad-btn" onclick="blogSetDate(\'' + p.slug + '\',\'' + p.publishDate + '\')">改日期</button> ' +
+                     '<button class="ad-btn primary" onclick="blogPublishNow(\'' + p.slug + '\')">立即發佈</button>'
+                   : '') + '</span>';
         }
         return '<div class="bug">' +
           '<div class="bug-head"><div class="bug-desc">' + esc(p.title || p.slug) + '</div>' +
@@ -444,6 +458,58 @@
     function blogPublishNow(slug) {
       if (!confirm('確定立即發佈「' + slug + '」？\n會直接 commit 並觸發部署，約 1-2 分鐘後上線。')) return;
       blogAction({ action: 'publish-now', slug: slug }, '已觸發發佈，約 1-2 分鐘後上線。');
+    }
+
+    // ── 文章編輯器（讀不需 PAT；儲存需 GITHUB_PAT）──
+    var _beSlug = null, _beFiles = null, _beCur = null;
+    function _beName(which) { return which === 'zh' ? (_beSlug + '-zh.html') : (_beSlug + '.html'); }
+    async function blogOpenEditor(slug) {
+      var st = document.getElementById('be-status');
+      document.getElementById('blog-editor').classList.remove('hidden');
+      document.getElementById('blog-editor-slug').textContent = slug;
+      document.getElementById('be-text').value = '';
+      st.textContent = '載入中…';
+      try {
+        var res = await fetch(SUPABASE_FUNCTIONS_URL + '/admin-blog-schedule', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + _blogToken, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'get-files', slug: slug }),
+        });
+        var d = await res.json();
+        if (!res.ok || d.status !== 'OK') throw new Error(d.message || ('HTTP ' + res.status));
+        _beSlug = slug; _beFiles = d.files; _beCur = null;
+        blogSwitchFile('zh');
+        st.textContent = '已載入。改 <article> 區塊內的文字即可，儲存後預覽約 1-2 分鐘更新。';
+      } catch (e) { st.textContent = '載入失敗：' + (e.message || e); }
+    }
+    function blogSwitchFile(which) {
+      if (!_beFiles) return;
+      if (_beCur) _beFiles[_beName(_beCur)] = document.getElementById('be-text').value;
+      _beCur = which;
+      document.getElementById('be-text').value = _beFiles[_beName(which)] || '';
+      document.getElementById('be-zh').className = 'ad-btn' + (which === 'zh' ? ' primary' : '');
+      document.getElementById('be-en').className = 'ad-btn' + (which === 'en' ? ' primary' : '');
+    }
+    async function blogSaveCurrent() {
+      if (!_beSlug || !_beCur) return;
+      var name = _beName(_beCur);
+      var st = document.getElementById('be-status');
+      st.textContent = '儲存中…';
+      try {
+        var res = await fetch(SUPABASE_FUNCTIONS_URL + '/admin-blog-schedule', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + _blogToken, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'save-file', slug: _beSlug, name: name, content: document.getElementById('be-text').value }),
+        });
+        var d = await res.json();
+        if (!res.ok || d.status !== 'OK') throw new Error(d.message || ('HTTP ' + res.status));
+        _beFiles[name] = document.getElementById('be-text').value;
+        st.textContent = '✅ 已儲存 ' + name + '（預覽約 1-2 分鐘後更新）';
+      } catch (e) { st.textContent = '儲存失敗：' + (e.message || e); }
+    }
+    function blogCloseEditor() {
+      document.getElementById('blog-editor').classList.add('hidden');
+      _beSlug = _beFiles = _beCur = null;
     }
 
     (async function init() {

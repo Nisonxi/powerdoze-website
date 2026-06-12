@@ -88,6 +88,11 @@
       <p>Quick math. A desktop idling at 75 W around the clock burns about <strong>657 kWh per year</strong> (75 W × 24 h × 365). At a typical electricity rate of US$0.15/kWh, that's roughly <strong>US$100 a year</strong> — for a machine that was mostly waiting. If you pay European electricity rates, double it. Run two or three machines (a homelab habit) and multiply again.</p>
       <p>The point isn't that any one number is huge. It's that this cost is <em>pure waste</em> — you get nothing for it — and it can be automated away entirely.</p>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        <strong style="color: var(--accent);">💡 TL;DR</strong><br>
+        75 watts is roughly one old-school light bulb. Leaving the PC on 24/7 is having one bulb burn from New Year's to New Year's without ever switching it off — you'd never tolerate the bulb; the PC just hides its glow.
+      </div>
+
       <h2>Why Windows' built-in settings don't solve this</h2>
       <p>Out of the box, Windows gives you essentially the same two levers it has had for over a decade (Windows 11's power-mode slider is the same idea with a new coat of paint — it still never moves itself):</p>
       <ul>
@@ -95,6 +100,11 @@
         <li><strong>The sleep timer</strong> — one global "sleep after N minutes" that can't tell the difference between <em>idle because you left</em> and <em>idle because a download, a render, or a backup job is running</em>. Set it short and it kills your overnight jobs. Set it long (or off, like most people) and you're back to burning watts.</li>
       </ul>
       <p>Neither tool knows what time it is, what app is running, where your laptop is, or whether you're in a meeting. They're settings, not behavior.</p>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        <strong style="color: var(--accent);">💡 TL;DR</strong><br>
+        A power plan is a fan with one speed knob: you set it to "high" three years ago and it's been high ever since, winter included. The sleep timer is a meeting-room motion light: no movement, lights out — even though you were sitting right there watching the slides. What Windows lacks isn't switches; it's any awareness of what's actually going on.
+      </div>
 
       <h2>The manual workaround treadmill</h2>
       <p>So people improvise: switch the power plan by hand before gaming, disable sleep before a big download, re-enable it later (or forget to — usually forget to), turn the PC off entirely and lose remote access. Every workaround is a small recurring tax on your attention, which is exactly the kind of thing computers were supposed to handle for us.</p>
@@ -107,6 +117,11 @@
         <li><strong>Place</strong> — laptop joins the office Wi-Fi, office profile applies. Home network, home profile. No GPS, just the SSID you're already connected to.</li>
         <li><strong>Presence</strong> — you walk away, the machine winds down after a few idle minutes; you touch the mouse, it restores instantly. Crucially, it must <em>not</em> misfire during meetings or movies.</li>
       </ul>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        <strong style="color: var(--accent);">💡 TL;DR</strong><br>
+        Think of it as a good butler: dims the unused lights after dark (<strong>time</strong>), never shuts off the stove while you're cooking (<strong>apps</strong>), lays out your work desk when you arrive at the office (<strong>place</strong>), turns the TV down ten minutes after you leave the couch and back up the moment you return (<strong>presence</strong>). You never gave a single order — which is what "automatic" should mean.
+      </div>
 
       <h2>Where PowerDoze fits</h2>
       <p>This is the tool we wanted and couldn't find, so we built it. <a href="./">PowerDoze</a> runs all four signals on Windows 10/11: scheduled power modes (bundling CPU limits, cooling policy, screen timeout, and NVIDIA GPU power limits), a keep-awake whitelist, fullscreen and meeting detection, Wi-Fi-based profiles, and an away mode — plus an analytics page that shows the kWh and money you actually saved, so you can check whether any of this was worth it.</p>
