@@ -88,6 +88,11 @@
         <li><strong>Desktop, sitting idle:</strong> typically 50–100 W at the wall.</li>
         <li><strong>Gaming desktop under load:</strong> 300–600 W is normal for a high-end build.</li>
       </ul>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Asking "how much power does a PC use" is like asking "how much fuel does a car use" — it depends entirely on what you're doing. Idling in a jam, cruising through town, and flooring it on the highway can differ ten-fold. So "my PC uses X watts" isn't a complete sentence; the most you can say is "X watts <em>right now</em>." And Windows won't even tell you that — Task Manager shows everything except a single watt.
+      </div>
+
       <p>Same machine, ten-fold range. "My PC uses X watts" isn't really a sentence that means anything — it uses X watts <em>right now</em>. And Windows won't tell you: Task Manager charts CPU percent, memory, even GPU queues, but there isn't a single watt anywhere in it.</p>
 
       <h2>Three ways to get the number</h2>
@@ -97,10 +102,18 @@
         <li><strong>Software sensors — free, instant, and half the picture.</strong> Modern CPUs report their own "package power" and NVIDIA GPUs report board power; tools like HWiNFO or LibreHardwareMonitor read both. Two caveats matter. On a <em>desktop</em>, CPU + GPU is not the whole machine — the missing motherboard, RAM, drives, fans and PSU losses mean the wall figure is routinely 30–60% higher than what the sensors add up to. On a <em>laptop running on battery</em>, though, there is one genuinely honest software number: the battery's discharge rate <em>is</em> the whole machine, screen included, measured by the hardware that's actually paying for it.</li>
       </ul>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Reading CPU + GPU watts in software on a desktop is like tallying your electric bill from just the AC and the fridge while forgetting the lights, water heater, TV, and router — the motherboard, RAM, drives, fans, and power-supply losses all go uncounted, which is why the real figure at the wall runs 30–60% higher than the sensor total. For the truth, slip a plug-in wall meter (the price of lunch) between the wall and the PC: it's the house's main electricity meter, and it reports honestly whatever flows through it.
+      </div>
+
       <h2>Turning watts into money</h2>
       <p>One formula is all you need:</p>
       <p><code>kWh per year = watts × hours per day × 365 ÷ 1000</code></p>
       <p>A desktop that idles at 120 W and never sleeps burns about 1,050 kWh a year — roughly $160 at US average rates, and well over €300 at European ones. That's for doing <em>nothing</em>.</p>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        120 watts sounds harmless, but it's a dripping tap: you never notice a single drop, yet a year later it's filled a whole bathtub. A PC doing <em>nothing</em> quietly drips away $160 or more a year — a fancy dinner or two, in return for not one second of usefulness. The point of measuring isn't to compute that average; it's to find the drip windows — the hours nobody's using it while it idles at full speed — and close the tap.
+      </div>
       <p>But the real value of measuring isn't computing an average — it's finding the <strong>waste window</strong>: the hours when the machine runs at full-power settings and nobody benefits. A PC drawing 120 W overnight when it could be drawing 40 in a capped power mode — or 2 in sleep — is the gap all the savings live in. (If your machine genuinely can't sleep because it serves Plex or torrents, that gap is still closable — we wrote a <a href="blog-always-on-pc-power-savings.html">separate guide for always-on machines</a>.)</p>
 
       <h2>Measurement built in, next to the fix</h2>

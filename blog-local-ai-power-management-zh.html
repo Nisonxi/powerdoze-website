@@ -90,8 +90,16 @@
       </ul>
       <p>不舒服的比例來了：除非你整天都在批次生成，<strong>你的「AI 伺服器」90% 以上的時間都活在第二、三種狀態</strong>——耗著電什麼都不做。你真正要的推理，跟你沒想過的閒置時數比起來只是零頭。</p>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        最花錢的不是你問問題的那幾秒，而是它「乾等你問」的那 23 小時。就像家裡的熱水器：你以為電費都花在洗澡那十分鐘，其實大半是它整天反覆把整桶水保溫在燙的狀態，只為了你哪天突然想用。本地 AI 也一樣——真正被你用到的推理只是零頭，帳單是那一整天的「保溫待命」貢獻的。
+      </div>
+
       <h2>功耗上限技巧（速度掉得比你想的少）</h2>
       <p>r/LocalLLaMA 早就知道這招：LLM 推理主要吃的是<em>記憶體頻寬</em>，不是運算力。把 GPU 功耗上限壓下來，時脈會降，但 tokens/sec 幾乎不動。社群在 3090、4090 這類卡上的實測一再得到同樣結論：<strong>功耗上限砍 25–35%，推理速度只掉個位數百分比</strong>——同時熱量和風扇噪音跟著瓦數一起降。</p>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        LLM 推理像在排隊取餐：瓶頸是出餐口（記憶體頻寬）有多快，不是廚房後面站了幾個廚師（運算力）。所以你把廚師人手砍掉三分之一（功耗砍 25–35%），出餐速度幾乎沒變——因為原本卡的就不是廚師。你省下的是那一大票閒著的廚師的工錢（電費）和他們散的熱，菜上得一樣快。
+      </div>
       <p>手動版作法（系統管理員視窗）：</p>
       <ul>
         <li><code>nvidia-smi -pl 300</code>——把卡限制在 300 瓦（你的卡的合法範圍用 <code>nvidia-smi -q -d POWER</code> 查）。</li>
@@ -105,6 +113,10 @@
         <li><strong>長任務會死。</strong>Finetune、大批次生成、跑整晚的 embedding——Windows 的睡眠計時器只認鍵盤滑鼠，不認 CUDA。30 分鐘沒輸入 → 判定「閒置」→ 睡眠 → 幾小時的 GPU 工作直接蒸發。</li>
         <li><strong>服務也會死。</strong>機器一睡，你的 Ollama endpoint 就斷線，所有 client 全掛。</li>
       </ul>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Windows 判斷你「在不在用電腦」只看一件事：有沒有人在動鍵盤滑鼠。問題是你那張 GPU 正埋頭跑整晚的訓練，它完全不算「有人在用」——就像保全只認門口有沒有人走動，沒看到後院工廠燈火通明還在趕工，時間一到就大手一揮把總電源關了，半夜的成果全沒。於是大家乾脆把睡眠整個關掉，結果反而落得整晚全功率空轉——兩頭皆輸。
+      </div>
       <p>於是大家都用同一個解法：<strong>把睡眠整個關掉。</strong>一個為了隱私做的決定，就這樣靜悄悄變成一台永遠全功率空轉的機器。每一步都很合理，加起來是兩頭皆輸。</p>
 
       <h2>靜態設定跑步機，AI 版</h2>

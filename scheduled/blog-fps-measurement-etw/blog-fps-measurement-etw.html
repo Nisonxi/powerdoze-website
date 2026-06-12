@@ -88,9 +88,17 @@
       <h2>Windows already counts them for you</h2>
       <p>The answer is ETW — Event Tracing for Windows, the OS-wide telemetry bus that most people only meet through Task Manager's nicer cousins. The graphics stack is instrumented: the <code>Microsoft-Windows-DXGI</code> provider emits an event every time any process presents a frame (Event 42, <code>Present::Start</code>). Subscribe to that stream from your own process, filter by the foreground game's PID, count events per second — that's FPS, measured from the outside. It's the same data source Intel's PresentMon uses. Older DirectX 9 titles present through a different path, so we also listen to <code>Microsoft-Windows-D3D9</code> Event 1, with a flag so a frame routed through both layers isn't counted twice.</p>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Think of an office tower with a security desk at the lobby. To count how many times a tenant walks out the door, you don't break into their apartment and hide a camera by the doorway — you just read the lobby's CCTV feed, which already logs everyone passing through the front entrance. ETW is that building-wide CCTV: Windows is already recording every "frame went out the door", so we just watch the tape instead of barging into the game.
+      </div>
+
       <h2>The bug: the game that ran at 600 FPS</h2>
       <p>First version shipped, and a player reported the overlay reading 500–600 FPS in a game that was actually rendering around 200. Not jitter — consistently, confidently triple the truth.</p>
       <p>The cause is obvious in hindsight: <strong>a modern game is not one stream of frames.</strong> Many engines embed a Chromium-based UI layer (menus, cash shop, map overlays), and that browser presents its own frames through its own swapchain. Our counter was summing <em>every</em> Present event from the PID — main render at ~200 plus a busy web overlay — and reporting the total. The fix is what PresentMon does: bucket events <strong>per swapchain</strong>, then report the busiest one, which is the main render. The chatty UI overlay gets its own bucket and stops polluting the number.</p>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Our counter was like measuring traffic on a highway by standing at a junction and counting every car on every lane at once — main road plus the busy on-ramp from a shopping mall — then reporting one giant number. No wonder it looked like 600. The fix was to count each lane separately and report the main road only. A game's menu and shop screen are that mall on-ramp: their own steady stream of "cars" that has nothing to do with how fast the game itself is running.
+      </div>
       <p>Then the second trap fired: the event payload field that identifies the swapchain has <em>different names across Windows versions</em> (<code>pIDXGISwapChain</code> on some builds, variants on others). Read the wrong field name and every event lands in one bucket — silently reproducing the original bug. The build that finally stuck scans the payload for any pointer-sized field whose name contains "swap", and writes a once-per-second per-swapchain breakdown to a diagnostic log, so when a user's machine names the field something new, the log shows it and we can adapt without guessing.</p>
 
       <h2>What this approach can't do</h2>

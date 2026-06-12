@@ -89,8 +89,16 @@
       </ul>
       <p>螢幕「不見了」，Windows 就做它對拔除螢幕該做的事：重排桌面。視窗搬到倖存的螢幕上、解析度可能改變；等螢幕醒來重新報到，整個重新枚舉一輪——就是螢幕回來時那段黑屏閃爍。你的 DP 螢幕會不會這樣，取決於型號和韌體：有的保持 HPD、很多不保持、有些在 OSD 裡給你選。</p>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        想像一張兩個人共用的辦公桌。HDMI 螢幕休眠，像同事關掉檯燈但人還坐在位子上——辦公室仍當他那半邊桌子有人，沒人會去動他的東西。DisplayPort 螢幕休眠，則像那位同事收拾東西整個走人。辦公室自然把他那半邊桌子收掉、把他的文件挪到你這邊。等他回來，全部又得重新整理一次。那場大搬風，就是你的視窗在螢幕間亂跳。
+      </div>
+
       <h2>遠端版的同一個問題</h2>
       <p>把一台純 DP 桌機的螢幕<em>全部</em>關掉，這台機器就相信自己沒接任何顯示器。抓實體畫面來串流的工具——Parsec、Moonlight/Sunshine、部分 AnyDesk 模式——突然沒東西可抓，或掉到一塊迷你虛擬面板。（傳統 RDP 免疫：它自帶虛擬螢幕。）這就是遠端遊戲圈人手一顆 <strong>HDMI 假負載（dummy plug）</strong>的原因——一顆百元的電阻假裝自己是螢幕，讓系統永遠「接著一顆顯示器」。</p>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        攝影師只能拍「有布景、有打燈」的舞台——把布景拆了、燈關了，就沒東西可拍。遠端串流工具就是那位攝影師：它只能把「存在的畫面」拍給你看。假負載就像一塊永遠不撤的小紙板舞台，就算真正的螢幕全暗了，台上永遠還留著一個可以拍的東西。
+      </div>
 
       <h2>解法工具箱</h2>
       <ul>

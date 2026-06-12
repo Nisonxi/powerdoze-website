@@ -85,6 +85,10 @@
       <p>Look at what the machine actually does at 4 AM. Seeding is a trickle of I/O. A media server between streams is essentially idle. Camera recording is constant but light. Most always-on workloads need <strong>a few percent of the machine's capacity, most of the time</strong> — yet the default Balanced plan keeps the CPU boost-ready, the fans on active duty, and a discrete GPU awake at desktop clocks.</p>
       <p>The most common homelab pattern makes this worse: the always-on box is <em>yesterday's gaming desktop</em>. Hardware picked for peak performance, now doing a job a NUC could handle, idling at 60–100 W around the clock. The overnight hours — say 01:00 to 08:00 — are the purest waste: nobody is streaming, nobody is at the desk, and the downloads genuinely do not care whether the CPU can boost to 5 GHz.</p>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        It's like buying a big-engine truck for the occasional heavy haul, then using it only for a daily trip to the corner store — engine roaring at full revs the whole way. Overnight seeding and a media server nobody's watching need about a bicycle's worth of effort, yet the PC idles all night at "truck, foot to the floor." The fuel (power) burns; not one extra parcel (work) gets delivered.
+      </div>
+
       <h2>The knobs that cut power while staying awake</h2>
       <p>You can do all of this by hand today. The recipes, for the DIY-inclined:</p>
       <ul>
@@ -93,11 +97,19 @@
         <li><strong>Switch cooling policy to passive.</strong> The same <code>sub_processor</code> group has a cooling policy setting (<code>SYSCOOLPOL</code>) — passive slows the CPU before spinning fans up. Caveat: this only applies where Windows actually controls the fans (mostly OEM boxes and laptops); on a self-built desktop, the motherboard's BIOS fan curve is in charge, and the CPU/GPU caps are what actually quiet things down.</li>
         <li><strong>Power-limit the GPU.</strong> On NVIDIA, <code>nvidia-smi -pl 120</code> (admin shell) caps the card's power draw. Note it resets on reboot, so it needs to run again at startup.</li>
       </ul>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        "Cap the CPU at 50%" sounds scary, but it's just a cruise-control speed limit on an open road: you still reach the destination fine, the car just stops flooring it to 5,000 RPM every time a gap opens up. A trickle of downloads and standby work never feels that limit — but the fuel use (power) and the engine heat (temperature) drop right away.
+      </div>
       <p>One caution: if your server does real work at night — a transcode queue, backups — cap less aggressively, or schedule around those windows.</p>
 
       <h2>The problem: all of those settings are static</h2>
       <p>Here's where the DIY route gets annoying. At 8 PM you sit down at this same machine to actually use it — and it's still capped at 50% with passive cooling, because that's what you set. So you flip everything back. Later you forget to re-apply it. Two weeks later, the box is back to full power 24/7 and you've stopped bothering.</p>
       <p>The honest DIY fix is two batch scripts and Task Scheduler: one job at 01:00 applying the caps, one at 08:00 removing them, plus a startup task to re-apply the GPU limit. This genuinely works, and if you enjoy maintaining it, you have everything you need. Its limits are the usual ones: it doesn't react to whether you happen to be using the machine, it silently breaks when a Windows update resets a setting, and you never find out what any of it actually saved.</p>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Batch scripts on a timer are like a cheap plug-in timer switch in the living room: it does flip on and off on schedule, but it's blind. You sit down at 8 PM to actually use the machine and it throttles you anyway, because it can't see that you're there. And the day a Windows update wipes your setting, it won't say a word — it just quietly stops working.
+      </div>
 
       <h2>Automating the night shift</h2>
       <p>This exact pattern is what <a href="./">PowerDoze</a> was built around. You define power modes — bundles of CPU limit, cooling policy, screen timeout, and NVIDIA power limit — and schedule rules that switch between them by time of day: Balanced during the day, a capped low-power mode from 01:00 to 08:00. Your server apps go on a <strong>keep-awake whitelist</strong>, so no rule, mode, or future misconfiguration can ever put the box to sleep mid-seed. The GPU limit is re-applied automatically, updates and reboots included.</p>

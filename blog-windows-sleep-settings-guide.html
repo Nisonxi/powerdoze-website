@@ -96,6 +96,10 @@
         <li><strong>Modern Standby (S0 low power idle)</strong> — newer laptops. The machine stays half-awake to sync mail and such; also the reason some laptops cook in backpacks. Check which you have: <code>powercfg /a</code>.</li>
       </ul>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        These sleep modes are like the different ways you can leave the living-room TV overnight. Sleep is hitting standby on the remote: the little red light stays on (a trickle, 1–5 W) but it springs back the instant you press a button. Hibernate is pulling the plug entirely — zero power, but it takes a moment to warm back up. Hybrid does both: standby now, plug-data backed up just in case the power cuts. The odd one is a newer laptop's Modern Standby — it never really falls asleep, just shuts its eyes while still grabbing messages, which is why it sweats inside a closed backpack.
+      </div>
+
       <h2>Problem 1: "My PC won't sleep"</h2>
       <p>Something is holding a wake request. Find it in 10 seconds — run in an elevated terminal:</p>
       <p><code>powercfg /requests</code></p>
@@ -106,6 +110,10 @@
         <li><strong>Devices allowed to wake it</strong> — <code>powercfg /devicequery wake_armed</code>; mice and network adapters are the classics. Disable per-device in Device Manager → Power Management.</li>
         <li><strong>The full report</strong> — <code>powercfg /energy</code> watches the system for 60 seconds, then generates an HTML report of everything misbehaving (run elevated).</li>
       </ul>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        A PC that won't sleep is like a kid who won't go to bed — something is keeping them up. <code>powercfg /requests</code> is you opening the door and asking "who's still awake?" — and out comes the name of the one playing under the covers (a browser tab playing audio) or the dog barking outside (a mouse, a network card). Name each one, switch it off, and the room finally goes quiet.
+      </div>
 
       <h2>Problem 2: "It sleeps when it shouldn't"</h2>
       <p>The opposite case: you're downloading a 60 GB game, rendering a video, or running a server — and the global timer kills it. Windows' built-in answers are all bad in a different way:</p>
@@ -126,6 +134,10 @@
 
       <h2>The structural limit no setting fixes</h2>
       <p>Even perfectly tuned, Windows sleep settings are <strong>one static number</strong>. They can't be different at 2 PM and 2 AM. They can't tell a download from idleness. They can't switch when you launch a game, join a meeting, or move your laptop from office to home. Every "fix" above is you compensating, manually, for settings that can't see context.</p>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        A Windows sleep setting is basically an oven timer that just cuts the power: you set it to 30 minutes, it dings and shuts off — never mind whether you were baking bread that needs three hours or cookies that are already done. The problem isn't that the timer is inaccurate; it's that the timer has no eyes and can't see what's in the pot. Everything you can do is just running over to press it a few more times before it pulls the plug.
+      </div>
       <p>That gap is why we built <a href="./">PowerDoze</a>: schedule rules pick a power mode per time slot, a whitelist keeps the machine awake while specific apps are running (and lets it sleep afterward), and fullscreen/game detection pauses timers automatically — all free, fully local, no account needed. Pro (a one-time purchase, no subscription) adds meeting detection, an away mode that throttles the machine when you step away, and Wi-Fi-based profiles. If you only fix your settings with this guide, that's a win too — but if you're tired of being the manual automation layer, that's the tool.</p>
 
       <h2>powercfg quick reference</h2>

@@ -388,34 +388,34 @@
       </div>
     </div>
     <div class="p-faq-list">
-      <div class="p-faq-item">
-        <div class="p-faq-q" data-i18n="faq1q">Is PowerDoze free?</div>
+      <details class="p-faq-item">
+        <summary class="p-faq-q" data-i18n="faq1q">Is PowerDoze free?</summary>
         <div class="p-faq-a" data-i18n="faq1a">Yes! Core features are free forever. Pro unlocks advanced automation like app-based switching, Wi-Fi geofencing, and analytics. It's a one-time purchase, not a subscription.</div>
-      </div>
-      <div class="p-faq-item">
-        <div class="p-faq-q" data-i18n="faq2q">Does it send my data anywhere?</div>
+      </details>
+      <details class="p-faq-item">
+        <summary class="p-faq-q" data-i18n="faq2q">Does it send my data anywhere?</summary>
         <div class="p-faq-a" data-i18n="faq2a">No. PowerDoze runs entirely on your local machine. The only network requests are an optional update check and Pro license verification when you sign in. No telemetry, no analytics, no cloud sync.</div>
-      </div>
-      <div class="p-faq-item">
-        <div class="p-faq-q" data-i18n="faq3q">Why does Windows SmartScreen show a warning?</div>
+      </details>
+      <details class="p-faq-item">
+        <summary class="p-faq-q" data-i18n="faq3q">Why does Windows SmartScreen show a warning?</summary>
         <div class="p-faq-a" data-i18n="faq3a">Code signing certificates cost US$200+/year. As an indie developer, we'll add signing once the project is sustainable. Click "More info" then "Run anyway" to proceed safely.</div>
-      </div>
-      <div class="p-faq-item">
-        <div class="p-faq-q" data-i18n="faq4q">Can I transfer my license to a new PC?</div>
+      </details>
+      <details class="p-faq-item">
+        <summary class="p-faq-q" data-i18n="faq4q">Can I transfer my license to a new PC?</summary>
         <div class="p-faq-a" data-i18n="faq4a">Yes. Each Pro license works on up to 3 devices. Manage your bound devices from the account page — unbind an old PC to free a slot (one unbind every 30 days).</div>
-      </div>
-      <div class="p-faq-item">
-        <div class="p-faq-q" data-i18n="faq5q">Does it work on laptops and desktops?</div>
+      </details>
+      <details class="p-faq-item">
+        <summary class="p-faq-q" data-i18n="faq5q">Does it work on laptops and desktops?</summary>
         <div class="p-faq-a" data-i18n="faq5a">Both. Laptops benefit from battery policies and away mode. Desktops benefit from scheduled sleep rules and app-based power mode switching.</div>
-      </div>
-      <div class="p-faq-item">
-        <div class="p-faq-q" data-i18n="faq6q">What happens if I don't like it?</div>
+      </details>
+      <details class="p-faq-item">
+        <summary class="p-faq-q" data-i18n="faq6q">What happens if I don't like it?</summary>
         <div class="p-faq-a" data-i18n="faq6a">The free version has no time limit. If you bought Pro, you have a 14-day money-back guarantee, no questions asked.</div>
-      </div>
-      <div class="p-faq-item">
-        <div class="p-faq-q" data-i18n="faq7q">Is switching power modes safe? I keep mine on High performance just in case.</div>
+      </details>
+      <details class="p-faq-item">
+        <summary class="p-faq-q" data-i18n="faq7q">Is switching power modes safe? I keep mine on High performance just in case.</summary>
         <div class="p-faq-a" data-i18n="faq7a">Yes. Power modes are a native Windows feature — every laptop switches them dozens of times a day as it's plugged in and unplugged. PowerDoze writes settings only through Windows' official powercfg interface (CPU limit, cooling policy, sleep and screen timeouts) and never touches the BIOS, drivers, fan curves or your overclock. Uninstall it and everything returns to Windows defaults. Staying on High performance 24/7 doesn't add safety — it just burns extra watts while the PC waits for you.</div>
-      </div>
+      </details>
     </div>
   </div>
 </section>
@@ -482,10 +482,7 @@
   });
 })();
 
-// ── FAQ accordion ──
-document.querySelectorAll('.p-faq-q').forEach(q => {
-  q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
-});
+// FAQ 改原生 <details>/<summary>，鍵盤可達、免 JS
 
 // ── Savings calculator ──
 (function() {
@@ -575,7 +572,7 @@ document.querySelectorAll('.p-faq-q').forEach(q => {
   window.addEventListener('pd-pricing-updated', recalc);
 
   // Snap input to bounds on blur for visual feedback
-  [wattsEl, hoursEl].forEach(el => {
+  [wattsEl, hoursEl, rateEl].forEach(el => {
     el.addEventListener('blur', () => {
       const v = parseFloat(el.value);
       const min = parseFloat(el.min);

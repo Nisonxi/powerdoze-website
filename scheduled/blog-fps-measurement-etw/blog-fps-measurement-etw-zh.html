@@ -88,9 +88,17 @@
       <h2>Windows 其實已經幫你數好了</h2>
       <p>答案是 ETW——Event Tracing for Windows，作業系統內建的全域遙測匯流排。圖形堆疊本身就有埋點：<code>Microsoft-Windows-DXGI</code> provider 會在任何程序送出一幀時發事件（Event 42，<code>Present::Start</code>）。從自己的程序訂閱這條流、用前景遊戲的 PID 過濾、每秒數事件數——就是 FPS，從外面量出來的。這跟 Intel 的 PresentMon 用的是同一個資料來源。老的 DirectX 9 遊戲走另一條路徑，所以我們同時聽 <code>Microsoft-Windows-D3D9</code> 的 Event 1，並用旗標防止同一幀從兩邊各算一次。</p>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        想像一棟有大廳警衛室的辦公大樓。要算某住戶進出大門幾次，你不會闖進他家、在門口偷裝攝影機——你只要調大廳的監視器畫面，因為每個從正門經過的人本來就都被錄下來了。ETW 就是這套全大樓的中央監視系統：Windows 早就把每一次「有一幀送出門」都記下來了，所以我們只要看錄影帶，不必硬闖進遊戲裡。
+      </div>
+
       <h2>那個跑出 600 FPS 的 bug</h2>
       <p>第一版上線後，玩家回報：遊戲實際大約 200 幀，overlay 卻顯示 500–600。不是抖動——是穩定、自信地三倍於真相。</p>
       <p>事後看原因很明顯：<strong>現代遊戲不是只有一條幀流。</strong>很多引擎內嵌 Chromium 做 UI（選單、商城、地圖介面），那個瀏覽器有自己的 swapchain、自己送自己的幀。我們的計數器把該 PID 的<em>所有</em> Present 事件加總——主渲染約 200 幀，加上一個很忙的網頁 UI——報出總和。修法就是 PresentMon 的做法：<strong>按 swapchain 分桶</strong>，回報最忙的那一桶（主渲染），愛講話的 UI overlay 自己一桶，不再污染數字。</p>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        我們的計數器當初像在數高速公路車流：站在交流道口，把每條車道的車一次全算進去——主線加上一條從大賣場匯進來的繁忙匝道——然後報出一個超大數字。難怪會變成 600。修法就是分車道各算各的，只報主線。遊戲的選單和商城畫面就是那條賣場匝道：它有自己穩定的一股「車流」，跟遊戲本身跑多快其實一點關係都沒有。
+      </div>
       <p>然後第二個坑引爆：事件 payload 裡指向 swapchain 的欄位，<em>在不同 Windows 版本叫不同名字</em>（有的叫 <code>pIDXGISwapChain</code>，有的是變體）。讀錯欄位名，所有事件全進同一桶——悄悄重現原 bug。最後站穩的版本改成名稱無關掃描：找 payload 裡任何名字含「swap」的指標欄位，並每秒把逐 swapchain 的分桶明細寫進診斷 log——哪天某台機器的欄位又叫新名字，log 會直接告訴我們，不用猜。</p>
 
       <h2>這個做法做不到的事</h2>

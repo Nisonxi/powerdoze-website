@@ -38,7 +38,7 @@
   --hair:        #E8E8E4;
   --hair-2:      #D4D4D0;
 
-  --accent:      #D97706;
+  --accent:      #B45309; /* 淺色主題 amber 加深一階：#D97706 當文字只有 ~3:1，#B45309 ≈4.6:1 過 AA */
   --accent-soft: #FEF3C7;
   --accent-edge: #92400E;
 
@@ -123,7 +123,21 @@ body.plain {
   display: flex; align-items: center; gap: var(--s-3);
 }
 
-@media (max-width: 720px) { .p-nav-links { display: none; } }
+/* 手機：導覽改橫向可捲（不再整條消失），控制項墊到可觸控高度 */
+@media (max-width: 720px) {
+  .p-nav-links {
+    flex: 1; min-width: 0;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: var(--s-3);
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .p-nav-links::-webkit-scrollbar { display: none; }
+  .p-nav-links a { padding: 12px 0; }
+  .p-theme-toggle, .p-lang-select { height: 44px; }
+  .p-calc-preset { padding: 10px 12px; }
+}
 
 /* Theme toggle */
 .p-theme-toggle {
@@ -451,7 +465,7 @@ body.plain {
   color: var(--ink-3);
   margin-bottom: var(--s-6);
 }
-.p-feat h3 {
+.p-feat h3, .p-feat .p-feat-h3 {
   margin: 0 0 var(--s-3);
   font-size: 16px;
   font-weight: 600;
@@ -650,7 +664,9 @@ body.plain {
   font-weight: 500;
   color: var(--ink);
   transition: color 80ms;
+  list-style: none; /* details/summary：藏預設三角 */
 }
+.p-faq-q::-webkit-details-marker { display: none; }
 .p-faq-q:hover { color: var(--accent); }
 .p-faq-q::after {
   content: '+';
@@ -659,16 +675,14 @@ body.plain {
   font-size: 18px;
   transition: transform 120ms;
 }
-.p-faq-item.open .p-faq-q::after { transform: rotate(45deg); }
+.p-faq-item[open] .p-faq-q::after { transform: rotate(45deg); }
 .p-faq-a {
-  display: none;
   padding: 0 0 var(--s-5);
   color: var(--ink-2);
   font-size: 14px;
   line-height: 1.65;
   max-width: 64ch;
 }
-.p-faq-item.open .p-faq-a { display: block; }
 
 /* ═══════════════════════════════════════════════════════════
    Trust grid (small indicator row)
@@ -1174,6 +1188,7 @@ body.plain {
 .p-calc-input:focus {
   outline: none;
   border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft); /* 補 focus ring：只靠 1px 邊框變色太弱 */
 }
 
 .p-calc-divider {
@@ -1293,7 +1308,7 @@ body.plain {
   margin-top: 4px;
   font-family: var(--font-mono);
   font-size: 10px;
-  color: var(--muted);
+  color: var(--ink-3); /* 價格是購買決策資訊，--muted 兩主題都不到 4.5:1 */
   text-transform: none;
   letter-spacing: 0;
 }

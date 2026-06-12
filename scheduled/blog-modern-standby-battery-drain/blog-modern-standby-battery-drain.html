@@ -85,6 +85,10 @@
       <p>For two decades, closing the lid meant <strong>S3 sleep</strong>: RAM stays powered, everything else shuts off, the machine draws a trickle and can hold its charge for days. Then Windows moved to <strong>Modern Standby</strong> (S0 Low Power Idle), and most current laptops ship with it — usually with no S3 option left in the firmware at all.</p>
       <p>Modern Standby is built on a phone-like idea: "asleep" should really mean <em>barely awake</em>. The machine keeps its network connection, syncs mail, downloads updates, and wakes instantly at a touch. When it works, it's lovely. When it doesn't, a driver or background task keeps the system in a higher-power state — and your bag becomes a padded oven. A healthy machine should lose only a few percent overnight; a misbehaving one can burn 10% or more per hour, awake in all but name.</p>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Old sleep was a person in a deep coma — basically switched off until you shook them. Modern Standby is a light sleeper with their phone on the nightstand: any buzz, any notification, and they half-wake to check it. Most nights that's fine. But if the phone keeps lighting up, they never really rest — and in the morning they're exhausted and warm. That's your laptop in the bag.
+      </div>
+
       <h2>Diagnose before you fix</h2>
       <p>Open an admin terminal and ask Windows what it's actually doing:</p>
       <ul>
@@ -100,6 +104,10 @@
         <li><strong>Use hibernate for long absences.</strong> Hibernate (S4) writes RAM to disk and powers off completely — zero drain, survives any bag, any flight. It takes a few seconds longer to resume, which matters not at all when you're away for hours. Make sure it's enabled (<code>powercfg /hibernate on</code>), then map lid-close on battery to Hibernate instead of Sleep in your power settings.</li>
         <li><strong>The registry kill switch — with a real warning.</strong> You'll find guides recommending <code>PlatformAoAcOverride = 0</code> to disable Modern Standby entirely. Know what you're buying: on machines whose firmware no longer supports S3 (most recent laptops), you don't get good old sleep back — you get an undefined state, and Windows has ignored the key on some recent builds anyway. Test thoroughly and be ready to revert; for most people, hibernate-on-lid-close achieves the same goal without the risk.</li>
       </ul>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Hibernate is unplugging the fridge, emptying it, and going on holiday: nothing runs, nothing spoils, nothing costs you a cent — but it takes a minute to get cold again when you're back. Sleep is just closing the fridge door: instantly cold the moment you open it, quietly humming the whole time. For a quick coffee break you want the door shut; for a two-week trip you pull the plug. The bag is a two-week trip.
+      </div>
 
       <h2>The switching problem, again</h2>
       <p>Notice the shape of the fix: hibernate is right for the bag and wrong for the desk. At your desk you want short, light sleep — quick to enter, instant to leave. On the move you want the machine completely off. Windows gives you one static set of lid and timeout settings, so whichever you pick is wrong half the time.</p>

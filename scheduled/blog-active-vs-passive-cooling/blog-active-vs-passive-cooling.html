@@ -89,6 +89,10 @@
       </ul>
       <p>So the real translation is: Active = "loud before slow", Passive = "slow before loud". For a night-time download box or a machine you're on a call next to, passive is the right default; for a render rig mid-job, active is.</p>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Picture a runner getting too hot. Active cooling is "keep up the pace and crank the fan blowing on you" — you finish fast, but the fan roars. Passive cooling is "just jog a bit slower so you stop overheating" — you stay quiet and comfortable, but you arrive later. Neither turns the fan off; the question is only which one you reach for first. Sprinting a deadline? Crank the fan. Strolling at midnight? Just slow down.
+      </div>
+
       <h2>Where to set it</h2>
       <p>GUI: Control Panel → Power Options → Change plan settings → Advanced → Processor power management → System cooling policy (separate values for plugged-in and on-battery). Command line: it's the <code>SYSCOOLPOL</code> setting under <code>powercfg</code>'s processor subgroup. Or let a power mode carry it — more on that below.</p>
 
@@ -101,6 +105,10 @@
         <li><strong>BIOS fan curves are never touched.</strong> Windows' cooling policy (and PowerDoze) works on the heat-<em>production</em> side: CPU clocks, caps, boost. Your fans keep following the BIOS curve — and because less heat reaches the sensors, the same curve simply spins slower. The two compose; they don't compete.</li>
         <li><strong>Afterburner coexists, with one shared knob.</strong> Fan curves, core/memory offsets and voltage tuning in Afterburner are never touched by PowerDoze. The only overlap is the GPU <em>power limit</em>: both tools can set it, and the last writer wins. The clean setup: if Afterburner manages your GPU, leave the GPU power field empty in your PowerDoze modes — empty means "don't touch the GPU at all".</li>
       </ul>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Worried the cooling setting will overwrite your carefully-tuned fan curve? It works the other way. Your BIOS fan curve is a thermostat: "if it gets this hot, blow this hard." The cooling policy doesn't fiddle with the thermostat — it just turns down the heater. Less heat reaches the room, so the exact same thermostat clicks the fan on less often, all by itself. They don't fight; one quietly makes the other's job easier.
+      </div>
 
       <h2>The part worth automating</h2>
       <p>The cooling policy is a trade-off, which means the right value changes with context: passive at midnight, active when you're rendering, passive during meetings, active in games. That's exactly the kind of switch nobody flips by hand five times a day. In <a href="/">PowerDoze</a>, cooling policy is one of the knobs bundled into a power mode — a "Quiet" mode carries passive cooling plus a CPU cap, a "Full Power" mode carries active with everything open — and the automation (schedule, fullscreen detection, per-app rules) picks the mode, so the policy follows your day without you remembering it exists.</p>

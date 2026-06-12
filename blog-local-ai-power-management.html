@@ -90,8 +90,16 @@
       </ul>
       <p>Here's the uncomfortable math: unless you're batch-generating all day, <strong>your "AI server" spends well over 90% of its life in states two and three</strong>, drawing power to do nothing. The inference you actually wanted is a rounding error next to the idle hours you didn't think about.</p>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        The expensive part isn't the few seconds you spend asking it something — it's the 23 hours it spends idling, waiting for you to ask. Like a home water heater: you assume the bill is the ten minutes of shower, but most of it is the tank reheating itself to scalding all day long, just in case you wander in. Local AI is the same — the inference you use is a rounding error; the bill comes from a full day of "kept warm, just in case."
+      </div>
+
       <h2>The power-limit trick (you lose less speed than you think)</h2>
       <p>r/LocalLLaMA has known this one for a while: LLM inference is mostly <em>memory-bandwidth-bound</em>, not compute-bound. Cap the GPU's power and the clocks drop, but tokens/sec barely moves. Community tests on cards like the 3090 and 4090 consistently find that <strong>cutting the power limit by 25–35% costs only a few percent in tokens/sec</strong> — while cutting heat and fan noise along with the watts.</p>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        LLM inference is like a queue at a food counter: the bottleneck is how fast the serving window moves (memory bandwidth), not how many cooks are in the back (compute). So you can send a third of the cooks home (cut power 25–35%) and the food comes out almost as fast — because the cooks were never the holdup. What you save is the wages of all those idle cooks (the watts) and the heat they gave off; the meal still arrives on time.
+      </div>
       <p>The manual version, in an admin shell:</p>
       <ul>
         <li><code>nvidia-smi -pl 300</code> — cap the card at 300 W (your card's valid range: <code>nvidia-smi -q -d POWER</code>).</li>
@@ -105,6 +113,10 @@
         <li><strong>Long jobs die.</strong> A fine-tune, a big batch run, an overnight embedding job — Windows' sleep timer counts keyboard and mouse, not CUDA. No input for 30 minutes → "idle" → sleep → hours of GPU work gone.</li>
         <li><strong>Serving dies too.</strong> If the box sleeps, your Ollama endpoint goes dark and every client breaks.</li>
       </ul>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Windows decides whether you're "using the PC" from one thing only: is someone wiggling a keyboard or mouse? Trouble is, your GPU grinding through an overnight training run doesn't count as "in use" — like a guard who only watches the front door for footsteps, misses the workshop out back running full tilt all night, and flips the master switch at closing time, erasing hours of work. So people just turn sleep off entirely — and end up idling at full power all night. Worst of both worlds.
+      </div>
       <p>So everyone applies the same fix: <strong>disable sleep entirely.</strong> Which is how a privacy decision quietly becomes a machine that burns full idle power forever. Each step was rational; the sum is the worst of both worlds.</p>
 
       <h2>The static-settings treadmill, AI edition</h2>

@@ -96,6 +96,10 @@
         <li><strong>Modern Standby（S0 低電力閒置）</strong>——較新的筆電。半睡半醒以便收信同步——也是有些筆電在背包裡發燙的原因。查你的機器支援哪種：<code>powercfg /a</code>。</li>
       </ul>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        這幾種睡法的差別，就像晚上要怎麼處理客廳的電視：「睡眠」是只按遙控器的待機鍵，那顆小紅燈還亮著（耗一點點電 1–5 瓦），優點是一按就立刻開；「休眠」是直接把插頭拔掉、完全不耗電，但重開要等它慢慢暖機；「混合式」則是兩手準備——按待機鍵的同時也把插頭資料先備份好，停電也不怕。新筆電的「Modern Standby」最特別：它根本沒真的睡著，是閉著眼睛還在偷收訊息，所以才會塞進背包裡悶出一身汗。
+      </div>
+
       <h2>問題一：「電腦不肯睡」</h2>
       <p>一定是有東西掛著喚醒請求。10 秒揪出來——用系統管理員終端機執行：</p>
       <p><code>powercfg /requests</code></p>
@@ -106,6 +110,10 @@
         <li><strong>哪些裝置有權叫醒它</strong>——<code>powercfg /devicequery wake_armed</code>；滑鼠和網卡是經典慣犯。到裝置管理員 → 電源管理逐一關閉。</li>
         <li><strong>完整報告</strong>——<code>powercfg /energy</code> 產出一份 HTML，列出所有行為不檢的東西。</li>
       </ul>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        電腦不肯睡，就像小孩半夜不肯睡覺——一定有人在偷偷搞他。<code>powercfg /requests</code> 就是你打開房門喊一聲「誰還醒著？」，然後那個躲在棉被裡偷玩手機的（播著聲音的瀏覽器分頁）、或是窗外一直叫的狗（滑鼠、網卡）就會被點名。揪出來一個個關掉，房間自然就安靜下來了。
+      </div>
 
       <h2>問題二：「不該睡卻睡掉」</h2>
       <p>反過來的情況：你掛著 60 GB 的遊戲下載、轉檔到一半、或跑著伺服器——全域計時器一到就把它砍了。Windows 內建的解法每個都爛在不同地方：</p>
@@ -126,6 +134,10 @@
 
       <h2>任何設定都修不了的結構性極限</h2>
       <p>就算調到完美，Windows 的睡眠設定仍然是<strong>一個靜態數字</strong>。它沒辦法下午 2 點一個樣、凌晨 2 點另一個樣；分不出「掛著下載」和「人走了」；不會在你開遊戲、進會議、或把筆電從公司帶回家時自動切換。上面每一個「解法」，本質都是你在手動補償一套看不見情境的設定。</p>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Windows 的睡眠設定，本質上是一台「定時就關」的烤箱計時器：你轉到 30 分鐘，時間一到「叮」就斷電，它根本不在乎裡面烤的是要烤三小時的麵包還是已經烤好的餅乾。問題不是計時器不準，是它從頭到尾沒長眼睛、看不到鍋裡在煮什麼。你能做的全部努力，都只是在它要斷電前衝過去多按幾下而已。
+      </div>
       <p>這個缺口就是我們做 <a href="./">PowerDoze</a> 的原因：排程規則替每個時段選電源模式、白名單讓特定程式跑著時不睡（跑完照常睡）、全螢幕/遊戲偵測自動暫停計時——這些全部免費、不用帳號、完全本機。Pro（一次性買斷、無訂閱）再加上會議偵測、你起身後自動降速的離開模式、Wi-Fi 設定檔。如果這篇指南就解決了你的問題，那也很好——但如果你受夠了自己當人肉自動化層，工具在這裡。</p>
 
       <h2>powercfg 快速參考</h2>

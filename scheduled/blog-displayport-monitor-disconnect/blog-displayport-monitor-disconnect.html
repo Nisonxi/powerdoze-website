@@ -89,8 +89,16 @@
       </ul>
       <p>And when a monitor is gone, Windows does what it's supposed to do for an unplugged display: it re-arranges the desktop. Windows migrate to surviving screens, the resolution may change, and when the monitor wakes up and re-announces itself, everything re-enumerates — that black-flash dance you see when screens come back. Whether your DP monitor does this depends on the model and its firmware; some keep HPD alive, many don't, and some have an OSD option that decides.</p>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Picture a shared office desk for two people. When an HDMI monitor sleeps, it's like a colleague switching off their lamp but staying in their chair — the room still treats their desk as occupied, nobody touches their papers. When a DisplayPort monitor sleeps, it's like that colleague packing up and walking out entirely. Naturally the room reassigns their desk and shuffles their files onto yours. Then they come back, and everything has to be re-sorted. That shuffle is your windows jumping screens.
+      </div>
+
       <h2>The remote-access version of the problem</h2>
       <p>Now switch off <em>all</em> the monitors on a DP-only desktop and the machine believes it has no display hardware at all. Tools that stream the physical desktop — Parsec, Moonlight/Sunshine, some AnyDesk modes — suddenly have nothing to capture, or fall back to a tiny virtual panel. (Classic RDP is immune: it creates its own virtual display.) This is why the remote-gaming crowd buys <strong>HDMI dummy plugs</strong> — a $10 resistor pretending to be a monitor, keeping one "display" permanently attached.</p>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        A photographer can only photograph a stage that has a set on it — strike the set and turn off the lights, and there's nothing to shoot. Remote-streaming tools are that photographer: they can only send you a picture of a screen that exists. A dummy plug is a tiny cardboard stage that stays up permanently, so there's always something to photograph even after the real monitors have gone dark.
+      </div>
 
       <h2>The fix toolbox</h2>
       <ul>

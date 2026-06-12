@@ -89,8 +89,16 @@
         <li><strong>Yield to everything else.</strong> The process also drops to low scheduling priority, so it never competes with whatever you're actually doing.</li>
       </ul>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Sending a non-urgent errand by courier on a roaring motorbike is overkill — loud, thirsty, and it jumps the queue at every light. Efficiency Mode is telling that errand: "no rush, take the bicycle, use the side streets, and let everyone in a hurry go ahead of you." The errand still gets done; it just stops burning fuel and elbowing past your real work to do it.
+      </div>
+
       <h2>EcoQoS vs CPU priority: quality vs queue position</h2>
       <p>Old-school process priority (Idle through High) only changes <em>queue position</em> — who goes first when the CPU is contested. An idle-priority process on an uncontested machine still boosts the CPU to full clocks and burns full watts. EcoQoS changes the <em>quality</em> of execution: even alone on the machine, the work runs slow, cool and on small cores. Priority answers "who first?"; EcoQoS answers "how expensively?". For background loads on an otherwise quiet PC, EcoQoS is the one that actually moves the power meter.</p>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Old-style priority is the queue at a bank: it only decides who gets called to the counter first. But if you're the only customer, you still march straight to the counter and get the full VIP treatment — no saving there. EcoQoS is different: it tells that customer "take the slow lane, the basic service, walk don't drive." Even with the whole bank to themselves, they're handled cheaply. Priority = who goes first; EcoQoS = how lavishly they're served.
+      </div>
 
       <h2>What it's for</h2>
       <p>Anything that should stay alive but has no business being fast:</p>

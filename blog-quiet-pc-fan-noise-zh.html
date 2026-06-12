@@ -88,12 +88,20 @@
         <li><strong>軟體路線：</strong>更少瓦數、更少熱、風扇沒事做——代價是犧牲一些你可能根本沒在用的峰值效能。</li>
       </ul>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        風扇吵就像廚房的抽油煙機：火開得越大、油煙越多，它就得轉得越用力越吵。大家通常想的是換一台更強的抽油煙機（買更好的散熱），但更簡單的一招是先把爐火關小一點——油煙少了，抽風機自然不用拚命。風扇從來不是噪音的源頭，它只是在收拾瓦數產生的熱這個爛攤子。
+      </div>
+
       <h2>讓電腦安靜的三個設定</h2>
       <ul>
         <li><strong>散熱策略改被動。</strong>Windows 的系統散熱策略（<code>powercfg</code> 的 <code>SYSCOOLPOL</code>，或進階電源選項裡的「系統散熱原則」）決定 Windows 先拉風扇（主動）還是先降 CPU 速度（被動）。被動模式是作業系統內建最直接的「安靜開關」——但只在 Windows 真的管散熱的機器上有效（主要是筆電和品牌機）；自組桌機的風扇歸主機板 BIOS 曲線管，這個設定作用有限，真正有感的是下面的 CPU/GPU 上限。</li>
         <li><strong>限制 CPU 最大狀態。</strong><code>powercfg /setacvalueindex scheme_current sub_processor PROCTHROTTLEMAX 70</code> 加 <code>powercfg /setactive scheme_current</code>，把 CPU 上限設在 70%——只要低於 100% 就會關掉 turbo boost，70% 還會再壓低一點持續時脈。不成比例的熱就藏在 turbo 裡：最後 20% 的效能要付出遠超過 20% 的瓦數。上網、看片、文書完全無感。</li>
         <li><strong>給 GPU 設功耗上限。</strong><code>nvidia-smi -pl 150</code>（系統管理員視窗）限制 NVIDIA 顯卡的功耗。重開機會重置，要靠開機任務。</li>
       </ul>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        turbo boost 就像開車最後那段硬要從時速 110 飆到 130：快不了多少，油耗卻暴增、引擎還吼得最大聲。CPU 不成比例的熱全藏在這裡——最後 20% 的效能要付出遠超過 20% 的電和噪音。把上限砍掉這一段（設成 70%），上網、看片、打字你完全感覺不到差別，風扇卻立刻閉嘴。
+      </div>
       <p>夏天還有加倍紅利：你沒燒掉的每一瓦，就是你的房間——和你的冷氣——不用處理的熱，省下的每一瓦也同時減輕冷氣的負擔。</p>
 
       <h2>一週內你就會撞到的問題</h2>

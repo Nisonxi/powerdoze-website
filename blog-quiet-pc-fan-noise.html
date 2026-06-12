@@ -88,12 +88,20 @@
         <li><strong>Software route:</strong> fewer watts, less heat, less for the fans to do — at the cost of some peak performance you may not have been using anyway.</li>
       </ul>
 
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        A loud fan is like a kitchen range hood: the bigger the flame and the more smoke, the harder and louder it has to run. Most people reach for a stronger hood (better cooling), but the simpler move is to turn the flame down first — less smoke, and the extractor stops straining. The fan was never the source of the noise; it's just cleaning up the heat the watts created.
+      </div>
+
       <h2>The three settings that quiet a PC</h2>
       <ul>
         <li><strong>Cooling policy → passive.</strong> Windows' system cooling policy (<code>SYSCOOLPOL</code> under <code>powercfg</code>, or "System cooling policy" in advanced power options) decides whether Windows spins fans up first (active) or slows the CPU down first (passive). Passive is the most direct "be quiet" switch the OS has — on machines where Windows actually manages cooling, which mostly means laptops and OEM prebuilts. On a typical self-built desktop, fans follow the motherboard's BIOS fan curve and this setting does little; there, the CPU and GPU caps below are what move the needle.</li>
         <li><strong>Cap the CPU's maximum state.</strong> <code>powercfg /setacvalueindex scheme_current sub_processor PROCTHROTTLEMAX 70</code> + <code>powercfg /setactive scheme_current</code> caps the CPU at 70% — anything below 100% kills turbo boost, and 70% trims sustained clocks a bit further on top. (On a laptop, repeat with <code>/setdcvalueindex</code> for the on-battery profile.) Turbo is where the disproportionate heat lives: the last 20% of performance costs far more than 20% of the watts. Browsing, video, and office work won't notice.</li>
         <li><strong>Power-limit the GPU.</strong> <code>nvidia-smi -pl 150</code> (admin shell) caps an NVIDIA card's draw — check your card's allowed range with <code>nvidia-smi -q -d POWER</code>. Resets at reboot, so it needs a startup task.</li>
       </ul>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Turbo boost is like flooring it from 110 to 130 km/h at the end of a drive: barely any faster, but the fuel use spikes and the engine roars loudest. That's exactly where a CPU's disproportionate heat hides — the last 20% of performance costs far more than 20% of the watts and noise. Cap that slice off (set it to 70%) and browsing, video, and typing feel identical, but the fans go quiet.
+      </div>
       <p>Bonus in summer: every watt you don't burn is heat your room — and your air conditioner — doesn't have to deal with, so each watt you cut comes off your AC's workload too.</p>
 
       <h2>The problem you'll hit within a week</h2>
