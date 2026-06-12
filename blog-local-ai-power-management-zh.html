@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在自己電腦跑 AI？你的電費單已經發現了 — PowerDoze 部落格</title>
+  <meta name="description" content="Ollama、LM Studio、ComfyUI——本地 AI 讓你的桌機變成 24 小時開機的基礎設施。這篇拆給你看：電到底耗在哪、幾乎不掉 tokens/sec 的 GPU 功耗上限技巧、以及怎麼不再「關睡眠」和「任務跑掉」二選一。">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-local-ai-power-management-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-local-ai-power-management.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-local-ai-power-management-zh.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="在自己電腦跑 AI？你的電費單已經發現了">
+  <meta property="og:description" content="本地 AI 讓桌機變成 24 小時基礎設施。電耗在哪、怎麼砍掉它又不拖慢推理。">
+  <meta property="og:url" content="https://powerdoze.app/blog-local-ai-power-management-zh.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="在自己電腦跑 AI？你的電費單已經發現了">
+  <meta name="twitter:description" content="本地 AI 的電到底耗在哪，以及怎麼砍掉它又不拖慢推理。">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "在自己電腦跑 AI？你的電費單已經發現了",
+    "datePublished": "2026-06-11",
+    "dateModified": "2026-06-11",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-local-ai-power-management-zh.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "zh-Hant"
+  }
+  </script>
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="blog.html" data-i18n="navBlog">Blog</a>
+      <a href="index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="blog-local-ai-power-management.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">English version →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">在自己電腦跑 AI？你的電費單已經發現了</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-06-11
+    </p>
+
+    <article class="p-prose">
+      <p>你做了明智的選擇：不再按 token 付錢，改在家裡跑模型——桌機上掛著 Ollama 提供服務、LM Studio 拿來聊天、ComfyUI 生圖，也許還有一台跑 Whisper 在轉錄會議。私密、無限量、完全是你的。</p>
+      <p>但你可能沒注意到，你同時也把桌機變成了一台 <strong>24 小時開機的 AI 基礎設施</strong>——而讓本地 AI 成為可能的那張 GPU，正是整台機器裡最會吃電的元件。</p>
+
+      <h2>電到底耗在哪</h2>
+      <p>一台本地 AI 機有三種狀態，而最花錢的不是你直覺想的那個：</p>
+      <ul>
+        <li><strong>推理中。</strong>高階卡在原廠設定下生成時輕鬆拉到 300–450 瓦。聽起來很兇——但每個請求只跑幾秒鐘。</li>
+        <li><strong>模型載著、GPU 閒置。</strong>請求之間，模型常駐在 VRAM 裡。GPU 的待機功耗明顯比空桌面高——多螢幕加高刷新率還會把這個地板再墊高。</li>
+        <li><strong>24 小時待命。</strong>如果這台機器在為你的手機、編輯器外掛或 Home Assistant 提供 API，它就永遠不能睡——於是整台機器（CPU、風扇、主機板、硬碟）全天候空轉。</li>
+      </ul>
+      <p>不舒服的比例來了：除非你整天都在批次生成，<strong>你的「AI 伺服器」90% 以上的時間都活在第二、三種狀態</strong>——耗著電什麼都不做。你真正要的推理，跟你沒想過的閒置時數比起來只是零頭。</p>
+
+      <h2>功耗上限技巧（速度掉得比你想的少）</h2>
+      <p>r/LocalLLaMA 早就知道這招：LLM 推理主要吃的是<em>記憶體頻寬</em>，不是運算力。把 GPU 功耗上限壓下來，時脈會降，但 tokens/sec 幾乎不動。社群在 3090、4090 這類卡上的實測一再得到同樣結論：<strong>功耗上限砍 25–35%，推理速度只掉個位數百分比</strong>——同時熱量和風扇噪音跟著瓦數一起降。</p>
+      <p>手動版作法（系統管理員視窗）：</p>
+      <ul>
+        <li><code>nvidia-smi -pl 300</code>——把卡限制在 300 瓦（你的卡的合法範圍用 <code>nvidia-smi -q -d POWER</code> 查）。</li>
+        <li>自己跑一次前後對比——用你常用的模型測五分鐘，就知道真實代價。生圖比 LLM 更吃運算力，掉速會比較明顯，上限設保守一點。</li>
+        <li>注意：這個限制<strong>重開機就重置</strong>，要靠開機任務才留得住。</li>
+      </ul>
+
+      <h2>睡眠兩難（問題的另一半）</h2>
+      <p>功耗上限管住瓦數，但本地 AI 在「睡眠」這邊才是真的跟你作對：</p>
+      <ul>
+        <li><strong>長任務會死。</strong>Finetune、大批次生成、跑整晚的 embedding——Windows 的睡眠計時器只認鍵盤滑鼠，不認 CUDA。30 分鐘沒輸入 → 判定「閒置」→ 睡眠 → 幾小時的 GPU 工作直接蒸發。</li>
+        <li><strong>服務也會死。</strong>機器一睡，你的 Ollama endpoint 就斷線，所有 client 全掛。</li>
+      </ul>
+      <p>於是大家都用同一個解法：<strong>把睡眠整個關掉。</strong>一個為了隱私做的決定，就這樣靜悄悄變成一台永遠全功率空轉的機器。每一步都很合理，加起來是兩頭皆輸。</p>
+
+      <h2>靜態設定跑步機，AI 版</h2>
+      <p>這些你都可以手動接起來——開機任務跑 <code>nvidia-smi</code>、睡眠關掉、也許再加個排程腳本晚上壓低功耗、白天放寬。它能動，跟 homelab 那篇的 DIY 一樣能動：直到某天晚上 8 點你想打遊戲，GPU 還卡在為深夜服務設的上限；或者某次 Windows 更新悄悄重置了設定，你一個月後才從電費單上發現。</p>
+
+      <h2>把它自動化</h2>
+      <p>這正是 <a href="./">PowerDoze</a> 為之存在的問題形狀。對應到本地 AI，每一塊是：</p>
+      <ul>
+        <li><strong>保持清醒白名單</strong>——把 <code>ollama.exe</code>、<code>koboldcpp.exe</code> 或你訓練腳本的程序加進去。它們在跑，電腦就不會睡；其他 20 個小時，正常睡眠可以開回來。長任務活下來，閒置的夜晚不再燒電。</li>
+        <li><strong>內建 NVIDIA 功耗上限的電源模式</strong>——把 GPU 瓦數、CPU 上限、散熱策略打包成模式，再排程切換：白天全速、深夜切「服務模式」限速待命。GPU 上限每次重開機自動重新套用。</li>
+        <li><strong>分析儀表板</strong>——長期追蹤估算瓦數、度數、電費，「壓 GPU 到底有沒有差」從感覺變成數字。</li>
+      </ul>
+      <p>誠實邊界：PowerDoze 不會幫你排程 AI 工作、不碰 VRAM 和模型載入、也不會讓推理變快。它管的是 AI 周圍的那一圈——睡眠、功耗上限、排程、量測——而浪費剛好全都住在那一圈裡。</p>
+      <p>排程、電源模式、白名單、監控全部<strong>免費、不用註冊帳號</strong>。一切都在本機執行——如果你跑本地 AI 是為了隱私，這一點你應該會在意。</p>
+
+      <h2>誰不需要這篇</h2>
+      <p>模型跑在雲端的人，電費是別人的問題。在筆電上推理的人，電池已經自動幫你管住浪費。如果你的 AI 機是一台專用的無頭 Linux 伺服器，PowerDoze 幫不上忙——它只支援 Windows；<code>nvidia-smi</code> 加 systemd timer 是你的朋友。這篇寫給最常見的那種配置：<strong>既是你的日常主力機、又是你的 AI 機的那台 Windows 桌機</strong>——下午 2 點需要全速、凌晨 2 點幾乎什麼都不用，而現在它兩個時間都在全速。</p>
+
+      <p style="margin-top: 40px;"><a href="index.html#download" class="p-btn p-btn-primary">免費下載 PowerDoze →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 留中文版；其他語言 → 跳英文版
+  (function() {
+    var EN = 'blog-local-ai-power-management.html';
+    var ZH = 'blog-local-ai-power-management-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>

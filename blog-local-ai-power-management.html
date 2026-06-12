@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Running Local AI? Your Power Bill Noticed — PowerDoze Blog</title>
+  <meta name="description" content="Ollama, LM Studio, ComfyUI — local AI turns your desktop into always-on infrastructure. Where the watts actually go, the GPU power-limit trick that barely costs tokens/sec, and how to stop choosing between sleep and dead jobs.">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-local-ai-power-management.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-local-ai-power-management-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-local-ai-power-management.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Running Local AI? Your Power Bill Noticed">
+  <meta property="og:description" content="Local AI turns your desktop into always-on infrastructure. Where the watts go, and how to cut them without slowing inference.">
+  <meta property="og:url" content="https://powerdoze.app/blog-local-ai-power-management.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Running Local AI? Your Power Bill Noticed">
+  <meta name="twitter:description" content="Where the watts go when you run LLMs at home, and how to cut them without slowing inference.">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Running Local AI? Your Power Bill Noticed",
+    "datePublished": "2026-06-11",
+    "dateModified": "2026-06-11",
+    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-local-ai-power-management.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "en"
+  }
+  </script>
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="blog.html" data-i18n="navBlog">Blog</a>
+      <a href="index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">Blog</span>
+      <a href="blog-local-ai-power-management-zh.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">中文版 →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">Running Local AI? Your Power Bill Noticed</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
+      2026-06-11
+    </p>
+
+    <article class="p-prose">
+      <p>You did the sensible thing. Instead of paying per token, you run models at home — Ollama serving on your desktop, LM Studio for chat, ComfyUI for images, maybe a Whisper box transcribing meetings. Private, unlimited, yours.</p>
+      <p>What you also did, possibly without noticing, is turn your desktop into <strong>always-on AI infrastructure</strong> — and the GPU that makes local AI possible is the hungriest component in the machine.</p>
+
+      <h2>Where the watts actually go</h2>
+      <p>A local-AI machine lives in three states, and the expensive one isn't the one you'd guess:</p>
+      <ul>
+        <li><strong>Active inference.</strong> A high-end card at stock settings will happily pull 300–450 W while generating. Sounds bad — but each request only takes seconds.</li>
+        <li><strong>Model loaded, GPU idle.</strong> Between requests, the model sits resident in VRAM. The GPU idles noticeably higher than an empty desktop — and a multi-monitor, high-refresh setup raises that floor further.</li>
+        <li><strong>Waiting, 24/7.</strong> If the box serves an API for your phone, your editor plugin, or Home Assistant, it can never sleep — so the whole machine (CPU, fans, board, drives) idles around the clock.</li>
+      </ul>
+      <p>Here's the uncomfortable ratio: unless you're batch-generating all day, <strong>your "AI server" spends well over 90% of its life in states two and three</strong>, drawing power to do nothing. The inference you actually wanted is a rounding error next to the idle hours you didn't think about.</p>
+
+      <h2>The power-limit trick (you lose less speed than you think)</h2>
+      <p>r/LocalLLaMA has known this one for a while: LLM inference is mostly <em>memory-bandwidth-bound</em>, not compute-bound. Cap the GPU's power and the clocks drop, but tokens/sec barely moves. Community tests on cards like the 3090 and 4090 consistently find that <strong>cutting the power limit by 25–35% costs only single-digit percent in inference speed</strong> — while cutting heat and fan noise along with the watts.</p>
+      <p>The manual version, in an admin shell:</p>
+      <ul>
+        <li><code>nvidia-smi -pl 300</code> — cap the card at 300 W (your card's valid range: <code>nvidia-smi -q -d POWER</code>).</li>
+        <li>Benchmark your own setup before and after — five minutes with your usual model tells you the real cost. Image generation is more compute-bound than LLMs, so expect a bigger hit there and cap less aggressively.</li>
+        <li>Note: the limit <strong>resets on reboot</strong>, so it needs a startup task to stick.</li>
+      </ul>
+
+      <h2>The sleep dilemma (the other half of the problem)</h2>
+      <p>Power limits handle the watts. Sleep is where local AI gets actively hostile:</p>
+      <ul>
+        <li><strong>Long jobs die.</strong> A fine-tune, a big batch run, an overnight embedding job — Windows' sleep timer counts keyboard and mouse, not CUDA. No input for 30 minutes → "idle" → sleep → hours of GPU work gone.</li>
+        <li><strong>Serving dies too.</strong> If the box sleeps, your Ollama endpoint goes dark and every client breaks.</li>
+      </ul>
+      <p>So everyone applies the same fix: <strong>disable sleep entirely.</strong> Which is how a privacy decision quietly becomes a machine that burns full idle power forever. Each step was rational; the sum is the worst of both worlds.</p>
+
+      <h2>The static-settings treadmill, AI edition</h2>
+      <p>You can wire all of this up by hand — a startup task for <code>nvidia-smi</code>, sleep disabled, maybe a scheduled script that tightens the power limit at night and loosens it for daytime use. It works, the same way the homelab version works: until the day you're gaming at 8 PM on a GPU still capped for overnight serving, or a Windows update quietly resets something and you find out a month later on the electricity bill.</p>
+
+      <h2>Automating it</h2>
+      <p>This is the shape of problem <a href="./">PowerDoze</a> exists for. The pieces, mapped to local AI:</p>
+      <ul>
+        <li><strong>Keep-awake whitelist</strong> — put <code>ollama.exe</code>, <code>koboldcpp.exe</code>, or your training script's process on it. The PC won't sleep while they're running, and you can turn normal sleep back on for the other 20 hours a day. Long jobs survive; idle nights don't burn.</li>
+        <li><strong>Power modes with an NVIDIA power limit built in</strong> — bundle GPU watts, CPU cap, and cooling policy into modes, then schedule them: full power during the day, a capped "serving mode" overnight. The GPU limit is re-applied automatically after every reboot.</li>
+        <li><strong>Analytics</strong> — estimated watts, kWh, and cost over time, so "did capping the GPU actually matter?" gets a number instead of a feeling.</li>
+      </ul>
+      <p>Honest boundary: PowerDoze doesn't schedule your AI jobs, doesn't touch VRAM or model loading, and doesn't make inference faster. It manages the part around the AI — sleep, power limits, schedules, and measurement — which happens to be where the waste lives.</p>
+      <p>Schedules, power modes, the whitelist, and monitoring are <strong>free, no account required</strong>. Everything runs locally — which, if you're running local AI for privacy reasons, is presumably a feature you care about.</p>
+
+      <h2>Who doesn't need this</h2>
+      <p>If your models run in the cloud, your power bill is someone else's problem. If you do inference on a laptop, the battery already polices waste. And if your AI box is a dedicated headless Linux server, PowerDoze can't help — it's Windows-only; <code>nvidia-smi</code> plus a systemd timer is your friend. This is for the most common setup of all: <strong>the Windows desktop that is both your daily machine and your AI box</strong> — the one that needs full power at 2 PM and almost none at 2 AM, and currently gets full power at both.</p>
+
+      <p style="margin-top: 40px;"><a href="index.html#download" class="p-btn p-btn-primary">Download PowerDoze free →</a></p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 跳中文版；其他語言 → 英文版
+  (function() {
+    var EN = 'blog-local-ai-power-management.html';
+    var ZH = 'blog-local-ai-power-management-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>
