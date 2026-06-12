@@ -1,8 +1,8 @@
 ﻿{
-    "latest":  "2.0.6",
+    "latest":  "2.0.7",
     "url":  "https://powerdoze.app/#download",
-    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.0.6/PowerDoze_v2.0.6_portable.zip",
-    "sha256":  "7ca5dbddcc48d11436ffdee0a8ac8cd86f1abd16a7d3d3359971023fa2f7230a",
-    "notes":  "FPS overlay 修正（多 swapchain 虛高）、Bug 回報 App 內直送、迷你模式設定持久化、電源計畫選擇器、Game Mode 徽章、UTF-8 編碼根治、說明文案更新",
-    "date":  "2026-06-10"
+    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.0.7/PowerDoze_v2.0.7_portable.zip",
+    "sha256":  "2a63d7a4577977a4f502ffbd8cf59a52dfa819def4c748fea4305cba33ba9291",
+    "notes":  "離開模式調整為 Pro 功能（與官網一致）、FPS 診斷強化（600 行記錄+前景程序+工作階段重置）、購買流程調整（ECPay 暫停、PayPal 正常）",
+    "date":  "2026-06-12"
 }
