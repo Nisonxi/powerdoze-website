@@ -555,8 +555,15 @@ document.querySelectorAll('.p-faq-q').forEach(q => {
     if (savedCost > 0) {
       const proPrice = getProPrice();
       const months = Math.max(1, Math.round(proPrice / monthlyCost));
-      const tpl = (typeof t === 'function') ? t('calc_payback') : 'PowerDoze Pro pays for itself in <strong>{months} months</strong>.';
-      payback.innerHTML = tpl.replace('{months}', months);
+      if (months > 12) {
+        // 超過一年改以「年」呈現（26 個月 → 約 2.2 年）
+        const years = (months / 12).toFixed(1).replace(/\.0$/, '');
+        const tplY = (typeof t === 'function') ? t('calc_payback_years') : 'PowerDoze Pro pays for itself in about <strong>{years} years</strong>.';
+        payback.innerHTML = tplY.replace('{years}', years);
+      } else {
+        const tpl = (typeof t === 'function') ? t('calc_payback') : 'PowerDoze Pro pays for itself in <strong>{months} months</strong>.';
+        payback.innerHTML = tpl.replace('{months}', months);
+      }
       payback.style.display = '';
     } else {
       payback.style.display = 'none';
