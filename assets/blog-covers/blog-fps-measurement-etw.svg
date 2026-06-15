@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Frame-time bars on a baseline">
+  <rect width="1200" height="630" fill="#131316"/>
+  <g stroke="#1B1B1F" stroke-width="1">
+    <line x1="0" y1="210" x2="1200" y2="210"/>
+    <line x1="0" y1="420" x2="1200" y2="420"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+  </g>
+  <g stroke="#34343A" stroke-width="2" fill="none">
+    <path d="M40 64 V40 H64"/>
+    <path d="M1136 40 H1160 V64"/>
+    <path d="M40 566 V590 H64"/>
+    <path d="M1160 566 V590 H1136"/>
+  </g>
+  <!-- frame bars -->
+  <line x1="340" y1="430" x2="860" y2="430" stroke="#5E5E5C" stroke-width="5"/>
+  <g stroke="#5E5E5C" stroke-width="16">
+    <line x1="370" y1="430" x2="370" y2="360"/>
+    <line x1="410" y1="430" x2="410" y2="330"/>
+    <line x1="450" y1="430" x2="450" y2="350"/>
+    <line x1="490" y1="430" x2="490" y2="300"/>
+    <line x1="530" y1="430" x2="530" y2="340"/>
+    <line x1="770" y1="430" x2="770" y2="345"/>
+    <line x1="810" y1="430" x2="810" y2="375"/>
+  </g>
+  <g stroke="#F59E0B" stroke-width="16">
+    <line x1="570" y1="430" x2="570" y2="260"/>
+    <line x1="610" y1="430" x2="610" y2="220"/>
+    <line x1="650" y1="430" x2="650" y2="280"/>
+    <line x1="690" y1="430" x2="690" y2="190"/>
+    <line x1="730" y1="430" x2="730" y2="250"/>
+  </g>
+  <text x="84" y="576" font-family="Consolas, 'Cascadia Mono', ui-monospace, monospace" font-size="19" letter-spacing="5" fill="#8A8A86">POWERDOZE BLOG</text>
+  <text x="1116" y="576" text-anchor="end" font-family="Consolas, 'Cascadia Mono', ui-monospace, monospace" font-size="19" letter-spacing="5" fill="#F59E0B">NO.09</text>
+</svg>

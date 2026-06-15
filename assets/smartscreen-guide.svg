@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" width="820" height="380" role="img" aria-label="Windows SmartScreen dialog: click More info, then Run anyway">
+  <rect width="820" height="380" rx="10" fill="#202024"/>
+  <!-- Panel 1: initial dialog -->
+  <g transform="translate(28,40)">
+    <rect width="320" height="300" rx="8" fill="#F3F3F3" stroke="#D4D4D0" stroke-width="1"/>
+    <rect width="320" height="46" rx="8" fill="#0B6CBD"/>
+    <rect y="30" width="320" height="16" fill="#0B6CBD"/>
+    <circle cx="28" cy="23" r="12" fill="#F3F3F3"/>
+    <path d="M22 23 l4 4 l8 -9" fill="none" stroke="#0B6CBD" stroke-width="2.5"/>
+    <text x="50" y="29" font-family="'Segoe UI',sans-serif" font-size="15" font-weight="600" fill="#FFFFFF">Windows protected your PC</text>
+    <text x="22" y="84" font-family="'Segoe UI',sans-serif" font-size="12.5" fill="#1A1A1A">Microsoft Defender SmartScreen prevented an</text>
+    <text x="22" y="104" font-family="'Segoe UI',sans-serif" font-size="12.5" fill="#1A1A1A">unrecognized app from starting. Running this</text>
+    <text x="22" y="124" font-family="'Segoe UI',sans-serif" font-size="12.5" fill="#1A1A1A">app might put your PC at risk.</text>
+    <!-- More info link, highlighted -->
+    <text x="22" y="168" font-family="'Segoe UI',sans-serif" font-size="13.5" font-weight="600" fill="#0B6CBD">More info</text>
+    <rect x="14" y="150" width="92" height="26" rx="5" fill="none" stroke="#F59E0B" stroke-width="3"/>
+    <text x="14" y="200" font-family="'Segoe UI',sans-serif" font-size="12" font-weight="600" fill="#F59E0B">STEP 1</text>
+    <!-- Don't run button -->
+    <rect x="206" y="248" width="96" height="34" rx="4" fill="#E1E1E1" stroke="#BDBDBD" stroke-width="1"/>
+    <text x="254" y="270" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12.5" fill="#5A5A5A">Don't run</text>
+  </g>
+  <!-- Arrow -->
+  <g transform="translate(372,190)">
+    <line x1="0" y1="0" x2="56" y2="0" stroke="#F59E0B" stroke-width="5"/>
+    <path d="M44 -11 L60 0 L44 11" fill="none" stroke="#F59E0B" stroke-width="5"/>
+  </g>
+  <!-- Panel 2: after More info -->
+  <g transform="translate(472,40)">
+    <rect width="320" height="300" rx="8" fill="#F3F3F3" stroke="#D4D4D0" stroke-width="1"/>
+    <rect width="320" height="46" rx="8" fill="#0B6CBD"/>
+    <rect y="30" width="320" height="16" fill="#0B6CBD"/>
+    <circle cx="28" cy="23" r="12" fill="#F3F3F3"/>
+    <path d="M22 23 l4 4 l8 -9" fill="none" stroke="#0B6CBD" stroke-width="2.5"/>
+    <text x="50" y="29" font-family="'Segoe UI',sans-serif" font-size="15" font-weight="600" fill="#FFFFFF">Windows protected your PC</text>
+    <text x="22" y="84" font-family="'Segoe UI',sans-serif" font-size="12.5" fill="#1A1A1A">Microsoft Defender SmartScreen prevented an</text>
+    <text x="22" y="104" font-family="'Segoe UI',sans-serif" font-size="12.5" fill="#1A1A1A">unrecognized app from starting.</text>
+    <text x="22" y="138" font-family="'Segoe UI',sans-serif" font-size="12.5" fill="#1A1A1A">App:  PowerDoze_Setup.exe</text>
+    <text x="22" y="158" font-family="'Segoe UI',sans-serif" font-size="12.5" fill="#1A1A1A">Publisher:  Unknown publisher</text>
+    <!-- Run anyway button, highlighted -->
+    <rect x="104" y="248" width="96" height="34" rx="4" fill="#E1E1E1" stroke="#BDBDBD" stroke-width="1"/>
+    <text x="152" y="270" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12.5" fill="#1A1A1A">Run anyway</text>
+    <rect x="100" y="244" width="104" height="42" rx="6" fill="none" stroke="#F59E0B" stroke-width="3"/>
+    <text x="100" y="234" font-family="'Segoe UI',sans-serif" font-size="12" font-weight="600" fill="#F59E0B">STEP 2</text>
+    <!-- Don't run button -->
+    <rect x="206" y="248" width="96" height="34" rx="4" fill="#E1E1E1" stroke="#BDBDBD" stroke-width="1"/>
+    <text x="254" y="270" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12.5" fill="#5A5A5A">Don't run</text>
+  </g>
+</svg>

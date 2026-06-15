@@ -54,7 +54,11 @@ for (const post of due) {
     fs.unlinkSync(src);
   }
 
-  // 2. blog.html 置頂卡
+  // 1b. 封面圖（相片牆卡片用；慣例路徑 assets/blog-covers/<slug>.svg，缺了直接 fail）
+  const coverRel = 'assets/blog-covers/' + slug + '.svg';
+  if (!fs.existsSync(path.join(ROOT, coverRel))) fail('missing cover image: ' + coverRel);
+
+  // 2. blog.html 置頂卡（相片牆格式，與 blog.html 既有卡片一致）
   const blogFile = path.join(ROOT, 'blog.html');
   let blogHtml = fs.readFileSync(blogFile, 'utf8');
   const CARD_MARK = '<!-- scheduled-blog-insert -->';
@@ -62,14 +66,17 @@ for (const post of due) {
   const card = [
     '',
     '',
-    '    <div class="p-feat" style="margin-bottom: 16px;">',
-    '      <span class="p-feat-num">' + post.publishDate + '</span>',
-    '      <h3><a href="' + slug + '.html" data-en="' + slug + '.html" data-zh="' + slug + '-zh.html" style="color: inherit;" data-i18n="' + key + 't">' + escHtml(meta.i18n.en.t) + '</a></h3>',
-    '      <p data-i18n="' + key + 'd">' + escHtml(meta.i18n.en.d) + '</p>',
-    '      <p style="margin-top: 8px; font-family: var(--font-mono); font-size: 12px;">',
-    '        <a href="' + slug + '.html" data-i18n="blogReadEn">Read in English →</a> ·',
-    '        <a href="' + slug + '-zh.html" data-i18n="blogReadZh">中文版 →</a>',
-    '      </p>',
+    '    <div class="p-blog-card">',
+    '      <a href="' + slug + '.html" data-en="' + slug + '.html" data-zh="' + slug + '-zh.html" aria-hidden="true" tabindex="-1"><img class="p-blog-cover" src="' + coverRel + '" alt="" loading="lazy"></a>',
+    '      <div class="p-blog-card-body">',
+    '        <span class="p-feat-num">' + post.publishDate + '</span>',
+    '        <h2><a href="' + slug + '.html" data-en="' + slug + '.html" data-zh="' + slug + '-zh.html" data-i18n="' + key + 't">' + escHtml(meta.i18n.en.t) + '</a></h2>',
+    '        <p data-i18n="' + key + 'd">' + escHtml(meta.i18n.en.d) + '</p>',
+    '        <p class="p-blog-card-links">',
+    '          <a href="' + slug + '.html" data-i18n="blogReadEn">Read in English →</a> ·',
+    '          <a href="' + slug + '-zh.html" data-i18n="blogReadZh">中文版 →</a>',
+    '        </p>',
+    '      </div>',
     '    </div>',
   ].join('\n');
   blogHtml = blogHtml.replace(CARD_MARK, CARD_MARK + card);

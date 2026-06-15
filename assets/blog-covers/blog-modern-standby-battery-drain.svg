@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Battery draining under a crescent moon">
+  <rect width="1200" height="630" fill="#131316"/>
+  <g stroke="#1B1B1F" stroke-width="1">
+    <line x1="0" y1="210" x2="1200" y2="210"/>
+    <line x1="0" y1="420" x2="1200" y2="420"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+  </g>
+  <g stroke="#34343A" stroke-width="2" fill="none">
+    <path d="M40 64 V40 H64"/>
+    <path d="M1136 40 H1160 V64"/>
+    <path d="M40 566 V590 H64"/>
+    <path d="M1160 566 V590 H1136"/>
+  </g>
+  <!-- small crescent moon -->
+  <circle cx="784" cy="170" r="42" fill="#26262A" stroke="#5E5E5C" stroke-width="5"/>
+  <circle cx="804" cy="158" r="36" fill="#131316"/>
+  <!-- battery body draining -->
+  <rect x="430" y="240" width="280" height="140" rx="12" fill="none" stroke="#5E5E5C" stroke-width="7"/>
+  <rect x="710" y="280" width="24" height="60" rx="5" fill="#5E5E5C"/>
+  <rect x="452" y="262" width="52" height="96" fill="#2A1F0E" stroke="#F59E0B" stroke-width="6"/>
+  <rect x="518" y="262" width="52" height="96" fill="none" stroke="#F59E0B" stroke-width="6"/>
+  <rect x="584" y="262" width="52" height="96" fill="none" stroke="#5E5E5C" stroke-width="6" stroke-dasharray="14 10"/>
+  <text x="84" y="576" font-family="Consolas, 'Cascadia Mono', ui-monospace, monospace" font-size="19" letter-spacing="5" fill="#8A8A86">POWERDOZE BLOG</text>
+  <text x="1116" y="576" text-anchor="end" font-family="Consolas, 'Cascadia Mono', ui-monospace, monospace" font-size="19" letter-spacing="5" fill="#F59E0B">NO.08</text>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Monitor with a broken cable connection">
+  <rect width="1200" height="630" fill="#131316"/>
+  <g stroke="#1B1B1F" stroke-width="1">
+    <line x1="0" y1="210" x2="1200" y2="210"/>
+    <line x1="0" y1="420" x2="1200" y2="420"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+  </g>
+  <g stroke="#34343A" stroke-width="2" fill="none">
+    <path d="M40 64 V40 H64"/>
+    <path d="M1136 40 H1160 V64"/>
+    <path d="M40 566 V590 H64"/>
+    <path d="M1160 566 V590 H1136"/>
+  </g>
+  <!-- monitor -->
+  <rect x="380" y="160" width="280" height="190" rx="10" fill="none" stroke="#5E5E5C" stroke-width="7"/>
+  <rect x="406" y="186" width="228" height="138" fill="none" stroke="#34343A" stroke-width="5" stroke-dasharray="16 12"/>
+  <line x1="520" y1="350" x2="520" y2="400" stroke="#5E5E5C" stroke-width="7"/>
+  <line x1="464" y1="404" x2="576" y2="404" stroke="#5E5E5C" stroke-width="7"/>
+  <!-- cable with break -->
+  <line x1="660" y1="255" x2="752" y2="255" stroke="#5E5E5C" stroke-width="7"/>
+  <line x1="766" y1="232" x2="754" y2="278" stroke="#F59E0B" stroke-width="7"/>
+  <line x1="792" y1="232" x2="780" y2="278" stroke="#F59E0B" stroke-width="7"/>
+  <rect x="804" y="237" width="46" height="36" rx="6" fill="#2A1F0E" stroke="#F59E0B" stroke-width="7"/>
+  <line x1="850" y1="255" x2="912" y2="255" stroke="#F59E0B" stroke-width="7"/>
+  <text x="84" y="576" font-family="Consolas, 'Cascadia Mono', ui-monospace, monospace" font-size="19" letter-spacing="5" fill="#8A8A86">POWERDOZE BLOG</text>
+  <text x="1116" y="576" text-anchor="end" font-family="Consolas, 'Cascadia Mono', ui-monospace, monospace" font-size="19" letter-spacing="5" fill="#F59E0B">NO.10</text>
+</svg>
