@@ -1,8 +1,8 @@
 ﻿{
-    "latest":  "2.0.7",
+    "latest":  "2.0.8",
     "url":  "https://powerdoze.app/#download",
-    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.0.7/PowerDoze_v2.0.7_portable.zip",
-    "sha256":  "2a63d7a4577977a4f502ffbd8cf59a52dfa819def4c748fea4305cba33ba9291",
-    "notes":  "離開模式調整為 Pro 功能（與官網一致）、FPS 診斷強化（600 行記錄+前景程序+工作階段重置）、購買流程調整（ECPay 暫停、PayPal 正常）",
-    "date":  "2026-06-12"
+    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.0.8/PowerDoze_v2.0.8_portable.zip",
+    "sha256":  "9b40bb7403f55c2d63b6d0c5b4b290f9400bca283633b83cb20ff0abb0d816a5",
+    "notes":  "修復用電歷史/真實節省從未記錄的問題（取樣服務未啟動）；省電量單位自動切換 Wh/kWh；讀不到功率時顯示明確引導。不影響 Pro 授權。",
+    "date":  "2026-06-15"
 }
