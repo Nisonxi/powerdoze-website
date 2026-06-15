@@ -17,6 +17,12 @@
   var m = location.pathname.match(/\/([a-z0-9-]+?)(-zh)?\.html$/);
   if (!m) return;
   var slug = m[1];
+  // 標記本篇為已讀（首頁索引據此顯示已讀/未讀；換瀏覽器或清快取會重置）
+  try {
+    var RK = 'pd_blog_read';
+    var rd = JSON.parse(localStorage.getItem(RK) || '[]');
+    if (Array.isArray(rd) && rd.indexOf(slug) === -1) { rd.push(slug); localStorage.setItem(RK, JSON.stringify(rd)); }
+  } catch (e) {}
   var suffix = m[2] ? '-zh.html' : '.html';
   var idx = POSTS.indexOf(slug);
   var prev = idx > 0 ? POSTS[idx - 1] : null;

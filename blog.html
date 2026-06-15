@@ -51,105 +51,120 @@
 </nav>
 
 <section class="p-section">
-  <div class="container" style="max-width: 960px;">
+  <div class="container" style="max-width: 1000px;">
     <span class="p-eyebrow">Blog</span>
     <h1 class="p-h2" style="margin: 24px 0 8px;" data-i18n="blogTitle">Notes on power, in writing</h1>
-    <p class="p-h2-sub" style="margin: 0 0 48px;" data-i18n="blogSub">Windows power management, PC energy savings, and how PowerDoze is built.</p>
+    <p class="p-h2-sub" style="margin: 0 0 32px;" data-i18n="blogSub">Windows power management, PC energy savings, and how PowerDoze is built.</p>
 
-    <div class="p-blog-grid">
+    <input type="search" id="blog-search" class="p-blog-search" placeholder="Search articles…" aria-label="Search articles" autocomplete="off">
 
-    <!-- scheduled-blog-insert -->
+    <div class="p-blog-layout">
 
-    <div class="p-blog-card">
-      <a href="blog-measure-pc-power-consumption.html" data-en="blog-measure-pc-power-consumption.html" data-zh="blog-measure-pc-power-consumption-zh.html" aria-hidden="true" tabindex="-1"><img class="p-blog-cover" src="assets/blog-covers/blog-measure-pc-power-consumption.svg" alt="" loading="lazy"></a>
-      <div class="p-blog-card-body">
-        <span class="p-feat-num">2026-06-12</span>
-        <h2><a href="blog-measure-pc-power-consumption.html" data-en="blog-measure-pc-power-consumption.html" data-zh="blog-measure-pc-power-consumption-zh.html" data-i18n="blogA7t">How Much Power Does Your PC Actually Draw? Three Ways to Find Out</a></h2>
-        <p data-i18n="blogA7d">Your PSU's label is a ceiling, not a reading. Wall meter, UPS readout, or free software sensors — what each method tells you, what each one misses, and how to turn the number into actual savings.</p>
-        <p class="p-blog-card-links">
-          <a href="blog-measure-pc-power-consumption.html" data-i18n="blogReadEn">Read in English →</a> ·
-          <a href="blog-measure-pc-power-consumption-zh.html" data-i18n="blogReadZh">中文版 →</a>
-        </p>
+      <aside class="p-blog-index" aria-label="All posts">
+        <div class="p-blog-index-title" data-i18n="blogAll">All posts</div>
+        <ol>
+          <!-- scheduled-blog-index-insert -->
+          <li data-slug="blog-measure-pc-power-consumption"><a href="blog-measure-pc-power-consumption.html" data-en="blog-measure-pc-power-consumption.html" data-zh="blog-measure-pc-power-consumption-zh.html"><span class="pd-dot" aria-hidden="true"></span><span data-i18n="blogA7t">How Much Power Does Your PC Actually Draw? Three Ways to Find Out</span></a></li>
+          <li data-slug="blog-quiet-pc-fan-noise"><a href="blog-quiet-pc-fan-noise.html" data-en="blog-quiet-pc-fan-noise.html" data-zh="blog-quiet-pc-fan-noise-zh.html"><span class="pd-dot" aria-hidden="true"></span><span data-i18n="blogA6t">Loud PC Fans? Try Software Before You Buy New Cooling</span></a></li>
+          <li data-slug="blog-local-ai-power-management"><a href="blog-local-ai-power-management.html" data-en="blog-local-ai-power-management.html" data-zh="blog-local-ai-power-management-zh.html"><span class="pd-dot" aria-hidden="true"></span><span data-i18n="blogA5t">Running Local AI? Your Power Bill Noticed</span></a></li>
+          <li data-slug="blog-always-on-pc-power-savings"><a href="blog-always-on-pc-power-savings.html" data-en="blog-always-on-pc-power-savings.html" data-zh="blog-always-on-pc-power-savings-zh.html"><span class="pd-dot" aria-hidden="true"></span><span data-i18n="blogA4t">Cut Your Always-On PC's Power Bill — Without Letting It Sleep</span></a></li>
+          <li data-slug="blog-windows-power-tools-compared"><a href="blog-windows-power-tools-compared.html" data-en="blog-windows-power-tools-compared.html" data-zh="blog-windows-power-tools-compared-zh.html"><span class="pd-dot" aria-hidden="true"></span><span data-i18n="blogA3t">PowerToys Awake, Caffeine, Process Lasso: Which Windows Power Tool Do You Actually Need?</span></a></li>
+          <li data-slug="blog-windows-sleep-settings-guide"><a href="blog-windows-sleep-settings-guide.html" data-en="blog-windows-sleep-settings-guide.html" data-zh="blog-windows-sleep-settings-guide-zh.html"><span class="pd-dot" aria-hidden="true"></span><span data-i18n="blogA2t">Windows Sleep Settings: The Complete Guide (and Where They Fall Short)</span></a></li>
+          <li data-slug="blog-why-automatic-power-management"><a href="blog-why-automatic-power-management.html" data-en="blog-why-automatic-power-management.html" data-zh="blog-why-automatic-power-management-zh.html"><span class="pd-dot" aria-hidden="true"></span><span data-i18n="blogA1t">Why Your Windows PC Needs Automatic Power Management</span></a></li>
+        </ol>
+      </aside>
+
+      <div class="p-blog-list">
+
+        <!-- scheduled-blog-insert -->
+
+        <article class="p-blog-card" data-slug="blog-measure-pc-power-consumption">
+          <div class="p-blog-card-head">
+            <span class="pd-dot" aria-hidden="true"></span>
+            <h2><a href="blog-measure-pc-power-consumption.html" data-en="blog-measure-pc-power-consumption.html" data-zh="blog-measure-pc-power-consumption-zh.html" data-i18n="blogA7t">How Much Power Does Your PC Actually Draw? Three Ways to Find Out</a></h2>
+          </div>
+          <p data-i18n="blogA7d">Your PSU's label is a ceiling, not a reading. Wall meter, UPS readout, or free software sensors — what each method tells you, what each one misses, and how to turn the number into actual savings.</p>
+          <p class="p-blog-card-links">
+            <a href="blog-measure-pc-power-consumption.html" data-i18n="blogReadEn">Read in English →</a> ·
+            <a href="blog-measure-pc-power-consumption-zh.html" data-i18n="blogReadZh">中文版 →</a>
+          </p>
+        </article>
+
+        <article class="p-blog-card" data-slug="blog-quiet-pc-fan-noise">
+          <div class="p-blog-card-head">
+            <span class="pd-dot" aria-hidden="true"></span>
+            <h2><a href="blog-quiet-pc-fan-noise.html" data-en="blog-quiet-pc-fan-noise.html" data-zh="blog-quiet-pc-fan-noise-zh.html" data-i18n="blogA6t">Loud PC Fans? Try Software Before You Buy New Cooling</a></h2>
+          </div>
+          <p data-i18n="blogA6d">Fan noise is heat, and heat is watts — and watts are a setting. The Windows knobs that cut heat at the source (cooling policy, CPU caps, GPU power limits), and how to be quiet at night but fast in games.</p>
+          <p class="p-blog-card-links">
+            <a href="blog-quiet-pc-fan-noise.html" data-i18n="blogReadEn">Read in English →</a> ·
+            <a href="blog-quiet-pc-fan-noise-zh.html" data-i18n="blogReadZh">中文版 →</a>
+          </p>
+        </article>
+
+        <article class="p-blog-card" data-slug="blog-local-ai-power-management">
+          <div class="p-blog-card-head">
+            <span class="pd-dot" aria-hidden="true"></span>
+            <h2><a href="blog-local-ai-power-management.html" data-en="blog-local-ai-power-management.html" data-zh="blog-local-ai-power-management-zh.html" data-i18n="blogA5t">Running Local AI? Your Power Bill Noticed</a></h2>
+          </div>
+          <p data-i18n="blogA5d">Ollama, LM Studio, ComfyUI — local AI turns your desktop into always-on infrastructure. Where the watts go, the GPU power-limit trick that barely costs tokens/sec, and how to stop choosing between sleep and dead jobs.</p>
+          <p class="p-blog-card-links">
+            <a href="blog-local-ai-power-management.html" data-i18n="blogReadEn">Read in English →</a> ·
+            <a href="blog-local-ai-power-management-zh.html" data-i18n="blogReadZh">中文版 →</a>
+          </p>
+        </article>
+
+        <article class="p-blog-card" data-slug="blog-always-on-pc-power-savings">
+          <div class="p-blog-card-head">
+            <span class="pd-dot" aria-hidden="true"></span>
+            <h2><a href="blog-always-on-pc-power-savings.html" data-en="blog-always-on-pc-power-savings.html" data-zh="blog-always-on-pc-power-savings-zh.html" data-i18n="blogA4t">Cut Your Always-On PC's Power Bill — Without Letting It Sleep</a></h2>
+          </div>
+          <p data-i18n="blogA4d">Seedbox, Plex server, camera recorder — some PCs can never sleep. The powercfg and nvidia-smi recipes that cut their power draw anyway, why static settings fall apart, and how to automate the night shift.</p>
+          <p class="p-blog-card-links">
+            <a href="blog-always-on-pc-power-savings.html" data-i18n="blogReadEn">Read in English →</a> ·
+            <a href="blog-always-on-pc-power-savings-zh.html" data-i18n="blogReadZh">中文版 →</a>
+          </p>
+        </article>
+
+        <article class="p-blog-card" data-slug="blog-windows-power-tools-compared">
+          <div class="p-blog-card-head">
+            <span class="pd-dot" aria-hidden="true"></span>
+            <h2><a href="blog-windows-power-tools-compared.html" data-en="blog-windows-power-tools-compared.html" data-zh="blog-windows-power-tools-compared-zh.html" data-i18n="blogA3t">PowerToys Awake, Caffeine, Process Lasso: Which Windows Power Tool Do You Actually Need?</a></h2>
+          </div>
+          <p data-i18n="blogA3d">An honest map of the Windows power-tool landscape — keep-awake switches, plan switchers, Process Lasso, CPU tuners, vendor battery tools — what each does well, and the context-automation gap none of them fill.</p>
+          <p class="p-blog-card-links">
+            <a href="blog-windows-power-tools-compared.html" data-i18n="blogReadEn">Read in English →</a> ·
+            <a href="blog-windows-power-tools-compared-zh.html" data-i18n="blogReadZh">中文版 →</a>
+          </p>
+        </article>
+
+        <article class="p-blog-card" data-slug="blog-windows-sleep-settings-guide">
+          <div class="p-blog-card-head">
+            <span class="pd-dot" aria-hidden="true"></span>
+            <h2><a href="blog-windows-sleep-settings-guide.html" data-en="blog-windows-sleep-settings-guide.html" data-zh="blog-windows-sleep-settings-guide-zh.html" data-i18n="blogA2t">Windows Sleep Settings: The Complete Guide (and Where They Fall Short)</a></h2>
+          </div>
+          <p data-i18n="blogA2d">Where every sleep setting lives, sleep vs hibernate vs Modern Standby, the powercfg commands that solve "won't sleep" and "sleeps too soon", and the structural limits no setting can fix.</p>
+          <p class="p-blog-card-links">
+            <a href="blog-windows-sleep-settings-guide.html" data-i18n="blogReadEn">Read in English →</a> ·
+            <a href="blog-windows-sleep-settings-guide-zh.html" data-i18n="blogReadZh">中文版 →</a>
+          </p>
+        </article>
+
+        <article class="p-blog-card" data-slug="blog-why-automatic-power-management">
+          <div class="p-blog-card-head">
+            <span class="pd-dot" aria-hidden="true"></span>
+            <h2><a href="blog-why-automatic-power-management.html" data-en="blog-why-automatic-power-management.html" data-zh="blog-why-automatic-power-management-zh.html" data-i18n="blogA1t">Why Your Windows PC Needs Automatic Power Management</a></h2>
+          </div>
+          <p data-i18n="blogA1d">Your PC sits idle most of the day at close to full power. What that actually costs per year, why Windows' built-in power plans and sleep timer can't fix it, and the four signals automatic power management should follow.</p>
+          <p class="p-blog-card-links">
+            <a href="blog-why-automatic-power-management.html" data-i18n="blogReadEn">Read in English →</a> ·
+            <a href="blog-why-automatic-power-management-zh.html" data-i18n="blogReadZh">中文版 →</a>
+          </p>
+        </article>
+
+        <p class="p-blog-empty" id="blog-no-results" hidden>No matching articles.</p>
+
       </div>
-    </div>
-
-    <div class="p-blog-card">
-      <a href="blog-quiet-pc-fan-noise.html" data-en="blog-quiet-pc-fan-noise.html" data-zh="blog-quiet-pc-fan-noise-zh.html" aria-hidden="true" tabindex="-1"><img class="p-blog-cover" src="assets/blog-covers/blog-quiet-pc-fan-noise.svg" alt="" loading="lazy"></a>
-      <div class="p-blog-card-body">
-        <span class="p-feat-num">2026-06-12</span>
-        <h2><a href="blog-quiet-pc-fan-noise.html" data-en="blog-quiet-pc-fan-noise.html" data-zh="blog-quiet-pc-fan-noise-zh.html" data-i18n="blogA6t">Loud PC Fans? Try Software Before You Buy New Cooling</a></h2>
-        <p data-i18n="blogA6d">Fan noise is heat, and heat is watts — and watts are a setting. The Windows knobs that cut heat at the source (cooling policy, CPU caps, GPU power limits), and how to be quiet at night but fast in games.</p>
-        <p class="p-blog-card-links">
-          <a href="blog-quiet-pc-fan-noise.html" data-i18n="blogReadEn">Read in English →</a> ·
-          <a href="blog-quiet-pc-fan-noise-zh.html" data-i18n="blogReadZh">中文版 →</a>
-        </p>
-      </div>
-    </div>
-
-    <div class="p-blog-card">
-      <a href="blog-local-ai-power-management.html" data-en="blog-local-ai-power-management.html" data-zh="blog-local-ai-power-management-zh.html" aria-hidden="true" tabindex="-1"><img class="p-blog-cover" src="assets/blog-covers/blog-local-ai-power-management.svg" alt="" loading="lazy"></a>
-      <div class="p-blog-card-body">
-        <span class="p-feat-num">2026-06-12</span>
-        <h2><a href="blog-local-ai-power-management.html" data-en="blog-local-ai-power-management.html" data-zh="blog-local-ai-power-management-zh.html" data-i18n="blogA5t">Running Local AI? Your Power Bill Noticed</a></h2>
-        <p data-i18n="blogA5d">Ollama, LM Studio, ComfyUI — local AI turns your desktop into always-on infrastructure. Where the watts go, the GPU power-limit trick that barely costs tokens/sec, and how to stop choosing between sleep and dead jobs.</p>
-        <p class="p-blog-card-links">
-          <a href="blog-local-ai-power-management.html" data-i18n="blogReadEn">Read in English →</a> ·
-          <a href="blog-local-ai-power-management-zh.html" data-i18n="blogReadZh">中文版 →</a>
-        </p>
-      </div>
-    </div>
-
-    <div class="p-blog-card">
-      <a href="blog-always-on-pc-power-savings.html" data-en="blog-always-on-pc-power-savings.html" data-zh="blog-always-on-pc-power-savings-zh.html" aria-hidden="true" tabindex="-1"><img class="p-blog-cover" src="assets/blog-covers/blog-always-on-pc-power-savings.svg" alt="" loading="lazy"></a>
-      <div class="p-blog-card-body">
-        <span class="p-feat-num">2026-06-11</span>
-        <h2><a href="blog-always-on-pc-power-savings.html" data-en="blog-always-on-pc-power-savings.html" data-zh="blog-always-on-pc-power-savings-zh.html" data-i18n="blogA4t">Cut Your Always-On PC's Power Bill — Without Letting It Sleep</a></h2>
-        <p data-i18n="blogA4d">Seedbox, Plex server, camera recorder — some PCs can never sleep. The powercfg and nvidia-smi recipes that cut their power draw anyway, why static settings fall apart, and how to automate the night shift.</p>
-        <p class="p-blog-card-links">
-          <a href="blog-always-on-pc-power-savings.html" data-i18n="blogReadEn">Read in English →</a> ·
-          <a href="blog-always-on-pc-power-savings-zh.html" data-i18n="blogReadZh">中文版 →</a>
-        </p>
-      </div>
-    </div>
-
-    <div class="p-blog-card">
-      <a href="blog-windows-power-tools-compared.html" data-en="blog-windows-power-tools-compared.html" data-zh="blog-windows-power-tools-compared-zh.html" aria-hidden="true" tabindex="-1"><img class="p-blog-cover" src="assets/blog-covers/blog-windows-power-tools-compared.svg" alt="" loading="lazy"></a>
-      <div class="p-blog-card-body">
-        <span class="p-feat-num">2026-06-11</span>
-        <h2><a href="blog-windows-power-tools-compared.html" data-en="blog-windows-power-tools-compared.html" data-zh="blog-windows-power-tools-compared-zh.html" data-i18n="blogA3t">PowerToys Awake, Caffeine, Process Lasso: Which Windows Power Tool Do You Actually Need?</a></h2>
-        <p data-i18n="blogA3d">An honest map of the Windows power-tool landscape — keep-awake switches, plan switchers, Process Lasso, CPU tuners, vendor battery tools — what each does well, and the context-automation gap none of them fill.</p>
-        <p class="p-blog-card-links">
-          <a href="blog-windows-power-tools-compared.html" data-i18n="blogReadEn">Read in English →</a> ·
-          <a href="blog-windows-power-tools-compared-zh.html" data-i18n="blogReadZh">中文版 →</a>
-        </p>
-      </div>
-    </div>
-
-    <div class="p-blog-card">
-      <a href="blog-windows-sleep-settings-guide.html" data-en="blog-windows-sleep-settings-guide.html" data-zh="blog-windows-sleep-settings-guide-zh.html" aria-hidden="true" tabindex="-1"><img class="p-blog-cover" src="assets/blog-covers/blog-windows-sleep-settings-guide.svg" alt="" loading="lazy"></a>
-      <div class="p-blog-card-body">
-        <span class="p-feat-num">2026-06-11</span>
-        <h2><a href="blog-windows-sleep-settings-guide.html" data-en="blog-windows-sleep-settings-guide.html" data-zh="blog-windows-sleep-settings-guide-zh.html" data-i18n="blogA2t">Windows Sleep Settings: The Complete Guide (and Where They Fall Short)</a></h2>
-        <p data-i18n="blogA2d">Where every sleep setting lives, sleep vs hibernate vs Modern Standby, the powercfg commands that solve "won't sleep" and "sleeps too soon", and the structural limits no setting can fix.</p>
-        <p class="p-blog-card-links">
-          <a href="blog-windows-sleep-settings-guide.html" data-i18n="blogReadEn">Read in English →</a> ·
-          <a href="blog-windows-sleep-settings-guide-zh.html" data-i18n="blogReadZh">中文版 →</a>
-        </p>
-      </div>
-    </div>
-
-    <div class="p-blog-card">
-      <a href="blog-why-automatic-power-management.html" data-en="blog-why-automatic-power-management.html" data-zh="blog-why-automatic-power-management-zh.html" aria-hidden="true" tabindex="-1"><img class="p-blog-cover" src="assets/blog-covers/blog-why-automatic-power-management.svg" alt="" loading="lazy"></a>
-      <div class="p-blog-card-body">
-        <span class="p-feat-num">2026-06-11</span>
-        <h2><a href="blog-why-automatic-power-management.html" data-en="blog-why-automatic-power-management.html" data-zh="blog-why-automatic-power-management-zh.html" data-i18n="blogA1t">Why Your Windows PC Needs Automatic Power Management</a></h2>
-        <p data-i18n="blogA1d">Your PC sits idle most of the day at close to full power. What that actually costs per year, why Windows' built-in power plans and sleep timer can't fix it, and the four signals automatic power management should follow.</p>
-        <p class="p-blog-card-links">
-          <a href="blog-why-automatic-power-management.html" data-i18n="blogReadEn">Read in English →</a> ·
-          <a href="blog-why-automatic-power-management-zh.html" data-i18n="blogReadZh">中文版 →</a>
-        </p>
-      </div>
-    </div>
 
     </div>
 
@@ -183,11 +198,28 @@
     });
   })();
   if (typeof updateNavAuth === 'function') updateNavAuth();
-  // 語言是中文（繁/簡）時，文章標題連到中文版；其他語言連英文版。
-  // 必須用 getLang()（含瀏覽器語言自動偵測）——只讀 localStorage 會漏掉
-  // 「沒手動切過語言的中文使用者」（pd_lang 不存在 → 退回 html lang='en'）。
+
   (function() {
-    function sync() {
+    // 1. 已讀/未讀：讀本機儲存標記 is-read。包成函式並在 pageshow（含上一頁 bfcache 還原）
+    //    與分頁重新可見時重跑——否則「讀完按上一頁」時索引從 bfcache 還原、不重跑 JS，橘點不會更新。
+    function markRead() {
+      try {
+        var read = JSON.parse(localStorage.getItem('pd_blog_read') || '[]');
+        if (Array.isArray(read)) {
+          document.querySelectorAll('[data-slug]').forEach(function(el) {
+            if (read.indexOf(el.getAttribute('data-slug')) !== -1) el.classList.add('is-read');
+          });
+        }
+      } catch (e) {}
+    }
+    markRead();
+    window.addEventListener('pageshow', markRead);
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'visible') markRead();
+    });
+
+    // 2. 語言連結同步：中文（繁/簡）連中文版，其他連英文版。用 getLang() 含瀏覽器偵測
+    function syncLinks() {
       var lang = (typeof getLang === 'function') ? getLang()
         : (localStorage.getItem('pd_lang') || document.documentElement.lang || 'en');
       var isZh = lang.indexOf('zh') === 0;
@@ -195,11 +227,42 @@
         a.href = a.getAttribute(isZh ? 'data-zh' : 'data-en');
       });
     }
+
+    // 3. 搜尋過濾（比對標題＋描述的顯示文字，純前端、即時）
+    var search = document.getElementById('blog-search');
+    var rows = Array.prototype.slice.call(document.querySelectorAll('.p-blog-card'));
+    var idx = Array.prototype.slice.call(document.querySelectorAll('.p-blog-index li'));
+    var noRes = document.getElementById('blog-no-results');
+    function filter() {
+      var q = (search.value || '').trim().toLowerCase();
+      var any = false;
+      rows.forEach(function(row) {
+        var slug = row.getAttribute('data-slug');
+        var match = !q || row.textContent.toLowerCase().indexOf(q) !== -1;
+        row.hidden = !match;
+        if (match) any = true;
+        for (var i = 0; i < idx.length; i++) {
+          if (idx[i].getAttribute('data-slug') === slug) { idx[i].hidden = !match; break; }
+        }
+      });
+      if (noRes) noRes.hidden = any || !q;
+    }
+
+    // 4. 搜尋框提示字 / 無結果文字（7 語系，內嵌避免動 264KB 的 i18n.js）
+    var PH = {'en':'Search articles…','zh-TW':'搜尋文章…','zh-CN':'搜索文章…','ja':'記事を検索…','ko':'글 검색…','fr':'Rechercher des articles…','de':'Artikel suchen…'};
+    var NONE = {'en':'No matching articles.','zh-TW':'沒有符合的文章。','zh-CN':'没有匹配的文章。','ja':'該当する記事はありません。','ko':'일치하는 글이 없습니다.','fr':'Aucun article correspondant.','de':'Keine passenden Artikel.'};
+    function applyI18n() {
+      var lang = (typeof getLang === 'function') ? getLang() : 'en';
+      if (search) search.placeholder = PH[lang] || PH.en;
+      if (noRes) noRes.textContent = NONE[lang] || NONE.en;
+    }
+
+    if (search) search.addEventListener('input', filter);
     var sel = document.getElementById('lang-select');
-    // setTimeout：讓 i18n.js 的 setLang 先寫入 pd_lang 再同步，避免讀到舊值
-    if (sel) sel.addEventListener('change', function() { setTimeout(sync, 0); });
-    sync();
-    document.addEventListener('DOMContentLoaded', sync);
+    if (sel) sel.addEventListener('change', function() { setTimeout(function() { syncLinks(); applyI18n(); }, 0); });
+    syncLinks();
+    applyI18n();
+    document.addEventListener('DOMContentLoaded', function() { syncLinks(); applyI18n(); });
   })();
 </script>
 </body>

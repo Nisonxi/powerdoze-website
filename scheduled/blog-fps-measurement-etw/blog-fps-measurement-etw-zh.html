@@ -27,7 +27,7 @@
     "headline": "不碰遊戲怎麼數 FPS？我們 overlay 背後的 ETW 技術",
     "datePublished": "2026-06-26",
     "dateModified": "2026-06-26",
-    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "author": { "@type": "Person", "name": "Nisonxi", "url": "https://powerdoze.app/about-zh.html" },
     "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
     "mainEntityOfPage": "https://powerdoze.app/blog-fps-measurement-etw-zh.html",
     "image": "https://powerdoze.app/assets/hero-screenshot.png",
@@ -70,13 +70,11 @@
 <section class="p-section">
   <div class="container" style="max-width: 720px;">
     <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
-      <span class="p-eyebrow">Blog</span>
+      <a href="/blog.html" class="p-eyebrow" style="text-decoration: none;">← <span data-i18n="blogAll">All posts</span></a>
       <a href="/blog-fps-measurement-etw.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">English version →</a>
     </div>
     <h1 class="p-h2" style="margin: 24px 0 8px;">不碰遊戲怎麼數 FPS？我們 overlay 背後的 ETW 技術</h1>
-    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
-      2026-06-26
-    </p>
+    <p class="pd-byline" style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">Nisonxi · 2026-06-26</p>
 
     <article class="p-prose">
       <p>PowerDoze 是個電源工具，為什麼要量 FPS？因為瓦數和幀數是同一筆交易的兩端：把 GPU 功耗上限壓下去，幀數幾乎沒動，你就白賺了安靜和電費；幀數崩了，就是壓過頭。要讓這個取捨看得見，我們的遊戲 overlay 把即時 FPS 和螢幕更新率並排顯示——而做出這個數字的過程，是我們踩過最有教育意義的一個坑。</p>
@@ -113,6 +111,11 @@
       <p>這個 overlay 存在的目的，是讓你一眼回答一個問題：<em>我是不是在為看不到的幀付電費？</em>165 Hz 的螢幕上選單跑 400 FPS，那是純發熱。FPS 和 Hz 並排放著，壓 GPU 功耗（<a href="/blog-local-ai-power-management-zh.html">power limit 那招幾乎不掉性能</a>）就不再是賭注——你盯著數字，它撐住或撐不住，一翻兩瞪眼。</p>
 
       <p style="margin-top: 40px;"><a href="/index.html#download" class="p-btn p-btn-primary">免費下載 PowerDoze →</a></p>
+      <div class="pd-author-bio" style="margin: 56px 0 0; padding: 20px; border: 1px solid var(--hair); border-radius: var(--r-4); background: var(--surface);">
+        <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">Nisonxi</div>
+        <p style="font-size: 14px; color: var(--ink-2); margin: 0 0 10px; line-height: 1.65;">我是 Nisonxi，PowerDoze 的開發者。當初純粹因為我自己受夠了 Windows 桌機整天全速發呆吃電、卻找不到一個能「看懂情況、自動切換」的工具，乾脆自己做。這個部落格就是我一路上的筆記。</p>
+        <a href="/about-zh.html" style="font-size: 14px; color: var(--accent);">關於作者與 PowerDoze →</a>
+      </div>
       <div id="blog-nav"></div>
     </article>
   </div>

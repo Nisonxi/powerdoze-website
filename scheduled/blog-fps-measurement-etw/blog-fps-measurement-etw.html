@@ -27,7 +27,7 @@
     "headline": "Counting Frames Without Touching the Game: How Our FPS Overlay Works",
     "datePublished": "2026-06-26",
     "dateModified": "2026-06-26",
-    "author": { "@type": "Organization", "name": "PowerDoze" },
+    "author": { "@type": "Person", "name": "Nisonxi", "url": "https://powerdoze.app/about.html" },
     "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
     "mainEntityOfPage": "https://powerdoze.app/blog-fps-measurement-etw.html",
     "image": "https://powerdoze.app/assets/hero-screenshot.png",
@@ -70,13 +70,11 @@
 <section class="p-section">
   <div class="container" style="max-width: 720px;">
     <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
-      <span class="p-eyebrow">Blog</span>
+      <a href="/blog.html" class="p-eyebrow" style="text-decoration: none;">← <span data-i18n="blogAll">All posts</span></a>
       <a href="/blog-fps-measurement-etw-zh.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">中文版 →</a>
     </div>
     <h1 class="p-h2" style="margin: 24px 0 8px;">Counting Frames Without Touching the Game: How Our FPS Overlay Works</h1>
-    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">
-      2026-06-26
-    </p>
+    <p class="pd-byline" style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">Nisonxi · 2026-06-26</p>
 
     <article class="p-prose">
       <p>PowerDoze is a power tool, so why does it measure FPS at all? Because watts and frames are two ends of the same trade. If you cap your GPU's power and the frame rate barely moves, you just got free silence and a smaller power bill; if it tanks, you've gone too far. To make that visible, our gaming overlay shows live FPS next to your monitor's refresh rate — and building that number turned out to be the most educational bug hunt we've had.</p>
@@ -113,6 +111,11 @@
       <p>The overlay exists to answer one question at a glance: <em>am I paying for frames I can't see?</em> A 165 Hz monitor showing a menu at 400 FPS is pure heat. With FPS and Hz side by side, capping the GPU (and <a href="/blog-local-ai-power-management.html">the power-limit trick barely costs performance</a>) stops being a leap of faith — you watch the number, and it either holds or it doesn't.</p>
 
       <p style="margin-top: 40px;"><a href="/index.html#download" class="p-btn p-btn-primary">Download PowerDoze free →</a></p>
+      <div class="pd-author-bio" style="margin: 56px 0 0; padding: 20px; border: 1px solid var(--hair); border-radius: var(--r-4); background: var(--surface);">
+        <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">Nisonxi</div>
+        <p style="font-size: 14px; color: var(--ink-2); margin: 0 0 10px; line-height: 1.65;">I'm Nisonxi, the developer behind PowerDoze. I built it because my own Windows desktop idled all day at near-full power and no existing tool could read the situation and switch on its own. This blog is my notebook from the journey.</p>
+        <a href="/about.html" style="font-size: 14px; color: var(--accent);">About the author and PowerDoze →</a>
+      </div>
       <div id="blog-nav"></div>
     </article>
   </div>

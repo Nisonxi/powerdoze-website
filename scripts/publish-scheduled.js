@@ -54,32 +54,32 @@ for (const post of due) {
     fs.unlinkSync(src);
   }
 
-  // 1b. 封面圖（相片牆卡片用；慣例路徑 assets/blog-covers/<slug>.svg，缺了直接 fail）
-  const coverRel = 'assets/blog-covers/' + slug + '.svg';
-  if (!fs.existsSync(path.join(ROOT, coverRel))) fail('missing cover image: ' + coverRel);
-
-  // 2. blog.html 置頂卡（相片牆格式，與 blog.html 既有卡片一致）
+  // 2. blog.html：左側索引 <li> + 右側清單 row（都插在標記後＝最新在前）
   const blogFile = path.join(ROOT, 'blog.html');
   let blogHtml = fs.readFileSync(blogFile, 'utf8');
-  const CARD_MARK = '<!-- scheduled-blog-insert -->';
-  if (!blogHtml.includes(CARD_MARK)) fail('marker missing in blog.html: ' + CARD_MARK);
-  const card = [
+  const LIST_MARK = '<!-- scheduled-blog-insert -->';
+  const INDEX_MARK = '<!-- scheduled-blog-index-insert -->';
+  if (!blogHtml.includes(LIST_MARK)) fail('marker missing in blog.html: ' + LIST_MARK);
+  if (!blogHtml.includes(INDEX_MARK)) fail('marker missing in blog.html: ' + INDEX_MARK);
+  const enUrl = slug + '.html', zhUrl = slug + '-zh.html';
+  const row = [
     '',
     '',
-    '    <div class="p-blog-card">',
-    '      <a href="' + slug + '.html" data-en="' + slug + '.html" data-zh="' + slug + '-zh.html" aria-hidden="true" tabindex="-1"><img class="p-blog-cover" src="' + coverRel + '" alt="" loading="lazy"></a>',
-    '      <div class="p-blog-card-body">',
-    '        <span class="p-feat-num">' + post.publishDate + '</span>',
-    '        <h2><a href="' + slug + '.html" data-en="' + slug + '.html" data-zh="' + slug + '-zh.html" data-i18n="' + key + 't">' + escHtml(meta.i18n.en.t) + '</a></h2>',
-    '        <p data-i18n="' + key + 'd">' + escHtml(meta.i18n.en.d) + '</p>',
-    '        <p class="p-blog-card-links">',
-    '          <a href="' + slug + '.html" data-i18n="blogReadEn">Read in English →</a> ·',
-    '          <a href="' + slug + '-zh.html" data-i18n="blogReadZh">中文版 →</a>',
-    '        </p>',
-    '      </div>',
-    '    </div>',
+    '        <article class="p-blog-card" data-slug="' + slug + '">',
+    '          <div class="p-blog-card-head">',
+    '            <span class="pd-dot" aria-hidden="true"></span>',
+    '            <h2><a href="' + enUrl + '" data-en="' + enUrl + '" data-zh="' + zhUrl + '" data-i18n="' + key + 't">' + escHtml(meta.i18n.en.t) + '</a></h2>',
+    '          </div>',
+    '          <p data-i18n="' + key + 'd">' + escHtml(meta.i18n.en.d) + '</p>',
+    '          <p class="p-blog-card-links">',
+    '            <a href="' + enUrl + '" data-i18n="blogReadEn">Read in English →</a> ·',
+    '            <a href="' + zhUrl + '" data-i18n="blogReadZh">中文版 →</a>',
+    '          </p>',
+    '        </article>',
   ].join('\n');
-  blogHtml = blogHtml.replace(CARD_MARK, CARD_MARK + card);
+  const indexLi = '\n          <li data-slug="' + slug + '"><a href="' + enUrl + '" data-en="' + enUrl + '" data-zh="' + zhUrl + '"><span class="pd-dot" aria-hidden="true"></span><span data-i18n="' + key + 't">' + escHtml(meta.i18n.en.t) + '</span></a></li>';
+  blogHtml = blogHtml.replace(LIST_MARK, LIST_MARK + row);
+  blogHtml = blogHtml.replace(INDEX_MARK, INDEX_MARK + indexLi);
   fs.writeFileSync(blogFile, blogHtml);
 
   // 3. i18n.js 7 語系

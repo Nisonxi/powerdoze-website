@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About PowerDoze and Its Developer — Nisonxi</title>
+  <meta name="description" content="Who makes PowerDoze? Nisonxi — and why he built it.">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/about.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/about.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/about-zh.html">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="About PowerDoze and Its Developer — Nisonxi">
+  <meta property="og:description" content="Nisonxi, the developer behind PowerDoze, and how it came to be.">
+  <meta property="og:url" content="https://powerdoze.app/about.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About PowerDoze and Its Developer — Nisonxi">
+  <meta name="twitter:description" content="Nisonxi, the developer behind PowerDoze, and how it came to be.">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "inLanguage": "en",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "Nisonxi",
+      "url": "https://powerdoze.app/about.html",
+      "knowsAbout": ["Windows power management", "PC energy efficiency", "hardware monitoring"]
+    }
+  }
+  </script>
+  <link rel="stylesheet" href="plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="blog.html" data-i18n="navBlog">Blog</a>
+      <a href="index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <span class="p-eyebrow">About</span>
+      <a href="about-zh.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">中文版 →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">About PowerDoze and its developer</h1>
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">Nisonxi</p>
+
+    <article class="p-prose">
+      <h2>Why PowerDoze exists</h2>
+      <p>Not a romantic story: my own Windows desktop spent most of the day sitting idle at close to full power. I tried the built-in power plans and the sleep timer — they're static settings that don't know what time it is, what's running, or whether I'm even at the desk. The existing tools either just block sleep or just switch power plans; none of them tie together the four things that actually matter — time, running apps, location, and whether you're present — and decide on their own.</p>
+      <p>I couldn't find it, so I built it. PowerDoze started as the tool I used every day, and only later became a product.</p>
+
+      <h2>Contact</h2>
+      <p>Questions, corrections, or just want to talk Windows power? Email <a href="mailto:PowerDozeSupport@gmail.com">PowerDozeSupport@gmail.com</a>.</p>
+
+      <p style="margin-top: 40px; display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="index.html#download" class="p-btn p-btn-primary">Download PowerDoze free →</a>
+        <a href="blog.html" class="p-btn p-btn-ghost">Read the blog →</a>
+      </p>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // Language select: zh → zh page, others → English
+  (function() {
+    var EN = 'about.html';
+    var ZH = 'about-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>
