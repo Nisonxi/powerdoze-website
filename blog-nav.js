@@ -10,6 +10,7 @@
     'blog-local-ai-power-management',
     'blog-quiet-pc-fan-noise',
     'blog-measure-pc-power-consumption',
+    'blog-modern-standby-battery-drain',
     // <scheduled-blog-nav>
   ];
   var el = document.getElementById('blog-nav');
