@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Windows 睡眠設定完全指南（以及它做不到的事）— PowerDoze 部落格</title>
+  <title>電腦該睡的時候不睡？Windows 睡眠設定完全指南 — PowerDoze 部落格</title>
   <meta name="description" content="所有 Windows 睡眠設定一次講清楚：設定藏在哪、睡眠/休眠差在哪、電腦不睡覺怎麼查（powercfg /requests）、不該睡卻睡掉怎麼辦，以及內建設定的天生極限。">
   <link rel="icon" href="assets/favicon.ico">
   <link rel="canonical" href="https://powerdoze.app/blog-windows-sleep-settings-guide-zh.html">
   <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-windows-sleep-settings-guide.html">
   <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-windows-sleep-settings-guide-zh.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Windows 睡眠設定完全指南（以及它做不到的事）">
+  <meta property="og:title" content="電腦該睡的時候不睡？Windows 睡眠設定完全指南">
   <meta property="og:description" content="設定藏在哪、睡眠/休眠差在哪、powercfg 診斷指令、以及內建設定的天生極限。">
   <meta property="og:url" content="https://powerdoze.app/blog-windows-sleep-settings-guide-zh.html">
   <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
   <meta property="og:site_name" content="PowerDoze">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Windows 睡眠設定完全指南">
+  <meta name="twitter:title" content="電腦該睡的時候不睡？Windows 睡眠設定完全指南">
   <meta name="twitter:description" content="設定藏在哪、powercfg 診斷指令、以及內建設定的天生極限。">
   <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "Windows 睡眠設定完全指南（以及它做不到的事）",
+    "headline": "電腦該睡的時候不睡？Windows 睡眠設定完全指南",
     "datePublished": "2026-06-11",
     "dateModified": "2026-06-11",
     "author": { "@type": "Person", "name": "Nisonxi", "url": "https://powerdoze.app/about-zh.html" },
@@ -72,11 +72,15 @@
       <a href="/blog.html" class="p-eyebrow" style="text-decoration: none;">← <span data-i18n="blogAll">All posts</span></a>
       <a href="blog-windows-sleep-settings-guide.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">English version →</a>
     </div>
-    <h1 class="p-h2" style="margin: 24px 0 8px;">Windows 睡眠設定完全指南（以及它做不到的事）</h1>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">電腦該睡的時候不睡？Windows 睡眠設定完全指南</h1>
     <p class="pd-byline" style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">Nisonxi</p>
 
     <article class="p-prose">
-      <p>睡眠設定是 Windows 裡最常被動到、卻最少人真正搞懂的角落。這篇一次講清楚：每個設定實際藏在哪、各種睡眠狀態差在哪、用 <code>powercfg</code> 指令解決兩大經典問題——「<em>電腦不肯睡</em>」和「<em>不該睡卻睡掉</em>」——以及任何內建設定都修不了的結構性極限。</p>
+      <p>你明明把睡眠時間設好了。可是該睡的時候它不睡，風扇還在轉；不該睡的時候——下載到一半、影片轉檔到一半——它倒是說睡就睡。你跑去把數字改大一點、再改小一點，來來回回，永遠喬不對。</p>
+
+      <p>先別怪自己設錯。問題不是那個數字調得不夠好，而是它從頭到尾「看不見」你在幹嘛——它只是一個冷冰冰的倒數計時器，分不出你是在掛下載、還是真的離開了。真相比「設定有問題」更微妙一點。</p>
+
+      <p>這篇就帶你把這件事徹底搞懂：每個設定到底藏在哪、各種睡眠狀態差在哪、以及幾個 <code>powercfg</code> 指令——揪出「誰擋著不讓睡」、「是誰半夜把它叫醒」。看完你會知道怎麼把它調到剛剛好，也會明白它天生有條線，怎麼調都跨不過去。</p>
 
       <h2>設定到底藏在哪</h2>
       <p>Windows 把睡眠設定拆在三個地方，混亂有一半是這樣來的：</p>

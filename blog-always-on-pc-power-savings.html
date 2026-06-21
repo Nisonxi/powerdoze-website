@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cut Your Always-On PC's Power Bill — Without Letting It Sleep — PowerDoze Blog</title>
+  <title>The PC You Never Turn Off Is Still Burning Power at 3 AM: Cut an Always-On PC's Bill Without Letting It Sleep — PowerDoze Blog</title>
   <meta name="description" content="Seedbox, Plex server, camera recorder, remote-access box — some PCs can never sleep. Here's how to cut their power draw anyway: powercfg recipes, GPU limits, and how to automate the night shift.">
   <link rel="icon" href="assets/favicon.ico">
   <link rel="canonical" href="https://powerdoze.app/blog-always-on-pc-power-savings.html">
   <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-always-on-pc-power-savings-zh.html">
   <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-always-on-pc-power-savings.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Cut Your Always-On PC's Power Bill — Without Letting It Sleep">
+  <meta property="og:title" content="The PC You Never Turn Off Is Still Burning Power at 3 AM: Cut an Always-On PC's Bill Without Letting It Sleep">
   <meta property="og:description" content="Some PCs can never sleep. How to cut their power draw anyway: powercfg recipes, GPU limits, and automating the night shift.">
   <meta property="og:url" content="https://powerdoze.app/blog-always-on-pc-power-savings.html">
   <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
   <meta property="og:site_name" content="PowerDoze">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Cut Your Always-On PC's Power Bill — Without Letting It Sleep">
+  <meta name="twitter:title" content="The PC You Never Turn Off Is Still Burning Power at 3 AM: Cut an Always-On PC's Bill Without Letting It Sleep">
   <meta name="twitter:description" content="Some PCs can never sleep. How to cut their power draw anyway, manually or automatically.">
   <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "Cut Your Always-On PC's Power Bill — Without Letting It Sleep",
+    "headline": "The PC You Never Turn Off Is Still Burning Power at 3 AM: Cut an Always-On PC's Bill Without Letting It Sleep",
     "datePublished": "2026-06-11",
     "dateModified": "2026-06-11",
     "author": { "@type": "Person", "name": "Nisonxi", "url": "https://powerdoze.app/about.html" },
@@ -72,12 +72,13 @@
       <a href="/blog.html" class="p-eyebrow" style="text-decoration: none;">← <span data-i18n="blogAll">All posts</span></a>
       <a href="blog-always-on-pc-power-savings-zh.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">中文版 →</a>
     </div>
-    <h1 class="p-h2" style="margin: 24px 0 8px;">Cut Your Always-On PC's Power Bill — Without Letting It Sleep</h1>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">The PC You Never Turn Off Is Still Burning Power at 3 AM: Cut an Always-On PC's Bill Without Letting It Sleep</h1>
     <p class="pd-byline" style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">Nisonxi</p>
 
     <article class="p-prose">
-      <p>Some PCs aren't allowed to sleep. The seedbox that's maintaining ratio. The Plex or Jellyfin server the family streams from. The machine recording security cameras, hosting a game server for friends, or just sitting there so you can RDP in from anywhere. Every power-saving guide on the internet ends with "let it sleep" — which makes all of them useless to you.</p>
-      <p>But here's the thing: <strong>"must stay awake" does not mean "must stay at full readiness 24/7."</strong> Those are two different settings, and Windows lets you separate them.</p>
+      <p>There's a PC in the corner of the room that hasn't been switched off in a month. It's seeding, streaming Plex to the family, recording the security cameras, or just sitting there so you can RDP in from anywhere. It's 3 AM, nobody's at the desk, and it's still lit up and humming away.</p>
+      <p>You probably gave up on saving power on that one a long time ago — because it can't sleep. Every power-saving guide on the internet ends with "let it sleep," which makes all of them useless to you. But here's the twist: "can't sleep" and "can't save" are two different things. A PC that's never allowed to nap can still have a real chunk shaved off its power bill.</p>
+      <p>This is the part where you learn how — how to cut what that machine draws without ever letting it doze off. There's a hands-on way, and if you'd rather not babysit it, a way to automate the whole thing.</p>
 
       <h2>The waste profile of an always-on box</h2>
       <p>Look at what the machine actually does at 4 AM. Seeding is a trickle of I/O. A media server between streams is essentially idle. Camera recording is constant but light. Most always-on workloads need <strong>a few percent of the machine's capacity, most of the time</strong> — yet the default Balanced plan keeps the CPU boost-ready, the fans on active duty, and a discrete GPU awake at desktop clocks.</p>

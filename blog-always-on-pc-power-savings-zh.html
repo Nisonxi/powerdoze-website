@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>24 小時開機的電腦怎麼省電——又不讓它睡著 — PowerDoze 部落格</title>
+  <title>那台一個月沒關過的電腦，半夜還在燒電：常開機怎麼省又不讓它睡 — PowerDoze 部落格</title>
   <meta name="description" content="做種機、Plex 伺服器、監控錄影、遠端跳板——有些電腦永遠不能睡。這篇教你照樣省電：powercfg 實作配方、GPU 功耗上限、以及怎麼把「夜班省電」全自動化。">
   <link rel="icon" href="assets/favicon.ico">
   <link rel="canonical" href="https://powerdoze.app/blog-always-on-pc-power-savings-zh.html">
   <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-always-on-pc-power-savings.html">
   <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-always-on-pc-power-savings-zh.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="24 小時開機的電腦怎麼省電——又不讓它睡著">
+  <meta property="og:title" content="那台一個月沒關過的電腦，半夜還在燒電：常開機怎麼省又不讓它睡">
   <meta property="og:description" content="有些電腦永遠不能睡。教你照樣省電：powercfg 配方、GPU 功耗上限、夜班省電自動化。">
   <meta property="og:url" content="https://powerdoze.app/blog-always-on-pc-power-savings-zh.html">
   <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
   <meta property="og:site_name" content="PowerDoze">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="24 小時開機的電腦怎麼省電——又不讓它睡著">
+  <meta name="twitter:title" content="那台一個月沒關過的電腦，半夜還在燒電：常開機怎麼省又不讓它睡">
   <meta name="twitter:description" content="有些電腦永遠不能睡。教你照樣省電，手動或全自動。">
   <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "24 小時開機的電腦怎麼省電——又不讓它睡著",
+    "headline": "那台一個月沒關過的電腦，半夜還在燒電：常開機怎麼省又不讓它睡",
     "datePublished": "2026-06-11",
     "dateModified": "2026-06-11",
     "author": { "@type": "Person", "name": "Nisonxi", "url": "https://powerdoze.app/about-zh.html" },
@@ -72,12 +72,13 @@
       <a href="/blog.html" class="p-eyebrow" style="text-decoration: none;">← <span data-i18n="blogAll">All posts</span></a>
       <a href="blog-always-on-pc-power-savings.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">English version →</a>
     </div>
-    <h1 class="p-h2" style="margin: 24px 0 8px;">24 小時開機的電腦怎麼省電——又不讓它睡著</h1>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">那台一個月沒關過的電腦，半夜還在燒電：常開機怎麼省又不讓它睡</h1>
     <p class="pd-byline" style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">Nisonxi</p>
 
     <article class="p-prose">
-      <p>有些電腦是不准睡覺的：在維持分享率的做種機、全家都在看的 Plex / Jellyfin 伺服器、錄監控畫面的那台、幫朋友開的遊戲伺服器，或單純擺著讓你隨時能遠端連回家的跳板機。網路上每篇省電指南的結論都是「讓它睡眠」——對你來說，每一篇都沒用。</p>
-      <p>但重點是：<strong>「必須保持清醒」不等於「必須 24 小時保持全速待命」。</strong>這是兩個不同的設定，而 Windows 其實讓你把它們分開。</p>
+      <p>房間角落那台電腦，已經一個月沒關過機了。它在幫你做種、跑 Plex 給全家看片、錄監控畫面，或單純擺著讓你隨時遠端連回家。半夜三點，沒人坐在前面，它還是亮著燈、嗡嗡作響。</p>
+      <p>你大概早就放棄省這台的電了——因為它根本不能睡。網路上每篇省電指南的結論都是「讓它睡眠」，對你來說每一篇都沒用。但真相是：「不能睡」跟「不能省」其實是兩回事。一台不准睡覺的電腦，照樣能把電費砍掉一截。</p>
+      <p>這篇就帶你看，怎麼在不讓機器睡著的前提下削掉它的吃電——手動有手動的做法，懶得管的話也能整套自動化。</p>
 
       <h2>常開機的浪費長什麼樣</h2>
       <p>看看這台機器凌晨 4 點實際在做什麼：做種是涓涓細流的 I/O；媒體伺服器在沒人看片的時間基本上是閒置；監控錄影持續但很輕。大多數常開型工作<strong>絕大部分時間只需要機器幾個百分點的能力</strong>——但預設的「平衡」計畫讓 CPU 隨時準備加速、風扇照常運轉、獨顯醒著跑桌面時脈。</p>

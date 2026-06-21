@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Running Local AI? Your Power Bill Noticed — PowerDoze Blog</title>
+  <title>It's Not the Seconds You Prompt, It's the 23 Hours It Idles: The Truth About Local AI's Power Bill — PowerDoze Blog</title>
   <meta name="description" content="Ollama, LM Studio, ComfyUI — local AI turns your desktop into always-on infrastructure. Where the watts go, the GPU power-limit trick, and how to stop choosing between sleep and dead jobs.">
   <link rel="icon" href="assets/favicon.ico">
   <link rel="canonical" href="https://powerdoze.app/blog-local-ai-power-management.html">
   <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-local-ai-power-management-zh.html">
   <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-local-ai-power-management.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Running Local AI? Your Power Bill Noticed">
+  <meta property="og:title" content="It's Not the Seconds You Prompt, It's the 23 Hours It Idles: The Truth About Local AI's Power Bill">
   <meta property="og:description" content="Local AI turns your desktop into always-on infrastructure. Where the watts go, and how to cut them while barely slowing inference.">
   <meta property="og:url" content="https://powerdoze.app/blog-local-ai-power-management.html">
   <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
   <meta property="og:site_name" content="PowerDoze">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Running Local AI? Your Power Bill Noticed">
+  <meta name="twitter:title" content="It's Not the Seconds You Prompt, It's the 23 Hours It Idles: The Truth About Local AI's Power Bill">
   <meta name="twitter:description" content="Where the watts go when you run LLMs at home, and how to cut them while barely slowing inference.">
   <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "Running Local AI? Your Power Bill Noticed",
+    "headline": "It's Not the Seconds You Prompt, It's the 23 Hours It Idles: The Truth About Local AI's Power Bill",
     "datePublished": "2026-06-11",
     "dateModified": "2026-06-11",
     "author": { "@type": "Person", "name": "Nisonxi", "url": "https://powerdoze.app/about.html" },
@@ -72,12 +72,13 @@
       <a href="/blog.html" class="p-eyebrow" style="text-decoration: none;">← <span data-i18n="blogAll">All posts</span></a>
       <a href="blog-local-ai-power-management-zh.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">中文版 →</a>
     </div>
-    <h1 class="p-h2" style="margin: 24px 0 8px;">Running Local AI? Your Power Bill Noticed</h1>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">It's Not the Seconds You Prompt, It's the 23 Hours It Idles: The Truth About Local AI's Power Bill</h1>
     <p class="pd-byline" style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">Nisonxi</p>
 
     <article class="p-prose">
-      <p>You did the sensible thing. Instead of paying per token, you run models at home — Ollama serving on your desktop, LM Studio for chat, ComfyUI for images, maybe a Whisper box transcribing meetings. Private, unlimited, yours.</p>
-      <p>What you also did, possibly without noticing, is turn your desktop into <strong>always-on AI infrastructure</strong> — and the GPU that makes local AI possible is the hungriest component in the machine.</p>
+      <p>You type a question into your own chat model, hit enter, and a few seconds later there's an answer — private, free, no token meter ticking. You lean back feeling pretty clever. You stopped renting AI; you own it now.</p>
+      <p>Then the electricity bill shows up, and it's gone up more than a handful of seconds a day should explain. Here's the twist: those bursts of typing barely cost a thing. The real charge is racking up in the hours you're not even at the keyboard.</p>
+      <p>This one's about where the watts actually hide — the idle "kept warm, just in case" hours, the one GPU trick that cuts power without slowing your answers, and how to stop choosing between letting the PC sleep and watching an overnight job die.</p>
 
       <h2>Where the watts actually go</h2>
       <p>A local-AI machine lives in three states, and the expensive one isn't the one you'd guess:</p>

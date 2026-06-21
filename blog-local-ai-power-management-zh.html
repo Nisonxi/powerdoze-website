@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>在自己電腦跑 AI？你的電費單已經發現了 — PowerDoze 部落格</title>
+  <title>最貴的不是你問問題那幾秒，是它乾等的 23 小時：本地 AI 的電費真相 — PowerDoze 部落格</title>
   <meta name="description" content="Ollama、LM Studio、ComfyUI——本地 AI 讓你的桌機變成 24 小時開機的基礎設施。這篇拆給你看：電到底耗在哪、幾乎不掉 tokens/sec 的 GPU 功耗上限技巧、以及怎麼不再「關睡眠」和「任務跑掉」二選一。">
   <link rel="icon" href="assets/favicon.ico">
   <link rel="canonical" href="https://powerdoze.app/blog-local-ai-power-management-zh.html">
   <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-local-ai-power-management.html">
   <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-local-ai-power-management-zh.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="在自己電腦跑 AI？你的電費單已經發現了">
+  <meta property="og:title" content="最貴的不是你問問題那幾秒，是它乾等的 23 小時：本地 AI 的電費真相">
   <meta property="og:description" content="本地 AI 讓桌機變成 24 小時基礎設施。電耗在哪、怎麼砍掉它又不拖慢推理。">
   <meta property="og:url" content="https://powerdoze.app/blog-local-ai-power-management-zh.html">
   <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
   <meta property="og:site_name" content="PowerDoze">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="在自己電腦跑 AI？你的電費單已經發現了">
+  <meta name="twitter:title" content="最貴的不是你問問題那幾秒，是它乾等的 23 小時：本地 AI 的電費真相">
   <meta name="twitter:description" content="本地 AI 的電到底耗在哪，以及怎麼砍掉它又不拖慢推理。">
   <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "在自己電腦跑 AI？你的電費單已經發現了",
+    "headline": "最貴的不是你問問題那幾秒，是它乾等的 23 小時：本地 AI 的電費真相",
     "datePublished": "2026-06-11",
     "dateModified": "2026-06-11",
     "author": { "@type": "Person", "name": "Nisonxi", "url": "https://powerdoze.app/about-zh.html" },
@@ -72,12 +72,13 @@
       <a href="/blog.html" class="p-eyebrow" style="text-decoration: none;">← <span data-i18n="blogAll">All posts</span></a>
       <a href="blog-local-ai-power-management.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">English version →</a>
     </div>
-    <h1 class="p-h2" style="margin: 24px 0 8px;">在自己電腦跑 AI？你的電費單已經發現了</h1>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">最貴的不是你問問題那幾秒，是它乾等的 23 小時：本地 AI 的電費真相</h1>
     <p class="pd-byline" style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">Nisonxi</p>
 
     <article class="p-prose">
-      <p>你做了明智的選擇：不再按 token 付錢，改在家裡跑模型——桌機上掛著 Ollama 提供服務、LM Studio 拿來聊天、ComfyUI 生圖，也許還有一台跑 Whisper 在轉錄會議。私密、無限量、完全是你的。</p>
-      <p>但你可能沒注意到，你同時也把桌機變成了一台 <strong>24 小時開機的 AI 基礎設施</strong>——而讓本地 AI 成為可能的那張 GPU，正是整台機器裡最會吃電的元件。</p>
+      <p>你在自己的聊天模型裡打了個問題，按下 enter，幾秒後答案就出來了——私密、免費、沒有 token 計費表在跳。你往椅背一靠，覺得自己挺聰明：以前是租 AI，現在這台是你自己的了。</p>
+      <p>然後電費單來了，漲幅遠超過「一天就那幾秒鐘」能解釋的程度。轉折在這裡：你那幾下打字幾乎不花什麼錢，真正燒錢的，是你連碰都沒碰鍵盤的那些時段。</p>
+      <p>這篇就帶你看清電到底躲在哪——那些「保溫待命、以防萬一」的閒置時數、一個能砍掉功耗又不拖慢你拿到答案的 GPU 技巧，還有怎麼不再「讓電腦睡」和「看著整晚的任務跑掉」二選一。</p>
 
       <h2>電到底耗在哪</h2>
       <p>一台本地 AI 機有三種狀態，而最花錢的不是你直覺想的那個：</p>

@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>電腦風扇好吵？先別買散熱器，試試軟體 — PowerDoze 部落格</title>
+  <title>風扇狂轉不是散熱不夠，是瓦數沒人管：軟體就能讓電腦閉嘴 — PowerDoze 部落格</title>
   <meta name="description" content="風扇噪音的本質是熱，熱的本質是瓦數——而瓦數是個設定值。花錢買散熱器之前，先試試從源頭降熱的 Windows 設定：被動散熱策略、CPU 上限、GPU 功耗限制，再把它們自動化。">
   <link rel="icon" href="assets/favicon.ico">
   <link rel="canonical" href="https://powerdoze.app/blog-quiet-pc-fan-noise-zh.html">
   <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-quiet-pc-fan-noise.html">
   <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-quiet-pc-fan-noise-zh.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="電腦風扇好吵？先別買散熱器，試試軟體">
+  <meta property="og:title" content="風扇狂轉不是散熱不夠，是瓦數沒人管：軟體就能讓電腦閉嘴">
   <meta property="og:description" content="噪音的本質是熱，熱的本質是瓦數——而瓦數是個設定值。從源頭降熱，再自動化。">
   <meta property="og:url" content="https://powerdoze.app/blog-quiet-pc-fan-noise-zh.html">
   <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
   <meta property="og:site_name" content="PowerDoze">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="電腦風扇好吵？先別買散熱器，試試軟體">
+  <meta name="twitter:title" content="風扇狂轉不是散熱不夠，是瓦數沒人管：軟體就能讓電腦閉嘴">
   <meta name="twitter:description" content="噪音的本質是熱，熱的本質是瓦數——而瓦數是個設定值。">
   <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "電腦風扇好吵？先別買散熱器，試試軟體",
+    "headline": "風扇狂轉不是散熱不夠，是瓦數沒人管：軟體就能讓電腦閉嘴",
     "datePublished": "2026-06-12",
     "dateModified": "2026-06-12",
     "author": { "@type": "Person", "name": "Nisonxi", "url": "https://powerdoze.app/about-zh.html" },
@@ -72,12 +72,13 @@
       <a href="/blog.html" class="p-eyebrow" style="text-decoration: none;">← <span data-i18n="blogAll">All posts</span></a>
       <a href="blog-quiet-pc-fan-noise.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">English version →</a>
     </div>
-    <h1 class="p-h2" style="margin: 24px 0 8px;">電腦風扇好吵？先別買散熱器，試試軟體</h1>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">風扇狂轉不是散熱不夠，是瓦數沒人管：軟體就能讓電腦閉嘴</h1>
     <p class="pd-byline" style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">Nisonxi</p>
 
     <article class="p-prose">
-      <p>夏天會讓每台電腦現出原形。整個冬天安安靜靜的機器，現在動不動就轉速拉滿準備起飛——視訊會議的時候、看網頁的時候，有時候根本不知道為什麼。</p>
-      <p>標準建議是花錢：更大的散熱器、更好的機殼風扇、換機殼。這些建議沒有錯——但它們治的是症狀。風扇的工作是搬熱、熱來自瓦數，而<strong>瓦數是個設定值。</strong>在花錢買「把熱更快搬走」的硬體之前，值得先試免費的選項：一開始就少產生一點熱。</p>
+      <p>你正在開視訊會議，人坐得好好的、什麼重活也沒做——電腦卻突然像吹風機一樣轉了起來。整個夏天都這樣：你只是在看網頁，它就開始狂吼，安靜一下，又莫名其妙地吼回來。</p>
+      <p>於是你開始查散熱器多少錢。但真相是這樣：風扇不是兇手，你八成也不用買新硬體。那個噪音其實是熱，熱其實是瓦數，而瓦數只是一個 Windows 預設就敢一路衝到頂的設定——除非你叫它別這樣。</p>
+      <p>這篇就帶你認識三個從源頭讓電腦安靜下來的開關，再教你讓它們自己開關，從此你再也不用盯著它。</p>
 
       <h2>風扇為什麼吵</h2>
       <p>CPU 和 GPU 把電變成運算，而幾乎全部都會變成熱。風扇控制器看溫度做事——瓦數越多、熱越多、轉速越高、越吵。這條鏈只有一個方向，意思是你可以從鏈的開頭下手，而不是結尾：</p>
