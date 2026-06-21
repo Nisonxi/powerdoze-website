@@ -76,47 +76,57 @@
     <p class="pd-byline" style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">Nisonxi</p>
 
     <article class="p-prose">
-      <p>闔上螢幕，筆電塞進包包，出門。兩小時後拿出來：機身是溫的——有時燙得讓人緊張——電量少了一大截。沒有東西壞掉。你的筆電完全照著它的設計在運作。問題就出在這裡。</p>
+      <p>早上把筆電一闔，塞進包包就出門。中午打開——咦，怎麼<strong>燙燙的</strong>？電還掉了一截，你明明整個上午都沒碰它。</p>
+      <p>它沒壞。真相比「壞掉」更微妙：你以為它在<strong>睡覺</strong>，它其實一直<em>半醒著偷上網</em>，邊發燙邊吃你的電。</p>
+      <p>別擔心，這篇就帶你把這個躲在「睡眠」底下的小偷揪出來——而且大多數人，<strong>三個步驟</strong>就能搞定。</p>
 
-      <h2>「睡眠」被換掉了</h2>
-      <p>過去二十年，闔上螢幕等於 <strong>S3 睡眠</strong>：記憶體保持供電、其他全部斷電，整台機器只剩涓滴耗電，放幾天都還有電。後來 Windows 轉向 <strong>Modern Standby</strong>（S0 低功耗待機），現在大多數新筆電出廠就是它——而且韌體裡通常已經沒有 S3 這個選項了。</p>
-      <p>Modern Standby 的核心想法很像手機：「睡著」其實是<em>淺淺地醒著</em>。機器保持網路連線、同步郵件、下載更新、一碰就秒醒。運作正常時很美好；不正常時，某個驅動程式或背景工作把系統卡在較高功耗狀態——你的包包就成了保溫箱。健康的機器一夜只該掉幾個百分點；出問題的機器每小時可以燒掉 10% 以上，名為待機，實為醒著。</p>
+      <h2>說好的「睡覺」，被偷偷換掉了</h2>
+      <p>我們都以為「螢幕一闔 = 電腦睡了 = 不耗電」。以前真的是這樣。</p>
+      <p>過去二十年，筆電闔上叫做 <strong>S3 睡眠</strong>：只留記憶體一點點電、其他全斷掉，整台幾乎不吃電，放三五天再開都還有電。但這幾年的新筆電悄悄換了規則，現在的睡眠叫 <strong>Modern Standby</strong>（S0 低功耗待機），理念跟手機一樣——所謂「睡著」其實是<em>淺淺地醒著</em>：隨時連網、幫你同步信件、偷偷裝更新，你一掀蓋它就秒醒。</p>
+      <p>順利時很方便。但只要有某個程式或驅動「卡」住、讓它一直高耗電，你的包包就變成保溫箱了。健康的機器一整晚只該掉幾趴；出狀況的，一小時能燒掉 10% 以上——名義上在睡，其實累得半死。</p>
 
       <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
-        傳統睡眠像一個睡得很沉的人——你不搖他，他基本上就是關機狀態。Modern Standby 則像一個淺眠的人，手機放在床頭：只要一震動、一則通知，他就半醒過來看一眼。多數晚上沒事，但要是手機整夜亮個不停，他根本沒真的休息到——隔天早上又累又燙。那就是放在包包裡的你的筆電。
+        傳統睡眠像睡得很沉的人：你不搖他，他基本上跟關機沒兩樣。Modern Standby 則像淺眠的人，手機放在床頭——一震動、一則通知就半醒過來瞄一眼。多數晚上沒事，但要是手機整夜亮個不停，他根本沒真的休息到，隔天又累又燙。那，就是躺在你包包裡的筆電。
       </div>
 
-      <h2>先診斷，再動手</h2>
-      <p>開一個系統管理員終端機，直接問 Windows 它在幹嘛：</p>
+      <h2>第一步：先問問電腦它在搞什麼</h2>
+      <p>別急著亂改設定，先讓 Windows 自己招供。開「系統管理員」終端機（開始選單搜尋 cmd → 右鍵「以系統管理員身分執行」），打三個指令：</p>
       <ul>
-        <li><strong><code>powercfg /a</code></strong> — 列出硬體支援哪些睡眠狀態。看到「待命 (S0 低電源閒置)」就是 Modern Standby；如果清單裡沒有 S3，代表韌體不提供傳統睡眠，任何軟體都加不回來。</li>
-        <li><strong><code>powercfg /sleepstudy</code></strong> — 關鍵工具。產出一份 HTML 報告，列出每段待機：持續多久、吃掉多少電、哪些元件或程序讓系統閒不下來。答案通常就在「Top Offenders」清單裡。</li>
-        <li><strong><code>powercfg /lastwake</code></strong> 和 <strong><code>powercfg /devicequery wake_armed</code></strong> — 上次是誰喚醒機器、以及哪些裝置有權喚醒它。</li>
-      </ul>
-
-      <h2>真正有用的處方</h2>
-      <ul>
-        <li><strong>解除流氓喚醒源的武裝。</strong><code>wake_armed</code> 清單裡用不到的東西——通常是網路卡和雜七雜八的周邊——到裝置管理員（電源管理分頁，取消「允許這個裝置喚醒電腦」）或用 <code>powercfg /devicedisablewake "裝置名稱"</code> 關掉。</li>
-        <li><strong>待機時切斷網路。</strong>S0 背景耗電很大一部分是網路活動。部分機器的電源選項有「待機時的網路連線」這個設定；有的話，把電池模式設為停用，待機行為就會接近傳統睡眠許多。</li>
-        <li><strong>長時間離開改用休眠。</strong>休眠（S4）把記憶體寫進磁碟後完全斷電——零耗電，放多久、飛多遠都沒事。恢復多花幾秒，但對離開好幾個小時的人毫無影響。先確認休眠開著（<code>powercfg /hibernate on</code>），再把「用電池時闔上螢幕」的動作從睡眠改成休眠。</li>
-        <li><strong>登錄檔大絕招——附真實警語。</strong>網路上很多教學推薦 <code>PlatformAoAcOverride = 0</code> 整個關掉 Modern Standby。先想清楚代價：在韌體已不支援 S3 的機器上（最近幾年的筆電大多如此），你換不回傳統睡眠，只會得到一個未定義的狀態，而且 Windows 在部分新版本已經無視這個機碼。要試請充分測試、隨時準備改回來；對多數人來說，「闔蓋改休眠」就能達到同樣目的，沒有這些風險。</li>
+        <li><strong><code>powercfg /a</code></strong> — 看你的筆電支援哪幾種睡眠。看到「待命 (S0 低電源閒置)」就是中了 Modern Standby；如果清單裡<strong>根本沒有 S3</strong>，代表硬體就不給你老式睡眠，任何軟體都救不回（這點等下有用）。</li>
+        <li><strong><code>powercfg /sleepstudy</code></strong> — <strong>這個最好用。</strong>它生出一份網頁報告，把你每一次「睡眠」攤開：睡多久、吃多少電、誰害它睡不著。兇手通常就寫在「Top Offenders（最大元兇）」那欄。</li>
+        <li><strong><code>powercfg /lastwake</code></strong> — 想知道「上次是誰把它吵醒的？」這行告訴你。</li>
       </ul>
 
       <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
-        休眠就像出國前把冰箱拔插頭、清空、上鎖：不耗電、不會壞、一毛錢都不花——代價是回家後要等它重新冷下來。睡眠則只是把冰箱門關上：門一開就是冷的，但全程都在低聲運轉。喝杯咖啡的休息，你只要關門就好；出門兩週，就該拔插頭。塞進包包出門，就是那趟兩週的旅行。
+        <code>sleepstudy</code> 就像幫筆電做一份「睡眠品質報告」，跟智慧手環記錄你的睡眠一樣：它不會幫你睡得更好，但會明明白白告訴你——昨晚幾點被吵醒、被什麼吵醒。知道兇手，才好對症下藥。
       </div>
 
-      <h2>又是切換的問題</h2>
-      <p>注意這些處方的共同形狀：休眠對包包是對的，對書桌是錯的。在桌上你要的是輕快的睡眠——進得快、醒得快；在路上你要的是完全斷電。Windows 只給你一組靜態的闔蓋和逾時設定，所以不管選哪邊，都有一半的時間是錯的。</p>
-      <p>這正是 <a href="/">PowerDoze</a> 自動化的那一層。它不碰 S0 本身——它決定的是機器<em>什麼時候、用什麼方式</em>進入低功耗，而電真正省下來的地方就在這裡：</p>
+      <h2>第二步：對症下藥</h2>
+      <p>抓到兇手後，通常這幾招就能解決，從最簡單的開始：</p>
       <ul>
-        <li><strong>在 App 裡設定闔蓋動作</strong>——睡眠、休眠、關機或不動作，接電和用電池分開設。「用電池時休眠、接上 dock 時睡眠」就是上面那帖包包處方的常駐版。</li>
-        <li><strong>用智慧任務排程休眠</strong>——設一個「01:00 自動休眠」，接住那些筆電忘了關就放著的夜晚——這是「早上電量莫名變少」最大宗的來源。</li>
-        <li><strong>逐模式的睡眠逾時</strong>——電池模式逾時抓緊、插電模式放寬，跟著電源模式自動切換，不用再進控制台。</li>
+        <li><strong>把愛亂叫醒它的東西「禁聲」。</strong>跑 <code>powercfg /devicequery wake_armed</code> 會列出「有權叫醒電腦」的裝置，裡面常有用不到的網路卡、滑鼠鍵盤。到「裝置管理員」找到它 → 內容 → 電源管理 → 取消「允許這個裝置喚醒電腦」。</li>
+        <li><strong>睡覺時順手把網路斷掉。</strong>Modern Standby 耗電很大一塊就是一直掛在網路上。有些筆電的電源設定有「待命時的網路連線」，把（用電池時）設成「停用」，它睡起來就乖很多。</li>
+        <li><strong>要離開久一點，改用「休眠」。</strong>這招最關鍵。休眠（S4）會把記憶體存到硬碟、然後<strong>整台真正斷電</strong>——零耗電，放一整天、坐一趟飛機都沒事，只是再開機多等幾秒（離開好幾小時的話根本無感）。先確認休眠開著（<code>powercfg /hibernate on</code>），再把「用電池闔蓋時」的動作從睡眠改成休眠就好。</li>
       </ul>
 
-      <h2>誠實角落</h2>
-      <p>任何第三方軟體——包括我們的——都無法改變機器進入 S0 之後 Modern Standby 本身的行為；那是韌體和 Windows 的地盤，要打那場仗請用上面的診斷步驟。軟體<em>能</em>負責的是決策層：確保機器每一次都在對的時刻進入對的狀態（睡眠、休眠、關機），而你不用動腦。實務上，大部分消失的電量一直都藏在這個決策層裡。想看 Windows 睡眠設定的全貌，可以讀我們的<a href="/blog-windows-sleep-settings-guide-zh.html">Windows 睡眠設定完整指南</a>。</p>
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        休眠就像出國前把冰箱拔插頭、清空、上鎖：不耗電、不會壞、一毛不花，代價是回家要等它重新冷起來。睡眠則只是把冰箱門關上：門一開就是冷的，但全程都在低聲運轉。喝杯咖啡的休息，關門就好；出門兩週，就該拔插頭。把筆電塞進包包出門，就是那趟兩週的旅行。
+      </div>
+
+      <p>至於網路上很多人推的「改登錄檔把 Modern Standby 整個關掉」（<code>PlatformAoAcOverride</code>）——先別衝動。如果你的機器硬體上已經沒有 S3（剛剛 <code>powercfg /a</code> 沒看到的話，近幾年筆電大多如此），關掉之後你<strong>換不回老式睡眠</strong>，只會得到一個怪怪、沒人保證的狀態，而且新版 Windows 有時根本不理它。真要試請隨時準備改回來；但老實說，對大部分人「闔蓋改休眠」就有一樣效果，還不用冒這個險。</p>
+
+      <h2>問題的根源，其實是「該用哪一種」</h2>
+      <p>你有沒有發現，上面這些招會「打架」？塞進包包你要<strong>休眠</strong>（完全斷電）；放在書桌上你卻要<strong>輕快的睡眠</strong>（掀開秒醒）。同一台筆電，不同情境要的不一樣。</p>
+      <p>偏偏 Windows 只讓你設<strong>一組</strong>「闔蓋要做什麼」。所以不管選哪邊，總有一半時間是錯的：設休眠，在家掀蓋要等；設睡眠，出門又繼續偷耗電。</p>
+      <p>這就是 <a href="/">PowerDoze</a> 在幫你顧的那一層。<strong>它不會去改 Modern Standby 本身</strong>（那是硬體和 Windows 的地盤，要硬碰硬請用上面的診斷三步驟）；它幫你管的是<em>什麼時候、用哪一種方式睡</em>——電，大多就是在這裡省回來的：</p>
+      <ul>
+        <li><strong>闔蓋動作分插電 / 用電池兩種</strong>——「用電池就休眠、接上 dock 就睡眠」，把上面那帖「包包處方」變自動，你再也不用記。</li>
+        <li><strong>設一個半夜自動休眠</strong>——例如「凌晨一點還醒著就自動休眠」，專門接住那些「忘了關就丟著」的夜晚（這其實是早上電量莫名變少的最大宗）。</li>
+        <li><strong>睡眠逾時跟著電源模式走</strong>——電池模式抓緊、插電放寬，自動切換，不用每次再進控制台。</li>
+      </ul>
+
+      <h2>老實說一句</h2>
+      <p>任何第三方軟體——包括我們的——都<strong>沒辦法</strong>改變 Modern Standby 進入之後的行為，那是硬體和 Windows 說了算，要硬碰硬請走上面的診斷路線。但軟體<em>能</em>做、而且最有價值的，是那個「決策」：每一次都讓電腦在對的時機、用對的方式進入低功耗（該睡就睡、該休眠就休眠、該關就關），而你完全不用動腦。實際上，大多數莫名消失的電，一直都漏在這個決策層裡。想把 Windows 睡眠設定一次搞懂，可以接著讀我們的 <a href="/blog-windows-sleep-settings-guide-zh.html">Windows 睡眠設定完整指南</a>。</p>
 
       <p style="margin-top: 40px;"><a href="/index.html#download" class="p-btn p-btn-primary">免費下載 PowerDoze →</a></p>
       <div class="pd-author-bio" style="margin: 56px 0 0; padding: 20px; border: 1px solid var(--hair); border-radius: var(--r-4); background: var(--surface);">
