@@ -1,8 +1,8 @@
 ﻿{
-    "latest":  "2.0.8",
+    "latest":  "2.0.9",
     "url":  "https://powerdoze.app/#download",
-    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.0.8/PowerDoze_v2.0.8_portable.zip",
-    "sha256":  "9b40bb7403f55c2d63b6d0c5b4b290f9400bca283633b83cb20ff0abb0d816a5",
-    "notes":  "修復用電歷史/真實節省從未記錄的問題（取樣服務未啟動）；省電量單位自動切換 Wh/kWh；讀不到功率時顯示明確引導。不影響 Pro 授權。",
-    "date":  "2026-06-15"
+    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.0.9/PowerDoze_v2.0.9_portable.zip",
+    "sha256":  "c5c7c3c679d30d0c6b15ac14decc4e820c4b0d1987c191ecd65a76eb4b49974f",
+    "notes":  "新增 App 內 Google 登入安全說明（7 語系，避免誤判為詐騙）",
+    "date":  "2026-06-21"
 }
