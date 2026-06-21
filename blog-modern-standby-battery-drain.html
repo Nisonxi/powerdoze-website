@@ -76,47 +76,57 @@
     <p class="pd-byline" style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">Nisonxi</p>
 
     <article class="p-prose">
-      <p>You close the lid, slide the laptop into your bag, and head out. Two hours later you pull out a machine that's warm — sometimes alarmingly hot — with a chunk of its battery gone. Nothing is broken. Your laptop is doing exactly what it was designed to do. That's the problem.</p>
+      <p>You close the lid, drop the laptop in your bag, and head out. You open it at lunch and — wait, why is it <strong>warm</strong>? A chunk of the battery is gone, and you never even touched it all morning.</p>
+      <p>Relax — it's not broken. The truth is sneakier than "broken": you thought it was <strong>asleep</strong>, but it's been <em>half-awake and quietly online</em> the whole time, running warm and eating your battery.</p>
+      <p>Don't worry. This post walks you through catching the thief hiding under "sleep" — and for most people, it's a <strong>three-step fix</strong>.</p>
 
-      <h2>What happened to sleep</h2>
-      <p>For two decades, closing the lid meant <strong>S3 sleep</strong>: RAM stays powered, everything else shuts off, the machine draws a trickle and can hold its charge for days. Then Windows moved to <strong>Modern Standby</strong> (S0 Low Power Idle), and most current laptops ship with it — usually with no S3 option left in the firmware at all.</p>
-      <p>Modern Standby is built on a phone-like idea: "asleep" should really mean <em>barely awake</em>. The machine keeps its network connection, syncs mail, downloads updates, and wakes instantly at a touch. When it works, it's lovely. When it doesn't, a driver or background task keeps the system in a higher-power state — and your bag becomes a padded oven. A healthy machine should lose only a few percent overnight; a misbehaving one can burn 10% or more per hour, awake in all but name.</p>
+      <h2>The sleep you were promised got swapped out</h2>
+      <p>We all assume "lid shut = computer asleep = no power used." That used to be true.</p>
+      <p>For two decades, closing the lid meant <strong>S3 sleep</strong>: a trickle of power to RAM, everything else off, the machine sipping so little it held its charge for days. But recent laptops quietly changed the rules. Today's sleep is <strong>Modern Standby</strong> (S0 Low Power Idle), built on the same idea as your phone — "asleep" really means <em>barely awake</em>: still on the network, syncing your mail, slipping in updates, awake the instant you lift the lid.</p>
+      <p>When it works, it's great. But let one app or driver get "stuck" holding the machine in a high-power state, and your bag turns into an oven. A healthy machine should lose only a few percent overnight; a misbehaving one can burn 10% or more an hour — asleep in name, exhausted in fact.</p>
 
       <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
         Old sleep was a person in a deep coma — basically switched off until you shook them. Modern Standby is a light sleeper with their phone on the nightstand: any buzz, any notification, and they half-wake to check it. Most nights that's fine. But if the phone keeps lighting up, they never really rest — and in the morning they're exhausted and warm. That's your laptop in the bag.
       </div>
 
-      <h2>Diagnose before you fix</h2>
-      <p>Open an admin terminal and ask Windows what it's actually doing:</p>
+      <h2>Step 1: Ask your computer what it's up to</h2>
+      <p>Don't start changing settings — make Windows confess first. Open an admin terminal (search <strong>cmd</strong> in Start → right-click → Run as administrator) and run three commands:</p>
       <ul>
-        <li><strong><code>powercfg /a</code></strong> — lists which sleep states your hardware supports. If you see "Standby (S0 Low Power Idle)", you're on Modern Standby; if S3 isn't listed, your firmware doesn't offer real sleep and no software can add it.</li>
-        <li><strong><code>powercfg /sleepstudy</code></strong> — the key tool. Generates an HTML report of every standby session: how long it lasted, how much battery it ate, and which components or processes kept the system busy. The "Top Offenders" list is usually where your answer lives.</li>
-        <li><strong><code>powercfg /lastwake</code></strong> and <strong><code>powercfg /devicequery wake_armed</code></strong> — what woke the machine last, and which devices are allowed to wake it at all.</li>
-      </ul>
-
-      <h2>The fixes that actually help</h2>
-      <ul>
-        <li><strong>Disarm rogue wake sources.</strong> Anything in the <code>wake_armed</code> list that you don't need — usually the network adapter and stray peripherals — can be disarmed in Device Manager (Power Management tab, uncheck "Allow this device to wake the computer") or with <code>powercfg /devicedisablewake "Device Name"</code>.</li>
-        <li><strong>Cut the network during standby.</strong> Much of S0's background drain is network activity. Some machines expose "Network connection in standby" in power options; where available, setting it to disabled on battery makes standby behave much more like old-fashioned sleep.</li>
-        <li><strong>Use hibernate for long absences.</strong> Hibernate (S4) writes RAM to disk and powers off completely — zero drain, survives any bag, any flight. It takes a few seconds longer to resume, which matters not at all when you're away for hours. Make sure it's enabled (<code>powercfg /hibernate on</code>), then map lid-close on battery to Hibernate instead of Sleep in your power settings.</li>
-        <li><strong>The registry kill switch — with a real warning.</strong> You'll find guides recommending <code>PlatformAoAcOverride = 0</code> to disable Modern Standby entirely. Know what you're buying: on machines whose firmware no longer supports S3 (most recent laptops), you don't get good old sleep back — you get an undefined state, and Windows has ignored the key on some recent builds anyway. Test thoroughly and be ready to revert; for most people, hibernate-on-lid-close achieves the same goal without the risk.</li>
+        <li><strong><code>powercfg /a</code></strong> — shows which sleep states your laptop supports. "Standby (S0 Low Power Idle)" means you're on Modern Standby; if <strong>S3 isn't on the list at all</strong>, the hardware simply won't give you old-style sleep, and no software can bring it back (keep that in mind — it matters shortly).</li>
+        <li><strong><code>powercfg /sleepstudy</code></strong> — <strong>the best one.</strong> It spits out a web report that lays every "sleep" bare: how long it lasted, how much battery it ate, and who kept it up. The culprit is usually right there under "Top Offenders."</li>
+        <li><strong><code>powercfg /lastwake</code></strong> — want to know "who woke it up last time?" This line tells you.</li>
       </ul>
 
       <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
-        Hibernate is unplugging the fridge, emptying it, and going on holiday: nothing runs, nothing spoils, nothing costs you a cent — but it takes a minute to get cold again when you're back. Sleep is just closing the fridge door: instantly cold the moment you open it, quietly humming the whole time. For a quick coffee break you want the door shut; for a two-week trip you pull the plug. The bag is a two-week trip.
+        <code>sleepstudy</code> is like a "sleep quality report" for your laptop — the way a fitness band logs your night. It won't make you sleep better, but it tells you plainly: what time you got woken, and by what. Find the culprit and you can actually treat it.
       </div>
 
-      <h2>The switching problem, again</h2>
-      <p>Notice the shape of the fix: hibernate is right for the bag and wrong for the desk. At your desk you want short, light sleep — quick to enter, instant to leave. On the move you want the machine completely off. Windows gives you one static set of lid and timeout settings, so whichever you pick is wrong half the time.</p>
-      <p>This is the layer <a href="/">PowerDoze</a> automates. It doesn't touch S0 itself — it decides <em>when and how</em> the machine goes down, which is where the battery actually gets saved:</p>
+      <h2>Step 2: Treat the actual cause</h2>
+      <p>Once you've caught the culprit, these moves usually do it — start with the easiest:</p>
       <ul>
-        <li><strong>Lid-close action, set from the app</strong> — sleep, hibernate, shutdown or nothing, configured separately for plugged-in and on-battery. "Hibernate when on battery, sleep when docked" is exactly the bag fix above, made permanent.</li>
-        <li><strong>Scheduled hibernate as a Smart Task</strong> — a task like "hibernate at 01:00" catches the nights the laptop got left open, the single biggest source of mystery morning drain.</li>
-        <li><strong>Per-mode sleep timeouts</strong> — aggressive timeouts on battery, relaxed ones plugged in, switching automatically with your power modes instead of living in Control Panel.</li>
+        <li><strong>Mute whatever keeps poking it awake.</strong> Run <code>powercfg /devicequery wake_armed</code> to list the devices "allowed to wake the computer" — often a network card or a stray mouse/keyboard you don't need. Find it in Device Manager → Properties → Power Management → uncheck "Allow this device to wake the computer."</li>
+        <li><strong>Cut the network while it sleeps.</strong> A big chunk of Modern Standby's drain is just staying online. Some laptops have a "Network connection in standby" setting; set it to disabled (on battery) and standby behaves far better.</li>
+        <li><strong>Going away a while? Switch to hibernate.</strong> This is the key one. Hibernate (S4) saves RAM to disk and then powers the machine fully off — zero drain, fine for a whole day or a long flight; you just wait a few extra seconds to resume (which you won't even notice after hours away). Confirm it's on (<code>powercfg /hibernate on</code>), then change the "on battery, lid close" action from sleep to hibernate.</li>
       </ul>
 
-      <h2>Honesty corner</h2>
-      <p>No third-party app — ours included — can change how Modern Standby itself behaves once the machine is in S0; that's firmware and Windows territory, and the diagnosis steps above are how you fight that fight. What software <em>can</em> own is the decision layer: making sure the machine enters the right state (sleep, hibernate, off) at the right moment, every time, without you thinking about it. In practice, that decision layer is where most of the lost battery was hiding all along. For the broader picture of how Windows sleep settings fit together, see our <a href="/blog-windows-sleep-settings-guide.html">complete guide to Windows sleep settings</a>.</p>
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Hibernate is unplugging the fridge, emptying it, and going on holiday: nothing runs, nothing spoils, nothing costs you a cent — but it takes a minute to get cold again when you're back. Sleep is just closing the fridge door: instantly cold the moment you open it, quietly humming the whole time. For a quick coffee break you want the door shut; for a two-week trip you pull the plug. Sliding the laptop into your bag is that two-week trip.
+      </div>
+
+      <p>As for the popular "edit the registry to kill Modern Standby entirely" trick (<code>PlatformAoAcOverride</code>) — hold off. If your machine's hardware no longer has S3 (which <code>powercfg /a</code> just told you — true for most recent laptops), turning it off won't bring old-style sleep back; you just get a weird, unsupported state, and newer Windows builds sometimes ignore the setting anyway. If you must try it, be ready to revert — but honestly, for most people "hibernate on lid close" gets the same result without the risk.</p>
+
+      <h2>The root problem: which one to use</h2>
+      <p>Notice how these fixes fight each other? In the bag you want <strong>hibernate</strong> (fully off); on the desk you want <strong>light, quick sleep</strong> (lift the lid, instantly back). Same laptop, different situations, different needs.</p>
+      <p>But Windows only lets you set <strong>one</strong> "what the lid does." So whichever you choose is wrong half the time: pick hibernate and you wait every time you open it at home; pick sleep and it keeps draining while you're out.</p>
+      <p>This is the layer <a href="/">PowerDoze</a> looks after for you. <strong>It doesn't touch Modern Standby itself</strong> (that's hardware-and-Windows turf — for that, use the three diagnosis steps above); what it manages is <em>when and how</em> the machine sleeps — and that's where the battery comes back:</p>
+      <ul>
+        <li><strong>Lid action split for plugged-in vs battery</strong> — "hibernate on battery, sleep when docked" makes that bag fix automatic, so you never have to remember.</li>
+        <li><strong>A nightly auto-hibernate</strong> — e.g. "if it's still awake at 1 a.m., hibernate," to catch the nights it got left open (the single biggest source of mystery morning drain).</li>
+        <li><strong>Sleep timeouts that follow your power mode</strong> — tight on battery, relaxed when plugged in, switching automatically instead of you diving into Control Panel each time.</li>
+      </ul>
+
+      <h2>One honest note</h2>
+      <p>No third-party app — ours included — can change how Modern Standby behaves once the machine is in S0; that's hardware and Windows calling the shots, so for that, take the diagnosis route above. But what software <em>can</em> do — and where it matters most — is the decision: putting your computer into the right low-power state at the right moment (sleep, hibernate, or off), every time, without you thinking about it. In reality, most of the battery that mysteriously vanishes was leaking right there, in the decision layer. To get Windows sleep settings straight once and for all, read on: our <a href="/blog-windows-sleep-settings-guide.html">complete guide to Windows sleep settings</a>.</p>
 
       <p style="margin-top: 40px;"><a href="/index.html#download" class="p-btn p-btn-primary">Download PowerDoze free →</a></p>
       <div class="pd-author-bio" style="margin: 56px 0 0; padding: 20px; border: 1px solid var(--hair); border-radius: var(--r-4); background: var(--surface);">
