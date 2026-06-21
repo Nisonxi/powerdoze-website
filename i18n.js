@@ -10,7 +10,7 @@ const LANGS = {
     blogA2d: 'Where every sleep setting lives, sleep vs hibernate vs Modern Standby, the powercfg commands that solve "won\'t sleep" and "sleeps too soon", and the structural limits no setting can fix.',
     blogPrev: 'Previous', blogNext: 'Next', blogAll: 'All posts',
     // <scheduled-blog-i18n:en>
-    blogA8t: 'Your Laptop Drains Battery While "Asleep" — Blame Modern Standby',
+    blogA8t: 'You Think It\'s Asleep — It\'s Scrolling Its Phone All Night: The Truth About Modern Standby',
     blogA8d: 'Hot laptop in the bag, 30% gone overnight? Windows replaced real sleep (S3) with Modern Standby. What S0 is, how to diagnose the drain with powercfg, and the fixes that actually help.',
     blogA7t: 'How Much Power Does Your PC Actually Draw? Three Ways to Find Out',
     blogA7d: 'Your PSU\'s label is a ceiling, not a reading. Wall meter, UPS readout, or free software sensors — what each method tells you, what each one misses, and how to turn the number into actual savings.',
@@ -427,7 +427,7 @@ const LANGS = {
     blogA2d: '設定藏在哪、睡眠/休眠/Modern Standby 差在哪、用 powercfg 解決「不肯睡」和「不該睡卻睡掉」，以及任何設定都修不了的結構性極限。',
     blogPrev: '上一篇', blogNext: '下一篇', blogAll: '所有文章',
     // <scheduled-blog-i18n:zh-TW>
-    blogA8t: '筆電「睡著」還在偷跑電？元兇是 Modern Standby',
+    blogA8t: '以為筆電睡了，它其實整夜在「滑手機」：Modern Standby 耗電真相',
     blogA8d: '包包裡發燙、隔夜掉 30%？Windows 把傳統 S3 睡眠換成了 Modern Standby。S0 是什麼、用 powercfg 抓出耗電元兇，以及真正有用的處方。',
     blogA7t: '你的電腦到底吃幾瓦？三種量法，從免費到精準',
     blogA7d: '電源供應器標的瓦數是上限，不是讀數。插座電錶、UPS 讀數、免費軟體感測器——每種方法量到什麼、漏掉什麼，以及怎麼把數字變成真正省下的電。',
@@ -844,7 +844,7 @@ const LANGS = {
     blogA2d: '设置藏在哪、睡眠/休眠/Modern Standby 差在哪、用 powercfg 解决「不肯睡」和「不该睡却睡掉」，以及任何设置都修不了的结构性极限。',
     blogPrev: '上一篇', blogNext: '下一篇', blogAll: '所有文章',
     // <scheduled-blog-i18n:zh-CN>
-    blogA8t: '笔记本"睡着"还在偷跑电？元凶是 Modern Standby',
+    blogA8t: '以为笔记本睡了，它其实整夜在「刷手机」：Modern Standby 耗电真相',
     blogA8d: '包里发烫、隔夜掉 30%？Windows 把传统 S3 睡眠换成了 Modern Standby。S0 是什么、用 powercfg 抓出耗电元凶，以及真正有用的处方。',
     blogA7t: '你的电脑到底吃几瓦？三种量法，从免费到精准',
     blogA7d: '电源标的瓦数是上限，不是读数。插座电表、UPS 读数、免费软件传感器——每种方法量到什么、漏掉什么，以及怎么把数字变成真正省下的电。',
@@ -1233,7 +1233,7 @@ const LANGS = {
     blogA2d: '設定の場所、スリープ/休止状態/Modern Standby の違い、「スリープしない」「すぐスリープする」を解決する powercfg コマンド、そして設定では直せない構造的限界。',
     blogPrev: '前の記事', blogNext: '次の記事', blogAll: '記事一覧',
     // <scheduled-blog-i18n:ja>
-    blogA8t: 'スリープ中なのにバッテリーが減る？犯人は Modern Standby',
+    blogA8t: '寝てると思ったら一晩中スマホをいじっていた——Modern Standby 電力消費の真相',
     blogA8d: 'カバンの中で熱い、一晩で30%減——Windows は従来の S3 スリープを Modern Standby に置き換えました。S0 の正体、powercfg での診断方法、本当に効く対策。',
     blogA7t: 'PCの実際の消費電力は？無料から正確まで、3つの測り方',
     blogA7d: '電源ユニットの表記は上限であって実測値ではない。ワットチェッカー、UPSの表示、無料のソフトウェアセンサー——それぞれ何が測れて何が抜けるか、そして数字を実際の節電につなげる方法。',
@@ -1603,7 +1603,7 @@ const LANGS = {
     blogA2d: '설정 위치, 절전/최대 절전/Modern Standby의 차이, "절전 안 됨"과 "너무 빨리 절전됨"을 해결하는 powercfg 명령어, 그리고 설정으로는 고칠 수 없는 구조적 한계.',
     blogPrev: '이전 글', blogNext: '다음 글', blogAll: '전체 글',
     // <scheduled-blog-i18n:ko>
-    blogA8t: '"잠든" 노트북이 배터리를 먹는다? 범인은 Modern Standby',
+    blogA8t: '잠든 줄 알았더니 밤새 폰만 보고 있었다: Modern Standby 배터리 소모의 진실',
     blogA8d: '가방 속에서 뜨겁고 하룻밤에 30% 증발 — Windows는 전통 S3 절전을 Modern Standby로 바꿨습니다. S0의 정체, powercfg 진단법, 실제로 효과 있는 처방.',
     blogA7t: '내 PC는 실제로 몇 와트를 쓸까? 무료부터 정밀까지 3가지 측정법',
     blogA7d: '파워서플라이에 적힌 와트는 상한이지 실측값이 아닙니다. 플러그 전력계, UPS 표시값, 무료 소프트웨어 센서 — 각 방법이 보여주는 것과 놓치는 것, 그리고 숫자를 실제 절약으로 바꾸는 법.',
@@ -1972,7 +1972,7 @@ const LANGS = {
     blogA2d: 'Où se trouvent les réglages, veille vs hibernation vs Modern Standby, les commandes powercfg qui résolvent « ne veut pas dormir » et « s\'endort trop tôt », et les limites structurelles.',
     blogPrev: 'Article précédent', blogNext: 'Article suivant', blogAll: 'Tous les articles',
     // <scheduled-blog-i18n:fr>
-    blogA8t: 'Votre portable se vide en « veille » ? La faute à Modern Standby',
+    blogA8t: 'On le croit en veille ? Il passe la nuit sur son téléphone : la vérité sur Modern Standby',
     blogA8d: 'PC chaud dans le sac, 30 % perdus pendant la nuit ? Windows a remplacé la vraie veille (S3) par Modern Standby. Ce qu\'est S0, comment diagnostiquer avec powercfg, et les correctifs qui marchent.',
     blogA7t: 'Combien consomme vraiment votre PC ? Trois façons de le savoir',
     blogA7d: 'L\'étiquette de votre alimentation est un plafond, pas une mesure. Wattmètre, écran de l\'onduleur ou capteurs logiciels gratuits — ce que chaque méthode révèle, ce qu\'elle rate, et comment transformer le chiffre en économies réelles.',
@@ -2341,7 +2341,7 @@ const LANGS = {
     blogA2d: 'Wo alle Einstellungen liegen, Schlaf vs. Ruhezustand vs. Modern Standby, die powercfg-Befehle für „schläft nicht" und „schläft zu früh", und die strukturellen Grenzen.',
     blogPrev: 'Vorheriger Beitrag', blogNext: 'Nächster Beitrag', blogAll: 'Alle Beiträge',
     // <scheduled-blog-i18n:de>
-    blogA8t: 'Laptop entlädt sich im "Schlaf"? Schuld ist Modern Standby',
+    blogA8t: 'Sie denken, er schläft? Er scrollt die ganze Nacht am Handy: die Wahrheit über Modern Standby',
     blogA8d: 'Heißer Laptop in der Tasche, 30 % über Nacht weg? Windows hat echten Schlaf (S3) durch Modern Standby ersetzt. Was S0 ist, wie man den Verbrauch mit powercfg diagnostiziert und welche Fixes wirklich helfen.',
     blogA7t: 'Wie viel Strom zieht Ihr PC wirklich? Drei Wege, es herauszufinden',
     blogA7d: 'Das Netzteil-Etikett ist eine Obergrenze, kein Messwert. Steckdosen-Messgerät, USV-Anzeige oder kostenlose Software-Sensoren — was jede Methode zeigt, was sie übersieht und wie aus der Zahl echte Ersparnis wird.',
