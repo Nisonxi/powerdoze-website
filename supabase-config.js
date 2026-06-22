@@ -75,3 +75,43 @@ async function updateNavAuth() {
     applyLang(getLang());
   }
 }
+
+// ── 手機漢堡選單 ────────────────────────────────────────
+// 全站每頁的 .p-nav 都載入本檔，所以在這裡注入漢堡鈕＝零逐頁改 HTML。
+// 桌面 CSS 把 .p-nav-toggle 設 display:none；手機 @media 顯示鈕、把連結/控制項折成下拉。
+(function () {
+  function initNavMenu() {
+    var nav = document.querySelector('.p-nav');
+    if (!nav) return;
+    var inner = nav.querySelector('.p-nav-inner');
+    if (!inner || inner.querySelector('.p-nav-toggle')) return; // 冪等：別重複注入
+    var isZh = (typeof getLang === 'function') && /^zh/.test(getLang() || '');
+    var btn = document.createElement('button');
+    btn.className = 'p-nav-toggle';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', isZh ? '選單' : 'Menu');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+    inner.appendChild(btn);
+
+    function setOpen(open) {
+      nav.classList.toggle('menu-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setOpen(!nav.classList.contains('menu-open'));
+    });
+    // 點選單內的連結後自動收起
+    var links = inner.querySelector('.p-nav-links');
+    if (links) links.addEventListener('click', function (e) { if (e.target.closest('a')) setOpen(false); });
+    // 點選單外、按 Esc、視窗放大到桌面 → 收起
+    document.addEventListener('click', function (e) {
+      if (nav.classList.contains('menu-open') && !nav.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+    window.addEventListener('resize', function () { if (window.innerWidth > 720) setOpen(false); });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initNavMenu);
+  else initNavMenu();
+})();

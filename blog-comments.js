@@ -48,7 +48,7 @@
   // ── Build the section shell ──
   var sec = document.createElement('section');
   sec.id = 'blog-comments';
-  sec.style.cssText = 'max-width:720px;margin:48px auto 0;padding-top:24px;border-top:1px solid var(--hair);';
+  sec.style.cssText = 'max-width: var(--article-w);margin:48px auto 0;padding-top:24px;border-top:1px solid var(--hair);';
   sec.innerHTML =
     '<h2 class="p-h3" style="font-size:20px;margin:0 0 18px;">' + esc(T.heading) + '</h2>' +
     '<div id="bc-list" style="margin-bottom:28px;color:var(--ink-2);">' + esc(T.loading) + '</div>' +

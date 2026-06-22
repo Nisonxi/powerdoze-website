@@ -123,18 +123,42 @@ body.plain {
   display: flex; align-items: center; gap: var(--s-3);
 }
 
-/* 手機：導覽改橫向可捲（不再整條消失），控制項墊到可觸控高度 */
+/* 漢堡選單按鈕（預設隱藏，只在手機顯示；按鈕由 supabase-config.js 注入，全站每頁生效） */
+.p-nav-toggle {
+  display: none;
+  align-items: center; justify-content: center;
+  width: 40px; height: 40px;
+  background: transparent;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-2, 6px);
+  color: var(--ink-2);
+  cursor: pointer; padding: 0;
+}
+.p-nav-toggle:hover { color: var(--ink); border-color: var(--ink-3); }
+.p-nav-toggle svg { width: 20px; height: 20px; }
+
+/* 手機：漢堡選單。logo + ☰ 在第一行；點 ☰ 後 5 個連結與語言/主題/登入展開成下拉。
+   （舊版用 grid 1fr + overflow-x 想做橫向捲，但 .p-nav-links 是 grid 子元素、flex:1 無效，
+   被 logo＋右側控制壓成 0 寬＝連結整組消失。改成 flex-wrap 折行下拉才真的修好。） */
 @media (max-width: 720px) {
-  .p-nav-links {
-    flex: 1; min-width: 0;
-    overflow-x: auto; -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    gap: var(--s-3);
-    font-size: 13px;
-    white-space: nowrap;
+  .p-nav-inner {
+    display: flex; flex-wrap: wrap; align-items: center;
+    height: auto; min-height: 56px; column-gap: var(--s-3);
   }
-  .p-nav-links::-webkit-scrollbar { display: none; }
-  .p-nav-links a { padding: 12px 0; }
+  .p-logo { order: 1; }
+  .p-nav-toggle { display: inline-flex; order: 2; margin-left: auto; }
+  .p-nav-links { order: 3; flex-basis: 100%; display: none; }
+  .p-nav-right { order: 4; flex-basis: 100%; display: none; }
+  .p-nav.menu-open .p-nav-links {
+    display: flex; flex-direction: column; gap: 0;
+    margin-top: var(--s-2); padding: var(--s-2) 0 var(--s-3);
+    border-top: 1px solid var(--hair);
+  }
+  .p-nav.menu-open .p-nav-right {
+    display: flex; align-items: center; gap: var(--s-3); flex-wrap: wrap;
+    padding-bottom: var(--s-3);
+  }
+  .p-nav-links a { padding: 12px 4px; font-size: 15px; color: var(--ink-2); }
   .p-theme-toggle, .p-lang-select { height: 44px; }
   .p-calc-preset { padding: 10px 12px; }
 }
@@ -1385,14 +1409,17 @@ body.plain {
    Long-form prose (privacy, terms, etc.)
    ═══════════════════════════════════════════════════════════ */
 
+/* 文章內容欄寬（桌面）。改這一個值即可全站文章同步加寬/縮窄；手機自動滿版。 */
+:root { --article-w: 880px; }
+
 .p-prose {
   color: var(--ink-2);
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: 18px;
+  line-height: 1.75;
 }
 .p-prose h2 {
   margin: var(--s-10) 0 var(--s-3);
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--ink);
@@ -1408,7 +1435,7 @@ body.plain {
 .p-prose strong { color: var(--ink); font-weight: 600; }
 .p-prose code {
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: 14px;
   background: var(--surface-2);
   padding: 1px 6px;
   border-radius: var(--r-1);
