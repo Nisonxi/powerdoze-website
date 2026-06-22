@@ -13,6 +13,8 @@
     'blog-modern-standby-battery-drain',
     // <scheduled-blog-nav>
   ];
+  // 供 blog-infinite.js（無限滾動）共用文章順序。
+  window.PD_BLOG_POSTS = POSTS;
   var el = document.getElementById('blog-nav');
   if (!el) return;
   var m = location.pathname.match(/\/([a-z0-9-]+?)(-zh)?\.html$/);
@@ -41,12 +43,16 @@
   el.innerHTML = html;
   // i18n.js 的 applyLang 在 DOMContentLoaded 跑，會接手翻譯上面的 data-i18n
 
-  // 留言區：每篇文章自動載入（不需逐篇改 HTML）。blog-comments.js 自己判斷
-  // 是否在文章頁、抓 slug、注入到本導覽下方。
-  if (!document.getElementById('blog-comments-loader')) {
-    var cs = document.createElement('script');
-    cs.id = 'blog-comments-loader';
-    cs.src = '/blog-comments.js';
-    document.body.appendChild(cs);
+  // 無限滾動：捲到文章底自動接下一篇（每篇自動生效，零逐頁改動）。
+  // 此時 #blog-nav 已填好、window.PD_BLOG_POSTS 已設好，blog-infinite.js 接手。
+  if (!document.getElementById('blog-infinite-loader')) {
+    var is = document.createElement('script');
+    is.id = 'blog-infinite-loader';
+    is.src = '/blog-infinite.js';
+    document.body.appendChild(is);
   }
+
+  // 留言區暫不載入：與無限滾動的連續閱讀體驗衝突（每篇文章底部一塊留言，在「一篇接一篇」
+  // 的連續流裡無處可放），且後端（留言表＋EF）尚未部署。留言程式碼仍保留在 blog-comments.js
+  // （休眠、不被載入），待重新設計成「無限滾動相容」版本＋部署後端後再開。見 blog_comments_feature memory。
 })();
