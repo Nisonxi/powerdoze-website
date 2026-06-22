@@ -52,6 +52,23 @@
 // Localize the static fallback text as soon as i18n.js is loaded.
 document.getElementById('status-text').textContent = t('callbackSigningIn');
 
+// Where to go after sign-in: a stashed same-origin URL (e.g. the blog article
+// the reader signed in from to comment), else home. Same-origin only — never
+// honor an absolute/cross-origin value, to avoid an open redirect.
+function postLoginDest() {
+  try {
+    var raw = localStorage.getItem('pd_return_to');
+    localStorage.removeItem('pd_return_to');
+    if (raw) {
+      var u = new URL(raw, window.location.origin);
+      if (u.origin === window.location.origin && u.pathname.indexOf('/auth') !== 0) {
+        return u.pathname + u.search + u.hash;
+      }
+    }
+  } catch (e) {}
+  return '/';
+}
+
 (async () => {
   try {
     // Supabase automatically picks up the tokens from the URL hash/params
@@ -62,13 +79,14 @@ document.getElementById('status-text').textContent = t('callbackSigningIn');
     if (session) {
       // Pure Google-OAuth sign in — no recovery flow to handle.
       document.getElementById('status-text').textContent = t('callbackSuccess');
-      setTimeout(() => { window.location.href = '/'; }, 800);
+      const dest = postLoginDest();
+      setTimeout(() => { window.location.href = dest; }, 800);
     } else {
       // No session yet — wait a moment and retry (OAuth can be async)
       await new Promise(r => setTimeout(r, 1500));
       const { data: { session: retrySession } } = await sbClient.auth.getSession();
       if (retrySession) {
-        window.location.href = '/';
+        window.location.href = postLoginDest();
       } else {
         throw new Error(t('callbackUnable'));
       }

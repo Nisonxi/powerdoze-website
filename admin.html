@@ -97,8 +97,12 @@
     .empty { color: var(--ad-ink3); font-size: 13px; padding: 8px 0; }
 
     /* Bug reports */
-    #bug-badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--ad-amber); color: #1a1a1a; font-weight: 700; margin-left: 6px; }
-    #bug-badge.zero { background: var(--ad-panel2); color: var(--ad-ink3); font-weight: 500; }
+    #bug-badge, #cmt-badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--ad-amber); color: #1a1a1a; font-weight: 700; margin-left: 6px; }
+    #bug-badge.zero, #cmt-badge.zero { background: var(--ad-panel2); color: var(--ad-ink3); font-weight: 500; }
+    .bug .st.appr { color: var(--ad-green); border-color: rgba(52,211,153,.4); }
+    .bug .st.rej { color: var(--ad-red); border-color: rgba(239,68,68,.4); }
+    .bug-actions { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .bug.reply { margin-left: 18px; border-left: 2px solid var(--ad-line); padding-left: 12px; }
     .bug { border-top: 1px solid var(--ad-line); padding: 12px 0; }
     .bug:first-child { border-top: none; }
     .bug-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
@@ -193,6 +197,11 @@
     <div class="ad-panel">
       <h2>Bug 回報 <span id="bug-badge"></span></h2>
       <div id="bug-reports"></div>
+    </div>
+
+    <div class="ad-panel">
+      <h2>部落格留言審核 <span id="cmt-badge"></span></h2>
+      <div id="blog-comments-mod"><div class="empty">載入中…</div></div>
     </div>
 
     <div class="ad-panel">
@@ -512,6 +521,93 @@
       _beSlug = _beFiles = _beCur = null;
     }
 
+    // ── 部落格留言審核（admin-blog-comments EF）──
+    var _cmtToken = null;
+
+    async function fetchComments(token) {
+      _cmtToken = token;
+      var el = document.getElementById('blog-comments-mod');
+      try {
+        var res = await fetch(SUPABASE_FUNCTIONS_URL + '/admin-blog-comments', {
+          headers: { 'Authorization': 'Bearer ' + token },
+        });
+        var d = await res.json();
+        if (!res.ok || d.status !== 'OK') throw new Error(d.message || ('HTTP ' + res.status));
+        renderComments(d);
+      } catch (e) {
+        el.innerHTML = '<div class="empty">讀取失敗：' + esc(e.message || e) + '</div>';
+      }
+    }
+
+    function renderComments(d) {
+      var badge = document.getElementById('cmt-badge');
+      var n = d.pending || 0;
+      badge.textContent = n > 0 ? (n + ' 待審') : '0';
+      badge.className = n > 0 ? '' : 'zero';
+
+      var all = d.comments || [];
+      var el = document.getElementById('blog-comments-mod');
+      if (!all.length) { el.innerHTML = '<div class="empty">尚無留言</div>'; return; }
+
+      // 子留言（回覆）掛在父留言下面顯示。
+      var byParent = {};
+      var tops = [];
+      all.forEach(function (c) {
+        if (c.parentId) { (byParent[c.parentId] = byParent[c.parentId] || []).push(c); }
+        else tops.push(c);
+      });
+
+      function one(c, isReply) {
+        var stClass = c.status === 'pending' ? ' new' : (c.status === 'approved' ? ' appr' : ' rej');
+        var stText = c.status === 'pending' ? '待審' : (c.status === 'approved' ? '已核准' : '已拒絕');
+        var who = c.isOwnerReply ? 'Nisonxi（作者回覆）' : (c.authorName || 'Reader');
+        var meta = [];
+        meta.push('<span>' + esc(c.postSlug) + (c.lang ? ('·' + esc(c.lang)) : '') + '</span>');
+        if (c.authorEmail && !c.isOwnerReply) meta.push('<a href="mailto:' + esc(c.authorEmail) + '">' + esc(c.authorEmail) + '</a>');
+        if (c.createdAt) meta.push('<span>' + esc(new Date(c.createdAt).toLocaleString()) + '</span>');
+
+        var acts = [];
+        if (c.status !== 'approved') acts.push('<button class="ad-btn" onclick="cmtAct(\'approve\',\'' + c.id + '\')">核准</button>');
+        if (c.status !== 'rejected') acts.push('<button class="ad-btn" onclick="cmtAct(\'reject\',\'' + c.id + '\')">拒絕</button>');
+        if (!c.isOwnerReply && c.status === 'approved') acts.push('<button class="ad-btn" onclick="cmtReply(\'' + c.id + '\')">公開回覆</button>');
+        acts.push('<button class="ad-btn" onclick="cmtAct(\'delete\',\'' + c.id + '\')">刪除</button>');
+
+        return '<div class="bug' + (isReply ? ' reply' : '') + '">' +
+          '<div class="bug-head"><div class="bug-desc"><strong>' + esc(who) + '</strong>：' + esc(c.body || '') + '</div>' +
+          '<span class="st' + stClass + '">' + stText + '</span></div>' +
+          '<div class="bug-meta">' + meta.join('') + '</div>' +
+          '<div class="bug-actions">' + acts.join('') + '</div>' +
+          '</div>';
+      }
+
+      el.innerHTML = tops.map(function (c) {
+        return one(c, false) + (byParent[c.id] || []).map(function (r) { return one(r, true); }).join('');
+      }).join('');
+    }
+
+    async function cmtAction(body, okMsg) {
+      try {
+        var res = await fetch(SUPABASE_FUNCTIONS_URL + '/admin-blog-comments', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + _cmtToken, 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        var d = await res.json();
+        if (!res.ok || d.status !== 'OK') throw new Error(d.message || ('HTTP ' + res.status));
+        renderComments(d);
+        if (okMsg) { /* 靜默更新即可，刪除才提示 */ }
+      } catch (e) { alert('失敗：' + (e.message || e)); }
+    }
+    function cmtAct(action, id) {
+      if (action === 'delete' && !confirm('確定刪除這則留言？（連同它的回覆一起刪）')) return;
+      cmtAction({ action: action, id: id });
+    }
+    function cmtReply(id) {
+      var text = prompt('以「Nisonxi（作者）」身分公開回覆：');
+      if (!text || !text.trim()) return;
+      cmtAction({ action: 'reply', id: id, body: text.trim() });
+    }
+
     (async function init() {
       if (!sbClient) { document.getElementById('error-msg').textContent = 'Supabase 未載入'; show('gate-error'); return; }
       show('gate-loading');
@@ -536,6 +632,7 @@
         }
         renderDashboard(data);
         fetchBlogSchedule(session.access_token);
+        fetchComments(session.access_token);
       } catch (e) {
         document.getElementById('error-msg').textContent = e.message || '未知錯誤';
         show('gate-error');

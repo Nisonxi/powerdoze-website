@@ -40,4 +40,13 @@
   html += '</nav>';
   el.innerHTML = html;
   // i18n.js 的 applyLang 在 DOMContentLoaded 跑，會接手翻譯上面的 data-i18n
+
+  // 留言區：每篇文章自動載入（不需逐篇改 HTML）。blog-comments.js 自己判斷
+  // 是否在文章頁、抓 slug、注入到本導覽下方。
+  if (!document.getElementById('blog-comments-loader')) {
+    var cs = document.createElement('script');
+    cs.id = 'blog-comments-loader';
+    cs.src = '/blog-comments.js';
+    document.body.appendChild(cs);
+  }
 })();
