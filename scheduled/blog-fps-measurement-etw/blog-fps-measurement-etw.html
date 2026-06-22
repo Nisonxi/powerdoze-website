@@ -77,7 +77,11 @@
     <p class="pd-byline" style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">Nisonxi</p>
 
     <article class="p-prose">
-      <p>PowerDoze is a power tool, so why does it measure FPS at all? Because watts and frames are two ends of the same trade. If you cap your GPU's power and the frame rate barely moves, you just got free silence and a smaller power bill; if it tanks, you've gone too far. To make that visible, our gaming overlay shows live FPS next to your monitor's refresh rate — and building that number turned out to be the most educational bug hunt we've had.</p>
+      <p>You're mid-game, the overlay in the corner says you're pushing some FPS number, and a small question pops up: how does it even know that? You never installed a frame counter into the game. Nothing got plugged into it. So where is the number coming from?</p>
+
+      <p>Here's the part that surprises people: it never touches the game at all. It can't. The moment a tool reaches inside an online game to count frames, anti-cheat sees a stranger in the house — and the worst case isn't a crash, it's your account getting flagged. So we count from the outside, and it turns out Windows was quietly keeping the tally the whole time.</p>
+
+      <p>This post walks you through how that works — the OS feature doing the counting, why it's safe to run next to ranked play, and the very educational bug that once made one game proudly report 600 FPS while it was really running 200.</p>
 
       <h2>The constraint: never touch the game</h2>
       <p>The standard way to measure FPS is to get inside the game: tools like RTSS inject a DLL into the game process and hook its <code>Present</code> calls — every hook fires, you count one frame. It works beautifully, and it's also exactly what anti-cheat systems are built to hate. For a tool people run alongside online games, injection isn't an option: the realistic worst case isn't a crash, it's someone's account getting flagged.</p>

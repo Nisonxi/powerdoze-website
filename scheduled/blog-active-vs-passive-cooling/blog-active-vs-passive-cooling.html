@@ -77,7 +77,11 @@
     <p class="pd-byline" style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">Nisonxi</p>
 
     <article class="p-prose">
-      <p>Deep in Windows' advanced power options sits "System cooling policy" with two values — Active and Passive — and no explanation whatsoever. The most common guess we hear is "passive means the fans don't spin". Wrong, and understandably so. Both modes use the fans. The setting decides something more interesting: <strong>which lever Windows pulls first when the CPU gets hot.</strong></p>
+      <p>You're halfway through a video call. The room goes quiet, and right then your laptop fan spins up with a roar — like a tiny hairdryer everyone on the call can hear. You wince and think: is this thing dying?</p>
+
+      <p>Relax. It's not broken. The truth is weirder than "broken" — there's a setting buried in Windows, one nobody ever explains, quietly making this call for you: when things get hot, does the fan get loud first, or does the chip slow down first? And almost everyone guesses what it does backwards.</p>
+
+      <p>This post shows you what that setting actually controls, where it really matters, and the thing people worry about most — whether it'll trample the BIOS fan curve you spent hours tuning.</p>
 
       <h2>Heat has two exits</h2>
       <p>When a chip heats up, the system has exactly two moves: move the heat away faster (spin fans up), or make less heat (run the chip slower). The cooling policy is the priority order between them:</p>
