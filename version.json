@@ -1,8 +1,8 @@
 ﻿{
-    "latest":  "2.0.9",
+    "latest":  "2.1.0",
     "url":  "https://powerdoze.app/#download",
-    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.0.9/PowerDoze_v2.0.9_portable.zip",
-    "sha256":  "c5c7c3c679d30d0c6b15ac14decc4e820c4b0d1987c191ecd65a76eb4b49974f",
-    "notes":  "新增 App 內 Google 登入安全說明（7 語系，避免誤判為詐騙）",
-    "date":  "2026-06-21"
+    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.1.0/PowerDoze_v2.1.0_portable.zip",
+    "sha256":  "ea3431d47052979c5825b8c264988fbde318bf8ac726cd487d4174bcc3dd6244",
+    "notes":  "新增 DP/HDMI 桌面圖示佈局守護（Pro）與 Pro 引導式設定精靈；修復硬體監控並發競態、緩解 WinRing0 防毒誤判。",
+    "date":  "2026-06-23"
 }
