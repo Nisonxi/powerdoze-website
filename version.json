@@ -1,8 +1,8 @@
 ﻿{
-    "latest":  "2.1.0",
+    "latest":  "2.1.1",
     "url":  "https://powerdoze.app/#download",
-    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.1.0/PowerDoze_v2.1.0_portable.zip",
-    "sha256":  "ea3431d47052979c5825b8c264988fbde318bf8ac726cd487d4174bcc3dd6244",
-    "notes":  "新增 DP/HDMI 桌面圖示佈局守護（Pro）與 Pro 引導式設定精靈；修復硬體監控並發競態、緩解 WinRing0 防毒誤判。",
+    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.1.1/PowerDoze_v2.1.1_portable.zip",
+    "sha256":  "5e1bdeae460dbffd4951105931287d8cb886037c79f0d98914ec68aaf14548f9",
+    "notes":  "背景自動更新：偵測新版即在背景靜默下載並校驗，下次開啟 App 自動套用、不彈窗不打斷；套用失敗自動回退、絕不鎖住。手動檢查更新仍可立即更新。",
     "date":  "2026-06-23"
 }
