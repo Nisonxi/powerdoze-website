@@ -1,8 +1,8 @@
 ﻿{
-    "latest":  "2.1.1",
+    "latest":  "2.1.2",
     "url":  "https://powerdoze.app/#download",
-    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.1.1/PowerDoze_v2.1.1_portable.zip",
-    "sha256":  "5e1bdeae460dbffd4951105931287d8cb886037c79f0d98914ec68aaf14548f9",
-    "notes":  "背景自動更新：偵測新版即在背景靜默下載並校驗，下次開啟 App 自動套用、不彈窗不打斷；套用失敗自動回退、絕不鎖住。手動檢查更新仍可立即更新。",
-    "date":  "2026-06-23"
+    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.1.2/PowerDoze_v2.1.2_portable.zip",
+    "sha256":  "dbdd0af98a9970aab0278595311e560c6d8de535548ba4fabc354387e877cde4",
+    "notes":  "v2.1.2 — 設定精靈與硬體監測穩定性修正\n\n• 設定精靈：套用推薦設定時會「保留」你既有的自訂排程規則（不再整批覆蓋）；起訖時間相同的無效排程會被擋下；app-driven 用途未選程式時會提醒。\n• 硬體監測：被防毒軟體擋住 WinRing0 驅動時，保留你的開啟設定並提供「重試」，不再靜默關閉；狀態誠實顯示「已被封鎖」而非看似沒開。\n• CPU 溫度／功耗讀值更穩定：溫度 fallback 只取 CPU／核心感測器（避免被 VRM／主機板騙高）、Package 功耗加優先序避免不確定值。\n• 引擎穩定性：硬體監測並發存取補強、Ring0 驅動殘留清理。",
+    "date":  "2026-06-24"
 }
