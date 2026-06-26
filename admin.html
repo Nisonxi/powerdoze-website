@@ -217,6 +217,7 @@
           <strong id="blog-editor-slug" style="font-size:13px;"></strong>
           <button class="ad-btn" id="be-zh" onclick="blogSwitchFile('zh')">中文版</button>
           <button class="ad-btn" id="be-en" onclick="blogSwitchFile('en')">English</button>
+          <button class="ad-btn" onclick="blogPreviewCurrent()">預覽</button>
           <button class="ad-btn primary" onclick="blogSaveCurrent()">儲存</button>
           <button class="ad-btn" onclick="blogCloseEditor()">關閉</button>
           <span id="be-status" style="font-size:12px;color:var(--ad-ink3);"></span>
@@ -401,14 +402,14 @@
       }
     }
 
-    // ── Blog 排程（admin-blog-schedule EF；寫入需 GITHUB_PAT secret）──
+    // ── Blog 排程（admin-blog-drafts EF；草稿存 Supabase，owner-only，外人看不到）──
     var _blogToken = null;
 
     async function fetchBlogSchedule(token) {
       _blogToken = token;
       var el = document.getElementById('blog-sched');
       try {
-        var res = await fetch(SUPABASE_FUNCTIONS_URL + '/admin-blog-schedule', {
+        var res = await fetch(SUPABASE_FUNCTIONS_URL + '/admin-blog-drafts', {
           headers: { 'Authorization': 'Bearer ' + token },
         });
         var d = await res.json();
@@ -422,32 +423,32 @@
     function renderBlogSchedule(d) {
       var el = document.getElementById('blog-sched');
       var note = document.getElementById('blog-sched-note');
-      note.textContent = d.canWrite ? '每日 09:30 自動檢查發佈' : '唯讀——設定 GITHUB_PAT secret 後可在此改期/發佈';
-      var posts = (d.schedule && d.schedule.posts) || [];
+      note.textContent = '草稿存 Supabase（外人看不到）；每日 09:30（台北）自動檢查發佈';
+      var posts = d.drafts || [];
       if (!posts.length) { el.innerHTML = '<div class="empty">佇列是空的</div>'; return; }
       el.innerHTML = posts.map(function (p) {
         var sched = p.status === 'scheduled';
-        var prev = sched ? ('/scheduled/' + p.slug + '/' + p.slug) : ('/' + p.slug);
-        var links = '<a href="' + prev + '.html" target="_blank">EN 預覽</a> · <a href="' + prev + '-zh.html" target="_blank">中文預覽</a>';
-        var btns = '';
+        var btns;
         if (sched) {
-          btns = '<span><button class="ad-btn" onclick="blogOpenEditor(\'' + p.slug + '\')">編輯</button>' +
-                 (d.canWrite
-                   ? ' <button class="ad-btn" onclick="blogSetDate(\'' + p.slug + '\',\'' + p.publishDate + '\')">改日期</button> ' +
-                     '<button class="ad-btn primary" onclick="blogPublishNow(\'' + p.slug + '\')">立即發佈</button>'
-                   : '') + '</span>';
+          btns = '<span><button class="ad-btn" onclick="blogOpenEditor(\'' + p.slug + '\')">編輯／預覽</button> ' +
+                 '<button class="ad-btn" onclick="blogSetDate(\'' + p.slug + '\',\'' + p.publishDate + '\')">改日期</button> ' +
+                 '<button class="ad-btn primary" onclick="blogPublishNow(\'' + p.slug + '\')">立即發佈</button></span>';
+        } else {
+          // 已發佈 → 連到公開站（草稿已上線）
+          btns = '<span><a href="/' + p.slug + '.html" target="_blank">EN</a> · <a href="/' + p.slug + '-zh.html" target="_blank">中文</a></span>';
         }
         return '<div class="bug">' +
-          '<div class="bug-head"><div class="bug-desc">' + esc(p.title || p.slug) + '</div>' +
+          '<div class="bug-head"><div class="bug-desc">' + esc(p.slug) + '</div>' +
           '<span class="st' + (sched ? ' new' : '') + '">' + (sched ? '排程 ' : '已發佈 ') + esc(p.publishDate) + '</span></div>' +
-          '<div class="bug-meta"><span>' + esc(p.slug) + '</span><span>' + links + '</span>' + btns + '</div>' +
+          '<div class="bug-meta"><span>' + esc(p.i18nKey || '') + '</span>' + btns + '</div>' +
           '</div>';
       }).join('');
     }
 
-    async function blogAction(body, okMsg) {
+    // set-date/delete 回 drafts → 直接重繪；publish-now 不回 drafts → refetch。
+    async function blogAction(body, okMsg, refetch) {
       try {
-        var res = await fetch(SUPABASE_FUNCTIONS_URL + '/admin-blog-schedule', {
+        var res = await fetch(SUPABASE_FUNCTIONS_URL + '/admin-blog-drafts', {
           method: 'POST',
           headers: { 'Authorization': 'Bearer ' + _blogToken, 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
@@ -455,7 +456,8 @@
         var d = await res.json();
         if (!res.ok || d.status !== 'OK') throw new Error(d.message || ('HTTP ' + res.status));
         alert(okMsg);
-        renderBlogSchedule({ schedule: d.schedule, canWrite: true });
+        if (refetch) fetchBlogSchedule(_blogToken);
+        else if (d.drafts) renderBlogSchedule(d);
       } catch (e) { alert('失敗：' + (e.message || e)); }
     }
     function blogSetDate(slug, cur) {
@@ -465,13 +467,13 @@
       blogAction({ action: 'set-date', slug: slug, date: date }, '已改為 ' + date + '。當天 09:30（台北）自動發佈。');
     }
     function blogPublishNow(slug) {
-      if (!confirm('確定立即發佈「' + slug + '」？\n會直接 commit 並觸發部署，約 1-2 分鐘後上線。')) return;
-      blogAction({ action: 'publish-now', slug: slug }, '已觸發發佈，約 1-2 分鐘後上線。');
+      if (!confirm('確定立即發佈「' + slug + '」？\n會把排程日期改成今天；下次發佈流程執行時上線。')) return;
+      blogAction({ action: 'publish-now', slug: slug },
+        '已排今天發佈。下次發佈流程執行時上線（每日 09:30 台北 cron，或在 GitHub Actions 手動觸發 publish-scheduled-blog）。', true);
     }
 
-    // ── 文章編輯器（讀不需 PAT；儲存需 GITHUB_PAT）──
-    var _beSlug = null, _beFiles = null, _beCur = null;
-    function _beName(which) { return which === 'zh' ? (_beSlug + '-zh.html') : (_beSlug + '.html'); }
+    // ── 文章編輯器（草稿存 Supabase，owner-only）──
+    var _beSlug = null, _beHtml = null, _beCur = null;
     async function blogOpenEditor(slug) {
       var st = document.getElementById('be-status');
       document.getElementById('blog-editor').classList.remove('hidden');
@@ -479,46 +481,54 @@
       document.getElementById('be-text').value = '';
       st.textContent = '載入中…';
       try {
-        var res = await fetch(SUPABASE_FUNCTIONS_URL + '/admin-blog-schedule', {
+        var res = await fetch(SUPABASE_FUNCTIONS_URL + '/admin-blog-drafts', {
           method: 'POST',
           headers: { 'Authorization': 'Bearer ' + _blogToken, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'get-files', slug: slug }),
+          body: JSON.stringify({ action: 'get-one', slug: slug }),
         });
         var d = await res.json();
         if (!res.ok || d.status !== 'OK') throw new Error(d.message || ('HTTP ' + res.status));
-        _beSlug = slug; _beFiles = d.files; _beCur = null;
+        _beSlug = slug; _beHtml = { en: d.htmlEn || '', zh: d.htmlZh || '' }; _beCur = null;
         blogSwitchFile('zh');
-        st.textContent = '已載入。改 <article> 區塊內的文字即可，儲存後預覽約 1-2 分鐘更新。';
+        st.textContent = '已載入。改完按儲存；按「預覽」可在新分頁本地渲染當前語言（草稿不公開，無法用網址預覽）。';
       } catch (e) { st.textContent = '載入失敗：' + (e.message || e); }
     }
     function blogSwitchFile(which) {
-      if (!_beFiles) return;
-      if (_beCur) _beFiles[_beName(_beCur)] = document.getElementById('be-text').value;
+      if (!_beHtml) return;
+      if (_beCur) _beHtml[_beCur] = document.getElementById('be-text').value;
       _beCur = which;
-      document.getElementById('be-text').value = _beFiles[_beName(which)] || '';
+      document.getElementById('be-text').value = _beHtml[which] || '';
       document.getElementById('be-zh').className = 'ad-btn' + (which === 'zh' ? ' primary' : '');
       document.getElementById('be-en').className = 'ad-btn' + (which === 'en' ? ' primary' : '');
     }
+    function blogPreviewCurrent() {
+      if (!_beHtml || !_beCur) return;
+      var html = document.getElementById('be-text').value;
+      var w = window.open('', '_blank');
+      if (w) { w.document.open(); w.document.write(html); w.document.close(); }
+    }
     async function blogSaveCurrent() {
       if (!_beSlug || !_beCur) return;
-      var name = _beName(_beCur);
       var st = document.getElementById('be-status');
       st.textContent = '儲存中…';
+      var content = document.getElementById('be-text').value;
+      var body = { action: 'save', slug: _beSlug };
+      if (_beCur === 'en') body.htmlEn = content; else body.htmlZh = content;
       try {
-        var res = await fetch(SUPABASE_FUNCTIONS_URL + '/admin-blog-schedule', {
+        var res = await fetch(SUPABASE_FUNCTIONS_URL + '/admin-blog-drafts', {
           method: 'POST',
           headers: { 'Authorization': 'Bearer ' + _blogToken, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'save-file', slug: _beSlug, name: name, content: document.getElementById('be-text').value }),
+          body: JSON.stringify(body),
         });
         var d = await res.json();
         if (!res.ok || d.status !== 'OK') throw new Error(d.message || ('HTTP ' + res.status));
-        _beFiles[name] = document.getElementById('be-text').value;
-        st.textContent = '✅ 已儲存 ' + name + '（預覽約 1-2 分鐘後更新）';
+        _beHtml[_beCur] = content;
+        st.textContent = '✅ 已儲存（' + (_beCur === 'en' ? 'English' : '中文') + '）。發佈後才會上線。';
       } catch (e) { st.textContent = '儲存失敗：' + (e.message || e); }
     }
     function blogCloseEditor() {
       document.getElementById('blog-editor').classList.add('hidden');
-      _beSlug = _beFiles = _beCur = null;
+      _beSlug = _beHtml = _beCur = null;
     }
 
     // ── 部落格留言審核（admin-blog-comments EF）──

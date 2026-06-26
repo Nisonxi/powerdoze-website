@@ -70,6 +70,8 @@
     try { history.replaceState(null, '', unit.url); } catch (e) {}
     if (unit.title) document.title = unit.title;
     markRead(unit.slug);
+    // 留言區（在整條流最底）跟著切到目前文章的留言。
+    if (typeof window.PD_loadCommentsFor === 'function') window.PD_loadCommentsFor(unit.slug);
   }
   // 目前正在讀哪篇＝「標題已捲過頂部基準線」的最後一篇（scrollspy）。比「標題進場才切」
   // 更穩——快速捲到底時也能算出正確文章，URL 不會卡在第一篇。units 依文件順序排列。

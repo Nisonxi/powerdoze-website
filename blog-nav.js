@@ -52,7 +52,13 @@
     document.body.appendChild(is);
   }
 
-  // 留言區暫不載入：與無限滾動的連續閱讀體驗衝突（每篇文章底部一塊留言，在「一篇接一篇」
-  // 的連續流裡無處可放），且後端（留言表＋EF）尚未部署。留言程式碼仍保留在 blog-comments.js
-  // （休眠、不被載入），待重新設計成「無限滾動相容」版本＋部署後端後再開。見 blog_comments_feature memory。
+  // 留言區（與無限滾動相容）：blog-comments.js 暴露 PD_loadCommentsFor，blog-infinite.js
+  // 滾到哪篇就載哪篇的留言；留言區恆在整條流最底，不打斷連續閱讀。後端 blog_comments 表 +
+  // get/submit/admin 三個 EF 已部署（2026-06-25）。
+  if (!document.getElementById('blog-comments-loader')) {
+    var cs = document.createElement('script');
+    cs.id = 'blog-comments-loader';
+    cs.src = '/blog-comments.js';
+    document.body.appendChild(cs);
+  }
 })();

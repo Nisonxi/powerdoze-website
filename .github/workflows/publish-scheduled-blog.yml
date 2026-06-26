@@ -5,6 +5,11 @@ on:
     - cron: '30 1 * * *'   # 每天 09:30（台北時間 UTC+8）檢查是否有到期文章
   workflow_dispatch: {}     # 後台「立即發佈」/ 手動觸發
 
+# 防兩個發佈同時跑（cron 撞 workflow_dispatch / 重跑）。不取消進行中，讓它跑完。
+concurrency:
+  group: publish-blog
+  cancel-in-progress: false
+
 permissions:
   contents: write
   pages: write
@@ -15,7 +20,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Fetch due drafts from Supabase
+        env:
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          SUPABASE_FN_URL: ${{ secrets.SUPABASE_FN_URL }}
+        run: |
+          # 草稿全文寫到 runner 暫存區（repo 外）→ 絕不會被 commit 進公開 repo。
+          code=$(curl -sS -o "$RUNNER_TEMP/due-drafts.json" -w '%{http_code}' \
+            -H "X-Publish-Token: $PUBLISH_TOKEN" \
+            "$SUPABASE_FN_URL/publish-due-drafts") || { echo "fetch failed"; exit 1; }
+          echo "due fetch HTTP $code"
+          [ "$code" = "200" ] || { echo "non-200 from publish-due-drafts"; cat "$RUNNER_TEMP/due-drafts.json" || true; exit 1; }
+
       - name: Publish due posts
+        env:
+          DUE_FILE: ${{ runner.temp }}/due-drafts.json
+          PUBLISHED_FILE: ${{ runner.temp }}/published-slugs.json
         run: node scripts/publish-scheduled.js
 
       - name: Commit & push if changed
@@ -23,15 +43,33 @@ jobs:
         run: |
           git config user.name "blog-scheduler[bot]"
           git config user.email "blog-scheduler[bot]@users.noreply.github.com"
-          git add -A
+          # Explicit add（非 git add -A）→ 只 commit 發佈會動到的檔案；任何暫存草稿
+          # 或未預期檔案都不會被帶進公開 repo（草稿暫存在 $RUNNER_TEMP，本就不在這）。
+          git add blog.html i18n.js blog-nav.js sitemap.xml blog-*.html
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "Nothing to publish."
           else
-            git commit -m "blog: 自動發佈排程文章（scheduled publish）"
+            git commit -m "blog: 自動發佈排程文章（from Supabase）"
             git push
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Mark drafts published in Supabase
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          SUPABASE_FN_URL: ${{ secrets.SUPABASE_FN_URL }}
+          PUBLISHED_FILE: ${{ runner.temp }}/published-slugs.json
+        run: |
+          slugs=$(cat "$PUBLISHED_FILE" 2>/dev/null || echo '[]')
+          if [ -z "$slugs" ] || [ "$slugs" = "[]" ]; then echo "no slugs to mark"; exit 0; fi
+          # 只在 push 成功後才標 published（mark-published 會二次驗證 publish_date<=today）。
+          for i in 1 2 3; do
+            curl -sS -X POST -H "X-Publish-Token: $PUBLISH_TOKEN" -H "Content-Type: application/json" \
+              -d "{\"action\":\"mark-published\",\"slugs\":$slugs}" \
+              "$SUPABASE_FN_URL/publish-due-drafts" && break || sleep 5
+          done
 
       - name: Request Pages rebuild
         if: steps.commit.outputs.changed == 'true'

@@ -7,7 +7,7 @@
   // Only on article pages (blog-xxx.html / blog-xxx-zh.html), not the index.
   var m = location.pathname.match(/\/(blog-[a-z0-9-]+?)(-zh)?\.html$/);
   if (!m) return;
-  var SLUG = m[1];
+  var currentSlug = m[1];
   var LANG = m[2] ? 'zh' : 'en';
   var anchor = document.getElementById('blog-nav');
   if (!anchor) return;
@@ -98,7 +98,7 @@
       headers.apikey = SUPABASE_ANON_KEY;
       headers.Authorization = 'Bearer ' + SUPABASE_ANON_KEY;
     }
-    fetch(FN + '/get-blog-comments?slug=' + encodeURIComponent(SLUG), { headers: headers })
+    fetch(FN + '/get-blog-comments?slug=' + encodeURIComponent(currentSlug), { headers: headers })
       .then(function (r) { return r.json(); })
       .then(function (d) { if (d && d.status === 'OK') renderList(d.comments); else listEl.innerHTML = ''; })
       .catch(function () { listEl.innerHTML = ''; });
@@ -150,7 +150,7 @@
       return fetch(FN + '/submit-blog-comment', {
         method: 'POST',
         headers: { 'Authorization': 'Bearer ' + session.access_token, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ postSlug: SLUG, body: text, lang: LANG }),
+        body: JSON.stringify({ postSlug: currentSlug, body: text, lang: LANG }),
       });
     }).then(function (r) {
       if (!r) return;
@@ -181,4 +181,12 @@
   function start() { loadComments(); initCompose(); }
   if (typeof sbClient !== 'undefined' && sbClient) start();
   else setTimeout(start, 300);
+
+  // 無限滾動相容：blog-infinite.js 滾到另一篇時呼叫這個，留言區（恆在整條流最底）
+  // 跟著切到那篇的留言。compose 動態讀 currentSlug，不需重建表單。
+  window.PD_loadCommentsFor = function (slug) {
+    if (!slug || slug === currentSlug) return;
+    currentSlug = slug;
+    loadComments();
+  };
 })();

@@ -8,3 +8,7 @@ secrets*
 # Local screenshot / CDP verification scratch (not for deploy)
 .shots/
 
+# 發佈流程的草稿暫存（正式在 $RUNNER_TEMP；本地 fallback 時防誤 commit 進公開 repo）
+.due-drafts.json
+.published-slugs.json
+

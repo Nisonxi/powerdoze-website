@@ -1,83 +1,93 @@
 #!/usr/bin/env node
-// 自動發佈排程部落格文章。
-// 讀 scheduled/schedule.json，把 publishDate <= 今天（台北時間）且 status=scheduled 的文章：
-//   1. 從 scheduled/<slug>/ 搬兩個 HTML 到網站根目錄（移除 noindex 行）
-//   2. blog.html 索引插入置頂卡（錨點 <!-- scheduled-blog-insert -->）
+// 自動發佈排程部落格文章（v2：草稿來源改為 Supabase，私密）。
+// GitHub Actions 先呼叫 publish-due-drafts EF 拿「今天到期的草稿」，寫到 $DUE_FILE
+// （runner 暫存區、repo 外 → 草稿全文絕不進公開 repo），本腳本讀它，對每篇做 surgery：
+//   1. 寫兩個 HTML 到網站根（移除 noindex 行）
+//   2. blog.html 索引插入置頂卡（錨點 <!-- scheduled-blog-insert --> / -index-insert）
 //   3. i18n.js 7 語系插入 {key}t/{key}d（錨點 // <scheduled-blog-i18n:LOCALE>）
-//   4. sitemap.xml 加 2 筆 URL + bump blog.html lastmod
-//   5. 刪 scheduled/<slug>/、schedule.json 標記 published
-// 任何錨點/檔案缺失 → 直接 exit 1，不留半套狀態（由 CI 的乾淨 checkout 保證原子性）。
+//   4. blog-nav.js 導覽加 slug（錨點 // <scheduled-blog-nav>）
+//   5. sitemap.xml 加 2 筆 URL + bump blog.html lastmod
+// 成功發佈的 slug 寫到 $PUBLISHED_FILE；Actions 據此呼叫 EF mark-published。
+// 冪等：blog.html 已含該 slug 卡片 → skip surgery（但仍回報，補「網站發了但 DB 沒標」的半套缺口）。
+// 任何錨點/檔案缺失 → exit 1，不留半套（CI 乾淨 checkout 保證原子性）。
 
 const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const SCHED_DIR = path.join(ROOT, 'scheduled');
-const SCHEDULE_FILE = path.join(SCHED_DIR, 'schedule.json');
 const LOCALES = ['en', 'zh-TW', 'zh-CN', 'ja', 'ko', 'fr', 'de'];
+// 由 Actions 注入（指向 $RUNNER_TEMP，repo 外）。本地測試時 fallback 到 repo 根，
+// 但這兩個檔已加進 .gitignore，不會被 commit。
+const DUE_FILE = process.env.DUE_FILE || path.join(ROOT, '.due-drafts.json');
+const PUBLISHED_FILE = process.env.PUBLISHED_FILE || path.join(ROOT, '.published-slugs.json');
 
 function fail(msg) { console.error('ERROR: ' + msg); process.exit(1); }
-function todayTaipei() { return new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10); }
 function escJsStr(s) { return s.replace(/\\/g, '\\\\').replace(/'/g, "\\'"); }
 function escHtml(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
 
-if (!fs.existsSync(SCHEDULE_FILE)) fail('scheduled/schedule.json not found');
-const schedule = JSON.parse(fs.readFileSync(SCHEDULE_FILE, 'utf8'));
-const today = todayTaipei();
-const due = (schedule.posts || []).filter(p => p.status === 'scheduled' && p.publishDate <= today);
+if (!fs.existsSync(DUE_FILE)) fail('due drafts file not found: ' + DUE_FILE);
+let due;
+try { due = JSON.parse(fs.readFileSync(DUE_FILE, 'utf8')).drafts || []; }
+catch (e) { fail('cannot parse due file: ' + e.message); }
 
 if (due.length === 0) {
-  console.log('No posts due today (' + today + '). Nothing to do.');
+  console.log('No due drafts today. Nothing to do.');
+  fs.writeFileSync(PUBLISHED_FILE, '[]');
   process.exit(0);
 }
 
+const publishedSlugs = [];
+
 for (const post of due) {
   const slug = post.slug;
-  const dir = path.join(SCHED_DIR, slug);
-  const metaFile = path.join(dir, 'meta.json');
-  if (!fs.existsSync(metaFile)) fail('missing ' + slug + '/meta.json');
-  const meta = JSON.parse(fs.readFileSync(metaFile, 'utf8'));
-  const key = meta.i18nKey;
+  if (!slug || !/^blog-[a-z0-9-]+$/.test(slug)) fail('bad slug: ' + slug);
+  const key = post.i18nKey;
   if (!key || !/^blogA\d+$/.test(key)) fail(slug + ': bad i18nKey "' + key + '"');
+  const meta = post.meta || {};
   for (const loc of LOCALES) {
-    const e = (meta.i18n || {})[loc];
-    if (!e || !e.t || !e.d) fail(slug + ': meta.json i18n missing locale ' + loc);
+    const e = meta[loc];
+    if (!e || !e.t || !e.d) fail(slug + ': meta missing locale ' + loc);
+  }
+  if (typeof post.htmlEn !== 'string' || typeof post.htmlZh !== 'string') fail(slug + ': missing html');
+
+  const enUrl = slug + '.html', zhUrl = slug + '-zh.html';
+
+  // 冪等守門：blog.html 已有這張卡 → 視為已發佈，skip surgery，但仍回報讓 DB 標 published。
+  const blogFile = path.join(ROOT, 'blog.html');
+  let blogHtml = fs.readFileSync(blogFile, 'utf8');
+  if (blogHtml.includes('data-slug="' + slug + '"')) {
+    console.log('Already published (card exists), skip surgery: ' + slug);
+    publishedSlugs.push(slug);
+    continue;
   }
 
-  // 1. 搬 HTML（移除 noindex 行）
-  for (const name of [slug + '.html', slug + '-zh.html']) {
-    const src = path.join(dir, name);
-    if (!fs.existsSync(src)) fail('missing scheduled/' + slug + '/' + name);
-    let html = fs.readFileSync(src, 'utf8');
-    html = html.split('\n').filter(l => !(l.includes('name="robots"') && l.includes('noindex'))).join('\n');
+  // 1. 寫兩個 HTML 到網站根（移除 noindex 行）
+  for (const [name, raw] of [[enUrl, post.htmlEn], [zhUrl, post.htmlZh]]) {
+    const html = raw.split('\n').filter(l => !(l.includes('name="robots"') && l.includes('noindex'))).join('\n');
     fs.writeFileSync(path.join(ROOT, name), html);
-    fs.unlinkSync(src);
   }
 
   // 2. blog.html：左側索引 <li> + 右側清單 row（都插在標記後＝最新在前）
-  const blogFile = path.join(ROOT, 'blog.html');
-  let blogHtml = fs.readFileSync(blogFile, 'utf8');
   const LIST_MARK = '<!-- scheduled-blog-insert -->';
   const INDEX_MARK = '<!-- scheduled-blog-index-insert -->';
   if (!blogHtml.includes(LIST_MARK)) fail('marker missing in blog.html: ' + LIST_MARK);
   if (!blogHtml.includes(INDEX_MARK)) fail('marker missing in blog.html: ' + INDEX_MARK);
-  const enUrl = slug + '.html', zhUrl = slug + '-zh.html';
   const row = [
     '',
     '',
     '        <article class="p-blog-card" data-slug="' + slug + '">',
     '          <div class="p-blog-card-head">',
     '            <span class="pd-dot" aria-hidden="true"></span>',
-    '            <h2><a href="' + enUrl + '" data-en="' + enUrl + '" data-zh="' + zhUrl + '" data-i18n="' + key + 't">' + escHtml(meta.i18n.en.t) + '</a></h2>',
+    '            <h2><a href="' + enUrl + '" data-en="' + enUrl + '" data-zh="' + zhUrl + '" data-i18n="' + key + 't">' + escHtml(meta.en.t) + '</a></h2>',
     '          </div>',
-    '          <p data-i18n="' + key + 'd">' + escHtml(meta.i18n.en.d) + '</p>',
+    '          <p data-i18n="' + key + 'd">' + escHtml(meta.en.d) + '</p>',
     '          <p class="p-blog-card-links">',
     '            <a href="' + enUrl + '" data-i18n="blogReadEn">Read in English →</a> ·',
     '            <a href="' + zhUrl + '" data-i18n="blogReadZh">中文版 →</a>',
     '          </p>',
     '        </article>',
   ].join('\n');
-  const indexLi = '\n          <li data-slug="' + slug + '"><a href="' + enUrl + '" data-en="' + enUrl + '" data-zh="' + zhUrl + '"><span class="pd-dot" aria-hidden="true"></span><span data-i18n="' + key + 't">' + escHtml(meta.i18n.en.t) + '</span></a></li>';
+  const indexLi = '\n          <li data-slug="' + slug + '"><a href="' + enUrl + '" data-en="' + enUrl + '" data-zh="' + zhUrl + '"><span class="pd-dot" aria-hidden="true"></span><span data-i18n="' + key + 't">' + escHtml(meta.en.t) + '</span></a></li>';
   blogHtml = blogHtml.replace(LIST_MARK, LIST_MARK + row);
   blogHtml = blogHtml.replace(INDEX_MARK, INDEX_MARK + indexLi);
   fs.writeFileSync(blogFile, blogHtml);
@@ -88,7 +98,7 @@ for (const post of due) {
   for (const loc of LOCALES) {
     const mark = '// <scheduled-blog-i18n:' + loc + '>';
     if (!i18n.includes(mark)) fail('i18n.js marker missing: ' + mark);
-    const e = meta.i18n[loc];
+    const e = meta[loc];
     const lines = mark + '\n    ' + key + "t: '" + escJsStr(e.t) + "',\n    " + key + "d: '" + escJsStr(e.d) + "',";
     i18n = i18n.replace(mark, lines);
   }
@@ -116,12 +126,9 @@ for (const post of due) {
   sm = sm.replace(/(<loc>https:\/\/powerdoze\.app\/blog\.html<\/loc><lastmod>)[0-9-]+/, '$1' + post.publishDate);
   fs.writeFileSync(smFile, sm);
 
-  // 5. 清掉草稿資料夾 + 更新狀態
-  fs.rmSync(dir, { recursive: true });
-  post.status = 'published';
-  post.publishedAt = new Date().toISOString();
+  publishedSlugs.push(slug);
   console.log('Published: ' + slug + ' (' + post.publishDate + ')');
 }
 
-fs.writeFileSync(SCHEDULE_FILE, JSON.stringify(schedule, null, 2) + '\n');
-console.log('Done. ' + due.length + ' post(s) published.');
+fs.writeFileSync(PUBLISHED_FILE, JSON.stringify(publishedSlugs));
+console.log('Done. ' + publishedSlugs.length + ' post(s) published.');
