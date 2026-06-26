@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Counting Frames Without Touching the Game: How Our FPS Overlay Works — PowerDoze Blog</title>
+  <meta name="description" content="Anti-cheat hates injection, so we count frames from the outside: Windows ETW, DXGI Present events, and the multi-swapchain bug that made one game report 600 FPS.">
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/blog-fps-measurement-etw.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/blog-fps-measurement-etw-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/blog-fps-measurement-etw.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Counting Frames Without Touching the Game: How Our FPS Overlay Works">
+  <meta property="og:description" content="Anti-cheat hates injection, so we count frames from the outside: Windows ETW, DXGI Present events, and a multi-swapchain war story.">
+  <meta property="og:url" content="https://powerdoze.app/blog-fps-measurement-etw.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Counting Frames Without Touching the Game">
+  <meta name="twitter:description" content="FPS measurement via Windows ETW — no injection, no hooks, and one very educational bug.">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Counting Frames Without Touching the Game: How Our FPS Overlay Works",
+    "datePublished": "2026-06-26",
+    "dateModified": "2026-06-26",
+    "author": { "@type": "Person", "name": "Nisonxi", "url": "https://powerdoze.app/about.html" },
+    "publisher": { "@type": "Organization", "name": "PowerDoze", "url": "https://powerdoze.app" },
+    "mainEntityOfPage": "https://powerdoze.app/blog-fps-measurement-etw.html",
+    "image": "https://powerdoze.app/assets/hero-screenshot.png",
+    "inLanguage": "en"
+  }
+  </script>
+  <link rel="stylesheet" href="/plain.css">
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="/" class="p-logo">
+      <img src="/assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="/features.html" data-i18n="navFeatures">Features</a>
+      <a href="/comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="/use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="/blog.html" data-i18n="navBlog">Blog</a>
+      <a href="/index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container" style="max-width: var(--article-w);">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <a href="/blog.html" class="p-eyebrow" style="text-decoration: none;">← <span data-i18n="blogAll">All posts</span></a>
+      <a href="/blog-fps-measurement-etw-zh.html" class="p-btn p-btn-ghost" style="height: 38px; padding: 0 20px; font-size: 14px;">中文版 →</a>
+    </div>
+    <h1 class="p-h2" style="margin: 24px 0 8px;">Counting Frames Without Touching the Game: How Our FPS Overlay Works</h1>
+    <p class="pd-byline" style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 48px;">Nisonxi</p>
+
+    <article class="p-prose">
+      <p>You're mid-game, the overlay in the corner says you're pushing some FPS number, and a small question pops up: how does it even know that? You never installed a frame counter into the game. Nothing got plugged into it. So where is the number coming from?</p>
+
+      <p>Here's the part that surprises people: it never touches the game at all. It can't. The moment a tool reaches inside an online game to count frames, anti-cheat sees a stranger in the house — and the worst case isn't a crash, it's your account getting flagged. So we count from the outside, and it turns out Windows was quietly keeping the tally the whole time.</p>
+
+      <p>This post walks you through how that works — the OS feature doing the counting, why it's safe to run next to ranked play, and the very educational bug that once made one game proudly report 600 FPS while it was really running 200.</p>
+
+      <h2>The constraint: never touch the game</h2>
+      <p>The standard way to measure FPS is to get inside the game: tools like RTSS inject a DLL into the game process and hook its <code>Present</code> calls — every hook fires, you count one frame. It works beautifully, and it's also exactly what anti-cheat systems are built to hate. For a tool people run alongside online games, injection isn't an option: the realistic worst case isn't a crash, it's someone's account getting flagged.</p>
+      <p>So the requirement became: count another process's frames <em>without ever touching that process</em>.</p>
+
+      <h2>Windows already counts them for you</h2>
+      <p>The answer is ETW — Event Tracing for Windows, the OS-wide telemetry bus that most people only meet through Task Manager's nicer cousins. The graphics stack is instrumented: the <code>Microsoft-Windows-DXGI</code> provider emits an event every time any process presents a frame (Event 42, <code>Present::Start</code>). Subscribe to that stream from your own process, filter by the foreground game's PID, count events per second — that's FPS, measured from the outside. It's the same data source Intel's PresentMon uses. Older DirectX 9 titles present through a different path, so we also listen to <code>Microsoft-Windows-D3D9</code> Event 1, with a flag so a frame routed through both layers isn't counted twice.</p>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Think of an office tower with a security desk at the lobby. To count how many times a tenant walks out the door, you don't break into their apartment and hide a camera by the doorway — you just read the lobby's CCTV feed, which already logs everyone passing through the front entrance. ETW is that building-wide CCTV: Windows is already recording every "frame went out the door", so we just watch the tape instead of barging into the game.
+      </div>
+
+      <h2>The bug: the game that ran at 600 FPS</h2>
+      <p>First version shipped, and a player reported the overlay reading 500–600 FPS in a game that was actually rendering around 200. Not jitter — consistently, confidently triple the truth.</p>
+      <p>The cause is obvious in hindsight: <strong>a modern game is not one stream of frames.</strong> Many engines embed a Chromium-based UI layer (menus, cash shop, map overlays), and that browser presents its own frames through its own swapchain. Our counter was summing <em>every</em> Present event from the PID — main render at ~200 plus a busy web overlay — and reporting the total. The fix is what PresentMon does: bucket events <strong>per swapchain</strong>, then report the busiest one, which is the main render. The chatty UI overlay gets its own bucket and stops polluting the number.</p>
+
+      <div style="background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: var(--r-1); padding: 14px 16px; margin: 20px 0;">
+        Our counter was like measuring traffic on a highway by standing at a junction and counting every car on every lane at once — main road plus the busy on-ramp from a shopping mall — then reporting one giant number. No wonder it looked like 600. The fix was to count each lane separately and report the main road only. A game's menu and shop screen are that mall on-ramp: their own steady stream of "cars" that has nothing to do with how fast the game itself is running.
+      </div>
+      <p>Then the second trap fired: the event payload field that identifies the swapchain has <em>different names across Windows versions</em> (<code>pIDXGISwapChain</code> on some builds, variants on others). Read the wrong field name and every event lands in one bucket — silently reproducing the original bug. The build that finally stuck scans the payload for any pointer-sized field whose name contains "swap", and writes a once-per-second per-swapchain breakdown to a diagnostic log, so when a user's machine names the field something new, the log shows it and we can adapt without guessing.</p>
+
+      <h2>What this approach can't do</h2>
+      <p>Honesty about the trade-offs of staying outside the process:</p>
+      <ul>
+        <li><strong>It follows the foreground window.</strong> Alt-tab away and the overlay measures whatever you switched to — by design, but it surprises multi-monitor users.</li>
+        <li><strong>It counts presents; it doesn't time them.</strong> You get a solid FPS number, not frametime percentiles or 1% lows. For deep stutter analysis, use PresentMon or CapFrameX — genuinely better tools for that job.</li>
+        <li><strong>ETW sessions need elevation</strong> — PowerDoze's engine already runs elevated for power management, so the overlay rides along free.</li>
+      </ul>
+
+      <h2>Why this matters in a power tool</h2>
+      <p>The overlay exists to answer one question at a glance: <em>am I paying for frames I can't see?</em> A 165 Hz monitor showing a menu at 400 FPS is pure heat. With FPS and Hz side by side, capping the GPU (and <a href="/blog-local-ai-power-management.html">the power-limit trick barely costs performance</a>) stops being a leap of faith — you watch the number, and it either holds or it doesn't.</p>
+
+      <p style="margin-top: 40px;"><a href="/index.html#download" class="p-btn p-btn-primary">Download PowerDoze free →</a></p>
+      <div class="pd-author-bio" style="margin: 56px 0 0; padding: 20px; border: 1px solid var(--hair); border-radius: var(--r-4); background: var(--surface);">
+        <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">Nisonxi</div>
+        <p style="font-size: 14px; color: var(--ink-2); margin: 0 0 10px; line-height: 1.65;">I'm Nisonxi, the developer behind PowerDoze. I built it because my own Windows desktop idled all day at near-full power and no existing tool could read the situation and switch on its own. This blog is my notebook from the journey.</p>
+        <a href="/about.html" style="font-size: 14px; color: var(--accent);">About the author and PowerDoze →</a>
+      </div>
+      <div id="blog-nav"></div>
+    </article>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="/privacy.html" data-i18n="privacy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/i18n.js"></script>
+<script src="/blog-nav.js"></script>
+<script src="/supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+  // 語言選單選中文（繁/簡）→ 跳中文版；其他語言 → 英文版
+  (function() {
+    var EN = '/blog-fps-measurement-etw.html';
+    var ZH = '/blog-fps-measurement-etw-zh.html';
+    var sel = document.getElementById('lang-select');
+    if (!sel) return;
+    sel.addEventListener('change', function() {
+      var target = sel.value.indexOf('zh') === 0 ? ZH : EN;
+      if (location.pathname.indexOf(target) === -1) location.href = target;
+    });
+  })();
+</script>
+</body>
+</html>

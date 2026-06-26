@@ -10,6 +10,8 @@ const LANGS = {
     blogA2d: 'Where every sleep setting lives, sleep vs hibernate vs Modern Standby, the powercfg commands that solve "won\'t sleep" and "sleeps too soon", and the structural limits no setting can fix.',
     blogPrev: 'Previous', blogNext: 'Next', blogAll: 'All posts',
     // <scheduled-blog-i18n:en>
+    blogA9t: 'Counting Frames Without Touching the Game: How Our FPS Overlay Works',
+    blogA9d: 'Anti-cheat hates injection, so we count frames from the outside — Windows ETW, DXGI Present events, and the multi-swapchain bug that made one game report 600 FPS.',
     blogA8t: 'You Think It\'s Asleep — It\'s Scrolling Its Phone All Night: The Truth About Modern Standby',
     blogA8d: 'Hot laptop in the bag, 30% gone overnight? Windows replaced real sleep (S3) with Modern Standby. What S0 is, how to diagnose the drain with powercfg, and the fixes that actually help.',
     blogA7t: 'How Much Power Does Your PC Actually Draw? Three Ways to Find Out',
@@ -430,6 +432,8 @@ const LANGS = {
     blogA2d: '設定藏在哪、睡眠/休眠/Modern Standby 差在哪、用 powercfg 解決「不肯睡」和「不該睡卻睡掉」，以及任何設定都修不了的結構性極限。',
     blogPrev: '上一篇', blogNext: '下一篇', blogAll: '所有文章',
     // <scheduled-blog-i18n:zh-TW>
+    blogA9t: '不碰遊戲怎麼數 FPS？我們 overlay 背後的 ETW 技術',
+    blogA9d: '防作弊系統痛恨注入，所以我們從外面數幀——Windows ETW、DXGI Present 事件，以及那個讓遊戲顯示 600 FPS 的多 swapchain 踩坑實錄。',
     blogA8t: '以為筆電睡了，它其實整夜在「滑手機」：Modern Standby 耗電真相',
     blogA8d: '包包裡發燙、隔夜掉 30%？Windows 把傳統 S3 睡眠換成了 Modern Standby。S0 是什麼、用 powercfg 抓出耗電元兇，以及真正有用的處方。',
     blogA7t: '你的電腦到底吃幾瓦？三種量法，從免費到精準',
@@ -850,6 +854,8 @@ const LANGS = {
     blogA2d: '设置藏在哪、睡眠/休眠/Modern Standby 差在哪、用 powercfg 解决「不肯睡」和「不该睡却睡掉」，以及任何设置都修不了的结构性极限。',
     blogPrev: '上一篇', blogNext: '下一篇', blogAll: '所有文章',
     // <scheduled-blog-i18n:zh-CN>
+    blogA9t: '不碰游戏怎么数 FPS？我们 overlay 背后的 ETW 技术',
+    blogA9d: '反作弊系统痛恨注入，所以我们从外面数帧——Windows ETW、DXGI Present 事件，以及那个让游戏显示 600 FPS 的多 swapchain 踩坑实录。',
     blogA8t: '以为笔记本睡了，它其实整夜在「刷手机」：Modern Standby 耗电真相',
     blogA8d: '包里发烫、隔夜掉 30%？Windows 把传统 S3 睡眠换成了 Modern Standby。S0 是什么、用 powercfg 抓出耗电元凶，以及真正有用的处方。',
     blogA7t: '你的电脑到底吃几瓦？三种量法，从免费到精准',
@@ -1242,6 +1248,8 @@ const LANGS = {
     blogA2d: '設定の場所、スリープ/休止状態/Modern Standby の違い、「スリープしない」「すぐスリープする」を解決する powercfg コマンド、そして設定では直せない構造的限界。',
     blogPrev: '前の記事', blogNext: '次の記事', blogAll: '記事一覧',
     // <scheduled-blog-i18n:ja>
+    blogA9t: 'ゲームに触れずにFPSを数える——ETWで作るオーバーレイの仕組み',
+    blogA9d: 'アンチチートはインジェクションを嫌う。だから外から数える——Windows ETW、DXGI Presentイベント、そしてゲームが600FPSと表示されたマルチスワップチェーンのバグ実録。',
     blogA8t: '寝てると思ったら一晩中スマホをいじっていた——Modern Standby 電力消費の真相',
     blogA8d: 'カバンの中で熱い、一晩で30%減——Windows は従来の S3 スリープを Modern Standby に置き換えました。S0 の正体、powercfg での診断方法、本当に効く対策。',
     blogA7t: 'PCの実際の消費電力は？無料から正確まで、3つの測り方',
@@ -1615,6 +1623,8 @@ const LANGS = {
     blogA2d: '설정 위치, 절전/최대 절전/Modern Standby의 차이, "절전 안 됨"과 "너무 빨리 절전됨"을 해결하는 powercfg 명령어, 그리고 설정으로는 고칠 수 없는 구조적 한계.',
     blogPrev: '이전 글', blogNext: '다음 글', blogAll: '전체 글',
     // <scheduled-blog-i18n:ko>
+    blogA9t: '게임을 건드리지 않고 FPS 세기 — ETW로 만든 오버레이의 원리',
+    blogA9d: '안티치트는 인젝션을 싫어합니다. 그래서 밖에서 셉니다 — Windows ETW, DXGI Present 이벤트, 그리고 게임이 600 FPS로 표시되던 멀티 스왑체인 버그 실록.',
     blogA8t: '잠든 줄 알았더니 밤새 폰만 보고 있었다: Modern Standby 배터리 소모의 진실',
     blogA8d: '가방 속에서 뜨겁고 하룻밤에 30% 증발 — Windows는 전통 S3 절전을 Modern Standby로 바꿨습니다. S0의 정체, powercfg 진단법, 실제로 효과 있는 처방.',
     blogA7t: '내 PC는 실제로 몇 와트를 쓸까? 무료부터 정밀까지 3가지 측정법',
@@ -1987,6 +1997,8 @@ const LANGS = {
     blogA2d: 'Où se trouvent les réglages, veille vs hibernation vs Modern Standby, les commandes powercfg qui résolvent « ne veut pas dormir » et « s\'endort trop tôt », et les limites structurelles.',
     blogPrev: 'Article précédent', blogNext: 'Article suivant', blogAll: 'Tous les articles',
     // <scheduled-blog-i18n:fr>
+    blogA9t: 'Compter les FPS sans toucher au jeu : notre overlay via ETW',
+    blogA9d: 'Les anti-cheat détestent l\'injection, alors on compte de l\'extérieur — Windows ETW, événements DXGI Present, et le bug multi-swapchain qui affichait 600 FPS.',
     blogA8t: 'On le croit en veille ? Il passe la nuit sur son téléphone : la vérité sur Modern Standby',
     blogA8d: 'PC chaud dans le sac, 30 % perdus pendant la nuit ? Windows a remplacé la vraie veille (S3) par Modern Standby. Ce qu\'est S0, comment diagnostiquer avec powercfg, et les correctifs qui marchent.',
     blogA7t: 'Combien consomme vraiment votre PC ? Trois façons de le savoir',
@@ -2359,6 +2371,8 @@ const LANGS = {
     blogA2d: 'Wo alle Einstellungen liegen, Schlaf vs. Ruhezustand vs. Modern Standby, die powercfg-Befehle für „schläft nicht" und „schläft zu früh", und die strukturellen Grenzen.',
     blogPrev: 'Vorheriger Beitrag', blogNext: 'Nächster Beitrag', blogAll: 'Alle Beiträge',
     // <scheduled-blog-i18n:de>
+    blogA9t: 'Frames zählen, ohne das Spiel anzufassen: unser FPS-Overlay mit ETW',
+    blogA9d: 'Anti-Cheat hasst Injection, also zählen wir von außen — Windows ETW, DXGI-Present-Events und der Multi-Swapchain-Bug, der 600 FPS anzeigte.',
     blogA8t: 'Sie denken, er schläft? Er scrollt die ganze Nacht am Handy: die Wahrheit über Modern Standby',
     blogA8d: 'Heißer Laptop in der Tasche, 30 % über Nacht weg? Windows hat echten Schlaf (S3) durch Modern Standby ersetzt. Was S0 ist, wie man den Verbrauch mit powercfg diagnostiziert und welche Fixes wirklich helfen.',
     blogA7t: 'Wie viel Strom zieht Ihr PC wirklich? Drei Wege, es herauszufinden',

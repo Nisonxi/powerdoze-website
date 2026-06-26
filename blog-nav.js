@@ -11,6 +11,7 @@
     'blog-quiet-pc-fan-noise',
     'blog-measure-pc-power-consumption',
     'blog-modern-standby-battery-drain',
+    'blog-fps-measurement-etw',
     // <scheduled-blog-nav>
   ];
   // 供 blog-infinite.js（無限滾動）共用文章順序。
