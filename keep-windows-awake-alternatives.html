@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keep Windows Awake: Honest Caffeine, PowerToys Awake, Don't Sleep &amp; StayGreen Alternatives — PowerDoze</title>
+  <meta name="description" content="An honest comparison of the popular Windows keep-awake tools — Caffeine, PowerToys Awake, Don't Sleep, StayGreen — and where each stops. PowerDoze automates power by context (app, idle, Wi-Fi, battery) instead of one manual switch. Free, local, no account.">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/keep-windows-awake-alternatives.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/keep-windows-awake-alternatives.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/keep-windows-awake-alternatives-zh.html">
+  <link rel="alternate" hreflang="x-default" href="https://powerdoze.app/keep-windows-awake-alternatives.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Keep Windows Awake: Honest Caffeine / PowerToys Awake / Don't Sleep / StayGreen Alternatives">
+  <meta property="og:description" content="Compared the popular Windows keep-awake tools and where each falls short. PowerDoze automates power by context instead of one manual switch.">
+  <meta property="og:url" content="https://powerdoze.app/keep-windows-awake-alternatives.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Keep Windows Awake: Honest Alternatives to Caffeine, PowerToys Awake, Don't Sleep &amp; StayGreen">
+  <meta name="twitter:description" content="Where the popular Windows keep-awake tools stop — and what context-based power automation looks like.">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <link rel="stylesheet" href="plain.css">
+  <style>
+    /* Local: 6-column comparison (plain.css only ships cols-4). Scrolls on mobile. */
+    .cmp-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -4px; }
+    .p-cmp-table.cols-6 { min-width: 720px; }
+    .p-cmp-table.cols-6 th:nth-child(n+2),
+    .p-cmp-table.cols-6 td:nth-child(n+2) { text-align: center; }
+    .p-cmp-table.cols-6 .col-pd { color: var(--accent); }
+    .p-cmp-table.cols-6 th.col-pd { font-weight: 700; }
+    .p-cmp-table.cols-6 .cell-mono { font-family: var(--mono, ui-monospace, monospace); font-size: 12px; color: var(--ink-2); }
+    .kwa-tool { margin: 0 0 28px; padding: 0 0 24px; border-bottom: 1px solid var(--line, rgba(255,255,255,0.08)); }
+    .kwa-tool:last-child { border-bottom: 0; }
+    .kwa-tool h3 { margin: 0 0 6px; font-size: 19px; }
+    .kwa-tool .kwa-best { margin: 10px 0 0; font-size: 14px; color: var(--ink-2); }
+    .kwa-faq { margin: 8px 0 0; }
+    .kwa-faq h3 { margin: 22px 0 6px; font-size: 17px; }
+    .kwa-faq p { margin: 0; color: var(--ink-2); font-size: 15px; line-height: 1.7; }
+    .kwa-prose { max-width: 680px; color: var(--ink-2); font-size: 15.5px; line-height: 1.75; }
+    .kwa-prose strong { color: var(--ink); }
+  </style>
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="blog.html" data-i18n="navBlog">Blog</a>
+      <a href="index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container">
+    <div class="p-section-head">
+      <div><span class="p-eyebrow">Keep Windows awake</span></div>
+      <div>
+        <h1 class="p-h2">Keep Windows awake — and let it sleep when it should</h1>
+        <p class="p-h2-sub">An honest look at Caffeine, PowerToys Awake, Don't Sleep and StayGreen — and the one thing they all leave to your memory. PowerDoze closes that gap: it reads four signals, decides for you, and gets out of the way.</p>
+      </div>
+    </div>
+
+    <p class="kwa-prose" style="margin-bottom: 28px;">
+      You searched for a way to stop Windows going to sleep. Every tool below does that. The real question is the <strong>next</strong> one: who turns it back off? Caffeine, PowerToys Awake and Don't Sleep keep your PC awake until <strong>you remember</strong> to flip the switch — leave it on and your machine never sleeps again, burning power all night. That gap is the whole reason PowerDoze exists: it keeps the screen awake <strong>while the app that needs it is running</strong>, then releases on its own — and it does the same trick for power modes, Wi-Fi location and battery, with a report of what you saved.
+    </p>
+
+    <div class="cmp-scroll">
+      <table class="p-cmp-table cols-6">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Caffeine</th>
+            <th>PowerToys&nbsp;Awake</th>
+            <th>Don't&nbsp;Sleep</th>
+            <th>StayGreen</th>
+            <th class="col-pd">PowerDoze</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Prevent system sleep</td><td><span class="check">&check;</span></td><td><span class="check">&check;</span></td><td><span class="check">&check;</span></td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>Keep the display on too</td><td>&mdash;</td><td><span class="check">&check;</span></td><td><span class="check">&check;</span></td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>Auto-release when the trigger ends</td><td><span class="cell-mono">CLI</span></td><td><span class="cell-mono">CLI</span></td><td>&mdash;</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>Time-of-day schedule (GUI)</td><td><span class="cell-mono">CLI</span></td><td>&mdash;</td><td><span class="check">&check;</span></td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>Foreground-app auto trigger</td><td><span class="cell-mono">CLI</span></td><td><span class="cell-mono">CLI</span></td><td>&mdash;</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>Idle / away detection</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>Wi-Fi location profiles</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>Battery-aware policy</td><td><span class="cell-mono">-onac</span></td><td>&mdash;</td><td><span class="check">&check;</span></td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>Switch Windows power mode</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>Thermal auto-pause</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td><span class="check">&check;</span></td><td>&mdash;</td></tr>
+          <tr><td>Power savings report (kWh / cost)</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>Away auto-dim / lock</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>Price</td><td><span class="cell-mono">Free</span></td><td><span class="cell-mono">Free</span></td><td><span class="cell-mono">Free</span></td><td><span class="cell-mono">~US$3&ndash;5</span></td><td><span class="cell-mono">Free + Pro</span></td></tr>
+          <tr><td>Open source</td><td>&mdash;</td><td><span class="check">MIT</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size: 12px; color: var(--ink-3, var(--ink-2)); margin: 10px 0 0;">&ldquo;CLI&rdquo; = possible only via command-line flags, no GUI. Facts checked against each tool's official docs (2026); StayGreen price is a Microsoft Store promo and may change.</p>
+
+    <div style="margin-top: 56px;">
+      <h2 class="p-h2" style="font-size: 22px; margin: 0 0 18px;">Honest take on each tool</h2>
+
+      <div class="kwa-tool">
+        <h3>Caffeine (Zhorn Software)</h3>
+        <p class="kwa-prose">The featherweight classic: a ~300KB portable app that taps a phantom key (F15) every 59 seconds so Windows thinks you're still there. It's free and needs no admin. It has surprisingly powerful command-line flags — <span class="cell-mono">-activeperiods</span> for time windows, <span class="cell-mono">-watchwindow</span> to only run when a given window is open — but they're <strong>CLI-only, set per launch, with no GUI</strong>. It also <strong>doesn't keep the display on</strong> (system only), and the default F15 trips up some apps.</p>
+        <p class="kwa-best"><strong>Best for:</strong> people who want the absolute lightest thing and are comfortable with command-line switches.</p>
+      </div>
+
+      <div class="kwa-tool">
+        <h3>PowerToys Awake (Microsoft)</h3>
+        <p class="kwa-prose">The official, free, open-source (MIT) option, bundled with PowerToys. Clean modes: keep awake indefinitely, for a set duration, or until a date/time — with an optional &ldquo;keep screen on&rdquo; and a <span class="cell-mono">--pid</span> flag to exit when a process ends. Its one documented wall: <strong>it stops working on the lock screen.</strong> Microsoft's own docs say so, and tell you to change your Windows power plan instead for that case. No daily schedule, no Wi-Fi, no power-mode switching, no report.</p>
+        <p class="kwa-best"><strong>Best for:</strong> occasionally blocking sleep on an unlocked PC. Honestly — if that's all you need, use PowerToys Awake. It's free and official; you don't need us.</p>
+      </div>
+
+      <div class="kwa-tool">
+        <h3>Don't Sleep (SoftwareOK)</h3>
+        <p class="kwa-prose">The most feature-rich of the keep-awake crowd: it blocks shutdown, standby, hibernate, log-off and the screensaver, with timers and <strong>conditions</strong> — release when battery drops below X%, when CPU or network load is low, or at a set time. Free, portable, 40+ languages. But it's still &ldquo;advanced manual blocking + conditions to let it sleep,&rdquo; not context-driven automation — and it <strong>doesn't change your power plan</strong> or report anything. The UI is dense and engineer-flavoured.</p>
+        <p class="kwa-best"><strong>Best for:</strong> power users who want fine-grained control over <em>when it's allowed to sleep</em>.</p>
+      </div>
+
+      <div class="kwa-tool">
+        <h3>StayGreen (Automata Labs)</h3>
+        <p class="kwa-prose">The smartest single-signal tool here: a Microsoft Store app (~US$3&ndash;5 one-time, no subscription) that keeps the PC awake <strong>only while a chosen app is in the foreground</strong>, pauses on unplug/lid-close, and adds genuine <strong>thermal protection</strong> (auto-pause so a laptop doesn't cook in a bag) using event-driven hooks at 0% CPU. Credit where due: its per-app trigger and thermal pause are real, and <strong>PowerDoze doesn't do the thermal piece</strong>. What it doesn't have: time schedules, Wi-Fi location, power-mode switching, or any savings report.</p>
+        <p class="kwa-best"><strong>Best for:</strong> &ldquo;don't sleep while this one app runs&rdquo; plus laptop overheating worries.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 48px;">
+      <h2 class="p-h2" style="font-size: 22px; margin: 0 0 14px;">What PowerDoze adds</h2>
+      <p class="kwa-prose">Here's the pattern: every tool above is a keep-awake switch — manual, or watching a single signal. PowerDoze is a different category — <strong>multi-signal power automation</strong>. It doesn't just block sleep; it runs your whole power behaviour by context and then bows out, so you stop being the switch:</p>
+      <ul class="kwa-prose" style="margin-top: 12px; padding-left: 20px;">
+        <li><strong>A whitelist that turns itself off</strong> — keep awake while an app runs, auto-restore when it closes. No &ldquo;forgot to switch it back.&rdquo;</li>
+        <li><strong>Four signals, automatic</strong> — foreground app, idle/away, Wi-Fi location (work vs home profiles), and battery state.</li>
+        <li><strong>Switches the actual Windows power mode</strong> (CPU, cooling, GPU power limit) — not just &ldquo;don't sleep.&rdquo;</li>
+        <li><strong>A real savings report</strong> — kWh, CO₂ and an electricity-cost estimate, with history and CSV export.</li>
+        <li><strong>Away auto-dim / lock</strong> using a software presence signal — works on any machine, no hardware sensor required.</li>
+        <li>All <strong>local, no account, free to use</strong>; the context features are a one-time Pro purchase, no subscription.</li>
+      </ul>
+    </div>
+
+    <div style="margin-top: 44px;">
+      <h2 class="p-h2" style="font-size: 22px; margin: 0 0 14px;">What PowerDoze doesn't do</h2>
+      <p class="kwa-prose">Because honesty is the point of this page:</p>
+      <ul class="kwa-prose" style="margin-top: 12px; padding-left: 20px;">
+        <li><strong>No battery charge limit (80% cap).</strong> That needs firmware-level control — use your laptop maker's tool (Lenovo Vantage, MyASUS, Dell Power Manager). Be wary of anything claiming to do it universally on Windows.</li>
+        <li><strong>No hardware thermal auto-pause.</strong> If &ldquo;stop running when the laptop overheats in a bag&rdquo; is your need, StayGreen does that piece better.</li>
+        <li><strong>It's not a CPU scheduler.</strong> If background processes are stuttering your foreground app, that's Process Lasso's job, not ours.</li>
+      </ul>
+    </div>
+
+    <div class="kwa-faq" style="margin-top: 48px; max-width: 720px;">
+      <h2 class="p-h2" style="font-size: 22px; margin: 0 0 6px;">FAQ</h2>
+      <h3>Why does PowerToys Awake stop working on the lock screen?</h3>
+      <p>The lock screen runs in a separate secure session, and a normal user-mode app can't hold a power request there — Microsoft documents this and suggests changing your power plan instead. PowerDoze's background engine keeps running while locked, so its rules still apply.</p>
+      <h3>Caffeine and Don't Sleep are free — why would I pay for PowerDoze?</h3>
+      <p>PowerDoze is free to use too. Only the context add-ons (Wi-Fi location, meeting detection, away dim/lock, savings analytics) are a one-time Pro purchase — no subscription. If you only need a manual keep-awake switch, the free tools are great; we're for people tired of being the switch.</p>
+      <h3>I just want my PC awake during a long download — which should I use?</h3>
+      <p>Honestly, PowerToys Awake or Caffeine. They're free and do exactly that. PowerDoze earns its keep when you want it to decide automatically and switch power behaviour by context, not when you want one manual toggle.</p>
+      <h3>Will PowerDoze keep my PC awake forever like the others can?</h3>
+      <p>Only while the trigger lasts. Its app whitelist keeps the machine awake while that app runs and <strong>restores normal sleep automatically</strong> when it closes — that's the whole point.</p>
+      <h3>What's the simplest way to keep Windows awake without a mouse jiggler?</h3>
+      <p>Any of these tools beats a physical jiggler — they declare a real power request to Windows instead of faking input. PowerDoze (or PowerToys Awake, for the manual case) does it cleanly with no phantom mouse movement.</p>
+    </div>
+
+    <div style="margin-top: 48px; max-width: 720px;">
+      <h2 class="p-h2" style="font-size: 22px; margin: 0 0 12px;">Bottom line</h2>
+      <p class="kwa-prose">Want one manual toggle? PowerToys Awake. The lightest CLI option? Caffeine. Fine-grained "when may it sleep" control? Don't Sleep. Per-app keep-awake plus thermal protection? StayGreen — each is good at its one thing. But if you're done being the thing that remembers to switch power settings on and off, <strong>PowerDoze is the only one here built to do it for you</strong> — automatically, on four signals, and it shows you what it saved.</p>
+    </div>
+
+    <div style="text-align: center; padding: 52px 0 0;">
+      <a href="index.html#download" class="p-btn p-btn-primary" style="margin-right: 12px;" data-i18n="cmp_dlFree">Download Free</a>
+      <a href="comparison.html" class="p-btn p-btn-accent" data-i18n="navFreeVsPro">See Free vs Pro</a>
+    </div>
+
+    <p class="kwa-prose" style="margin: 36px auto 0; text-align: center; font-size: 14px;">
+      Want the full landscape — including Process Lasso, ThrottleStop and vendor tools? Read <a href="blog-windows-power-tools-compared.html">the complete Windows power-tools guide →</a>
+    </p>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a> · <a href="refund.html" data-i18n="footerRefund">Refund Policy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PowerDoze",
+  "operatingSystem": "Windows 10, Windows 11",
+  "applicationCategory": "UtilitiesApplication",
+  "description": "Multi-signal Windows power automation: keep awake by app/idle/Wi-Fi/battery, switch power modes, away auto-dim/lock, and a real energy-savings report. A context-driven alternative to keep-awake tools like Caffeine, PowerToys Awake, Don't Sleep and StayGreen.",
+  "url": "https://powerdoze.app/",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "Nisonxi (LingDian Studio)", "url": "https://powerdoze.app/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Why does PowerToys Awake stop working on the lock screen?", "acceptedAnswer": { "@type": "Answer", "text": "The lock screen runs in a separate secure session where a normal user-mode app can't hold a power request. Microsoft documents this and suggests changing your power plan instead. PowerDoze's background engine keeps running while locked, so its rules still apply." } },
+    { "@type": "Question", "name": "Caffeine and Don't Sleep are free — why would I pay for PowerDoze?", "acceptedAnswer": { "@type": "Answer", "text": "PowerDoze is free to use. Only the context add-ons (Wi-Fi location, meeting detection, away dim/lock, savings analytics) are a one-time Pro purchase with no subscription. If you only need a manual keep-awake switch, the free tools are great." } },
+    { "@type": "Question", "name": "I just want my PC awake during a long download — which should I use?", "acceptedAnswer": { "@type": "Answer", "text": "PowerToys Awake or Caffeine — they're free and do exactly that. PowerDoze is for automatic, context-based power switching, not a single manual toggle." } },
+    { "@type": "Question", "name": "Will PowerDoze keep my PC awake forever like the others can?", "acceptedAnswer": { "@type": "Answer", "text": "Only while the trigger lasts. Its app whitelist keeps the machine awake while that app runs and restores normal sleep automatically when it closes." } },
+    { "@type": "Question", "name": "What's the simplest way to keep Windows awake without a mouse jiggler?", "acceptedAnswer": { "@type": "Answer", "text": "These tools declare a real power request to Windows instead of faking input, which is cleaner than a physical jiggler. PowerDoze, or PowerToys Awake for the manual case, does it with no phantom mouse movement." } }
+  ]
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+</script>
+</body>
+</html>

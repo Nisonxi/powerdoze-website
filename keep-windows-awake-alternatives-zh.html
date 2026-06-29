@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>讓 Windows 不休眠：Caffeine / PowerToys Awake / Don't Sleep / StayGreen 的誠實替代方案 — PowerDoze</title>
+  <meta name="description" content="誠實比較常見的 Windows 防睡／keep-awake 工具 —— Caffeine、PowerToys Awake、Don't Sleep、StayGreen —— 以及它們各自的極限。PowerDoze 依情境（App／閒置／Wi-Fi／電池）自動切換電源行為,而不是一個手動開關。免費、本機、免帳號。">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/keep-windows-awake-alternatives-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/keep-windows-awake-alternatives.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/keep-windows-awake-alternatives-zh.html">
+  <link rel="alternate" hreflang="x-default" href="https://powerdoze.app/keep-windows-awake-alternatives.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="讓 Windows 不休眠：Caffeine / PowerToys Awake / Don't Sleep / StayGreen 的誠實替代方案">
+  <meta property="og:description" content="比較常見的 Windows 防睡工具與它們的極限。PowerDoze 依情境自動切換電源行為,而不是一個手動開關。">
+  <meta property="og:url" content="https://powerdoze.app/keep-windows-awake-alternatives-zh.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="讓 Windows 不休眠：Caffeine / PowerToys Awake / Don't Sleep / StayGreen 的誠實替代方案">
+  <meta name="twitter:description" content="常見 Windows 防睡工具的極限,以及「依情境自動化」長什麼樣子。">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <link rel="stylesheet" href="plain.css">
+  <style>
+    /* Local: 6-column comparison (plain.css only ships cols-4). Scrolls on mobile. */
+    .cmp-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -4px; }
+    .p-cmp-table.cols-6 { min-width: 720px; }
+    .p-cmp-table.cols-6 th:nth-child(n+2),
+    .p-cmp-table.cols-6 td:nth-child(n+2) { text-align: center; }
+    .p-cmp-table.cols-6 .col-pd { color: var(--accent); }
+    .p-cmp-table.cols-6 th.col-pd { font-weight: 700; }
+    .p-cmp-table.cols-6 .cell-mono { font-family: var(--mono, ui-monospace, monospace); font-size: 12px; color: var(--ink-2); }
+    .kwa-tool { margin: 0 0 28px; padding: 0 0 24px; border-bottom: 1px solid var(--line, rgba(255,255,255,0.08)); }
+    .kwa-tool:last-child { border-bottom: 0; }
+    .kwa-tool h3 { margin: 0 0 6px; font-size: 19px; }
+    .kwa-tool .kwa-best { margin: 10px 0 0; font-size: 14px; color: var(--ink-2); }
+    .kwa-faq { margin: 8px 0 0; }
+    .kwa-faq h3 { margin: 22px 0 6px; font-size: 17px; }
+    .kwa-faq p { margin: 0; color: var(--ink-2); font-size: 15px; line-height: 1.85; }
+    .kwa-prose { max-width: 680px; color: var(--ink-2); font-size: 15.5px; line-height: 1.85; }
+    .kwa-prose strong { color: var(--ink); }
+  </style>
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="blog.html" data-i18n="navBlog">Blog</a>
+      <a href="index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+      <div id="auth-slot"></div>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container">
+    <div class="p-section-head">
+      <div><span class="p-eyebrow">讓 Windows 不休眠</span></div>
+      <div>
+        <h1 class="p-h2">讓 Windows 該醒時醒、該睡時睡</h1>
+        <p class="p-h2-sub">誠實看 Caffeine、PowerToys Awake、Don't Sleep、StayGreen —— 以及它們全都仰賴「你記得去關」的那個共同缺口。PowerDoze 就是來補這個洞的:讀四個訊號、替你決定,然後讓開。</p>
+      </div>
+    </div>
+
+    <p class="kwa-prose" style="margin-bottom: 28px;">
+      你搜的是「怎麼讓 Windows 不睡」,下面每個工具都做得到。真正的問題是<strong>下一個</strong>:誰把它關回去?Caffeine、PowerToys Awake、Don't Sleep 會一直撐著,直到<strong>你想起來</strong>把開關關掉 —— 忘了,你的電腦就整夜不睡、白白燒電。這個洞,正是 PowerDoze 存在的理由:它<strong>只在需要的 App 跑著時</strong>讓螢幕保持清醒,跑完就自己放手 —— 而且對電源模式、Wi-Fi 位置、電池也做同一招,還把你省下的電算給你看。
+    </p>
+
+    <div class="cmp-scroll">
+      <table class="p-cmp-table cols-6">
+        <thead>
+          <tr>
+            <th>功能</th>
+            <th>Caffeine</th>
+            <th>PowerToys&nbsp;Awake</th>
+            <th>Don't&nbsp;Sleep</th>
+            <th>StayGreen</th>
+            <th class="col-pd">PowerDoze</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>防止系統睡眠</td><td><span class="check">&check;</span></td><td><span class="check">&check;</span></td><td><span class="check">&check;</span></td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>也保持螢幕開著</td><td>&mdash;</td><td><span class="check">&check;</span></td><td><span class="check">&check;</span></td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>觸發結束自動放手</td><td><span class="cell-mono">CLI</span></td><td><span class="cell-mono">CLI</span></td><td>&mdash;</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>時間排程(GUI)</td><td><span class="cell-mono">CLI</span></td><td>&mdash;</td><td><span class="check">&check;</span></td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>前景 App 自動觸發</td><td><span class="cell-mono">CLI</span></td><td><span class="cell-mono">CLI</span></td><td>&mdash;</td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>閒置／離開偵測</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>Wi-Fi 位置設定檔</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>電池感知策略</td><td><span class="cell-mono">-onac</span></td><td>&mdash;</td><td><span class="check">&check;</span></td><td><span class="check">&check;</span></td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>切換 Windows 電源模式</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>熱防護自動暫停</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td><span class="check">&check;</span></td><td>&mdash;</td></tr>
+          <tr><td>省電報表(kWh／電費)</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>離開自動調暗／鎖屏</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td><span class="check-pro">&check;</span></td></tr>
+          <tr><td>價格</td><td><span class="cell-mono">免費</span></td><td><span class="cell-mono">免費</span></td><td><span class="cell-mono">免費</span></td><td><span class="cell-mono">約 US$3&ndash;5</span></td><td><span class="cell-mono">免費 + Pro</span></td></tr>
+          <tr><td>開源</td><td>&mdash;</td><td><span class="check">MIT</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size: 12px; color: var(--ink-3, var(--ink-2)); margin: 10px 0 0;">「CLI」＝只能用命令列參數做、沒有 GUI。事實對照各工具官方文件(2026);StayGreen 價格為 Microsoft Store 促銷價,可能變動。</p>
+
+    <div style="margin-top: 56px;">
+      <h2 class="p-h2" style="font-size: 22px; margin: 0 0 18px;">逐一誠實點評</h2>
+
+      <div class="kwa-tool">
+        <h3>Caffeine(Zhorn Software)</h3>
+        <p class="kwa-prose">極輕量的經典:一支約 300KB 的免安裝程式,每 59 秒模擬按一下一個你鍵盤上根本沒有的按鍵(F15),讓 Windows 以為你還在。免費、免系統管理員。它的命令列參數其實意外強大 —— <span class="cell-mono">-activeperiods</span> 指定時間窗、<span class="cell-mono">-watchwindow</span> 只在某視窗開著時啟動 —— 但全是<strong>命令列、每次啟動帶參數、沒有 GUI</strong>。它也<strong>不保持螢幕開著</strong>(只防系統睡),而且預設的 F15 會干擾部分程式。</p>
+        <p class="kwa-best"><strong>適合:</strong>想要最輕、又肯用命令列開關的人。</p>
+      </div>
+
+      <div class="kwa-tool">
+        <h3>PowerToys Awake(微軟)</h3>
+        <p class="kwa-prose">官方、免費、開源(MIT),內建於 PowerToys。模式乾淨:無限期清醒、維持一段時間、或到某個日期時間;可選「保持螢幕開」,還有 <span class="cell-mono">--pid</span> 旗標讓它在某程序結束時自動退場。它唯一的罩門:<strong>鎖定畫面下完全失效。</strong>微軟自己的文件這樣寫,並叫你那種情況直接改 Windows 電源計畫。沒有每日排程、沒有 Wi-Fi、不切電源模式、沒有報表。</p>
+        <p class="kwa-best"><strong>適合:</strong>偶爾在沒鎖屏的情況下擋一下睡眠。老實說 —— 如果你只需要這個,用 PowerToys Awake 就好,免費又官方,你不需要我們。</p>
+      </div>
+
+      <div class="kwa-tool">
+        <h3>Don't Sleep(SoftwareOK)</h3>
+        <p class="kwa-prose">防睡工具裡功能最多的一個:擋關機、待命、休眠、登出與螢幕保護,有計時器與<strong>條件</strong> —— 電池低於 X%、CPU 或網路負載低時、或到指定時間才解除。免費、免安裝、40+ 語言。但它本質仍是「進階手動擋睡 + 條件放它睡」,不是依情境自動化 —— 而且<strong>不改你的電源計畫</strong>、什麼都不報。UI 偏密集、工程味重。</p>
+        <p class="kwa-best"><strong>適合:</strong>想要細緻控制「何時才可以睡」的進階使用者。</p>
+      </div>
+
+      <div class="kwa-tool">
+        <h3>StayGreen(Automata Labs)</h3>
+        <p class="kwa-prose">這裡最聰明的單訊號工具:一支 Microsoft Store 應用(約 US$3&ndash;5 一次買斷、無訂閱),<strong>只在你指定的 App 位於前景時</strong>保持清醒,拔充電/關蓋自動暫停,還加了真正的<strong>熱防護</strong>(自動暫停,避免筆電在包包裡過熱),用事件驅動的 hook、0% CPU。該給的肯定:它的 per-app 觸發與熱防護是真功能,而且<strong>PowerDoze 沒做熱防護那塊</strong>。它沒有的:時間排程、Wi-Fi 位置、切電源模式、任何省電報表。</p>
+        <p class="kwa-best"><strong>適合:</strong>要「跑某個 App 時不睡」加上擔心筆電過熱的人。</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 48px;">
+      <h2 class="p-h2" style="font-size: 22px; margin: 0 0 14px;">PowerDoze 補的是哪一塊</h2>
+      <p class="kwa-prose">看出模式了嗎:上面每個工具都是一個 keep-awake 開關 —— 手動,或只盯一個訊號。PowerDoze 是另一個層級 —— <strong>多訊號電源自動化</strong>。它不只擋睡,而是依情境切換你整套電源行為、然後退場,讓你不必再當那個開關:</p>
+      <ul class="kwa-prose" style="margin-top: 12px; padding-left: 20px;">
+        <li><strong>會自己關掉的白名單</strong> —— App 跑著時保持清醒,App 一關就自動恢復可睡。不會「忘了切回去」。</li>
+        <li><strong>四個訊號,自動</strong> —— 前景 App、閒置/離開、Wi-Fi 位置(公司 vs 家裡設定檔)、電池狀態。</li>
+        <li><strong>切換實際的 Windows 電源模式</strong>(CPU、散熱、GPU 功耗上限)—— 不只是「別睡」。</li>
+        <li><strong>真實省電報表</strong> —— kWh、CO₂、電費估算,含歷史圖與 CSV 匯出。</li>
+        <li><strong>離開自動調暗/鎖屏</strong>,用軟體 presence 訊號 —— 任何機器都能用,不必硬體感測器。</li>
+        <li>全部<strong>本機執行、免帳號、免費可用</strong>;情境加值功能是 Pro 一次買斷,無訂閱。</li>
+      </ul>
+    </div>
+
+    <div style="margin-top: 44px;">
+      <h2 class="p-h2" style="font-size: 22px; margin: 0 0 14px;">PowerDoze 不做什麼</h2>
+      <p class="kwa-prose">因為這頁的重點就是誠實:</p>
+      <ul class="kwa-prose" style="margin-top: 12px; padding-left: 20px;">
+        <li><strong>不做電池充電上限(80% capping)。</strong>那需要韌體層控制 —— 去你筆電廠商的工具(Lenovo Vantage、MyASUS、Dell Power Manager)。任何宣稱在 Windows 通用做到的,都該懷疑。</li>
+        <li><strong>不做硬體熱防護自動暫停。</strong>如果你的需求是「筆電在包包裡過熱就自動停」,StayGreen 那塊做得比較專。</li>
+        <li><strong>它不是 CPU 排程器。</strong>背景程序害你前景卡頓,那是 Process Lasso 的活,不是我們。</li>
+      </ul>
+    </div>
+
+    <div class="kwa-faq" style="margin-top: 48px; max-width: 720px;">
+      <h2 class="p-h2" style="font-size: 22px; margin: 0 0 6px;">常見問題</h2>
+      <h3>為什麼 PowerToys Awake 一鎖屏就失效?PowerDoze 不一樣嗎?</h3>
+      <p>鎖定畫面跑在獨立的安全 session,一般 user-mode 應用無法在那裡維持電源請求 —— 微軟有文件說明,並建議改用電源計畫。PowerDoze 的背景引擎在鎖屏下照樣執行,所以它的規則仍然生效。</p>
+      <h3>Caffeine、Don't Sleep 都免費,我為什麼要付費給 PowerDoze?</h3>
+      <p>PowerDoze 也免費可用。只有情境加值(Wi-Fi 位置、會議偵測、離開調暗/鎖屏、省電分析)是 Pro 一次買斷、無訂閱。如果你只需要一個手動的 keep-awake 開關,那些免費工具很好;我們是給「受夠了當那個手動切換的人」用的。</p>
+      <h3>我只是想下載大檔時電腦別睡,該用哪個?</h3>
+      <p>老實說,用 PowerToys Awake 或 Caffeine。它們免費、又剛好做這個。PowerDoze 的價值在於「讓它自動依情境決定、切換電源行為」,不是一個手動開關。</p>
+      <h3>PowerDoze 會不會像它們一樣讓電腦永遠不睡?</h3>
+      <p>只在觸發持續時。它的 App 白名單在該 App 跑著時保持清醒,App 一關就<strong>自動恢復正常睡眠</strong> —— 這正是重點。</p>
+      <h3>不想用 mouse jiggler,最簡單怎麼讓 Windows 不休眠?</h3>
+      <p>這些工具都比實體甩鼠器乾淨 —— 它們是對 Windows 宣告一個真正的電源請求,而不是假裝有輸入。PowerDoze(或手動情況用 PowerToys Awake)做這件事不會有幻影滑鼠移動。</p>
+    </div>
+
+    <div style="margin-top: 48px; max-width: 720px;">
+      <h2 class="p-h2" style="font-size: 22px; margin: 0 0 12px;">結論</h2>
+      <p class="kwa-prose">只想要一個手動開關?PowerToys Awake。最輕、肯用命令列?Caffeine。要細控「何時可以睡」?Don't Sleep。要 per-app + 熱防護?StayGreen —— 它們各自把那一件事做得很好。但如果你受夠了當那個「要記得把電源設定切來切去」的人,這裡<strong>只有 PowerDoze 是為了替你做這件事而生的</strong> —— 自動、看四個訊號,還把省下的算給你看。</p>
+    </div>
+
+    <div style="text-align: center; padding: 52px 0 0;">
+      <a href="index.html#download" class="p-btn p-btn-primary" style="margin-right: 12px;" data-i18n="cmp_dlFree">免費下載</a>
+      <a href="comparison.html" class="p-btn p-btn-accent" data-i18n="navFreeVsPro">看 Free vs Pro</a>
+    </div>
+
+    <p class="kwa-prose" style="margin: 36px auto 0; text-align: center; font-size: 14px;">
+      想看完整的 Windows 電源工具全景(含 Process Lasso、ThrottleStop、廠商工具)?讀 <a href="blog-windows-power-tools-compared-zh.html">完整電源工具指南 →</a>
+    </p>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span data-i18n="footer">© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a> · <a href="privacy.html" data-i18n="privacy">Privacy</a> · <a href="refund.html" data-i18n="footerRefund">Refund Policy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PowerDoze",
+  "operatingSystem": "Windows 10, Windows 11",
+  "applicationCategory": "UtilitiesApplication",
+  "description": "多訊號的 Windows 電源自動化:依 App／閒置／Wi-Fi／電池保持清醒、切換電源模式、離開自動調暗/鎖屏,並提供真實省電報表。是 Caffeine、PowerToys Awake、Don't Sleep、StayGreen 等防睡工具的情境自動化替代方案。",
+  "url": "https://powerdoze.app/",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "Nisonxi (LingDian Studio)", "url": "https://powerdoze.app/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "為什麼 PowerToys Awake 一鎖屏就失效?", "acceptedAnswer": { "@type": "Answer", "text": "鎖定畫面跑在獨立的安全 session,一般 user-mode 應用無法在那裡維持電源請求;微軟有文件說明並建議改用電源計畫。PowerDoze 的背景引擎在鎖屏下照樣執行,規則仍生效。" } },
+    { "@type": "Question", "name": "Caffeine、Don't Sleep 都免費,為什麼要付費給 PowerDoze?", "acceptedAnswer": { "@type": "Answer", "text": "PowerDoze 也免費可用。只有情境加值(Wi-Fi 位置、會議偵測、離開調暗/鎖屏、省電分析)是 Pro 一次買斷、無訂閱。只需要手動 keep-awake 的話,免費工具很好。" } },
+    { "@type": "Question", "name": "只是想下載大檔時電腦別睡,該用哪個?", "acceptedAnswer": { "@type": "Answer", "text": "用 PowerToys Awake 或 Caffeine,免費又剛好做這個。PowerDoze 的價值在於依情境自動切換電源行為,不是單一手動開關。" } },
+    { "@type": "Question", "name": "PowerDoze 會不會像它們一樣讓電腦永遠不睡?", "acceptedAnswer": { "@type": "Answer", "text": "只在觸發持續時。App 白名單在該 App 跑著時保持清醒,App 一關就自動恢復正常睡眠。" } },
+    { "@type": "Question", "name": "不想用 mouse jiggler,最簡單怎麼讓 Windows 不休眠?", "acceptedAnswer": { "@type": "Answer", "text": "這些工具都比實體甩鼠器乾淨,它們對 Windows 宣告真正的電源請求而非假裝輸入。PowerDoze(或手動情況用 PowerToys Awake)沒有幻影滑鼠移動。" } }
+  ]
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pd-theme', theme);
+      if (label) label.textContent = theme.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  if (typeof updateNavAuth === 'function') updateNavAuth();
+</script>
+</body>
+</html>
