@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>如何防止 Windows 在下載或傳輸檔案時自動進入睡眠？| PowerDoze</title>
+  <meta name="description" content="Windows 以鍵盤滑鼠閒置時間決定睡眠，不看網路活動——下載到一半就會睡著。三種解法：暫時修改設定、使用防睡工具、或加入自動重設的應用程式白名單。">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/windows-sleep-during-download-zh.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/windows-sleep-during-download.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/windows-sleep-during-download-zh.html">
+  <link rel="alternate" hreflang="x-default" href="https://powerdoze.app/windows-sleep-during-download.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="如何防止 Windows 在下載時自動睡眠？3 種解法">
+  <meta property="og:description" content="Windows 以閒置時間判斷睡眠，不看網路活動。三種解法：改設定、防睡工具、應用程式白名單（自動重設）。">
+  <meta property="og:url" content="https://powerdoze.app/windows-sleep-during-download-zh.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="防止 Windows 在下載時睡眠 — 3 種解法">
+  <meta name="twitter:description" content="Windows 下載到一半睡著？閒置計時器不算網路活動。快速修法與自動重設解法。">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "為什麼 Windows 在下載途中會自動睡眠？", "acceptedAnswer": { "@type": "Answer", "text": "Windows 的閒置時間只計算鍵盤與滑鼠輸入，不計算網路活動。下載、種子傳輸、檔案複製和轉檔工作不會重置閒置計時器，因此當閒置逾時（通常 15–30 分鐘）後，Windows 會直接進入睡眠，不管背景有沒有東西在跑。" } },
+      { "@type": "Question", "name": "不裝任何程式，如何暫時阻止 Windows 睡眠？", "acceptedAnswer": { "@type": "Answer", "text": "開啟「設定 → 系統 → 電源與睡眠」，將「插電時，電腦在以下時間後進入睡眠」設為「從不」。下載完成後記得改回去，否則電腦將永遠不會自動睡眠。" } },
+      { "@type": "Question", "name": "有沒有下載完就自動恢復睡眠的方法？", "acceptedAnswer": { "@type": "Answer", "text": "有——在 PowerDoze 的應用程式白名單中加入你的下載管理員（qBittorrent、uTorrent、IDM 等）。應用程式執行期間，PowerDoze 阻止睡眠；應用程式關閉的瞬間，正常睡眠排程自動恢復，不需手動切換。" } },
+      { "@type": "Question", "name": "用了 PowerDoze 之後，下載完成後電腦還會自動睡眠嗎？", "acceptedAnswer": { "@type": "Answer", "text": "會——這正是應用程式白名單的優勢。PowerDoze 只在白名單應用程式執行時阻止睡眠，關閉下載管理員後，睡眠排程立即恢復。" } },
+      { "@type": "Question", "name": "這個方法也能防止螢幕在下載時關閉嗎？", "acceptedAnswer": { "@type": "Answer", "text": "螢幕關閉和系統睡眠是不同的 Windows 設定。應用程式白名單主要封鎖系統睡眠。如果也需要阻止螢幕關閉，可以在 PowerDoze 或 Windows 電源設定裡另行調整。" } }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "如何防止 Windows 在下載時自動睡眠",
+    "description": "三種方法防止 Windows 下載途中睡眠——從快速手動修法到自動重設保護。",
+    "totalTime": "PT3M",
+    "inLanguage": "zh-Hant",
+    "step": [
+      { "@type": "HowToStep", "name": "方法一：暫時修改睡眠設定", "text": "開啟「設定 → 系統 → 電源與睡眠」，將睡眠時間設為「從不」。下載完成後記得改回。" },
+      { "@type": "HowToStep", "name": "方法二：使用防睡工具", "text": "執行 Caffeine 或 PowerToys Awake，下載時啟用，完成後手動關閉。風險：容易忘記關閉，電腦就永遠不睡眠。" },
+      { "@type": "HowToStep", "name": "方法三：應用程式白名單（自動重設）", "text": "在 PowerDoze 的應用程式白名單加入下載管理員。應用程式執行中才封鎖睡眠，關閉後自動恢復正常排程。" }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="plain.css">
+  <style>
+    .kwa-prose { max-width: 680px; color: var(--ink-2); font-size: 15.5px; line-height: 1.75; }
+    .kwa-prose strong { color: var(--ink); }
+    .kwa-faq h3 { margin: 22px 0 6px; font-size: 17px; }
+    .kwa-faq p { margin: 0; color: var(--ink-2); font-size: 15px; line-height: 1.7; }
+    .method-box { border: 1px solid var(--line, rgba(255,255,255,0.08)); border-radius: 10px; padding: 20px 24px; margin: 0 0 20px; }
+    .method-box h3 { margin: 0 0 8px; font-size: 18px; }
+    .method-box .method-verdict { margin: 12px 0 0; font-size: 13px; color: var(--ink-3); }
+    .method-box .method-verdict strong { color: var(--ink-2); }
+    .cmp-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  </style>
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">功能</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">免費 vs 專業版</a>
+      <a href="use-cases.html" data-i18n="navUseCases">使用情境</a>
+      <a href="blog.html" data-i18n="navBlog">部落格</a>
+      <a href="index.html#pricing" data-i18n="navPricing">定價</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="切換主題">
+        <span id="theme-label">DARK</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container">
+    <div class="p-section-head">
+      <div><span class="p-eyebrow">Windows 電源修正</span></div>
+      <div>
+        <h1 class="p-h2">如何防止 Windows 在下載或傳輸檔案時自動睡眠？</h1>
+        <p class="p-h2-sub"><strong>Windows 以鍵盤滑鼠的閒置時間決定是否睡眠，不看網路活動。</strong>一個跑了幾小時的種子下載，在 Windows 眼中和空機沒有區別——閒置時間到了就睡。有三種解法：暫時修改睡眠設定、使用防睡工具，或把下載管理員加入應用程式白名單，下載完成後自動恢復正常。</p>
+      </div>
+    </div>
+
+    <div style="margin: 0 0 40px;">
+      <a href="index.html#download" class="p-btn p-btn-primary" style="margin-right: 12px;">免費下載 PowerDoze</a>
+      <a href="use-cases.html" class="p-btn p-btn-ghost">更多使用情境 →</a>
+    </div>
+
+    <h2 class="p-h2" style="font-size: 22px; margin: 0 0 12px;">Windows 為什麼會在下載途中睡眠？</h2>
+    <p class="kwa-prose" style="margin: 0 0 36px;">
+      <strong>原因很簡單：Windows 的閒置計時器只計算鍵盤和滑鼠動作。</strong>檔案傳輸、種子下載、轉檔工作和背景備份全都不算「活動」。閒置時間到了（通常 15 到 30 分鐘），Windows 就直接進入睡眠，不管背景有什麼在跑。唯一的例外是應用程式主動向 Windows 申請「電源喚醒鎖」（如 Netflix），但大多數下載工具不會這麼做。
+    </p>
+
+    <h2 class="p-h2" style="font-size: 22px; margin: 0 0 20px;">三種解法：哪種適合你？</h2>
+
+    <div class="cmp-scroll" style="margin: 0 0 36px;">
+      <table class="p-cmp-table" style="min-width: 520px;">
+        <thead>
+          <tr>
+            <th>解法</th>
+            <th>設定難度</th>
+            <th>完成後自動恢復？</th>
+            <th>風險</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>暫時修改睡眠設定</td><td>2 分鐘，免安裝</td><td>❌ 手動</td><td>忘記改回 → 電腦永遠不睡眠</td></tr>
+          <tr><td>防睡工具（Caffeine / PowerToys Awake）</td><td>快速安裝，一鍵啟用</td><td>❌ 手動</td><td>同上，容易忘記關閉</td></tr>
+          <tr><td style="color: var(--accent);">PowerDoze 應用程式白名單</td><td>一次設定</td><td>✅ 自動</td><td>無——應用程式關閉即恢復</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="method-box">
+      <h3>方法一：暫時修改睡眠設定</h3>
+      <p class="kwa-prose" style="margin: 0;">開啟「<strong>設定 → 系統 → 電源與睡眠</strong>」，將「插電時，電腦在以下時間後進入睡眠」設為「<strong>從不</strong>」。開始下載。下載完成後回去把設定改回原來的數值。</p>
+      <p class="method-verdict"><strong>適合：</strong>偶爾下載且人在旁邊的情況。<strong>風險：</strong>忘記改回的話，電腦從此不會自動睡眠，每晚持續耗電發熱。</p>
+    </div>
+
+    <div class="method-box">
+      <h3>方法二：使用防睡工具（Caffeine、PowerToys Awake、Don't Sleep）</h3>
+      <p class="kwa-prose" style="margin: 0;">安裝 Caffeine 或啟用 PowerToys Awake，點一下工具列圖示開啟防睡模式，下載完成後再點一次關閉。這類工具的原理是每隔幾秒注入假按鍵或向 Windows 申請電源喚醒鎖，讓閒置計時器不過期。</p>
+      <p class="method-verdict"><strong>適合：</strong>偶爾使用且習慣記得關閉的人。<strong>風險：</strong>和方法一一樣，忘記關閉就變成永不睡眠。<a href="keep-windows-awake-alternatives-zh.html" style="color: var(--accent);">防睡工具完整比較 →</a></p>
+    </div>
+
+    <div class="method-box" style="border-color: var(--accent);">
+      <h3 style="color: var(--accent);">方法三：PowerDoze 應用程式白名單（自動重設）</h3>
+      <p class="kwa-prose" style="margin: 0;">安裝 PowerDoze（免費）。進入「<strong>應用程式白名單</strong>」，加入你的下載管理員（qBittorrent、uTorrent、Transmission、IDM 等）。白名單應用程式執行期間，PowerDoze 阻止睡眠；<strong>應用程式關閉的瞬間，正常的睡眠排程自動恢復</strong>，不需要任何手動操作。</p>
+      <p class="kwa-prose" style="margin: 10px 0 0;">同樣的方式也適用於轉檔工作（Blender、Premiere、DaVinci Resolve）、備份工具（Backblaze、Robocopy 腳本），或任何不希望被中斷的長時間背景程序。</p>
+      <p class="method-verdict"><strong>適合：</strong>定期跑下載、轉檔或備份、不想每次手動切換的人。<strong>唯一真正的「設定一次、永久有效」解法。</strong></p>
+    </div>
+
+    <div style="text-align: center; padding: 16px 0 48px;">
+      <a href="index.html#download" class="p-btn p-btn-accent" style="margin-right: 12px;">免費下載 PowerDoze</a>
+      <a href="use-cases.html" class="p-btn p-btn-ghost">查看更多使用情境 →</a>
+    </div>
+
+    <h2 class="p-h2" style="font-size: 22px; margin: 0 0 8px;">常見問題</h2>
+    <div class="kwa-faq">
+      <h3>為什麼 Windows 在下載途中會自動睡眠？</h3>
+      <p>Windows 只計算鍵盤和滑鼠動作的閒置時間，不計算網路傳輸活動。下載、種子傳輸、檔案複製和轉檔工作都不會重置閒置計時器，逾時後就自動進入睡眠。</p>
+
+      <h3>不裝程式有辦法阻止睡眠嗎？</h3>
+      <p>有——進入「設定 → 系統 → 電源與睡眠」，把睡眠時間設為「從不」。下載完成後記得改回，否則電腦就此不再自動睡眠。</p>
+
+      <h3>下載完成後電腦還會自動睡眠嗎？</h3>
+      <p>用 PowerDoze 應用程式白名單的話會——PowerDoze 只在白名單應用程式執行期間阻止睡眠，關閉下載管理員後睡眠排程立即恢復。</p>
+
+      <h3>這個方法也能防止螢幕關閉嗎？</h3>
+      <p>螢幕關閉和系統睡眠是不同的 Windows 設定。應用程式白名單主要封鎖系統睡眠。如需同時防止螢幕關閉，可以在 PowerDoze 或 Windows 電源設定中另行調整。</p>
+
+      <h3>PowerDoze 相容 qBittorrent、uTorrent、IDM 等下載工具嗎？</h3>
+      <p>相容——任何 Windows 應用程式都可以加入白名單。PowerDoze 以執行檔名稱偵測程序，可搭配所有下載管理員、備份工具和轉檔程式使用。</p>
+    </div>
+
+    <div style="margin: 48px 0 0; padding: 24px; border: 1px solid var(--line, rgba(255,255,255,0.08)); border-radius: 10px; max-width: 600px;">
+      <p style="margin: 0 0 12px; font-size: 15px; color: var(--ink-2);">PowerDoze 免費下載。應用程式白名單功能屬於免費版，不需升級專業版即可解決下載中睡眠的問題。</p>
+      <a href="index.html#download" class="p-btn p-btn-primary">免費下載（支援 Windows 10/11）</a>
+    </div>
+
+    <p style="margin: 16px 0 0; font-size: 13px; color: var(--ink-3);">延伸閱讀：<a href="keep-windows-awake-alternatives-zh.html" style="color: var(--accent);">防睡工具比較</a> · <a href="use-cases.html" style="color: var(--accent);">更多使用情境</a> · <a href="blog-windows-sleep-settings-guide.html" style="color: var(--accent);">Windows 睡眠設定完整說明</a></p>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span>© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com">聯絡支援</a> · <a href="privacy.html">隱私權政策</a> · <a href="refund.html">退款政策</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('pd-theme', t);
+      if (label) label.textContent = t.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+</script>
+</body>
+</html>

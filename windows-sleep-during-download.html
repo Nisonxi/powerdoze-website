@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Stop Windows from Sleeping During a Download or File Transfer | PowerDoze</title>
+  <meta name="description" content="Windows sleeps based on idle time, not network activity — so it will shut down mid-download. Three methods to fix it: temporary setting change, keep-awake tool, or automatic app whitelist that resets itself when the download finishes.">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="canonical" href="https://powerdoze.app/windows-sleep-during-download.html">
+  <link rel="alternate" hreflang="en" href="https://powerdoze.app/windows-sleep-during-download.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://powerdoze.app/windows-sleep-during-download-zh.html">
+  <link rel="alternate" hreflang="x-default" href="https://powerdoze.app/windows-sleep-during-download.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Stop Windows from Sleeping During a Download or File Transfer">
+  <meta property="og:description" content="Windows sleeps based on idle time, not network activity. Three methods: temporary settings, keep-awake tool, or automatic app whitelist that resets itself when done.">
+  <meta property="og:url" content="https://powerdoze.app/windows-sleep-during-download.html">
+  <meta property="og:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <meta property="og:site_name" content="PowerDoze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Stop Windows from Sleeping During Downloads — 3 Methods">
+  <meta name="twitter:description" content="Windows ignores active downloads when calculating idle time. Here's the fast fix, the safe fix, and the set-and-forget fix.">
+  <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Why does Windows sleep in the middle of a download?", "acceptedAnswer": { "@type": "Answer", "text": "Windows measures idle time based on keyboard and mouse input — not network activity. A large download or file transfer running in the background doesn't count as 'activity', so Windows treats the session as idle and triggers sleep at the timeout you configured (often 15–30 minutes). The fix is to either extend the timeout, block sleep manually, or whitelist the download app so sleep is only blocked while that app is running." } },
+      { "@type": "Question", "name": "How do I stop Windows from sleeping during a download without installing anything?", "acceptedAnswer": { "@type": "Answer", "text": "Open Settings → System → Power & sleep. Set 'When plugged in, turn off after' and 'When plugged in, PC goes to sleep after' to Never. Remember to change it back after your download finishes — otherwise your PC will never sleep again." } },
+      { "@type": "Question", "name": "Is there a way to stop sleep during downloads that resets automatically when done?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — add your download manager (qBittorrent, uTorrent, Transmission, IDM, etc.) to PowerDoze's app whitelist. While that app is running, PowerDoze blocks sleep. The moment the download manager closes, your normal sleep schedule resumes automatically. No need to remember to undo anything." } },
+      { "@type": "Question", "name": "Will my PC still sleep after the download finishes if I use PowerDoze?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — that's the key advantage. PowerDoze's app whitelist blocks sleep only while the whitelisted application is running. When your download manager closes (or finishes and you close it), sleep rules kick back in immediately and your PC sleeps normally." } },
+      { "@type": "Question", "name": "Does this also prevent the screen from turning off during downloads?", "acceptedAnswer": { "@type": "Answer", "text": "Changing the 'turn off display' setting in Power & sleep prevents the screen from turning off. In PowerDoze, you can configure whether the app whitelist blocks screen-off as well as system sleep — separately. Most users only need to block system sleep (the display turning off is fine during overnight downloads)." } }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to stop Windows from sleeping during a download",
+    "description": "Three methods to prevent Windows from going to sleep mid-download, from a quick manual fix to automatic self-resetting protection.",
+    "totalTime": "PT3M",
+    "step": [
+      { "@type": "HowToStep", "name": "Method 1 — Change sleep settings temporarily", "text": "Open Settings → System → Power & sleep. Set sleep to Never while plugged in. Remember to restore after your download finishes." },
+      { "@type": "HowToStep", "name": "Method 2 — Use a keep-awake tool", "text": "Run Caffeine or PowerToys Awake while downloading. Disable it manually when done. Risk: easy to forget, PC never sleeps if left on." },
+      { "@type": "HowToStep", "name": "Method 3 — App whitelist (automatic, self-resetting)", "text": "Add your download manager to PowerDoze's app whitelist. Sleep is blocked while the app runs, then automatically restores when the download finishes and you close the app." }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="plain.css">
+  <style>
+    .kwa-prose { max-width: 680px; color: var(--ink-2); font-size: 15.5px; line-height: 1.75; }
+    .kwa-prose strong { color: var(--ink); }
+    .kwa-faq h3 { margin: 22px 0 6px; font-size: 17px; }
+    .kwa-faq p { margin: 0; color: var(--ink-2); font-size: 15px; line-height: 1.7; }
+    .method-box { border: 1px solid var(--line, rgba(255,255,255,0.08)); border-radius: 10px; padding: 20px 24px; margin: 0 0 20px; }
+    .method-box h3 { margin: 0 0 8px; font-size: 18px; }
+    .method-box .method-verdict { margin: 12px 0 0; font-size: 13px; color: var(--ink-3); }
+    .method-box .method-verdict strong { color: var(--ink-2); }
+    .cmp-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  </style>
+  <script>
+    (function() {
+      var t = localStorage.getItem('pd-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8530d7a5388c4418bc8398d7951f95b0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="plain">
+
+<nav class="p-nav">
+  <div class="container p-nav-inner">
+    <a href="./" class="p-logo">
+      <img src="assets/icon.png" alt="">powerdoze
+    </a>
+    <div class="p-nav-links">
+      <a href="features.html" data-i18n="navFeatures">Features</a>
+      <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
+      <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="blog.html" data-i18n="navBlog">Blog</a>
+      <a href="index.html#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="p-nav-right">
+      <select id="lang-select" class="p-lang-select" aria-label="Language"></select>
+      <button class="p-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-label">DARK</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<section class="p-section">
+  <div class="container">
+    <div class="p-section-head">
+      <div><span class="p-eyebrow">Windows power fix</span></div>
+      <div>
+        <h1 class="p-h2">How do I stop Windows from sleeping during a download?</h1>
+        <p class="p-h2-sub"><strong>Windows sleeps based on idle keyboard/mouse time — not network activity.</strong> A 10 GB torrent running overnight looks identical to an idle machine, so Windows will sleep right through it. There are three ways to fix this: temporarily adjust your sleep settings, use a keep-awake tool, or add your download manager to an app whitelist that automatically resets when the download finishes.</p>
+      </div>
+    </div>
+
+    <div style="margin: 0 0 40px;">
+      <a href="index.html#download" class="p-btn p-btn-primary" style="margin-right: 12px;">Download PowerDoze free</a>
+      <a href="use-cases.html" class="p-btn p-btn-ghost">More use cases →</a>
+    </div>
+
+    <h2 class="p-h2" style="font-size: 22px; margin: 0 0 12px;">Why does Windows go to sleep mid-download?</h2>
+    <p class="kwa-prose" style="margin: 0 0 36px;">
+      <strong>The short answer: Windows doesn't know your download is "activity."</strong> The idle timer only resets on keyboard and mouse input. File transfers, torrent seeding, render jobs, and background backups don't reset it. When your timeout expires — often 15 or 30 minutes — Windows puts the machine to sleep regardless of what's running on disk or over the network. The only exception is if the application explicitly holds a "power wake lock" (like a video streaming app does), and most download managers don't bother.
+    </p>
+
+    <h2 class="p-h2" style="font-size: 22px; margin: 0 0 20px;">Three methods — which fits your situation?</h2>
+
+    <div class="cmp-scroll" style="margin: 0 0 36px;">
+      <table class="p-cmp-table" style="min-width: 560px;">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Setup</th>
+            <th>Auto-resets when done?</th>
+            <th>Risk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Change sleep settings temporarily</td><td>2 minutes, no install</td><td>❌ Manual</td><td>Forget to undo → PC never sleeps</td></tr>
+          <tr><td>Keep-awake tool (Caffeine / PowerToys Awake)</td><td>Quick install, one click</td><td>❌ Manual</td><td>Same: easy to forget to turn off</td></tr>
+          <tr><td style="color: var(--accent);">App whitelist in PowerDoze</td><td>One-time setup</td><td>✅ Automatic</td><td>None — resets the moment app closes</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="method-box">
+      <h3>Method 1 — Change sleep settings temporarily</h3>
+      <p class="kwa-prose" style="margin: 0;">Open <strong>Settings → System → Power &amp; sleep</strong>. Set <em>"When plugged in, PC goes to sleep after"</em> to <strong>Never</strong>. Start your download. When it's done, go back and restore your original setting.</p>
+      <p class="method-verdict"><strong>Best for:</strong> One-off downloads where you'll be nearby. <strong>Risk:</strong> If you forget to change it back, your PC will never sleep again — silently burning power and heating your room every night.</p>
+    </div>
+
+    <div class="method-box">
+      <h3>Method 2 — Use a keep-awake tool (Caffeine, PowerToys Awake, Don't Sleep)</h3>
+      <p class="kwa-prose" style="margin: 0;">Download Caffeine or enable PowerToys Awake. Click its tray icon to block sleep. Start your download. When done, click again to release. These tools work by injecting a minimal fake keypress or holding a Windows power wake lock every few seconds to prevent the idle timer from expiring.</p>
+      <p class="method-verdict"><strong>Best for:</strong> Occasional use by someone who remembers to turn it off. <strong>Risk:</strong> Same as Method 1 — if you forget to disable it, your PC stays awake indefinitely. <a href="keep-windows-awake-alternatives.html" style="color: var(--accent);">Full comparison of keep-awake tools →</a></p>
+    </div>
+
+    <div class="method-box" style="border-color: var(--accent);">
+      <h3 style="color: var(--accent);">Method 3 — App whitelist in PowerDoze (automatic, self-resetting)</h3>
+      <p class="kwa-prose" style="margin: 0;">Install PowerDoze (free). Go to <strong>App Whitelist</strong> and add your download manager (qBittorrent, uTorrent, Transmission, IDM, or any other). While that app is running, PowerDoze blocks sleep. <strong>The moment the app closes, your normal sleep schedule resumes automatically.</strong> No toggling, no forgetting.</p>
+      <p class="kwa-prose" style="margin: 10px 0 0;">This also works for render jobs (Blender, Premiere, DaVinci Resolve), backup tools (Backblaze, Robocopy scripts), or any long-running process you don't want interrupted.</p>
+      <p class="method-verdict"><strong>Best for:</strong> Anyone who runs downloads, renders, or backups regularly and doesn't want to think about it. <strong>The only method that's truly set-and-forget.</strong></p>
+    </div>
+
+    <div style="text-align: center; padding: 16px 0 48px;">
+      <a href="index.html#download" class="p-btn p-btn-accent" style="margin-right: 12px;">Download PowerDoze free</a>
+      <a href="use-cases.html#creator" class="p-btn p-btn-ghost">See the render use case →</a>
+    </div>
+
+    <h2 class="p-h2" style="font-size: 22px; margin: 0 0 8px;">Frequently asked questions</h2>
+    <div class="kwa-faq">
+      <h3>Why does Windows sleep even though a download is running?</h3>
+      <p>Windows measures idle time by keyboard and mouse input only. Network transfers, torrents, file copies, and render jobs don't count as activity. When the idle timeout expires, Windows sleeps regardless of what's running in the background.</p>
+
+      <h3>How do I prevent sleep without changing settings manually?</h3>
+      <p>Add your download manager to PowerDoze's app whitelist. Sleep is blocked while the app runs, and your normal schedule resumes the moment it closes. No manual toggling required.</p>
+
+      <h3>Will my PC still sleep after the download finishes?</h3>
+      <p>Yes — with the app whitelist method. PowerDoze only blocks sleep while the whitelisted app is actively running. Once your download completes and you close the manager, sleep resumes on your normal schedule.</p>
+
+      <h3>Does this also keep the screen on during downloads?</h3>
+      <p>The screen turning off and the PC going to sleep are separate Windows settings. The app whitelist blocks system sleep. If you also want to prevent the screen from turning off, you can configure that separately in PowerDoze or in Windows Power &amp; sleep settings.</p>
+
+      <h3>Does PowerDoze work with qBittorrent, uTorrent, IDM, and other download managers?</h3>
+      <p>Yes — any Windows application can be added to the whitelist. PowerDoze detects the process by executable name, so it works with any download manager, backup tool, or rendering application.</p>
+    </div>
+
+    <div style="margin: 48px 0 0; padding: 24px; border: 1px solid var(--line, rgba(255,255,255,0.08)); border-radius: 10px; max-width: 600px;">
+      <p style="margin: 0 0 12px; font-size: 15px; color: var(--ink-2);">PowerDoze is free to download. The app whitelist feature is available in the free tier — no Pro upgrade needed to fix the sleep-during-download problem.</p>
+      <a href="index.html#download" class="p-btn p-btn-primary">Download free for Windows 10/11</a>
+    </div>
+
+    <p style="margin: 16px 0 0; font-size: 13px; color: var(--ink-3);">See also: <a href="keep-windows-awake-alternatives.html" style="color: var(--accent);">Keep-awake tool comparison</a> · <a href="use-cases.html" style="color: var(--accent);">More use cases</a> · <a href="blog-windows-sleep-settings-guide.html" style="color: var(--accent);">Windows sleep settings guide</a></p>
+  </div>
+</section>
+
+<footer class="p-footer">
+  <div class="container">
+    <div class="p-footer-bottom">
+      <span>© 2026 PowerDoze</span>
+      <span><a href="mailto:PowerDozeSupport@gmail.com">Support</a> · <a href="privacy.html">Privacy</a> · <a href="refund.html">Refund Policy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="i18n.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var label = document.getElementById('theme-label');
+    function set(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('pd-theme', t);
+      if (label) label.textContent = t.toUpperCase();
+    }
+    set(localStorage.getItem('pd-theme') || 'dark');
+    btn.addEventListener('click', function() {
+      set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+</script>
+</body>
+</html>
