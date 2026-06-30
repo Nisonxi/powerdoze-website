@@ -34,6 +34,46 @@
     "inLanguage": "zh-Hant"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "關掉 DisplayPort 螢幕為什麼會讓視窗全部亂跳？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "DisplayPort 使用一條稱為 HPD（Hot-Plug Detect，熱插拔偵測）的訊號線，讓顯示卡知道螢幕是否連接。許多 DisplayPort 螢幕在關機時會直接拉低 HPD 訊號——即使只是按了螢幕的電源鍵。Windows 把這個動作解讀為「螢幕被物理拔除」，隨即從桌面移除該顯示器，原本在上面的所有視窗就被強制遷移回剩餘的螢幕。HDMI 螢幕通常在關機後仍維持 HPD 訊號，所以 Windows 不會移除它，視窗位置也不會跑掉。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "什麼是 HPD？DisplayPort 和 HDMI 的行為為何不同？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HPD（Hot-Plug Detect）是 DisplayPort 和 HDMI 線材中都有的一條專用訊號線，用來告知顯示卡螢幕是否實際插著。兩者的差別在於螢幕關機時的處理方式：HDMI 螢幕通常會持續維持 HPD（保持高電位），顯示卡因此還是認為有螢幕連接，即使畫面已熄滅。DisplayPort 螢幕則常在關機時取消 HPD 訊號以節省待機耗電，結果導致 Windows 誤判為「螢幕已拔除」。這就是為什麼 DP 螢幕一關機就從系統「消失」，而 HDMI 螢幕卻能維持連線狀態。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "為什麼關掉螢幕之後遠端桌面（RDP）畫面會變黑？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "遠端桌面協定（RDP）依賴主機端的實體顯示設定來決定遠端工作階段的解析度與版面配置。如果主機連接的是一台在關機時會拉低 HPD 的 DisplayPort 螢幕，Windows 偵測到螢幕消失後就會收縮 RDP 工作階段，導致畫面變黑或縮成最小——因為系統已經沒有可以算繪的顯示器。HDMI 螢幕比較不容易發生這個問題，因為 Windows 仍持續把它視為已連接。解決方法包括：使用 DisplayPort 假負載（dummy plug，能持續維持 HPD）、在 Windows 顯示設定中啟用「中斷顯示器連線時最小化連線」選項，或在螢幕的 OSD 選單中開啟「待機時保持連線」功能。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "什麼是假負載（dummy plug）？它能解決視窗亂跳的問題嗎？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "DisplayPort 假負載（又稱無頭幽靈轉接器，headless ghost adapter）是一個小型被動式轉接頭，插入顯示卡的 DP 插槽後，會以電路方式持續模擬一台已連接的螢幕，讓 HPD 訊號維持高電位。由於顯示卡始終「看到」一台螢幕，Windows 就不會把那個桌面移除——即使真實螢幕已關機或進入待機，視窗位置也完全不動。一顆品質良好的假負載約 200 至 500 元台幣，是解決 DP HPD 掉線造成視窗亂跳與 RDP 黑屏最可靠的硬體方案。購買時請確認支援你所需的目標解析度（例如 4K），效果才會最理想。"
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="/plain.css">
   <script>
     (function() {

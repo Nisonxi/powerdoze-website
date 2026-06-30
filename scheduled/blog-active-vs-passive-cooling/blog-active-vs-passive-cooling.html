@@ -34,6 +34,46 @@
     "inLanguage": "en"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the difference between Active and Passive cooling policy in Windows?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Active cooling policy tells Windows to spin up the fan first when the CPU gets hot, prioritising temperature control over noise. Passive cooling policy tells Windows to throttle the CPU clock speed first, slowing the processor down to reduce heat before asking the fan to do more work. Both policies are CPU-side heat management knobs inside the Windows power plan — they do not control GPU fans or BIOS-level fan curves directly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which cooling policy setting makes my laptop fans quieter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Passive cooling policy generally results in quieter fans. Because Windows throttles the CPU first rather than spinning the fan, the processor runs slower and generates less heat, so the fan rarely needs to ramp up aggressively. The trade-off is that single-threaded performance can drop noticeably when the CPU is under sustained load. Active cooling policy keeps performance high but allows the fan to spin loud whenever thermals demand it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does changing the Windows cooling policy affect performance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, but only under thermal pressure. Under light loads both settings behave identically because the CPU never needs to throttle. When the processor is under heavy sustained load, Active policy lets the CPU run at full speed while the fan compensates, whereas Passive policy reduces clock speed to stay within thermal limits — which can mean 10–30% lower sustained performance on thin laptops with limited cooling. Desktops and well-cooled towers rarely notice a difference."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the Windows cooling policy interact with or override my BIOS fan curve or GPU software like MSI Afterburner?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No — the Windows system cooling policy only talks to the CPU's own thermal management (via ACPI _PSV and _ACx objects). It does not touch BIOS fan curves, embedded controller fan logic, or GPU fan control software like MSI Afterburner or ASUS Armory Crate. Those systems run independently at firmware or driver level. This means setting Passive mode in Windows will throttle your CPU but will not make a desktop PC quieter if the GPU or case fans are what you actually hear."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="/plain.css">
   <script>
     (function() {

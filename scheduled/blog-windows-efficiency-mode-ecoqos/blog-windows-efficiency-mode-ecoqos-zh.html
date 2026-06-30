@@ -34,6 +34,46 @@
     "inLanguage": "zh-Hant"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Windows 工作管理員裡的綠葉圖示是什麼意思？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "綠葉圖示代表該程序已啟用效率模式（Efficiency Mode，即 EcoQoS）。這表示 Windows 將此程序視為低優先權的背景工作，在採用混合架構 CPU（如 Intel 第 12 代以上、AMD Zen 4）的裝置上，會優先將它排程到能效核心（E-core）執行，同時降低其電源與排程優先級，讓它消耗更少的資源與電池電力。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Windows 效率模式（EcoQoS）是如何降低 CPU 功耗的？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "效率模式透過 Windows 11 引入的 EcoQoS API 運作。它會將程序的 CPU 排程優先權設為 PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION，並套用 eco QoS 電源節流策略，指示 CPU 排程器將該程序導向能效核心（E-core）、限制其允許的時脈速度，並在 CPU 資源競爭時給予最低優先權。最終效果是降低發熱量、減少風扇噪音、延長電池續航，且程序不會被完全暫停。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "效率模式和把程序設為「低 CPU 優先權」是一樣的嗎？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "不一樣，兩者相關但機制不同。在工作管理員的「設定優先順序」中將程序設為「低」，只影響 Windows 執行緒排程器分配時間片的方式。效率模式則額外套用 EcoQoS 電源節流旗標，在支援的硬體上將程序路由到 E-core，並向電源管理子系統發出訊號，要求以較低時脈執行。因此效率模式在省電效果上比單純降低優先權更全面。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "我可以手動為任何應用程式開啟效率模式嗎？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "可以。在 Windows 11 的工作管理員中，對任何程序按右鍵，選擇「效率模式」即可切換開啟或關閉。Windows 也會自動為它認為不重要的背景應用程式啟用此模式——例如 Microsoft Edge 的背景分頁會自動套用 EcoQoS。需要注意的是，效率模式無法套用至目前在前景執行的程序，或作業系統標記為關鍵的程序。此外，設定在重新啟動後不會保留，除非應用程式本身透過 EcoQoS API 主動要求。"
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="/plain.css">
   <script>
     (function() {

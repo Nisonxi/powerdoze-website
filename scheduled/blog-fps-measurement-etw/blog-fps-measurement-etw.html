@@ -34,6 +34,46 @@
     "inLanguage": "en"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is an ETW-based FPS overlay safe to use in anti-cheat protected games?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. ETW (Event Tracing for Windows) is a read-only kernel telemetry system built into Windows. An ETW-based overlay subscribes to DXGI Present events from the outside — it never injects a DLL, never hooks game code, and never modifies game memory. Anti-cheat systems like EAC and BattlEye flag tools that attach to the game process or load code into it. Because ETW listeners run entirely in a separate process with no game-side attachment, they present no surface for anti-cheat to detect or block."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is ETW and how does it measure FPS without injecting into a game?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ETW (Event Tracing for Windows) is a high-performance event logging system built into the Windows kernel. The DirectX runtime fires a DXGI Present event every time a frame is submitted to the GPU for display. An ETW consumer running as a separate, unprivileged process can subscribe to the Microsoft-Windows-DXGI provider and receive these events in real time. By counting how many Present events arrive per second for a given process ID, the overlay calculates a precise FPS figure — with no code running inside the game at all."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do some FPS counters show wildly wrong numbers like 600 FPS?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most modern games use multiple swap chains simultaneously — one for the main scene, others for UI layers, loading screens, or post-process passes. A naive ETW implementation that counts all DXGI Present events for a process without filtering by swap chain will add all of those frame submissions together. If a game renders 60 FPS main scene plus 60 FPS UI layer plus 60 FPS HUD layer, the raw event count yields 180 FPS. In cases with many internal swap chains, readings of 600 FPS or more are easy to produce. The correct fix is to identify the primary swap chain — typically the one with the largest render target or the highest frequency — and count only its Present events."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is a non-invasive ETW FPS overlay different from MSI Afterburner or RTSS?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MSI Afterburner and its companion RivaTuner Statistics Server (RTSS) work by injecting a rendering DLL into the game process. That DLL hooks DirectX calls from the inside to draw the overlay and collect frame timing — which is why they can display latency graphs and overlay text directly in the game window, but it's also why they can trigger anti-cheat bans in some titles. An ETW-based overlay stays entirely outside the game: it reads telemetry events from the Windows kernel, draws its overlay in its own window layered on top, and never touches game memory. The trade-off is that it cannot draw inside the game's exclusive full-screen surface (it uses a compositor overlay instead), but it is completely safe for anti-cheat environments."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="/plain.css">
   <script>
     (function() {

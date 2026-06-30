@@ -34,6 +34,46 @@
     "inLanguage": "en"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the green leaf icon in Windows Task Manager?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The green leaf icon indicates that a process has Efficiency Mode enabled (also called EcoQoS). It signals that Windows is treating that process as a low-priority background task, directing it to efficiency cores (E-cores) on hybrid-architecture CPUs, reducing its power and scheduling priority so it consumes fewer resources and less battery."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Windows Efficiency Mode (EcoQoS) reduce CPU power consumption?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Efficiency Mode works through the EcoQoS API introduced in Windows 11. It lowers a process's CPU scheduling priority to PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION and sets the eco QoS policy, which tells the CPU scheduler to route the process to energy-efficient cores (E-cores) on Intel 12th-gen and later or AMD Zen 4 hybrid CPUs, reduce its allowed clock speed, and deprioritize it when CPU resources are contested. The result is less heat, lower fan noise, and extended battery life — without the process being paused entirely."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Efficiency Mode the same as setting a process to low CPU priority?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No — they are related but different. Setting a process to low priority (via Task Manager's Set Priority menu) only affects the Windows thread scheduler's time-slice distribution. Efficiency Mode additionally applies the EcoQoS power throttling flag, which routes the process to E-cores on supported hardware and signals to power management that the process should run at lower clock speeds. Efficiency Mode has a broader power-saving effect than priority alone."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I manually enable Efficiency Mode for any app in Windows?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. In Windows 11's Task Manager, right-click any process and choose 'Efficiency mode' to toggle it on. Windows also applies it automatically to background apps it deems non-essential — for example, Microsoft Edge background tabs use EcoQoS automatically. Note that Efficiency Mode cannot be applied to processes that are currently in the foreground or marked as critical by the OS. The setting is not persistent across restarts unless the application itself opts in via the EcoQoS API."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="/plain.css">
   <script>
     (function() {

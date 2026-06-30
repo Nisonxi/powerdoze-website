@@ -34,6 +34,46 @@
     "inLanguage": "zh-Hant"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "在有防作弊保護的遊戲中使用 ETW FPS overlay 安全嗎？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "安全。ETW（Windows 事件追蹤）是 Windows 內建的唯讀核心遙測系統。基於 ETW 的 overlay 從外部訂閱 DXGI Present 事件，從不注入 DLL、從不掛鉤遊戲程式碼、也從不修改遊戲記憶體。EAC、BattlEye 等防作弊系統的偵測目標是那些附加到遊戲行程或向遊戲載入程式碼的工具。ETW 監聽器完全在獨立的行程中運行，與遊戲沒有任何附加點，因此防作弊系統無法偵測或封鎖它。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "什麼是 ETW？它如何在不注入遊戲的情況下量測 FPS？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ETW（Event Tracing for Windows，Windows 事件追蹤）是 Windows 核心內建的高效能事件記錄系統。每當一幀被提交給 GPU 準備顯示時，DirectX 執行環境就會觸發一個 DXGI Present 事件。以獨立的非特權行程運行的 ETW 消費者可以訂閱 Microsoft-Windows-DXGI 提供者，即時接收這些事件。透過計算每秒內特定行程 ID 收到多少 Present 事件，overlay 便能算出精準的 FPS 數值——完全沒有任何程式碼在遊戲內部執行。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "為什麼有些 FPS 計數器會顯示像 600 FPS 這樣離譜的數字？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "大多數現代遊戲同時使用多條 swap chain——一條用於主場景渲染，其餘用於 UI 層、載入畫面或後處理。如果 ETW 實作不過濾 swap chain，而是把一個行程的所有 DXGI Present 事件全部加總，就會把所有提交幀數疊在一起。假設遊戲以 60 FPS 渲染主場景、另有 60 FPS 的 UI 層和 60 FPS 的 HUD 層，原始事件計數就會得出 180 FPS。當遊戲內部有更多 swap chain 時，輕易出現 600 FPS 以上的讀數。正確解法是辨識主要 swap chain——通常是渲染目標最大或頻率最高的那條——只計算它的 Present 事件。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "非侵入式 ETW FPS overlay 與 MSI Afterburner 或 RTSS 有何不同？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MSI Afterburner 及其配套的 RivaTuner Statistics Server（RTSS）是透過向遊戲行程注入渲染 DLL 來運作的。該 DLL 從內部掛鉤 DirectX 呼叫，以繪製 overlay 並收集幀時序——這也是它們能在遊戲畫面內顯示延遲圖表和文字的原因，但同樣是它們在某些遊戲中可能觸發防作弊封禁的原因。基於 ETW 的 overlay 完全在遊戲外部運行：從 Windows 核心讀取遙測事件，在自己的視窗中繪製 overlay 疊加於上方，從不觸碰遊戲記憶體。代價是它無法繪製在遊戲獨佔全螢幕畫面內部（改用合成器 overlay），但在防作弊環境中完全安全。"
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="/plain.css">
   <script>
     (function() {

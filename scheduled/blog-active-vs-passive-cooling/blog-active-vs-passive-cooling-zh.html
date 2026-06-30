@@ -34,6 +34,46 @@
     "inLanguage": "zh-Hant"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Windows 的主動散熱與被動散熱原則有什麼不同？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "主動散熱原則（Active）讓 Windows 在 CPU 過熱時優先加速風扇轉速，以散熱為第一考量，不在意噪音。被動散熱原則（Passive）則讓 Windows 先降低 CPU 時脈來減少發熱，只有在降頻也壓不住溫度時才要求風扇更賣力。兩種原則都是 Windows 電源計畫裡的 CPU 熱管理旋鈕，不會直接控制 GPU 風扇或 BIOS 層的風扇曲線。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "哪種散熱原則設定可以讓筆電風扇更安靜？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "被動散熱原則通常能讓風扇更安靜。因為 Windows 會優先降低 CPU 頻率而非拉高風扇轉速，處理器的發熱量降低後，風扇就不需要大力運轉。代價是在持續高負載時，單核效能可能明顯下降。主動散熱原則維持較高效能，但只要溫度一上來，風扇就會隨之轉快轉響。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "更改 Windows 散熱原則會影響效能嗎？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "會，但只在溫度達到門檻時才有差異。輕負載時兩種設定幾乎一樣，因為 CPU 根本不需要降頻。當處理器長時間高負載時，主動模式讓 CPU 維持全速、由風扇負責散熱；被動模式則降低時脈以控制溫度，在散熱有限的薄型筆電上，持續效能可能低 10–30%。桌機或散熱良好的主機通常感受不到差異。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Windows 散熱原則會影響或覆蓋 BIOS 風扇曲線、MSI Afterburner 等 GPU 軟體嗎？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "不會。Windows 系統散熱原則只透過 ACPI 的 _PSV 與 _ACx 物件與 CPU 本身的熱管理溝通，不會碰 BIOS 風扇曲線、嵌入式控制器的風扇邏輯，也不會影響 MSI Afterburner 或 ASUS Armory Crate 等 GPU 風扇控制軟體——那些在韌體或驅動層獨立運作。因此，在 Windows 設成被動模式只會讓 CPU 降頻，如果你聽到的噪音主要來自 GPU 或機殼風扇，這個設定並不會讓桌機變安靜。"
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="/plain.css">
   <script>
     (function() {

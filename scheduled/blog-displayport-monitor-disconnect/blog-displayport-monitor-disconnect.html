@@ -34,6 +34,46 @@
     "inLanguage": "en"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why does turning off my DisplayPort monitor rearrange my windows?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "DisplayPort uses a Hot-Plug Detect (HPD) signal to tell the GPU whether a monitor is connected. When you turn off a DisplayPort monitor — even by pressing its power button — many monitors drop the HPD signal entirely. Windows interprets this as a physical disconnection and immediately removes that display from the desktop, forcing every window that was on it to relocate to the remaining screen. HDMI monitors usually hold the HPD line high even when the panel is off, so Windows keeps the display registered and your window layout is preserved."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is HPD and why does DisplayPort behave differently from HDMI?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HPD (Hot-Plug Detect) is a dedicated signal wire in both DisplayPort and HDMI cables that tells the graphics card whether a monitor is physically present. The difference is in how monitors handle it when they power down: HDMI monitors typically keep HPD asserted (active), so the GPU still sees an active display even when the screen is blank. DisplayPort monitors frequently deassert HPD on power-off to save standby power, which causes Windows to treat the monitor as unplugged. The result is that DP monitors 'disappear' from the system on power-off while HDMI monitors appear to stay connected."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does my remote desktop session go black when I turn off a monitor?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Remote Desktop Protocol (RDP) uses the physical display topology to determine the resolution and layout for your remote session. If the monitor connected to the host PC is a DisplayPort model that drops HPD on power-off, Windows sees the display disappear and collapses the RDP session to a minimal or black screen — it has nowhere to render. HDMI monitors are less prone to this because Windows keeps them registered even when off. Solutions include using a DisplayPort dummy plug (a passive adapter that holds HPD permanently), enabling the 'Minimize connections when a display is disconnected' option in Windows Display settings, or configuring your monitor's OSD to stay connected in standby."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a dummy plug and does it fix window rearrangement?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A DisplayPort dummy plug (also called a headless ghost adapter) is a small passive dongle that plugs into your GPU's DP port and electrically simulates a connected monitor by holding the HPD signal high. Because the GPU always sees an 'active' display, Windows never removes that screen from the desktop — your windows stay put even when the real monitor is switched off or in standby. A quality dummy plug costs around $5–$15 and is the most reliable hardware fix for window rearrangement and black RDP sessions caused by DP HPD drop. Make sure to buy one that matches your target resolution (e.g. 4 K) for best results."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="/plain.css">
   <script>
     (function() {
