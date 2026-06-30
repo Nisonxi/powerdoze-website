@@ -61,6 +61,12 @@ for (const post of due) {
     continue;
   }
 
+  // FAQPage schema 守門警告（AEO/rich results 必要；草稿 HTML 裡要有才會帶上線）
+  if (!post.htmlEn.includes('"FAQPage"'))
+    console.warn('⚠️  FAQPage schema 缺漏 (EN): ' + slug + ' — 上線前請在 Supabase 草稿 <head> 補入 FAQPage JSON-LD');
+  if (!post.htmlZh.includes('"FAQPage"'))
+    console.warn('⚠️  FAQPage schema 缺漏 (ZH): ' + slug + ' — 上線前請在 Supabase 草稿 <head> 補入 FAQPage JSON-LD');
+
   // 1. 寫兩個 HTML 到網站根（移除 noindex 行）
   for (const [name, raw] of [[enUrl, post.htmlEn], [zhUrl, post.htmlZh]]) {
     const html = raw.split('\n').filter(l => !(l.includes('name="robots"') && l.includes('noindex'))).join('\n');
