@@ -33,6 +33,46 @@
     "inLanguage": "zh-Hant"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "跑 Ollama 或本地 AI 模型到底會用掉多少電？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "推理本身的用電其實出乎意料地少——幾秒鐘的提示處理，瓦數大約跟打遊戲差不多。真正的帳單殺手是閒置時間。像 RTX 3080 或 4070 這類 GPU，掛著 Ollama 待命但沒人在打字的狀態，可以持續吃掉 20–80 W。一天閒置 23 小時累計下來就是好幾度電，月底電費帳單上會看得清清楚楚。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "GPU 功耗上限技巧是什麼？會讓 AI 推理變慢嗎？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "GPU 功耗上限技巧是用 nvidia-smi 指令——具體是「nvidia-smi -pl [瓦數]」——來限制 GPU 最大允許消耗的功率。把上限設在 TDP 的 60–70%（例如 250 W 的卡限到 150 W），能大幅降低閒置和峰值用電，但對推理速度的影響很小：LLM 的 token 生成主要受記憶體頻寬限制，而非算力，所以速度降幅通常不超過 5%。這是本地 AI 環境裡投報率最高的省電調整之一。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "為什麼跑 Ollama 的時候電腦就是不肯睡眠？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ollama 和類似的本地 AI 伺服器（LM Studio、ComfyUI）會持續持有一個「禁止睡眠」的請求，避免長時間推理任務被中斷。Windows 偵測到這個訊號就會把系統視為「工作中」而阻擋自動睡眠。你可以用系統管理員身份開命令提示字元，輸入「powercfg /requests」來確認是哪支程式在擋著。問題在於硬強制睡眠可能讓任務做到一半斷掉，所以真正需要的是更聰明的排程——只在 AI 伺服器真的閒置時才允許睡眠。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "怎麼讓本地 AI 任務跑整晚，又不用讓電腦白白開著燒一整晚的電？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "關鍵在於「條件式睡眠」：任務真正在跑的時候讓電腦保持清醒，任務結束後就自動睡眠。做法是把禁止睡眠工具（或一段呼叫 SetThreadExecutionState 的批次腳本）和任務完成後的釋放鉤子結合起來。PowerDoze 讓你定義規則——例如「如果 Ollama.exe 在活躍進程清單裡，保持清醒；否則閒置 10 分鐘後睡眠」——這樣就能讓任務完整跑完整夜，不必每次手動調電源設定。"
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="plain.css">
   <script>
     (function() {

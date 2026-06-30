@@ -33,6 +33,46 @@
     "inLanguage": "zh-Hant"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "不能進入睡眠的電腦，要怎麼降低功耗？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "對於 Plex 伺服器、種子機或監控錄影等必須 24 小時運作的電腦，最有效的省電方式包括：(1) 用 powercfg 停用系統睡眠，但保留螢幕睡眠，讓顯示器在閒置時自動關閉；(2) 啟用 USB 選擇性暫停，讓閒置的 USB 裝置切斷電源；(3) 用 nvidia-smi --power-limit 將 GPU 功耗上限調低，避免顯示卡在閒置時仍耗費大量電力；(4) 在離峰時段切換至「平衡」或「省電」電源計畫。綜合以上措施，通常可在不中斷背景任務的前提下，將閒置功耗降低 20–40%。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "哪些 powercfg 設定對常開機電腦最省電？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "對常開機電腦影響最大的 powercfg 設定有：(1) 將螢幕逾時設為 5–10 分鐘，讓沒人看的螢幕自動關閉（指令：powercfg /change monitor-timeout-ac 5）；(2) 設定硬碟在閒置 20–30 分鐘後進入省電模式，讓硬碟停止旋轉；(3) 將處理器電源管理的最小狀態設為 5%，讓 CPU 在閒置時維持低頻運作；(4) 設定超長時間後的休眠（例如 8 小時），做為安全備援。如果某些工作需要電腦保持喚醒，不建議把系統睡眠設為「永不」，改用 PowerDoze 這類工具，只在特定程式執行時阻止睡眠，效果更精準。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "顯示卡閒置時耗多少電？要怎麼降低？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "NVIDIA 顯示卡在閒置狀態下通常耗費 10–30 W，高階顯示卡若連接螢幕並以高更新率顯示畫面，閒置功耗甚至可達 50–100 W。降低 GPU 閒置功耗的方法：(1) 用 nvidia-smi --query-gpu=power.draw 確認目前耗電量，再用 nvidia-smi --power-limit=<瓦數>（例如額定 250 W 的卡設為 50 W）設定上限；(2) 將螢幕更新率改為 60 Hz（而非 144 Hz）；(3) 使用無頭模式或虛擬螢幕轉接頭，消除顯示渲染的開銷；(4) AMD 顯示卡可透過 RadeonPro 設定低功耗模式。注意：功耗上限在重開機後會還原，建議透過 Windows 排程工作或 PowerDoze 的排程功能自動套用。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "可以讓伺服器電腦依照時段自動切換電源計畫嗎？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "可以。Windows 本身不支援按時段切換電源計畫，但有三種方式可以實現：(1) 建立 Windows 排程工作，在指定時間執行 powercfg /setactive <GUID>，夜間切換至省電計畫，早晨再切回平衡；(2) 撰寫 PowerShell 腳本，結合 powercfg 與 nvidia-smi 功耗限制，再透過工作排程器定時執行；(3) 使用 PowerDoze，它提供視覺化排程編輯器，設定好時段後會自動啟用對應的電源計畫、調整 GPU 限制，無需手動維護腳本。自動化方案尤其重要，因為 Windows 更新和驅動程式安裝有時會悄悄還原預設電源計畫，一次性設定容易隨時間失效，定期重新套用的工具才能確保設定長期有效。"
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="plain.css">
   <script>
     (function() {

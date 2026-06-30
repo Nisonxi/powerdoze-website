@@ -33,6 +33,46 @@
     "inLanguage": "zh-Hant"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "FPS overlay 對防作弊遊戲安全嗎？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "這完全取決於 overlay 的量測方式。把程式碼或 hook 注入遊戲行程（DLL 注入）的 overlay 會被 Easy Anti-Cheat、BattlEye 等防作弊系統偵測並封號。若 overlay 純粹從 Windows 核心事件（ETW）讀取幀數、完全不碰遊戲行程，則是安全的——因為什麼都沒進入遊戲，防作弊根本無從偵測。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "ETW 是什麼？它怎麼在不注入的情況下量測 FPS？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ETW 是 Event Tracing for Windows 的縮寫，是每一版 Windows 都內建的核心層記錄基礎架構。遊戲每次呼叫 IDXGISwapChain::Present 把渲染好的畫面推送到螢幕時，DXGI 就會發出一個 ETW 事件。FPS 計數器可以在遊戲行程之外訂閱 Microsoft-DXGI 提供者的事件——統計每秒觸發幾次 Present 事件，就能得到準確的幀率，且完全零程式碼進入遊戲。Windows Performance Analyzer 也是用同一套技術。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "為什麼有些 FPS 計數器會顯示離譜的數字，例如 600 FPS？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "大多數遊戲同時使用多個 swap chain——主 3D 場景用一個，UI 層、載入畫面或影片播放各用另一個。如果 ETW 計數器把一個行程底下所有 swap chain 的 Present 事件加在一起，就會得到實際顯示幀率好幾倍的數字。正確的做法是找出哪條 swap chain 在驅動主顯示輸出（通常是幀率最高或最穩定的那條），只計算它的 Present 事件。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "非侵入式 FPS overlay 和 MSI Afterburner、RTSS 有什麼不同？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MSI Afterburner 和 RivaTuner Statistics Server（RTSS）的運作方式是把渲染 hook 注入遊戲的圖形管線——這能取得精確的幀時序資料，但也代表它們將程式碼放進了遊戲行程，防作弊軟體可能因此標記並封號。非侵入式的 ETW overlay 什麼都不注入，完全在遊戲外部運作，只訂閱 Windows 核心事件。取捨是：ETW 的幀時序精度稍低，但 overlay 對防作弊完全透明，在受保護的遊戲中零封號風險。"
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="/plain.css">
   <script>
     (function() {

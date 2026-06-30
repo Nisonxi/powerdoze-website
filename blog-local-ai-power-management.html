@@ -33,6 +33,46 @@
     "inLanguage": "en"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How much power does running Ollama or a local AI model actually use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The inference burst itself is surprisingly cheap — a few seconds of prompt processing draws roughly the same wattage as gaming. The real cost is idle time. A GPU like an RTX 3080 or 4070 sitting in 'ready' mode with Ollama loaded can draw 20–80 W continuously, even when you haven't typed a single prompt. Over 23 hours of idle per day that adds up to several kWh, which shows up clearly on your electricity bill by month-end."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the GPU power limit trick and does it slow down AI inference?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The GPU power limit trick uses the nvidia-smi command — specifically 'nvidia-smi -pl [watts]' — to cap the maximum power your GPU is allowed to draw. Setting a limit around 60–70% of TDP (e.g., 150 W on a 250 W card) cuts idle and peak draw significantly while barely affecting inference speed: LLM token generation is mostly memory-bandwidth-bound, not compute-bound, so the speed drop is often under 5%. It's one of the highest-ROI power tweaks for local AI setups."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does my PC refuse to sleep when Ollama is running?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ollama and similar local AI servers (LM Studio, ComfyUI) hold a power sleep request open so that long-running inference jobs aren't interrupted. Windows sees this as an active workload and blocks automatic sleep. You can confirm this by running 'powercfg /requests' in an elevated command prompt — it will list which process is holding the sleep blocker. The challenge is that simply overriding the blocker might kill a job mid-way, so you need smarter scheduling that sleeps only when the AI server is genuinely idle."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I run local AI jobs overnight without leaving my PC on and burning electricity all night?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The key is conditional sleep: let the PC stay awake while a job is genuinely running, then allow it to sleep automatically once the workload finishes. You can set this up by combining a sleep-blocker tool (or a batch script that calls SetThreadExecutionState) with a post-job hook that releases the blocker. PowerDoze lets you define rules — for example, 'if Ollama.exe is in the active process list, hold awake; otherwise sleep after 10 minutes of idle' — so you get proper overnight job runs without manually managing power settings every time."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="plain.css">
   <script>
     (function() {

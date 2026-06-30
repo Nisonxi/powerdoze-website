@@ -33,6 +33,46 @@
     "inLanguage": "zh-Hant"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Windows 11 的睡眠設定在哪裡？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "前往「設定 → 系統 → 電源與睡眠」。進階選項（包含休眠、混合式睡眠）則在「控制台 → 電源選項 → 變更計畫設定 → 變更進階電源設定」。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "睡眠、休眠與 Modern Standby 有什麼差別？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "睡眠將工作階段儲存在 RAM，仍需少量電力；休眠將工作階段寫入磁碟，完全斷電。Modern Standby（S0ix）讓 CPU 保持低功耗運作以處理背景任務（如郵件同步），因此不會真正進入深度省電，整夜溫度偏高是正常現象。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "為什麼電腦超過閒置時間後還是不睡覺？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "有程式或驅動程式正在送出「防止睡眠」的電源要求。請用系統管理員身份開啟命令提示字元，執行「powercfg /requests」，就能看到哪個處理程序在阻擋睡眠，常見兇手包含媒體播放器、視訊會議軟體及某些背景服務。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "「powercfg /requests」指令的作用是什麼？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "「powercfg /requests」會列出目前所有有效的電源要求，分為系統（SYSTEM）、顯示器（DISPLAY）、離開模式（AWAYMODE）三類。只要 SYSTEM 或 DISPLAY 項目有任何條目，就代表該程式正在主動阻止 Windows 進入睡眠，直到它釋放要求為止。"
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="plain.css">
   <script>
     (function() {

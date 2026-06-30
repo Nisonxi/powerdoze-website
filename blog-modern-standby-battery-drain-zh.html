@@ -33,6 +33,46 @@
     "inLanguage": "zh-Hant"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "什麼是 Modern Standby？為什麼它會讓筆電待機時大量耗電？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Modern Standby（S0 低功耗閒置）是微軟為取代傳統 S3 睡眠而引入的待機模式，2018 年後生產的大多數筆電預設採用此模式。S3 睡眠會完全關閉 CPU 和 RAM 電源，而 Modern Standby 會讓 CPU 保持部分運作，讓背景應用程式、推播通知和 Windows 服務持續執行。這表示你的筆電從未真正進入深眠——放在包包裡仍持續耗電，有時還會發熱，一夜之間電量可能流失 20–40%。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "如何判斷我的筆電使用 Modern Standby（S0）還是傳統 S3 睡眠？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "以系統管理員身分開啟命令提示字元或 PowerShell，執行：powercfg /a。查看輸出中「下列睡眠狀態可以使用」的項目。若出現「待命 (S0 低電力閒置) 已連線至網路」或類似 S0 項目，表示你的筆電使用 Modern Standby。若出現「待命 (S3)」則是傳統睡眠。現今大多數筆電只會顯示 S0——製造商在韌體層級移除了 S3 支援，無法單純透過 Windows 設定還原。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "如何用 powercfg /sleepstudy 找出待機耗電的元兇？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "以系統管理員身分執行「powercfg /sleepstudy」。Windows 會產生一份 HTML 報告（預設儲存於 C:\\Windows\\system32\\sleepstudy-report.html），依每個待機時段列出電量消耗明細。找出耗電比例異常高的時段，再查看「主要耗電來源」區段，了解哪些處理程序或裝置讓系統持續保持活躍。也可執行「powercfg /energy」進行 60 秒追蹤，標示出耗電量高的驅動程式與喚醒來源。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "能把筆電切回 S3 睡眠來解決耗電問題嗎？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "在大多數現代筆電上，S3 已無法使用——韌體（UEFI）未開放此功能，單靠 Windows 設定或登錄檔調整無法還原。少數商務筆電（部分 ThinkPad 和 Dell Latitude）的 BIOS 提供「Windows and Linux」（S3）與「Modern Standby」的切換選項。若 BIOS 沒有此選項，實用的替代方案包括：改用休眠模式取代睡眠（執行 powercfg /h on）、移除會在背景喚醒系統的應用程式、在裝置管理員中關閉網路卡的喚醒功能，或使用 PowerDoze 這類工具，在閒置一段時間後自動切換至休眠或關機，從根本避免待機耗電。"
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="/plain.css">
   <script>
     (function() {

@@ -33,6 +33,46 @@
     "inLanguage": "en"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the difference between PowerToys Awake and Process Lasso for Windows power management?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "PowerToys Awake is a simple stay-awake tool: it temporarily overrides your sleep timer so your PC won't go idle while you step away, then returns to normal when you disable it. Process Lasso's IdleSaver is a power management scheduler that automatically switches your Windows power plan based on CPU load — high load stays on Balanced or Performance, idle CPU drops to a saver plan to cut power consumption. They solve different problems: Awake prevents sleep, IdleSaver manages which power plan is active. Neither tool reacts to context signals like an external display being connected, a specific app running, or time of day."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the best free Windows tool to prevent my PC from going to sleep?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For a simple, reliable free option, PowerToys Awake (part of Microsoft PowerToys) is the most trusted choice — it is maintained by Microsoft, integrates with the system tray, and lets you keep the screen on for a set duration or indefinitely. Caffeine and Coffee are lightweight alternatives with a smaller install footprint, though they are less actively maintained. All three work by periodically simulating activity so Windows never triggers its sleep timer. If you also want automatic power plan switching based on CPU load, Process Lasso offers a free tier with its IdleSaver feature."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Caffeine for Windows affect actual power consumption, or does it only prevent the PC from sleeping?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Caffeine (and similar tools like Coffee) only prevents sleep — they do not touch your power plan, CPU frequency, display brightness, or any other power setting. They work by simulating a tiny mouse move or keypress on a timer so Windows resets its idle counter and never starts the sleep sequence. Your PC runs exactly as it would at normal idle, just without shutting down the display or entering a low-power state. If you want tools that actively reduce power draw while idle — switching to a power-saver plan, dimming the backlight, or lowering CPU speeds — you need a dedicated power manager like Process Lasso or PowerDoze."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What can Process Lasso do for power management that other stay-awake tools cannot?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Process Lasso goes well beyond stay-awake tools. Its IdleSaver feature monitors CPU utilization and automatically switches the active Windows power plan — for example, switching from Balanced to Power Saver when the CPU is idle for a set period, then back to Balanced when load rises. It can also apply per-process CPU priority rules, throttle background processes, and log power plan changes. What it cannot do is react to non-CPU context: it will not switch plans because you plugged in an external monitor, because a specific app opened, because you left the desk (presence detection), or based on a time schedule. For that kind of multi-signal, context-aware automation you need a tool like PowerDoze."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="plain.css">
   <script>
     (function() {

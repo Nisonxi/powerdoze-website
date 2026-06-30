@@ -33,6 +33,46 @@
     "inLanguage": "en"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the most accurate way to measure my PC's power consumption?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A wall plug power meter (such as a Kill-A-Watt or similar energy monitor) plugged between your PC and the outlet is the most accurate method. It measures total system draw at the wall — including the power supply, all components, fans, and displays connected to the same strip. Software sensors and UPS readouts are useful approximations but cannot match the precision of a dedicated watt meter."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why doesn't my PSU's rated wattage tell me how much power my PC actually uses?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your power supply unit (PSU) rating — for example 750 W — is its maximum capacity, not its actual draw. Real-world consumption depends on what components are installed and what they are doing at any given moment. A gaming PC with a 750 W PSU might idle at 60–90 W and peak at 400–500 W under load. The PSU also converts AC to DC with some efficiency loss (typically 80–90%), meaning it draws slightly more from the wall than it delivers to components."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does software like HWiNFO or HWMonitor accurately measure total PC power consumption?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Software sensors such as HWiNFO64 and HWMonitor read power figures reported by hardware sensors on the CPU and GPU. They can give useful per-component estimates — for example, CPU package power and GPU board power — but they do not capture total system draw. They miss the power consumed by storage drives, fans, memory, USB devices, and power-supply conversion losses. For a full picture, combine software readings with a wall meter."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I calculate my PC's annual electricity cost from wattage readings?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use this formula: Annual cost = (Watts ÷ 1000) × Hours per year × Electricity rate (per kWh). For example, a PC that averages 150 W and runs 8 hours per day: (150 ÷ 1000) × (8 × 365) × $0.15 = roughly $65.70 per year. For idle periods where the PC could sleep instead, multiply idle watts by idle hours to find the savings opportunity. Tools like PowerDoze can automate sleep during those idle hours to reduce consumption automatically."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="plain.css">
   <script>
     (function() {

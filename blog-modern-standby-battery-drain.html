@@ -33,6 +33,46 @@
     "inLanguage": "en"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Modern Standby and why does it drain my laptop battery?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Modern Standby (S0 low-power idle) is the sleep mode Microsoft introduced to replace traditional S3 sleep on most laptops made after 2018. Unlike S3, which fully powered down the CPU and RAM, Modern Standby keeps the CPU partially active so background apps, push notifications, and Windows services can still run. This means your laptop is never truly off — it keeps consuming power in the bag, sometimes generating heat and losing 20–40% battery overnight."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I tell if my laptop uses Modern Standby (S0) or traditional S3 sleep?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Open a Command Prompt or PowerShell as administrator and run: powercfg /a. Look at the output under 'The following sleep states are available.' If you see 'Standby (S0 Low Power Idle) Network Connected' or similar S0 entries, your laptop uses Modern Standby. If you see 'Standby (S3)', you have traditional sleep. Most laptops today only show S0 — the firmware removed S3 support at the manufacturer level and you cannot restore it through Windows settings alone."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I use powercfg /sleepstudy to find what is draining my battery during sleep?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Run 'powercfg /sleepstudy' in an elevated Command Prompt. Windows generates an HTML report (saved to C:\\Windows\\system32\\sleepstudy-report.html by default) that breaks down battery drain session by session while the system was in Modern Standby. Look for sessions with unusually high drain percentages, then check the 'Top offenders' section to see which processes or devices kept the system active. You can also run 'powercfg /energy' for a 60-second trace that flags power-hungry drivers and wake sources."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I switch my laptop back to S3 sleep to stop the battery drain?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "On most modern laptops, S3 is not available because the firmware (UEFI) does not expose it — you cannot re-enable it through Windows settings or registry tweaks alone. A small number of business laptops (some ThinkPads and Dell Latitudes) offer a BIOS option to switch between 'Windows and Linux' (S3) and 'Modern Standby' modes. If your BIOS does not have that option, the practical workarounds are: hibernate instead of sleep (powercfg /h on), uninstall apps that register background wake tasks, disable network adapters from waking the system (Device Manager → Power Management), or use a tool like PowerDoze to automatically hibernate or shut down after a set idle period."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="/plain.css">
   <script>
     (function() {

@@ -33,6 +33,46 @@
     "inLanguage": "zh-Hant"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "測量電腦實際耗電量最準確的方法是什麼？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "將插座式電力監測器（如 Kill-A-Watt 或類似的智慧插座瓦特計）接在電腦與插座之間，是最準確的測量方式。它能直接量測整個系統從牆壁插座抽取的總用電量，包含電源供應器、所有零組件、風扇，以及接在同一電源排上的螢幕。軟體感測器與 UPS 顯示數值只是估算，精度無法比擬專用電力計。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "為什麼電源供應器的額定瓦數無法告訴我電腦實際用了多少電？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "電源供應器（PSU）的額定瓦數（例如 750 W）代表的是最大輸出容量，而非實際消耗量。真實用電量取決於安裝了哪些零組件，以及它們當下的負載狀態。一台配備 750 W 電源的電競電腦，閒置時可能只用 60–90 W，高負載時才會衝到 400–500 W。此外，電源轉換效率通常在 80–90% 左右，因此從牆壁抽取的電量會略高於實際輸出給零組件的電量。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "HWiNFO 或 HWMonitor 等軟體能準確測量電腦的總耗電量嗎？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HWiNFO64、HWMonitor 等軟體讀取的是 CPU 與 GPU 硬體感測器回報的功耗數值，可提供有用的單元件估算，例如 CPU 封裝功耗與 GPU 板卡功耗。但這些數值無法涵蓋整體系統用電，儲存裝置、風扇、記憶體、USB 週邊，以及電源轉換損耗均未計入。若要掌握完整耗電全貌，建議搭配插座式電力計一同使用。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "知道電腦的瓦數後，如何計算每年的電費支出？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "套用以下公式：年電費 ＝（瓦數 ÷ 1000）× 年度使用時數 × 電費單價（元／度）。舉例：一台平均耗電 150 W、每天開機 8 小時的電腦：（150 ÷ 1000）×（8 × 365）× 3.5 元≈約 1,533 元／年。若電腦在閒置期間能進入睡眠而非保持開啟，將閒置瓦數乘以閒置時數即可估算可節省的電費。PowerDoze 等工具可在閒置時自動啟動睡眠，無需手動操作即可降低用電量。"
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="plain.css">
   <script>
     (function() {

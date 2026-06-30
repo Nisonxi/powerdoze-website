@@ -33,6 +33,46 @@
     "inLanguage": "en"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Where do I find sleep settings in Windows 11?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Go to Settings → System → Power & sleep. For advanced options like hibernate and hybrid sleep, open Control Panel → Power Options → Change plan settings → Change advanced power settings."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between Sleep, Hibernate, and Modern Standby in Windows?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sleep saves your session to RAM and draws a small amount of power; Hibernate saves the session to disk and uses zero power. Modern Standby (S0ix) keeps the CPU online for background tasks like email sync — it never truly cuts power and can run warm all night."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why won't my PC go to sleep even after the timeout?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A program or driver is holding a sleep-prevention request. Run 'powercfg /requests' in an elevated Command Prompt to see exactly which process is blocking sleep — common culprits include media players, video calls, and some background services."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does 'powercfg /requests' do?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "'powercfg /requests' lists every active power request — System, Display, and Awaymode — that is currently preventing Windows from sleeping. Any entry under SYSTEM or DISPLAY means something is actively blocking sleep until that request is released."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="plain.css">
   <script>
     (function() {

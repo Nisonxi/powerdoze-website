@@ -33,6 +33,46 @@
     "inLanguage": "zh-Hant"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Windows 的主動散熱與被動散熱策略有什麼差別？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Windows 電源計畫中提供兩種散熱策略。主動散熱（Active）會優先拉高風扇轉速來降溫，維持低溫但代價是噪音。被動散熱（Passive）則先降低 CPU 時脈來減少發熱，只有在仍過熱時才加速風扇，以小幅效能換取安靜。對大多數輕度使用情境（瀏覽、視訊會議），切換到被動散熱是免費又即效的靜音方式，完全不需要購買任何硬體。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "限制 CPU 功耗上限如何在不影響效能的情況下降低風扇噪音？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "現代 CPU 允許短暫大幅超出標稱 TDP 進行 Boost，這些瞬間功耗峰值會產生劇烈熱浪並觸發風扇加速。透過調低「處理器最大使用狀態」（例如從 100% 調至 80–90%），或設定持續功耗上限，可以削去這些熱浪。對瀏覽器、文書、視訊通話等輕度任務幾乎沒有感受到的效能差距，風扇噪音卻明顯安靜，因為觸發風扇的熱峰根本不再出現。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "可以限制 GPU 功耗來讓電腦更安靜嗎？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "可以。NVIDIA 顯示卡可透過 nvidia-smi 設定功耗上限，AMD 顯示卡也在驅動程式中提供類似設定。將 GPU 功耗降低 10–20%，通常能在待機和輕度使用時顯著降低溫度與風扇噪音，而遊戲最大幀數只損失幾個百分點。對於大部分時間 GPU 閒置的桌面工作來說，這是投報率極高的調整——GPU 幾乎感受不到上限，風扇卻安靜許多。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "調低處理器最大使用狀態會影響遊戲效能嗎？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "取決於調低的幅度和遊戲類型。從 100% 降至 90% 對多數遊戲影響微乎其微，因為遊戲很少把所有 CPU 核心都用滿。低於 80% 才可能在 CPU 瓶頸的遊戲中出現明顯掉幀。實用做法是：日常使用時掛低功耗安靜計畫，遊戲時切回不限制的高效能計畫——這個切換動作可以用 PowerDoze 根據偵測到的使用情境自動完成，不需要手動切換。"
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="plain.css">
   <script>
     (function() {

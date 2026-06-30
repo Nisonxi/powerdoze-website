@@ -33,6 +33,46 @@
     "inLanguage": "en"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How much electricity does an idle PC waste per year?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A typical desktop PC draws 60–120 W at idle. If it sits on for 20 hours a day while you're away or doing other things, that adds up to roughly 440–880 kWh per year — the equivalent of running a refrigerator non-stop. At average US electricity rates (~$0.16/kWh) that is $70–$140 wasted annually on a machine that is doing nothing useful for you."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do Windows power plans fail to save power automatically?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Windows power plans rely on a single fixed timer: if no mouse or keyboard input is detected for N minutes, the display turns off or the PC sleeps. This breaks down in common real-world situations — a video call keeps the microphone active so Windows thinks you're busy; a download or render is running and Windows won't sleep; you're reading a document without touching anything. Because the built-in logic has no awareness of what you're actually doing or where you are, it either sleeps at the wrong time or never sleeps at all."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What signals should automatic power management respond to?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Effective automatic power management should combine at least four signals: (1) Schedule — time-of-day rules so the PC stays awake during work hours and enters power-saving mode overnight; (2) App awareness — keep full power while specific programs are running (games, video editors, Zoom) and scale back when they close; (3) Network activity — hold off on sleeping when an active download or upload is in progress; (4) Hardware state — respond to battery level, lid close, or connected display changes. Reacting to all four together means the PC is always in the right power state without you having to think about it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between a sleep timer and automatic power management?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A sleep timer is a single fixed rule: 'sleep after 30 minutes of inactivity.' It has no context and treats every situation the same. Automatic power management is a set of conditional rules that adapt to what is actually happening: it can stay awake during a scheduled work window, prevent sleep while a specific app is running, pause the timer during an active download, and then immediately drop to a low-power state the moment those conditions clear — all without any manual intervention. The result is a PC that saves power whenever it safely can, without ever interrupting your work."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="plain.css">
   <script>
     (function() {

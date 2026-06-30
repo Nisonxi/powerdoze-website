@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
@@ -18,6 +18,12 @@
   <meta name="twitter:description" content="Fixing Windows sleep problems, reducing PC power consumption, automatic power plan switching. Written by the developer.">
   <meta name="twitter:image" content="https://powerdoze.app/assets/hero-screenshot.png">
   <link rel="stylesheet" href="plain.css">
+  <style>
+    .p-blog-filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 24px;}
+    .p-filter-btn{background:transparent;border:1px solid var(--border,#333);color:var(--text-muted,#888);padding:5px 16px;border-radius:20px;font-size:13px;cursor:pointer;transition:all .15s;font-family:inherit;line-height:1.5;}
+    .p-filter-btn:hover{border-color:var(--amber,#f59e0b);color:var(--amber,#f59e0b);}
+    .p-filter-btn.p-filter-active{border-color:var(--amber,#f59e0b);color:var(--amber,#f59e0b);background:rgba(245,158,11,.1);}
+  </style>
   <script>
     (function() {
       var t = localStorage.getItem('pd-theme') || 'dark';
@@ -75,11 +81,19 @@
 
     <input type="search" id="blog-search" class="p-blog-search" placeholder="Search articles…" aria-label="Search articles" autocomplete="off">
 
+    <div class="p-blog-filters" role="tablist">
+      <button class="p-filter-btn p-filter-active" data-filter="all" role="tab" aria-selected="true">All</button>
+      <button class="p-filter-btn" data-filter="guide" role="tab" aria-selected="false">指南 Guides</button>
+      <button class="p-filter-btn" data-filter="tech" role="tab" aria-selected="false">Technical</button>
+    </div>
+
     <div class="p-blog-layout">
 
       <aside class="p-blog-index" aria-label="All posts">
         <div class="p-blog-index-title" data-i18n="blogAll">All posts</div>
         <ol>
+          <li data-slug="windows-sleep-during-download"><a href="windows-sleep-during-download.html" data-en="windows-sleep-during-download.html" data-zh="windows-sleep-during-download-zh.html"><span class="pd-dot" aria-hidden="true"></span>Stop Windows Sleeping During Downloads</a></li>
+          <li data-slug="keep-windows-awake-alternatives"><a href="keep-windows-awake-alternatives.html" data-en="keep-windows-awake-alternatives.html" data-zh="keep-windows-awake-alternatives-zh.html"><span class="pd-dot" aria-hidden="true"></span>Keep Windows Awake: Alternatives Compared</a></li>
           <!-- scheduled-blog-index-insert -->
           <li data-slug="blog-fps-measurement-etw"><a href="blog-fps-measurement-etw.html" data-en="blog-fps-measurement-etw.html" data-zh="blog-fps-measurement-etw-zh.html"><span class="pd-dot" aria-hidden="true"></span><span data-i18n="blogA9t">Counting Frames Without Touching the Game: How Our FPS Overlay Works</span></a></li>
           <li data-slug="blog-modern-standby-battery-drain"><a href="blog-modern-standby-battery-drain.html" data-en="blog-modern-standby-battery-drain.html" data-zh="blog-modern-standby-battery-drain-zh.html"><span class="pd-dot" aria-hidden="true"></span><span data-i18n="blogA8t">You Think It's Asleep — It's Scrolling Its Phone All Night: The Truth About Modern Standby</span></a></li>
@@ -97,7 +111,31 @@
 
         <!-- scheduled-blog-insert -->
 
-        <article class="p-blog-card" data-slug="blog-fps-measurement-etw">
+        <article class="p-blog-card" data-slug="windows-sleep-during-download" data-category="guide">
+          <div class="p-blog-card-head">
+            <span class="pd-dot" aria-hidden="true"></span>
+            <h2><a href="windows-sleep-during-download.html" data-en="windows-sleep-during-download.html" data-zh="windows-sleep-during-download-zh.html">How to Stop Windows from Sleeping During a Download or File Transfer</a></h2>
+          </div>
+          <p>Windows sleeps based on idle time, not network activity — so it will shut down mid-download. Three methods: temporary setting change, keep-awake tool, or automatic app whitelist that resets when done.</p>
+          <p class="p-blog-card-links">
+            <a href="windows-sleep-during-download.html" data-i18n="blogReadEn">Read in English →</a> ·
+            <a href="windows-sleep-during-download-zh.html" data-i18n="blogReadZh">中文版 →</a>
+          </p>
+        </article>
+
+        <article class="p-blog-card" data-slug="keep-windows-awake-alternatives" data-category="guide">
+          <div class="p-blog-card-head">
+            <span class="pd-dot" aria-hidden="true"></span>
+            <h2><a href="keep-windows-awake-alternatives.html" data-en="keep-windows-awake-alternatives.html" data-zh="keep-windows-awake-alternatives-zh.html">Keep Windows Awake: Caffeine, PowerToys Awake, Don't Sleep &amp; StayGreen — Honest Comparison</a></h2>
+          </div>
+          <p>An honest map of Windows keep-awake tools — what each does, where each stops. PowerDoze automates power by context (app, idle, Wi-Fi, battery) instead of one manual switch.</p>
+          <p class="p-blog-card-links">
+            <a href="keep-windows-awake-alternatives.html" data-i18n="blogReadEn">Read in English →</a> ·
+            <a href="keep-windows-awake-alternatives-zh.html" data-i18n="blogReadZh">中文版 →</a>
+          </p>
+        </article>
+
+        <article class="p-blog-card" data-slug="blog-fps-measurement-etw" data-category="tech">
           <div class="p-blog-card-head">
             <span class="pd-dot" aria-hidden="true"></span>
             <h2><a href="blog-fps-measurement-etw.html" data-en="blog-fps-measurement-etw.html" data-zh="blog-fps-measurement-etw-zh.html" data-i18n="blogA9t">Counting Frames Without Touching the Game: How Our FPS Overlay Works</a></h2>
@@ -109,7 +147,7 @@
           </p>
         </article>
 
-        <article class="p-blog-card" data-slug="blog-modern-standby-battery-drain">
+        <article class="p-blog-card" data-slug="blog-modern-standby-battery-drain" data-category="guide">
           <div class="p-blog-card-head">
             <span class="pd-dot" aria-hidden="true"></span>
             <h2><a href="blog-modern-standby-battery-drain.html" data-en="blog-modern-standby-battery-drain.html" data-zh="blog-modern-standby-battery-drain-zh.html" data-i18n="blogA8t">You Think It's Asleep — It's Scrolling Its Phone All Night: The Truth About Modern Standby</a></h2>
@@ -121,7 +159,7 @@
           </p>
         </article>
 
-        <article class="p-blog-card" data-slug="blog-measure-pc-power-consumption">
+        <article class="p-blog-card" data-slug="blog-measure-pc-power-consumption" data-category="guide">
           <div class="p-blog-card-head">
             <span class="pd-dot" aria-hidden="true"></span>
             <h2><a href="blog-measure-pc-power-consumption.html" data-en="blog-measure-pc-power-consumption.html" data-zh="blog-measure-pc-power-consumption-zh.html" data-i18n="blogA7t">How Much Power Does Your PC Actually Draw? Three Ways to Find Out</a></h2>
@@ -133,7 +171,7 @@
           </p>
         </article>
 
-        <article class="p-blog-card" data-slug="blog-quiet-pc-fan-noise">
+        <article class="p-blog-card" data-slug="blog-quiet-pc-fan-noise" data-category="guide">
           <div class="p-blog-card-head">
             <span class="pd-dot" aria-hidden="true"></span>
             <h2><a href="blog-quiet-pc-fan-noise.html" data-en="blog-quiet-pc-fan-noise.html" data-zh="blog-quiet-pc-fan-noise-zh.html" data-i18n="blogA6t">Screaming Fans Aren't a Cooling Problem — They're Unmanaged Watts: Quiet Your PC with Software</a></h2>
@@ -145,7 +183,7 @@
           </p>
         </article>
 
-        <article class="p-blog-card" data-slug="blog-local-ai-power-management">
+        <article class="p-blog-card" data-slug="blog-local-ai-power-management" data-category="tech">
           <div class="p-blog-card-head">
             <span class="pd-dot" aria-hidden="true"></span>
             <h2><a href="blog-local-ai-power-management.html" data-en="blog-local-ai-power-management.html" data-zh="blog-local-ai-power-management-zh.html" data-i18n="blogA5t">It's Not the Seconds You Prompt, It's the 23 Hours It Idles: The Truth About Local AI's Power Bill</a></h2>
@@ -157,7 +195,7 @@
           </p>
         </article>
 
-        <article class="p-blog-card" data-slug="blog-always-on-pc-power-savings">
+        <article class="p-blog-card" data-slug="blog-always-on-pc-power-savings" data-category="tech">
           <div class="p-blog-card-head">
             <span class="pd-dot" aria-hidden="true"></span>
             <h2><a href="blog-always-on-pc-power-savings.html" data-en="blog-always-on-pc-power-savings.html" data-zh="blog-always-on-pc-power-savings-zh.html" data-i18n="blogA4t">The PC You Never Turn Off Is Still Burning Power at 3 AM: Cut an Always-On PC's Bill Without Letting It Sleep</a></h2>
@@ -169,7 +207,7 @@
           </p>
         </article>
 
-        <article class="p-blog-card" data-slug="blog-windows-power-tools-compared">
+        <article class="p-blog-card" data-slug="blog-windows-power-tools-compared" data-category="guide">
           <div class="p-blog-card-head">
             <span class="pd-dot" aria-hidden="true"></span>
             <h2><a href="blog-windows-power-tools-compared.html" data-en="blog-windows-power-tools-compared.html" data-zh="blog-windows-power-tools-compared-zh.html" data-i18n="blogA3t">Your Tray Is Full of Stay-Awake Apps — Which Windows Power Tool Do You Actually Need?</a></h2>
@@ -181,7 +219,7 @@
           </p>
         </article>
 
-        <article class="p-blog-card" data-slug="blog-windows-sleep-settings-guide">
+        <article class="p-blog-card" data-slug="blog-windows-sleep-settings-guide" data-category="guide">
           <div class="p-blog-card-head">
             <span class="pd-dot" aria-hidden="true"></span>
             <h2><a href="blog-windows-sleep-settings-guide.html" data-en="blog-windows-sleep-settings-guide.html" data-zh="blog-windows-sleep-settings-guide-zh.html" data-i18n="blogA2t">Your PC Won't Sleep When It Should? The Complete Windows Sleep Settings Guide</a></h2>
@@ -193,7 +231,7 @@
           </p>
         </article>
 
-        <article class="p-blog-card" data-slug="blog-why-automatic-power-management">
+        <article class="p-blog-card" data-slug="blog-why-automatic-power-management" data-category="tech">
           <div class="p-blog-card-head">
             <span class="pd-dot" aria-hidden="true"></span>
             <h2><a href="blog-why-automatic-power-management.html" data-en="blog-why-automatic-power-management.html" data-zh="blog-why-automatic-power-management-zh.html" data-i18n="blogA1t">Your PC Spends 20 Hours a Day as a Space Heater: Why Windows Needs Automatic Power Management</a></h2>
@@ -271,25 +309,38 @@
       });
     }
 
-    // 3. 搜尋過濾（比對標題＋描述的顯示文字，純前端、即時）
+    // 3. 搜尋過濾 + 分類過濾（純前端、即時）
     var search = document.getElementById('blog-search');
     var rows = Array.prototype.slice.call(document.querySelectorAll('.p-blog-card'));
     var idx = Array.prototype.slice.call(document.querySelectorAll('.p-blog-index li'));
     var noRes = document.getElementById('blog-no-results');
+    var currentFilter = 'all';
     function filter() {
       var q = (search.value || '').trim().toLowerCase();
       var any = false;
       rows.forEach(function(row) {
         var slug = row.getAttribute('data-slug');
-        var match = !q || row.textContent.toLowerCase().indexOf(q) !== -1;
+        var cat = row.getAttribute('data-category') || 'tech';
+        var catMatch = currentFilter === 'all' || cat === currentFilter;
+        var match = catMatch && (!q || row.textContent.toLowerCase().indexOf(q) !== -1);
         row.hidden = !match;
         if (match) any = true;
         for (var i = 0; i < idx.length; i++) {
           if (idx[i].getAttribute('data-slug') === slug) { idx[i].hidden = !match; break; }
         }
       });
-      if (noRes) noRes.hidden = any || !q;
+      if (noRes) noRes.hidden = any || !(q || currentFilter !== 'all');
     }
+    document.querySelectorAll('.p-filter-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.p-filter-btn').forEach(function(b) {
+          b.classList.remove('p-filter-active'); b.setAttribute('aria-selected', 'false');
+        });
+        this.classList.add('p-filter-active'); this.setAttribute('aria-selected', 'true');
+        currentFilter = this.getAttribute('data-filter');
+        filter();
+      });
+    });
 
     // 4. 搜尋框提示字 / 無結果文字（7 語系，內嵌避免動 264KB 的 i18n.js）
     var PH = {'en':'Search articles…','zh-TW':'搜尋文章…','zh-CN':'搜索文章…','ja':'記事を検索…','ko':'글 검색…','fr':'Rechercher des articles…','de':'Artikel suchen…'};

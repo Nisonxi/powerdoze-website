@@ -33,6 +33,46 @@
     "inLanguage": "en"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How can I reduce power on a PC that must stay on 24/7?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For always-on PCs like Plex servers, seedboxes, or camera recorders, the most impactful steps are: (1) disable sleep but enable display sleep via powercfg to keep the monitor off, (2) enable USB selective suspend so idle USB devices cut their power draw, (3) cap GPU power with nvidia-smi --power-limit to a lower wattage when graphics are not needed, and (4) switch to a Balanced or Power Saver Windows power plan during off-peak hours. Together these measures can cut idle power consumption by 20–40% without interrupting background tasks."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What powercfg settings save the most power on an always-on PC?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The highest-impact powercfg settings for an always-on PC are: (1) set display timeout to 5–10 minutes so the monitor sleeps when nobody is watching (powercfg /change monitor-timeout-ac 5), (2) enable Hard Disk power-down after 20–30 minutes of inactivity to spin down storage drives, (3) set Processor power management minimum state to 5% so the CPU idles at low frequency instead of running at full speed, and (4) enable Hibernate after a very long timeout (e.g., 8 hours) as a safety net if the machine is unexpectedly idle. Avoid setting the system sleep timeout to 0 if any single task needs the machine awake, and instead use a tool like PowerDoze to block sleep only while that task is running."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much power does a GPU use at idle, and how do I reduce it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "An NVIDIA GPU at idle typically consumes 10–30 W even when no 3D workload is running, and this rises to 50–100 W on high-end cards if a display is connected and driving a high refresh rate. To reduce idle GPU power: (1) use nvidia-smi --query-gpu=power.draw to check current draw, then set a lower power cap with nvidia-smi --power-limit=<watts> (e.g., 50 W on a card rated at 250 W), (2) connect the monitor at a lower refresh rate (60 Hz instead of 144 Hz), (3) use headless mode or a headless GPU dummy plug to eliminate display rendering overhead, and (4) for AMD GPUs use the RadeonProSettingsInstaller to set a low-power profile. Note that power-limit changes are reset on reboot, so automate them via a Windows Scheduled Task or PowerDoze's profile automation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I automate power profiles based on time of day for a server PC?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Windows has no built-in time-based power plan switching, but you can achieve it in three ways: (1) create a Windows Scheduled Task that runs powercfg /setactive <GUID> at a set time to switch to a Power Saver plan at night and back to Balanced in the morning, (2) write a PowerShell script that combines powercfg with nvidia-smi power-limit changes and schedule it with Task Scheduler, or (3) use PowerDoze, which provides a graphical schedule editor — you specify hours and it automatically activates the appropriate power plan, handles GPU limits, and switches back without manual scripts. The automated approach is important because static settings drift: Windows updates and driver installations can silently restore default power plans, so a tool that re-applies rules on a schedule is more reliable than a one-time configuration."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="plain.css">
   <script>
     (function() {

@@ -33,6 +33,46 @@
     "inLanguage": "en"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the difference between Active and Passive cooling policy in Windows?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Windows offers two cooling policies in its power plan settings. Active cooling ramps up fan speed first to keep the CPU cool, prioritising low temperatures over noise. Passive cooling throttles the CPU's clock speed first before spinning up fans, trading a small amount of peak performance for significantly less fan noise. Switching to Passive is one of the quickest software changes you can make to quiet your PC at idle without buying any new hardware."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do CPU power limits reduce fan noise without hurting performance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Modern CPUs are allowed to boost far above their base TDP for short bursts, generating sudden spikes of heat that trigger fan ramp-ups. By capping the processor maximum state (e.g. from 100% to 80–90%) or setting a sustained power limit, you reduce the peak wattage the CPU ever reaches. In practice, lightly-threaded tasks like browsing and video calls are barely affected because they rarely saturate the CPU, while fan noise drops noticeably since the heat spikes that triggered the fans are gone."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I limit GPU power to make my PC quieter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. NVIDIA cards expose a power limit via nvidia-smi, and AMD cards have a similar cap in their driver settings. Reducing GPU power by 10–20% typically cuts temperatures and fan noise substantially at idle and during light workloads, while losing only a few percent of peak frame rate in games. For everyday desktop use where the GPU is mostly idle, this is an easy win: the GPU barely notices the cap, but the fans stay quiet."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does lowering the processor maximum state affect game performance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It depends on how low you go and what you are playing. Dropping from 100% to 90% usually has negligible impact on most games because they do not fully saturate all CPU cores. Going below 80% can start to cause frame-rate drops in CPU-bound titles. The practical approach is to set a lower limit in a quiet power plan for everyday use, and switch back to an unrestricted plan when gaming — something PowerDoze can automate by switching profiles based on detected activity."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="plain.css">
   <script>
     (function() {

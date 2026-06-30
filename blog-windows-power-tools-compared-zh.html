@@ -33,6 +33,46 @@
     "inLanguage": "zh-Hant"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "PowerToys Awake 和 Process Lasso 在 Windows 電源管理上有什麼差別？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "PowerToys Awake 是一款單純的「防睡眠」工具：它暫時覆蓋你的閒置計時器，讓電腦不會因為沒動作就進入睡眠，停用後恢復原設定。Process Lasso 的 IdleSaver 功能則是電源計畫排程器，會根據 CPU 使用率自動切換 Windows 電源計畫——高負載時維持「平衡」或「高效能」，CPU 閒置時切換到省電計畫以降低耗電。兩者解決的問題不同：Awake 阻止睡眠，IdleSaver 管理電源計畫。兩者都無法根據情境訊號做出反應，例如外接螢幕連線、特定應用程式啟動、是否有人離開座位或當前時段。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "免費的 Windows 防睡眠工具哪個最好用？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "若只需要簡單可靠的免費選項，PowerToys Awake（Microsoft PowerToys 的一部分）是最值得信賴的選擇——由 Microsoft 維護、整合在系統匣，可設定防睡眠持續時間或永久開啟。Caffeine 和 Coffee 是佔用空間更小的替代品，但維護較不積極。三者的原理相同：定期模擬滑鼠移動或按鍵，讓 Windows 的閒置計時器不斷歸零，不觸發睡眠程序。如果還需要根據 CPU 負載自動切換電源計畫，Process Lasso 的免費版提供 IdleSaver 功能可以做到。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Caffeine for Windows 會影響實際耗電量，還是只是防止電腦睡眠？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Caffeine（以及 Coffee 等類似工具）只負責防止睡眠，不會更動電源計畫、CPU 頻率、螢幕亮度或任何電源相關設定。它們的原理是定時模擬一個極小的滑鼠移動或按鍵，讓 Windows 重置閒置計時器、不啟動睡眠流程。你的電腦跟正常閒置時完全一樣運作，只是不會關閉螢幕或進入低電量狀態。如果你希望在閒置時主動降低耗電——切換到省電計畫、降低螢幕亮度或降低 CPU 速度——就需要專用的電源管理工具，例如 Process Lasso 或 PowerDoze。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Process Lasso 在電源管理上能做到哪些其他防睡工具做不到的事？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Process Lasso 遠不只是防睡工具。它的 IdleSaver 功能會監控 CPU 使用率並自動切換 Windows 電源計畫——例如 CPU 閒置一段時間後切到「省電模式」，負載升高後再切回「平衡」。它還能為特定程序設定 CPU 優先順序規則、限制背景程序資源，並記錄電源計畫的切換歷程。但它做不到的是對非 CPU 情境的反應：不會因為你接上外接螢幕、某個特定應用程式開啟、你離開座位（使用者在場偵測），或根據時段排程來切換電源計畫。這類多訊號、情境感知的自動化，需要像 PowerDoze 這樣的工具才能做到。"
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="plain.css">
   <script>
     (function() {

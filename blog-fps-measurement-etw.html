@@ -33,6 +33,46 @@
     "inLanguage": "en"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is an FPS overlay safe for anti-cheat games?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It depends entirely on how the overlay measures FPS. Overlays that inject code or hooks into the game process (DLL injection) are flagged and banned by anti-cheat systems like Easy Anti-Cheat and BattlEye. An overlay that reads FPS purely from Windows kernel events (ETW) without touching the game process at all is safe — there is nothing to detect because nothing enters the game."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is ETW and how does it measure FPS without injection?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ETW stands for Event Tracing for Windows, a kernel-level logging infrastructure built into every version of Windows. When a game calls IDXGISwapChain::Present to push a rendered frame to the display, DXGI emits an ETW event. An FPS counter can subscribe to these Microsoft-DXGI provider events from outside the game process — counting how many Present events fire per second gives an accurate frame rate with zero code entering the game. This is the same technique used by Windows Performance Analyzer."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do some FPS counters show wildly wrong numbers like 600 FPS?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most games use multiple swap chains simultaneously — one for the main 3D scene, others for UI layers, loading screens, or video playback. A naive ETW counter that sums Present events across all swap chains belonging to a process will add up frames from every chain, producing a number several times higher than the real display rate. The correct approach is to identify which swap chain is driving the primary display output (usually the one with the highest or most consistent frame rate) and count only its Present events."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is a non-invasive FPS overlay different from MSI Afterburner or RTSS?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MSI Afterburner and RivaTuner Statistics Server (RTSS) work by injecting a rendering hook into the game's graphics pipeline — this gives them precise timing data but also means they place code inside the game process, which anti-cheat software may flag. A non-invasive ETW-based overlay injects nothing; it sits entirely outside the game, subscribing to Windows kernel events. The trade-off is that ETW frame timing is slightly less granular, but the overlay is invisible to anti-cheat and carries zero ban risk for protected titles."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="/plain.css">
   <script>
     (function() {
