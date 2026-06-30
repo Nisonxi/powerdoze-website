@@ -32,6 +32,22 @@
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Is PowerDoze free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes! Core features are free forever. Pro unlocks advanced automation like app-based switching, Wi-Fi geofencing, and analytics. It's a one-time purchase, not a subscription." } },
+      { "@type": "Question", "name": "Does it send my data anywhere?", "acceptedAnswer": { "@type": "Answer", "text": "No. PowerDoze runs entirely on your local machine. The only network requests are an optional update check and Pro license verification when you sign in. No telemetry, no analytics, no cloud sync." } },
+      { "@type": "Question", "name": "Why does Windows SmartScreen show a warning?", "acceptedAnswer": { "@type": "Answer", "text": "Code signing certificates cost US$200+/year. As an indie developer, we'll add signing once the project is sustainable. Click \"More info\" then \"Run anyway\" to proceed safely." } },
+      { "@type": "Question", "name": "Can I transfer my license to a new PC?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Each Pro license works on up to 3 devices. Manage your bound devices from the account page — unbind an old PC to free a slot (one unbind every 30 days)." } },
+      { "@type": "Question", "name": "Does it work on laptops and desktops?", "acceptedAnswer": { "@type": "Answer", "text": "Both. Laptops benefit from battery policies and away mode. Desktops benefit from scheduled sleep rules and app-based power mode switching." } },
+      { "@type": "Question", "name": "What happens if I don't like it?", "acceptedAnswer": { "@type": "Answer", "text": "The free version has no time limit. If you bought Pro, you have a 14-day money-back guarantee, no questions asked." } },
+      { "@type": "Question", "name": "Is switching power modes safe?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Power modes are a native Windows feature — every laptop switches them dozens of times a day as it's plugged in and unplugged. PowerDoze writes settings only through Windows' official powercfg interface (CPU limit, cooling policy, sleep and screen timeouts) and never touches the BIOS, drivers, fan curves or your overclock. Uninstall it and everything returns to Windows defaults. Staying on High performance 24/7 doesn't add safety — it just burns extra watts while the PC waits for you." } },
+      { "@type": "Question", "name": "Isn't this already built into Windows 11?", "acceptedAnswer": { "@type": "Answer", "text": "Windows 11's Presence Sensing only runs on laptops that have a hardware presence sensor, and it only locks or dims the screen — it doesn't switch power modes, combine time / app / Wi-Fi / activity signals, or show you a savings report. PowerDoze detects presence in software (window focus + input activity), so it works on any desktop or laptop and ties presence into a complete power strategy with real savings tracking." } }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="plain.css">
   <script>
     (function() {
@@ -53,6 +69,7 @@
       <a href="features.html" data-i18n="navFeatures">Features</a>
       <a href="comparison.html" data-i18n="navFreeVsPro">Free vs Pro</a>
       <a href="use-cases.html" data-i18n="navUseCases">Use cases</a>
+      <a href="about.html" data-i18n="navAbout">About</a>
       <a href="blog.html" data-i18n="navBlog">Blog</a>
       <a href="#pricing" data-i18n="navPricing">Pricing</a>
     </div>
@@ -75,13 +92,13 @@
           <span data-i18n="heroBadge">Windows 10 / 11</span>
           <span>2026</span>
         </div>
-        <h1 data-i18n="heroTitle">Automatic power management<br>Sleep when idle, full speed when busy</h1>
+        <h1 data-i18n="heroTitle">Fix the annoying things Windows does with sleep &amp; power</h1>
         <p class="p-hero-sub" data-i18n="heroTagline">
-          PowerDoze switches power modes by time, location, and what you're doing — saves power, cuts fan noise, never sleeps mid-task. Desktop and laptop.
+          Your PC sleeps mid-download, won't sleep at night, or quietly resets your power settings. PowerDoze handles it for you — keeps apps awake while they're working, then lets the PC sleep on its own. Free, 100% local.
         </p>
         <div class="p-hero-cta">
           <a href="#download" class="p-btn p-btn-primary" data-i18n="heroDownload">Download free</a>
-          <a href="#pricing" class="p-btn p-btn-ghost" data-i18n="heroSee">See Pro features →</a>
+          <a href="#how" class="p-btn p-btn-ghost" data-i18n="heroSee">See how it works ↓</a>
         </div>
         <div class="p-hero-foot">
           <span data-i18n="heroNote">Free forever · No subscription · 100% local</span>
@@ -95,37 +112,27 @@
 </section>
 
 <!-- ── Stats ────────────────────────────────────────────── -->
-<section class="p-section" style="padding-top: 0; padding-bottom: 0; border-bottom: 0;">
-  <div class="container" style="padding: 0;">
-    <div class="p-stats">
-      <div class="p-stat">
-        <span class="p-stat-num">07</span>
-        <span class="p-stat-label" data-i18n="statLang">Languages</span>
-      </div>
-      <div class="p-stat">
-        <span class="p-stat-num">20+</span>
-        <span class="p-stat-label" data-i18n="statFeat">Power features</span>
-      </div>
-      <div class="p-stat">
-        <span class="p-stat-num">0kB</span>
-        <span class="p-stat-label" data-i18n="statCloud">Cloud data sent</span>
-      </div>
-      <div class="p-stat">
-        <span class="p-stat-num">100%</span>
-        <span class="p-stat-label" data-i18n="statLocal">Local & private</span>
-      </div>
+<section class="p-section" style="padding-top: 0; border-bottom: 0;">
+  <div class="container">
+    <div class="p-pains">
+      <div class="p-pain" data-i18n="pain1">Sleeps mid-download or mid-render</div>
+      <div class="p-pain" data-i18n="pain2">Won't sleep at night, wasting power</div>
+      <div class="p-pain" data-i18n="pain3">Power settings reset themselves</div>
+      <div class="p-pain" data-i18n="pain4">Unplug a monitor, desktop icons scramble</div>
     </div>
+    <p class="p-pains-hook" data-i18n="painsHook">Sound familiar? PowerDoze quietly handles all of it.</p>
+    <p class="p-pains-trust" data-i18n="painsTrust">No telemetry · Verify the installer's SHA-256 yourself · Made by a solo developer · Uninstall restores Windows defaults</p>
   </div>
 </section>
 
 <!-- ── How it works ─────────────────────────────────────── -->
-<section class="p-section">
+<section id="how" class="p-section">
   <div class="container">
     <div class="p-section-head">
       <div><span class="p-eyebrow">How it works</span></div>
       <div>
-        <h2 class="p-h2" data-i18n="howTitle">Three steps to smarter power.</h2>
-        <p class="p-h2-sub" data-i18n="howSub">Set it up once. PowerDoze handles the rest in the background.</p>
+        <h2 class="p-h2" data-i18n="howTitle">Set it once. It handles the rest.</h2>
+        <p class="p-h2-sub" data-i18n="howSub">Tell PowerDoze what should never get interrupted and when the PC should rest. It watches time, apps, fullscreen, Wi-Fi, and whether you're there — and adjusts in the background.</p>
       </div>
     </div>
     <div class="p-features">
@@ -235,10 +242,11 @@
         </div>
 
         <div>
-          <span class="p-price-num" id="price-main">NT$490</span>
+          <span class="p-price-num" id="price-main">NT$490 / US$14.99</span>
           <span class="p-price-was" id="price-original">NT$690</span>
         </div>
         <span class="p-price-unit" data-i18n="proNote">one-time purchase</span>
+        <p style="margin: 8px 0 0; font-size: 12px; color: var(--ink-3); line-height: 1.5;" data-i18n="launchPriceNote">Locks in at this price forever — regular NT$690 / US$20.99 after the first 1,000.</p>
 
         <ul class="p-price-list">
           <li class="cat" data-i18n="proCatAll">Everything in Free</li>
@@ -249,8 +257,9 @@
           <li data-i18n="p8">App foreground auto-switch</li>
           <li data-i18n="p9">Wi-Fi geofencing</li>
           <li data-i18n="p10">Battery smart policy</li>
+          <li data-i18n="pIconGuard">Desktop-icon layout guard (restores icons after a monitor power-off)</li>
           <li class="cat" data-i18n="proCatAnalytics">Analytics</li>
-          <li data-i18n="p11">Energy report &amp; cost estimate</li>
+          <li data-i18n="p11">Savings analytics — the kWh &amp; money you saved</li>
           <li class="cat" data-i18n="proCatLicense">License</li>
           <li data-i18n="p14">Up to 3 devices per license</li>
         </ul>
@@ -385,23 +394,47 @@
     <h2 class="p-h2" style="margin: 24px 0 12px;" data-i18n="dlTitle">Get PowerDoze.</h2>
     <p class="p-h2-sub" style="margin: 0 auto 32px;" data-i18n="dlSub">Compatible with Windows 10 (1903+) and Windows 11.</p>
     <a href="https://github.com/Nisonxi/powerdoze-website/releases/download/v2.2.0/PowerDoze_Setup_v2.2.0.exe" download class="p-btn p-btn-primary" id="download-btn" style="height: 44px; padding: 0 28px; font-size: 14px;" data-i18n="dlBtn">
-      Download v2.2.0 for Windows
+      Download for Windows
     </a>
+    <p style="margin: 12px auto 0; max-width: 520px; font-size: 12px; color: var(--ink-3); line-height: 1.5;" data-i18n="dlMobileNote">On a phone? PowerDoze is a Windows 10/11 desktop app — open powerdoze.app on your PC to install.</p>
     <div style="margin-top: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.08em;" data-i18n="dlNote">
-      ~45 MB · Includes installer · SHA256 verified
+      ~45 MB · Installer · SHA-256 below
     </div>
 
-    <details class="p-ss-guide">
-      <summary data-i18n="ssTitle">Seeing a Windows SmartScreen warning? Here's how to continue</summary>
+    <a href="https://github.com/Nisonxi/powerdoze-website/releases/download/v2.2.0/PowerDoze_v2.2.0_portable.zip" download class="p-btn p-btn-secondary" id="portable-btn" style="margin-top:12px;" data-i18n="dlPortableBtn">Portable .zip (no install)</a>
+    <div style="margin-top: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.08em;" data-i18n="dlPortableNote">
+      Nervous about the installer? Get the portable version — just unzip and run. Usually no SmartScreen prompt.
+    </div>
+
+    <div style="margin: 32px auto 0; max-width: 620px; text-align: left; border: 1px solid var(--hair); border-radius: 6px; padding: 14px 16px;">
+      <div style="font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;" data-i18n="dlSha256Label">Installer SHA-256 — verify your download matches:</div>
+      <code id="dl-sha256" style="display: block; font-family: var(--font-mono); font-size: 11px; color: var(--ink-2); word-break: break-all; line-height: 1.6;">0E31A4C4B7F34859A1BE304198A71DABA801BAE1B46BBBD8C58D3C8C21485782</code>
+      <div style="font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.08em; margin: 10px 0 6px;" data-i18n="dlVerifyCmd">Verify in PowerShell:</div>
+      <code id="dl-verify-cmd" style="display: block; font-family: var(--font-mono); font-size: 11px; color: var(--ink-2); word-break: break-all; line-height: 1.6;">Get-FileHash .\PowerDoze_Setup_v2.2.0.exe</code>
+    </div>
+
+    <div style="margin: 16px auto 0; max-width: 620px; font-size: 12px; color: var(--ink-3); line-height: 1.6;" data-i18n="dlTrustLine">100% local · No account for the free tier · No telemetry · The only network calls are an update check + Pro license sign-in · One-time Pro, never a subscription</div>
+
+    <details class="p-ss-guide" open>
+      <summary data-i18n="ssTitle">Windows will show a SmartScreen warning — here's why, and how to continue</summary>
       <div class="p-ss-guide-body">
         <ol>
-          <li data-i18n="ssStep1">On the blue dialog, click <strong>"More info"</strong>.</li>
+          <li data-i18n="ssStep1">On the blue "Windows protected your PC" dialog, click the small <strong>"More info"</strong> link.</li>
           <li data-i18n="ssStep2">Click <strong>"Run anyway"</strong>, then finish the installer as usual.</li>
         </ol>
         <img src="assets/smartscreen-guide.svg" alt="Windows SmartScreen dialog: click More info, then Run anyway" class="p-ss-guide-img" loading="lazy">
-        <p class="p-ss-guide-why" data-i18n="ssWhy">The app isn't code-signed yet, so Windows doesn't recognize the publisher. Signed builds are coming — the download above is SHA-256 verified in the meantime.</p>
+        <p class="p-ss-guide-why" data-i18n="ssWhy">PowerDoze isn't code-signed yet — a certificate costs more per year than this project has earned, and it's made by one person. It is not a virus. You can verify the download with the SHA-256 above, or use the portable .zip instead. Signed builds are coming.</p>
       </div>
     </details>
+  </div>
+</section>
+
+<!-- ── Founder ──────────────────────────────────────────── -->
+<section class="p-section">
+  <div class="container" style="max-width: 720px;">
+    <span class="p-eyebrow" data-i18n="founderEyebrow">Who makes this</span>
+    <p class="p-h2-sub" style="margin: 24px 0 24px;" data-i18n="founderBody">PowerDoze is made by one person — Nisonxi, a solo developer in Taiwan. I built it because my own PC sat idle at almost full power all day and nothing on the market fixed it properly: the built-in plans and sleep timer are static, and other tools each solve only one piece. It started as the tool I used every day, then became a product.</p>
+    <a href="about.html" class="p-btn p-btn-ghost" data-i18n="founderLink">Read the full story →</a>
   </div>
 </section>
 
@@ -477,6 +510,7 @@
         <h4 data-i18n="footerSupport">Support</h4>
         <ul>
           <li><a href="mailto:PowerDozeSupport@gmail.com" data-i18n="contact">Support</a></li>
+          <li><a href="about.html" data-i18n="navAbout">About</a></li>
           <li><a href="account.html" data-i18n="footerAccount">Account</a></li>
         </ul>
       </div>
@@ -520,17 +554,21 @@
 (function() {
   const SAVING_RATIO = 0.30;   // typical mixed-use upper estimate
   const CO2_PER_KWH  = 0.502;  // Taiwan grid avg, kg/kWh
-  const FALLBACK_PRO_PRICE = 690; // regular price; used if DOM read fails
-
   // Read live Pro price from the displayed pricing card so payback
-  // automatically tracks first-batch promo (NT$490) vs regular (NT$690).
+  // automatically tracks first-batch promo vs regular, in the visitor's currency.
   function getProPrice() {
-    const el = document.getElementById('price-main');
-    if (!el) return FALLBACK_PRO_PRICE;
-    const m = el.textContent.match(/(\d{1,3}(?:[,，]\d{3})*)/);
-    if (!m) return FALLBACK_PRO_PRICE;
-    const n = parseInt(m[1].replace(/[,，]/g, ''), 10);
-    return n > 0 ? n : FALLBACK_PRO_PRICE;
+    const el  = document.getElementById('price-main');
+    const txt = el ? (el.textContent || '') : '';
+    const lang = (typeof getLang === 'function') ? getLang() : 'en';
+    if (lang === 'zh-TW' || lang === 'zh-CN') {
+      const m = txt.match(/NT\$(\d+)/);
+      if (m) return parseInt(m[1], 10);
+      const m2 = txt.match(/(\d{3,})/);
+      return m2 ? parseInt(m2[1], 10) : 690;
+    } else {
+      const m = txt.match(/US\$(\d+\.?\d*)/);
+      return m ? parseFloat(m[1]) : 20.99;
+    }
   }
 
   const wattsEl  = document.getElementById('calc-watts');
@@ -548,7 +586,15 @@
   // the user types their per-kWh rate in). Falls back to "$" before i18n loads.
   function calcCurrency() {
     var l = (typeof getLang === 'function') ? getLang() : 'en';
-    return { 'zh-TW': 'NT$', 'zh-CN': '¥', ja: '¥', ko: '₩', fr: '€', de: '€', en: '$' }[l] || '$';
+    // Chinese locales show local currency; everyone else uses USD.
+    return { 'zh-TW': 'NT$', 'zh-CN': '¥' }[l] || 'US$';
+  }
+
+  // Default per-kWh electricity rate by locale (fills the rate box on load).
+  // Chinese → local-currency rate; everyone else → a reasonable USD/kWh average.
+  function defaultRate() {
+    var l = (typeof getLang === 'function') ? getLang() : 'en';
+    return { 'zh-TW': 4.0, 'zh-CN': 0.6 }[l] || 0.15;
   }
 
   function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
@@ -625,6 +671,10 @@
     });
   });
 
+  // Fill the per-kWh rate with the visitor's locale default (USD for non-Chinese)
+  // before the first render, so an English visitor doesn't see an NT$ rate.
+  rateEl.value = defaultRate();
+
   // Initial render after i18n.js applies. The payback line deliberately has no
   // data-i18n (applyLang would overwrite the computed text with the raw
   // "{months}" template); recalc() localizes it via t() instead, so it must
@@ -651,13 +701,13 @@ updateNavAuth();
 
     if (data.isFirstBatch) {
       if (badge) badge.classList.add('visible');
-      if (priceMain) priceMain.textContent = 'NT$490';
+      if (priceMain) priceMain.textContent = 'NT$490 / US$14.99';
       if (priceOrig) { priceOrig.style.display = ''; priceOrig.textContent = 'NT$690'; }
       if (ecpayPrice) ecpayPrice.textContent = 'NT$490';
       if (paypalPrice) paypalPrice.textContent = 'US$14.99';
     } else {
       if (badge) badge.classList.remove('visible');
-      if (priceMain) priceMain.textContent = 'NT$690';
+      if (priceMain) priceMain.textContent = 'NT$690 / US$20.99';
       if (priceOrig) priceOrig.style.display = 'none';
       if (ecpayPrice) ecpayPrice.textContent = 'NT$690';
       if (paypalPrice) paypalPrice.textContent = 'US$20.99';
@@ -721,12 +771,11 @@ if (payModal) {
 if (buyBtn) {
   buyBtn.addEventListener('click', async function(e) {
     e.preventDefault();
+    // Modal-first: show the price + 14-day refund BEFORE any login wall.
+    // Sign-in is only required once a payment method is picked (see startPurchase).
+    // If the visitor is already signed in AND already Pro, say so instead of opening it.
     var user = await getUser();
-    if (!user) {
-      window.location.href = 'auth.html?redirect=buy';
-      return;
-    }
-    if (sbClient) {
+    if (user && sbClient) {
       var { data: profile } = await sbClient.from('profiles').select('is_pro').eq('id', user.id).single();
       if (profile && profile.is_pro) {
         alert(t('payAlreadyPro'));
@@ -793,6 +842,31 @@ async function startPurchase(gateway) {
   if (btn) btn.disabled = false;
   closePayModal();
 }
+</script>
+<script>
+// ── 下載資訊自動化：從 version.json 取最新版號／安裝程式網址／SHA-256，每次發版自動更新，
+//    無需手動改 HTML。讀不到 version.json 就沿用 HTML 內既有值當 fallback（不會壞）。 ──
+(async function() {
+  try {
+    var r = await fetch('version.json', { cache: 'no-store' });
+    if (!r.ok) return;
+    var txt = await r.text();
+    var v = JSON.parse(txt.replace(/^\uFEFF/, ''));  // 去掉 version.json 可能帶的 UTF-8 BOM
+    var ver = v.latest;
+    if (!ver) return;
+    var base = 'https://github.com/Nisonxi/powerdoze-website/releases/download/v' + ver + '/';
+    var instUrl = v.installerUrl || (base + 'PowerDoze_Setup_v' + ver + '.exe');
+    var zipUrl  = v.zipUrl || (base + 'PowerDoze_v' + ver + '_portable.zip');
+    var dl  = document.getElementById('download-btn');
+    var pb  = document.getElementById('portable-btn');
+    var sha = document.getElementById('dl-sha256');
+    var vc  = document.getElementById('dl-verify-cmd');
+    if (dl) dl.href = instUrl;
+    if (pb) pb.href = zipUrl;
+    if (vc) vc.textContent = 'Get-FileHash .\\PowerDoze_Setup_v' + ver + '.exe';
+    if (sha && v.installerSha256) sha.textContent = String(v.installerSha256).toUpperCase();
+  } catch (e) { /* keep HTML fallback values */ }
+})();
 </script>
 </body>
 </html>

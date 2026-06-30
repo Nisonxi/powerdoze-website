@@ -460,6 +460,50 @@ body.plain {
   color: var(--ink-3);
 }
 
+/* ── Pain-point confirmation band (取代舊的數字帶) ── */
+.p-pains {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
+@media (max-width: 720px) { .p-pains { grid-template-columns: repeat(2, 1fr); } }
+.p-pain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 22px 18px;
+  border-right: 1px solid var(--hair);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.p-pain:last-child { border-right: 0; }
+@media (max-width: 720px) {
+  .p-pain:nth-child(2) { border-right: 0; }
+  .p-pain:nth-child(1), .p-pain:nth-child(2) { border-bottom: 1px solid var(--hair); }
+}
+.p-pains-hook {
+  text-align: center;
+  margin: 28px auto 0;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.p-pains-trust {
+  text-align: center;
+  margin: 12px auto 0;
+  max-width: 760px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  line-height: 1.6;
+  color: var(--ink-3);
+}
+
 /* ═══════════════════════════════════════════════════════════
    Feature list (numbered, no icons)
    ═══════════════════════════════════════════════════════════ */

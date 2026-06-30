@@ -7,4 +7,22 @@ Disallow: /auth.html
 Disallow: /auth-callback.html
 Disallow: /paypal-return.html
 
+# ===== AI 搜尋／引用＋訓練爬蟲：全部放行（要被 ChatGPT / Claude / Perplexity 引用），
+#       但同樣排除 app/登入/交易頁。日後若要「不被訓練但仍被引用」，
+#       把 GPTBot / ClaudeBot / Google-Extended 改成 Disallow: / 即可（不影響被引用）。 =====
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: Google-Extended
+Allow: /
+Disallow: /account.html
+Disallow: /auth.html
+Disallow: /auth-callback.html
+Disallow: /paypal-return.html
+
 Sitemap: https://powerdoze.app/sitemap.xml
