@@ -1,10 +1,10 @@
 ﻿{
-    "latest":  "2.2.0",
+    "latest":  "2.2.2",
     "url":  "https://powerdoze.app/#download",
-    "installerUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.2.0/PowerDoze_Setup_v2.2.0.exe",
-    "installerSha256":  "0e31a4c4b7f34859a1be304198a71daba801bae1b46bbbd8c58d3c8c21485782",
-    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.2.0/PowerDoze_v2.2.0_portable.zip",
-    "sha256":  "fa0a924163f9dcc5d5e8ba28d77844d1d04697f6dfd2229b0c4f4ba992ffd829",
-    "notes":  "新增「離開自動調暗 / 鎖定螢幕」：偵測到你離開電腦一段時間，自動把螢幕調暗或鎖定，省電又顧隱私（看影片、開會、白名單程式執行時自動豁免）。分析頁預設改為顯示「全部歷史」、省電金額改為長期累積。並提升硬體監控的穩定性與數值準確度。",
-    "date":  "2026-06-24"
+    "installerUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.2.2/PowerDoze_Setup_v2.2.2.exe",
+    "installerSha256":  "ef043d91fd54b918403cf7094b7941f82a5e887ba88b4b8143340940bded6d29",
+    "zipUrl":  "https://github.com/Nisonxi/powerdoze-website/releases/download/v2.2.2/PowerDoze_v2.2.2_portable.zip",
+    "sha256":  "e1c4d4ac80b4f18cc08411c65badb9d733e4167c1f466d02ae87c00439259c54",
+    "notes":  "v2.2.2：離席調暗省電（毛玻璃遮隱私＋真實降背光）、外接螢幕背光還原修復、power-history 永久累積省電金額、安全強化與穩定性修補",
+    "date":  "2026-06-30"
 }
